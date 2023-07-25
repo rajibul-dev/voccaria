@@ -1,0 +1,33 @@
+.imgBox {
+  position: relative;
+}
+.miaImg {
+  position: relative;
+  border-radius: 50%;
+  width: 90%;
+}
+.badge {
+  position: absolute;
+  width: 30%;
+  top: 68%;
+  right: 7%;
+}
+@media (min-width: 56.25em) {
+  .miaImg {
+    margin-top: 4rem;
+  }
+  .imgBox {
+    transform: translateX(-5%);
+  }
+}
+
+@media (max-width: 56.25em) {
+  .imgBox {
+    width: 60svw;
+  }
+}
+@media (max-width: 580px) {
+  .imgBox {
+    width: 100%;
+  }
+}

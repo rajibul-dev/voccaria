@@ -1,0 +1,35 @@
+.heading {
+  font-size: 3.2rem;
+  margin-bottom: 1.8rem;
+  font-weight: 500;
+  letter-spacing: normal;
+  color: var(--secondary-gray);
+}
+.aboutText {
+  display: flex;
+  gap: 1.4rem;
+  flex-direction: column;
+  font-size: var(--font-size-p-primary);
+  line-height: 1.7;
+  color: #000;
+}
+.aboutText p:last-child {
+  margin-top: 0.5rem;
+}
+
+@media (min-width: 56.25em) {
+  .aboutBox {
+    max-width: 92ch;
+    margin-inline: auto;
+  }
+}
+@media (max-width: 56.25em) {
+  .aboutBox {
+    max-width: 88ch;
+  }
+}
+@media (max-width: 500px) {
+  .aboutBox {
+    max-width: 66ch;
+  }
+}
