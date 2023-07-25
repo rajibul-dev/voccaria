@@ -4,9 +4,9 @@ import AboutStyles from "./about.module.css";
 // components
 import ImageWithBadge from "./components/imageWithBadge";
 
-// images
-import MiaImage from "../../../../public/images/Mia.jpeg";
-import MiaBadge from "../../../../public/images/vtt-badge.webp";
+// images../
+import MiaImage from "../../../../../public/images/Mia.jpeg";
+import MiaBadge from "../../../../../public/images/vtt-badge.webp";
 import AboutText from "./components/aboutText";
 
 const aboutMiaText = [
