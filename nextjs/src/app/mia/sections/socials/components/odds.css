@@ -1,0 +1,38 @@
+.discord:hover {
+  background-color: #4e59d2 !important;
+}
+.twitch:hover {
+  width: 38rem;
+  height: 9.4rem;
+  transform: translateY(-1.8rem);
+}
+.streamelements:hover {
+  width: 27.3rem;
+}
+
+@keyframes late-text-visibility {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0%;
+  }
+}
+
+.twitch .text {
+  position: absolute;
+}
+
+.twitch:hover .text {
+  max-width: 22ch;
+  display: inline-block;
+  text-align: center;
+  transform: translateX(-2rem) translateY(1.6rem);
+  animation: late-text-visibility 1s;
+}
+.twitch:not(:hover) .text {
+  display: none;
+}
+.twitch:hover .icon-box {
+  transform: translateY(1.8rem);
+}

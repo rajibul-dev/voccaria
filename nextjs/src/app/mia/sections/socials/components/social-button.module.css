@@ -1,0 +1,41 @@
+.button {
+  display: inline-block;
+  height: 6rem;
+  width: 6rem;
+  background-color: #fff;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.button:nth-child(1) {
+  width: 35rem;
+}
+.iconBox {
+  display: inline-block;
+  text-align: center;
+  height: 6rem;
+  width: 6rem;
+  border-radius: 50%;
+  box-sizing: border-box;
+  line-height: 6.5rem;
+  transition: all 0.3s ease-out;
+}
+.text {
+  color: #fff;
+  text-shadow: 1.6px 1.6px 1.6px rgba(0, 0, 0, 0.1),
+    2px 2px 2px rgba(0, 0, 0, 0.1);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 6rem;
+  margin-left: 1rem;
+  transition: all 0.5s ease-out;
+  line-height: 1.6;
+  position: relative;
+  top: -3%;
+}
+.text:hover {
+  text-decoration: none;
+}
