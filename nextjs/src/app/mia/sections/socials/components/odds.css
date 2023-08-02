@@ -36,3 +36,16 @@
 .twitch:hover .icon-box {
   transform: translateY(1.8rem);
 }
+
+@media screen and (max-width: 832px) {
+  .twitch:hover .text {
+    display: none;
+  }
+  .twitch:hover {
+    height: 6rem !important;
+    transform: translateY(0);
+  }
+  .twitch:hover .icon-box {
+    transform: translateY(0);
+  }
+}

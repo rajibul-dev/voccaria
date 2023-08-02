@@ -16,3 +16,14 @@
   line-height: 6rem;
   color: #fff;
 }
+
+@media screen and (max-width: 532px) {
+  .wrapper {
+    height: 100%;
+    gap: 3.2rem;
+  }
+  .socialsSection {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}

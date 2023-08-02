@@ -10,7 +10,7 @@
   overflow: hidden;
   transition: all 0.3s ease;
 }
-.button:nth-child(1) {
+.button:first-child {
   width: 35rem;
 }
 .iconBox {
@@ -38,4 +38,22 @@
 }
 .text:hover {
   text-decoration: none;
+}
+
+@media screen and (max-width: 832px) {
+  .button:hover:not(:first-child) {
+    width: 6rem;
+    transform: scale(1.1);
+  }
+}
+@media screen and (max-width: 532px) {
+  .button {
+    transform: scale(1.1);
+  }
+  .button:first-child {
+    width: 6rem;
+  }
+  .button:hover {
+    transform: scale(1.3);
+  }
 }
