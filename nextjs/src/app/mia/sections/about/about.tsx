@@ -6,7 +6,7 @@ import ImageWithBadge from "./components/imageWithBadge"
 
 // images../
 import MiaImage from "../../../../../public/images/Mia.jpeg"
-import MiaBadge from "../../../../../public/images/vtt-badge.webp"
+import MiaBadge from "../../../../../public/images/vtt-badge.png"
 import AboutText from "./components/aboutText"
 
 // Mia's about text
