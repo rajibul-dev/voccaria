@@ -1,7 +1,5 @@
 "use client"
 
-import { useState } from "react"
-
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faDiscord, faTwitch } from "@fortawesome/free-brands-svg-icons"
@@ -52,16 +50,6 @@ const socialItems = [
 ]
 
 export default function socials() {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [isHovered, setIsHovered] = useState(false)
-
-  const handleMouseEnter = () => {
-    setIsHovered(true)
-  }
-  const handleMouseLeave = () => {
-    setIsHovered(false)
-  }
-
   return (
     <section id="socials" className={`block ${SocialsStyles.socialsSection}`}>
       <div className={SocialsStyles.wrapper}>
