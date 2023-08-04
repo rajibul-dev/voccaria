@@ -66,6 +66,17 @@ html {
 p {
   word-spacing: 0.8pt;
 }
+.section-heading {
+  font-weight: 700;
+  font-size: var(--font-size-secondary-heading);
+  line-height: 1.3;
+  margin-bottom: 2.4rem;
+}
+.goto-paragraph {
+  color: #000;
+  font-size: var(--font-size-p-primary);
+  line-height: 1.7;
+}
 
 /* Scale shift */
 @media (max-width: 68em) {
