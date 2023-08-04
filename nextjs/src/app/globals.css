@@ -40,6 +40,7 @@
   --font-size-p-primary: 1.8rem;
 }
 
+/* Resets */
 * {
   padding: 0;
   margin: 0;
@@ -51,24 +52,22 @@ html {
   overflow-x: hidden;
 }
 
-p {
-  word-spacing: 0.8pt;
+/* Section defaults */
+.block {
+  padding: 9.6rem 0;
 }
-
 .container {
   max-width: 130rem;
   margin: 0 auto;
   padding: 0 5%;
 }
 
-.block {
-  padding: 9.6rem 0;
+/* Typography */
+p {
+  word-spacing: 0.8pt;
 }
 
-/* /////////////////////
-SCALE SHIFT
-///////////////////// */
-
+/* Scale shift */
 @media (max-width: 68em) {
   html {
     font-size: 56.25%;
