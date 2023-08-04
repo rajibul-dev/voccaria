@@ -20,6 +20,7 @@
     rgb(var(--background-start-rgb));
 } */
 
+/* Misc */
 ::selection {
   background-color: #835c9a;
   color: #fff;
@@ -76,6 +77,17 @@ p {
   color: #000;
   font-size: var(--font-size-p-primary);
   line-height: 1.7;
+}
+
+/* Button */
+.btn {
+  display: inline-block;
+  font-size: var(--font-size-p-primary);
+  font-weight: 600;
+  background-color: #fff;
+  padding: 1rem 4rem;
+  border-radius: 12px;
+  transition: all ease 0.15s;
 }
 
 /* Scale shift */
