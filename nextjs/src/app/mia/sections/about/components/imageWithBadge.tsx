@@ -1,10 +1,10 @@
-import Image, { StaticImageData } from "next/image";
+import Image, { StaticImageData } from "next/image"
 
-import ImgWithBadgeStyles from "./imgwithbadge.module.css";
+import ImgWithBadgeStyles from "./imgwithbadge.module.css"
 
 interface ImageWithBadgeProps {
-  srcImage: StaticImageData;
-  srcBadge: StaticImageData;
+  srcImage: StaticImageData
+  srcBadge: StaticImageData
 }
 
 const ImageWithBadge: React.FC<ImageWithBadgeProps> = ({
@@ -17,15 +17,16 @@ const ImageWithBadge: React.FC<ImageWithBadgeProps> = ({
         className={ImgWithBadgeStyles.miaImg}
         src={srcImage}
         alt="Mia Image"
-        priority
+        priority={true}
       />
       <Image
         className={ImgWithBadgeStyles.badge}
         src={srcBadge}
         alt="Mia's new york vocal coaching voice teaching training certification badge"
+        priority={true}
       />
     </div>
-  );
-};
+  )
+}
 
-export default ImageWithBadge;
+export default ImageWithBadge

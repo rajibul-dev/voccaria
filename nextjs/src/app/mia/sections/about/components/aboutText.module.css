@@ -1,17 +1,10 @@
 .heading {
-  font-size: 3.2rem;
-  margin-bottom: 1.8rem;
-  font-weight: 500;
-  letter-spacing: normal;
-  color: var(--secondary-gray);
+  margin-bottom: 2rem;
 }
 .aboutText {
   display: flex;
-  gap: 1.4rem;
   flex-direction: column;
-  font-size: var(--font-size-p-primary);
-  line-height: 1.7;
-  color: #000;
+  gap: 1.4rem;
 }
 .aboutText p:last-child {
   margin-top: 0.5rem;

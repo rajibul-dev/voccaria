@@ -21,7 +21,7 @@ const aboutMiaText = [
 // component
 export default function About() {
   return (
-    <section id="about" className={`block ${AboutStyles.about}`}>
+    <section id="about" className={`${AboutStyles.about}`}>
       <div className={`container ${AboutStyles.container}`}>
         <ImageWithBadge srcImage={MiaImage} srcBadge={MiaBadge} />
         <AboutText text={aboutMiaText} />

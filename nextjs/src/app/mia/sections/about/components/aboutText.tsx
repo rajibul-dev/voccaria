@@ -1,20 +1,24 @@
-import AboutTextStyles from "./aboutText.module.css";
+import AboutTextStyles from "./aboutText.module.css"
 
 interface AboutTextProps {
-  text: string[];
+  text: string[]
 }
 
 const AboutText: React.FC<AboutTextProps> = ({ text }) => {
   return (
     <div className={AboutTextStyles.aboutBox}>
-      <h2 className={AboutTextStyles.heading}>About Me</h2>
+      <h2 className={`section-heading ${AboutTextStyles.heading}`}>About Me</h2>
       <div className={AboutTextStyles.aboutText}>
         {text.map((para: string, index: number) => {
-          return <p key={index}>{para}</p>;
+          return (
+            <p className="goto-paragraph" key={index}>
+              {para}
+            </p>
+          )
         })}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AboutText;
+export default AboutText
