@@ -1,0 +1,36 @@
+.section {
+  margin-bottom: 9.6rem;
+}
+.container {
+  background-color: #a2b6ff;
+  max-width: 85rem;
+  height: 30rem;
+  margin-inline: auto;
+
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+
+  border-radius: 6px;
+  overflow: hidden;
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.avatar {
+  width: 28rem;
+  align-self: end;
+}
+.textbox {
+  align-self: center;
+}
+.heading {
+  font-size: 3rem;
+  line-height: 1.4;
+  font-weight: 800;
+}
+.btn {
+  margin-top: 4rem;
+}
+.btn:hover {
+  background-color: #b63562;
+  color: #fff;
+}

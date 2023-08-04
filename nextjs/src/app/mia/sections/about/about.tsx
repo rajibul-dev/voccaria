@@ -4,7 +4,7 @@ import AboutStyles from "./about.module.css"
 // components
 import ImageWithBadge from "./components/imageWithBadge"
 
-// images../
+// images..
 import MiaImage from "../../../../../public/images/Mia.jpeg"
 import MiaBadge from "../../../../../public/images/vtt-badge.png"
 import AboutText from "./components/aboutText"
