@@ -21,7 +21,8 @@
 } */
 
 ::selection {
-  background-color: #9983a6;
+  background-color: #835c9a;
+  color: #fff;
 }
 
 :root {
