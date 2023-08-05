@@ -1,5 +1,6 @@
 .section {
   margin-bottom: 9.6rem;
+  padding-inline: 5%;
 }
 .container {
   background-color: #a2b6ff;
@@ -33,4 +34,41 @@
 .btn:hover {
   background-color: #b63562;
   color: #fff;
+}
+
+@media screen and (max-width: 725px) {
+  .container {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .textbox {
+    padding-top: 5rem;
+    padding-inline: 5rem;
+  }
+  .avatar {
+    grid-row: 2;
+    justify-self: end;
+    margin-right: 7rem;
+  }
+}
+@media screen and (max-width: 450px) {
+  .section {
+    background-color: #a2b6ff;
+    margin-inline: 0;
+    margin-bottom: 0;
+  }
+  .textbox {
+    padding-inline: 5%;
+  }
+  .avatar {
+    margin-right: 5%;
+  }
+}
+@media screen and (max-width: 379px) {
+  .heading {
+    font-size: 2.8rem;
+  }
+  .textbox {
+    padding-inline: 2%;
+  }
 }
