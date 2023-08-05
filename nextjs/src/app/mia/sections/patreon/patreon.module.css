@@ -61,6 +61,7 @@
   }
   .container {
     gap: 2rem;
+    box-shadow: none;
   }
   .textbox {
     padding-inline: 5%;
