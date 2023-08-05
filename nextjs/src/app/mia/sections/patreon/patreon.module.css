@@ -34,11 +34,7 @@
   color: #fff;
 }
 .btn:hover {
-  background-color: #fff;
-  color: #000;
-
-  /* Consideration */
-  /* background-color: #b63562; */
+  background-color: #df5384;
 }
 
 @media screen and (max-width: 725px) {
