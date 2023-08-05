@@ -25,15 +25,20 @@
 }
 .heading {
   font-size: 3rem;
-  line-height: 1.4;
+  line-height: 1.5;
   font-weight: 800;
 }
 .btn {
   margin-top: 4rem;
-}
-.btn:hover {
   background-color: #b63562;
   color: #fff;
+}
+.btn:hover {
+  background-color: #fff;
+  color: #000;
+
+  /* Consideration */
+  /* background-color: #b63562; */
 }
 
 @media screen and (max-width: 725px) {
@@ -56,12 +61,26 @@
     background-color: #a2b6ff;
     margin-inline: 0;
     margin-bottom: 0;
+    padding-top: 6rem;
+  }
+  .container {
+    gap: 2rem;
   }
   .textbox {
     padding-inline: 5%;
+    padding-top: 0;
   }
   .avatar {
     margin-right: 5%;
+
+    /* consideration */
+    width: 65vw;
+  }
+  .btn {
+    padding: 1.4rem 5rem;
+  }
+  .heading {
+    line-height: 1.5;
   }
 }
 @media screen and (max-width: 379px) {
