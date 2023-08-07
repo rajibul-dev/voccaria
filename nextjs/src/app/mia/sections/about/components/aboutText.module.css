@@ -18,11 +18,6 @@
 }
 @media (max-width: 56.25em) {
   .aboutBox {
-    max-width: 88ch;
-  }
-}
-@media (max-width: 500px) {
-  .aboutBox {
-    max-width: 66ch;
+    max-width: 78ch;
   }
 }

@@ -40,7 +40,7 @@
     gap: 4.8rem;
   }
   .textbox {
-    max-width: 100%;
+    max-width: 78ch;
   }
   .image {
     width: 30rem;
