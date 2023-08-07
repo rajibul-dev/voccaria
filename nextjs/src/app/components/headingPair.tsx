@@ -6,6 +6,7 @@ interface HeadingPairProps {
   heading: string
   headingClassName?: string
   tertiaryClassName?: string
+  isCentered?: boolean
 }
 
 const HeadingPair: React.FC<HeadingPairProps> = ({
@@ -13,13 +14,24 @@ const HeadingPair: React.FC<HeadingPairProps> = ({
   heading,
   headingClassName = "",
   tertiaryClassName = "",
+  isCentered = false,
 }) => {
   return (
     <>
-      <span className={`${HeadingPairStyles.tertiary} ${tertiaryClassName}`}>
+      <span
+        className={`${HeadingPairStyles.tertiary} ${tertiaryClassName} ${
+          isCentered ? HeadingPairStyles.center : ""
+        }`}
+      >
         {tertiary}
       </span>
-      <h2 className={`section-heading ${headingClassName}`}>{heading}</h2>
+      <h2
+        className={`section-heading ${headingClassName} ${
+          isCentered ? HeadingPairStyles.center : ""
+        }`}
+      >
+        {heading}
+      </h2>
     </>
   )
 }

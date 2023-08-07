@@ -1,9 +1,18 @@
 .tertiary {
-  display: inline-block;
+  display: block;
   font-size: 1.5rem;
   color: #c4265d;
   text-transform: uppercase;
   letter-spacing: 1.2pt;
   margin-bottom: 1.4rem;
   font-weight: 700;
+}
+.center {
+  text-align: center;
+}
+
+@media screen and (max-width: 420px) {
+  .center {
+    text-align: left;
+  }
 }
