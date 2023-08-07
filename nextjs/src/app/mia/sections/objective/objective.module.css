@@ -15,7 +15,8 @@
   max-width: 80ch;
 }
 .image {
-  width: 28rem;
+  width: 27.5rem;
+  align-self: center;
 }
 
 @media screen and (max-width: 948px) {
