@@ -20,16 +20,20 @@ const features = [
 ]
 
 // styles
-import Features from "./components/features"
 import ObjectiveStyles from "./objective.module.css"
 
 // components
 import HeadingPair from "@/app/components/headingPair"
+import Features from "./components/features"
+
+// image
+import Image from "next/image"
+import YourOneVoiceImage from "../../../../../public/images/youronevoice.png"
 
 export default function Objective() {
   return (
     <section className={`block ${ObjectiveStyles.section}`} id="objective">
-      <div className={`container`}>
+      <div className={ObjectiveStyles.continaer}>
         <div className={ObjectiveStyles.textbox}>
           <HeadingPair
             headingClassName={ObjectiveStyles.heading}
@@ -38,6 +42,13 @@ export default function Objective() {
           />
           <Features features={features} />
         </div>
+        <Image
+          className={ObjectiveStyles.image}
+          src={YourOneVoiceImage}
+          alt="Your One Voice discord server channel structure"
+          placeholder="blur"
+          blurDataURL={"../../../../../public/images/youronevoice.png"}
+        />
       </div>
     </section>
   )
