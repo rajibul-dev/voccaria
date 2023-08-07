@@ -108,3 +108,8 @@ strong {
     --font-size-p-primary: 1.86rem;
   }
 }
+@media (max-width: 500px) {
+  .block {
+    padding: 8rem 0;
+  }
+}
