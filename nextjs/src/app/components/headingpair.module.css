@@ -10,6 +10,9 @@
 .center {
   text-align: center;
 }
+.moreMargin {
+  margin-bottom: 6.2rem;
+}
 
 @media screen and (max-width: 420px) {
   .center {

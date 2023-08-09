@@ -7,6 +7,7 @@ interface HeadingPairProps {
   headingClassName?: string
   tertiaryClassName?: string
   isCentered?: boolean
+  moreMargin?: boolean
 }
 
 const HeadingPair: React.FC<HeadingPairProps> = ({
@@ -15,6 +16,7 @@ const HeadingPair: React.FC<HeadingPairProps> = ({
   headingClassName = "",
   tertiaryClassName = "",
   isCentered = false,
+  moreMargin = false,
 }) => {
   return (
     <>
@@ -28,7 +30,7 @@ const HeadingPair: React.FC<HeadingPairProps> = ({
       <h2
         className={`section-heading ${headingClassName} ${
           isCentered ? HeadingPairStyles.center : ""
-        }`}
+        } ${moreMargin ? HeadingPairStyles.moreMargin : ""}`}
       >
         {heading}
       </h2>
