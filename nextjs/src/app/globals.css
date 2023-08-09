@@ -39,6 +39,8 @@
   --font-size-tertiary: 2.4rem;
   --font-size-small-p: 1.5rem;
   --font-size-p-primary: 1.8rem;
+
+  --default-transition: all ease 0.15s;
 }
 
 /* Resets */
@@ -90,7 +92,7 @@ strong {
   background-color: #fff;
   padding: 1.2rem 4rem;
   border-radius: 12px;
-  transition: all ease 0.15s;
+  transition: var(--default-transition);
 }
 
 /* Scale shift */
