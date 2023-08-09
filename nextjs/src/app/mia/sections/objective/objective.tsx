@@ -37,7 +37,7 @@ export default function Objective() {
         <div className={ObjectiveStyles.textbox}>
           <HeadingPair
             headingClassName={ObjectiveStyles.heading}
-            tertiary="Objective"
+            tertiary="Paid Lesson Objective"
             heading="Our Collaborative Goals"
           />
           <Features features={features} />
