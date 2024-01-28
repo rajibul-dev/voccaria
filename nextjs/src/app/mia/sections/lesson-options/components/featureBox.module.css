@@ -41,7 +41,7 @@
   max-width: 32ch;
 }
 .btn {
-  background-color: #fff;
+  background-color: var(--white-primary);
   color: var(--black-primary);
   display: block;
   border-radius: 6px;
@@ -58,7 +58,7 @@
 .free .btn:hover {
   background-color: var(--cranberry-600);
   border: 1px solid var(--black-primary);
-  color: #fff;
+  color: var(--white-primary);
 }
 .listNBtn {
   display: flex;
@@ -71,7 +71,7 @@
 .brand .heading,
 .brand .icon,
 .brand .para {
-  color: #fff;
+  color: var(--white-primary);
 }
 .brand .para {
   font-weight: 700;
@@ -82,7 +82,7 @@
 .brand .btn:hover {
   background-color: var(--brand-secondary-400);
   border: 1px solid var(--black-primary);
-  color: #fff;
+  color: var(--white-primary);
 }
 
 @media screen and (max-width: 840px) {

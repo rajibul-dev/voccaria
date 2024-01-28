@@ -2,7 +2,7 @@
   display: inline-block;
   height: 6rem;
   width: 6rem;
-  background-color: #fff;
+  background-color: var(--white-primary);
   border-radius: 50px;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -24,7 +24,7 @@
   transition: all 0.3s ease-out;
 }
 .text {
-  color: #fff;
+  color: var(--white-primary);
   text-shadow: 1.6px 1.6px 1.6px rgba(0, 0, 0, 0.1),
     2px 2px 2px rgba(0, 0, 0, 0.1);
   font-size: 2rem;

@@ -30,8 +30,6 @@
 }
 .btn {
   margin-top: 4rem;
-  background-color: var(--brand-primary-700);
-  color: #fff;
 }
 .btn:hover {
   background-color: var(--brand-primary-500);
