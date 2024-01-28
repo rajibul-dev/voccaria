@@ -1,15 +1,21 @@
-import Image from "next/image"
+import Image from "next/image";
 
 // styles
-import PatreonStyles from "./patreon.module.css"
+import PatreonStyles from "./patreon.module.css";
 
 // image
-import PatreonAvatar from "../../../../../public/images/mia-patron.png"
+import PatreonAvatar from "../../../../../public/images/mia-patron.png";
+
+// components
+import Button from "@/app/components/button";
 
 // component
 export default function Patreon() {
   return (
-    <section className={PatreonStyles.section} id="patreon">
+    <section
+      className={PatreonStyles.section}
+      id="patreon"
+    >
       <div className={PatreonStyles.container}>
         {/* Image */}
         <Image
@@ -26,15 +32,14 @@ export default function Patreon() {
             <br />
             Get exclusive perks!
           </h3>
-          <a
-            className={`btn ${PatreonStyles.btn}`}
+          <Button
+            className={PatreonStyles.btn}
             href="https://www.patreon.com/MiaVoiceTeacher"
-            target="_blank"
           >
             To Patreon
-          </a>
+          </Button>
         </div>
       </div>
     </section>
-  )
+  );
 }

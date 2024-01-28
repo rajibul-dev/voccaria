@@ -1,0 +1,29 @@
+.button {
+  display: inline-block;
+  font-size: var(--font-size-p-primary);
+  font-weight: 600;
+  background-color: var(--white-primary);
+  border-radius: 12px;
+  transition: var(--default-transition);
+  text-align: center;
+}
+
+/* sizes */
+.small {
+  padding: 0.8rem 2.4rem;
+}
+.medium {
+  padding: 1.2rem 4rem;
+}
+.big {
+  padding: 1.6rem 6rem;
+}
+
+/* colors */
+.primary {
+  color: var(--white-primary);
+  background-color: var(--brand-primary-700);
+}
+.primary:hover {
+  background-color: var(--brand-primary-500);
+}
