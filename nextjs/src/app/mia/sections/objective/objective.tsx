@@ -17,28 +17,31 @@ const features = [
     allowing us to track your progress over time. (Alternative options are
     available if you prefer not to use Discord.)
   </>,
-]
+];
 
 // styles
-import ObjectiveStyles from "./objective.module.css"
+import ObjectiveStyles from "./objective.module.css";
 
 // components
-import HeadingPair from "@/app/components/headingPair"
-import Features from "./components/features"
+import HeadingPair from "@/app/components/headingPair";
+import Features from "./components/features";
 
 // image
-import Image from "next/image"
-import YourOneVoiceImage from "../../../../../public/images/youronevoice.png"
+import Image from "next/image";
+import YourOneVoiceImage from "../../../../../public/images/youronevoice.png";
 
 export default function Objective() {
   return (
-    <section className={`block ${ObjectiveStyles.section}`} id="objective">
+    <section
+      className={`block ${ObjectiveStyles.section}`}
+      id="objective"
+    >
       <div className={ObjectiveStyles.continaer}>
         <div className={ObjectiveStyles.textbox}>
           <HeadingPair
             headingClassName={ObjectiveStyles.heading}
             tertiary="Paid Lesson Objective"
-            heading="Our Collaborative Goals"
+            heading="Our collaborative goals"
           />
           <Features features={features} />
         </div>
@@ -51,5 +54,5 @@ export default function Objective() {
         />
       </div>
     </section>
-  )
+  );
 }
