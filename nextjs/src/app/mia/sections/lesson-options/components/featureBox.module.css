@@ -1,5 +1,5 @@
 .box {
-  background-color: #fff0f6;
+  background-color: var(--lavender-blush);
   padding: 4rem;
   border-radius: 6px;
   transition: var(--default-transition);
@@ -14,7 +14,7 @@
   justify-self: start;
 }
 .free {
-  border: 1px solid #000;
+  border: 1px solid var(--black-primary);
 }
 .heading {
   font-size: 3rem;
@@ -42,7 +42,7 @@
 }
 .btn {
   background-color: #fff;
-  color: #000;
+  color: var(--black-primary);
   display: block;
   border-radius: 6px;
   padding: 1.6rem 1.4rem;
@@ -53,11 +53,11 @@
   transition: var(--default-transition);
 }
 .free .btn {
-  border: 1px solid #000;
+  border: 1px solid var(--black-primary);
 }
 .free .btn:hover {
-  background-color: #d6627b;
-  border: 1px solid #d6627b;
+  background-color: var(--cranberry-600);
+  border: 1px solid var(--black-primary);
   color: #fff;
 }
 .listNBtn {
@@ -65,8 +65,8 @@
   flex-direction: column;
 }
 .brand {
-  background-color: #d6437e;
-  border: 1px solid #d6437e;
+  background-color: var(--cranberry-600);
+  border: 1px solid var(--black-primary);
 }
 .brand .heading,
 .brand .icon,
@@ -77,11 +77,11 @@
   font-weight: 700;
 }
 .brand .btn {
-  border: 1px solid #fff;
+  border: 1px solid var(--black-primary);
 }
 .brand .btn:hover {
-  background-color: #8199ee;
-  border: 1px solid #8199ee;
+  background-color: var(--brand-secondary-400);
+  border: 1px solid var(--black-primary);
   color: #fff;
 }
 

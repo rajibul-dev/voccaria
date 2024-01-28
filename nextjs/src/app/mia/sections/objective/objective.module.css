@@ -1,5 +1,5 @@
 .section {
-  background-color: #fff0f6;
+  background-color: var(--lavender-blush);
 }
 .continaer {
   max-width: 114rem;

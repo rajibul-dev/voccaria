@@ -3,7 +3,7 @@
   padding-inline: 5%;
 }
 .container {
-  background-color: #a2b6ff;
+  background-color: var(--brand-secondary-300);
   max-width: 85rem;
   height: 30rem;
   margin-inline: auto;
@@ -30,11 +30,11 @@
 }
 .btn {
   margin-top: 4rem;
-  background-color: #b63562;
+  background-color: var(--brand-primary-700);
   color: #fff;
 }
 .btn:hover {
-  background-color: #df5384;
+  background-color: var(--brand-primary-500);
 }
 
 @media screen and (max-width: 725px) {
@@ -54,7 +54,7 @@
 }
 @media screen and (max-width: 450px) {
   .section {
-    background-color: #a2b6ff;
+    background-color: var(--brand-secondary-300);
     margin-inline: 0;
     margin-bottom: 0;
     padding-top: 6rem;

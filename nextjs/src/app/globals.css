@@ -20,19 +20,28 @@
     rgb(var(--background-start-rgb));
 } */
 
-/* Misc */
-::selection {
-  background-color: #835c9a;
-  color: #fff;
-}
-
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 
-  --primary-gray: #222;
-  --secondary-gray: #2b2b2b;
+  --black-primary: #000;
+
+  --gray-primary: #222;
+  --gray-secondary: #2b2b2b;
+
+  --brand-primary-500: #df5384;
+  --brand-primary-700: #c4265d;
+  --brand-secondary-300: #a2b6ff;
+  --brand-secondary-400: #8199ee;
+
+  --magnolia-200: #f3f0ff;
+
+  --lavender-blush: #fff0f6;
+
+  --affair-500: #835c9a;
+
+  --cranberry-600: #d6437e;
 
   --font-size-h1: 3.2rem;
   --font-size-secondary-heading: 3.6rem;
@@ -41,6 +50,12 @@
   --font-size-p-primary: 1.8rem;
 
   --default-transition: all ease 0.15s;
+}
+
+/* Misc */
+::selection {
+  background-color: var(--affair-500);
+  color: #fff;
 }
 
 /* Resets */
@@ -79,7 +94,7 @@ strong {
   margin-bottom: 2.4rem;
 }
 .goto-paragraph {
-  color: #000;
+  color: var(--black-primary);
   font-size: var(--font-size-p-primary);
   line-height: 1.7;
 }
