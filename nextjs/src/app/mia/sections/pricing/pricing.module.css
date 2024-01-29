@@ -1,3 +1,7 @@
 .section {
   background-color: var(--magnolia-200);
+  padding: 8rem 0;
+}
+.heading {
+  margin-bottom: 5.2rem;
 }
