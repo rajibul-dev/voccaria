@@ -7,14 +7,12 @@
   max-width: 85rem;
   height: 30rem;
   margin-inline: auto;
-
   display: grid;
   grid-template-columns: 1fr 1.5fr;
-
   border-radius: 6px;
   overflow: hidden;
-
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
+  border: var(--box-border);
 }
 .avatar {
   width: 28rem;
@@ -30,9 +28,6 @@
 }
 .btn {
   margin-top: 4rem;
-}
-.btn:hover {
-  background-color: var(--brand-primary-500);
 }
 
 @media screen and (max-width: 725px) {
@@ -59,7 +54,8 @@
   }
   .container {
     gap: 2rem;
-    box-shadow: none;
+    /* box-shadow: none; */
+    border: none;
   }
   .textbox {
     padding-inline: 5%;
