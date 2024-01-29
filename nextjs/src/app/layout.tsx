@@ -7,6 +7,7 @@ import { Montserrat } from "next/font/google";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 // Prevent fontawesome from adding its CSS since we did it manually above:
 import { config } from "@fortawesome/fontawesome-svg-core";
+
 config.autoAddCss = false; /* eslint-disable import/first */
 
 const montserrat = Montserrat({
@@ -26,7 +27,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head></head>
+      <head>
+        <script
+          id="paypal-script"
+          src="https://www.paypal.com/sdk/js?client-id=AWlVsjH3FBAgYWGVKCzU_voA0e27xMcOTEqoGnU2967MUU_o1aiSpRWzBYIYRmdGW651kNba9Fwwxvq6&components=buttons&currency=EUR"
+          async
+        ></script>
+      </head>
       <body
         suppressHydrationWarning={true}
         className={montserrat.className}
