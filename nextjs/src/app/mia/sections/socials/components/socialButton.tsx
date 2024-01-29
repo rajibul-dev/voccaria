@@ -1,13 +1,13 @@
 // styles
-import socialButtonStyles from "./social-button.module.css"
-import "./odds.css"
+import socialButtonStyles from "./social-button.module.css";
+import "./odds.css";
 
 interface SocialButtonProps {
-  icon: any
-  text: string
-  backgroundColor: string
-  className: string
-  link: string
+  icon: any;
+  text: string;
+  backgroundColor: string;
+  className: string;
+  link: string;
 }
 
 const socialButton: React.FC<SocialButtonProps> = ({
@@ -22,7 +22,7 @@ const socialButton: React.FC<SocialButtonProps> = ({
     color: "#fff",
     display: "inline-block",
     fontSize: "1.8rem",
-  }
+  };
 
   return (
     <a
@@ -34,7 +34,7 @@ const socialButton: React.FC<SocialButtonProps> = ({
       <span className={`icon-box ${socialButtonStyles.iconBox}`}>{icon}</span>
       <span className={`text ${socialButtonStyles.text}`}>{text}</span>
     </a>
-  )
-}
+  );
+};
 
-export default socialButton
+export default socialButton;
