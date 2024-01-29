@@ -1,0 +1,32 @@
+/* .section {
+} */
+.container {
+  max-width: 120rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: end;
+  justify-content: center;
+}
+.image {
+  width: 50rem;
+}
+.imageBox {
+  justify-self: end;
+}
+
+@media (max-width: 54.375em) {
+  .imageBox {
+    align-self: center;
+  }
+}
+@media (max-width: 50.5em) {
+  .container {
+    grid-template-columns: 1fr;
+    row-gap: 4.8rem;
+  }
+  .imageBox {
+    align-self: center;
+    justify-self: center;
+  }
+}
