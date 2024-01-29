@@ -1,25 +1,36 @@
-"use client"
+"use client";
 
 // icons
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faDiscord, faTwitch } from "@fortawesome/free-brands-svg-icons"
-import { faHeart } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDiscord, faTwitch } from "@fortawesome/free-brands-svg-icons";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import streamElementsIcon from "../../../../../public/images/streamelements-logo.png";
 
 const discordIcon = (
-  <FontAwesomeIcon icon={faDiscord} className={SocialsStyles.icon} />
-)
+  <FontAwesomeIcon
+    icon={faDiscord}
+    className={SocialsStyles.icon}
+  />
+);
 const twitchIcon = (
-  <FontAwesomeIcon icon={faTwitch} className={SocialsStyles.icon} />
-)
-const heartIcon = (
-  <FontAwesomeIcon icon={faHeart} className={SocialsStyles.icon} />
-)
+  <FontAwesomeIcon
+    icon={faTwitch}
+    className={SocialsStyles.icon}
+  />
+);
+// const heartIcon = (
+//   <FontAwesomeIcon
+//     icon={faHeart}
+//     className={SocialsStyles.icon}
+//   />
+// );
 
 // styles
-import SocialsStyles from "./socials.module.css"
+import SocialsStyles from "./socials.module.css";
 
 // components
-import SocialButton from "./components/socialButton"
+import SocialButton from "./components/socialButton";
+import Image from "next/image";
 
 // social items object
 const socialItems = [
@@ -39,19 +50,38 @@ const socialItems = [
     bgColor: "#6441a5",
     isExpanded: false,
   },
+  // {
+  //   name: "streamelements",
+  //   link: "https://streamelements.com/miavoiceteacher/tip",
+  //   expandedText: "My tipping page",
+  //   icon: heartIcon,
+  //   bgColor: "#fb3c6c",
+  //   isExpanded: false,
+  // },
   {
     name: "streamelements",
     link: "https://streamelements.com/miavoiceteacher/tip",
     expandedText: "My tipping page",
-    icon: heartIcon,
-    bgColor: "#fb3c6c",
+    icon: (
+      <Image
+        src={streamElementsIcon}
+        alt="StreamElements logo"
+        placeholder="blur"
+        blurDataURL={"../../../../../public/images/streamelements-logo.png"}
+        className={SocialsStyles.streamElementsLogo}
+      />
+    ),
+    bgColor: "#020923",
     isExpanded: false,
   },
-]
+];
 
 export default function socials() {
   return (
-    <section id="socials" className={`block ${SocialsStyles.socialsSection}`}>
+    <section
+      id="socials"
+      className={`block ${SocialsStyles.socialsSection}`}
+    >
       <div className={SocialsStyles.wrapper}>
         {socialItems.map((item) => (
           <SocialButton
@@ -65,5 +95,5 @@ export default function socials() {
         ))}
       </div>
     </section>
-  )
+  );
 }

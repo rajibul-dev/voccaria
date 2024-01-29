@@ -17,6 +17,12 @@
   color: var(--white-primary);
 }
 
+.streamElementsLogo {
+  display: inline-block;
+  width: 10rem;
+  transform: translateY(-5%);
+}
+
 @media screen and (max-width: 532px) {
   .wrapper {
     height: 100%;
