@@ -1,18 +1,23 @@
 // styles
-import styles from "./featureBox.module.css"
+import styles from "./featureBox.module.css";
 
 // icon
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCircle } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle } from "@fortawesome/free-solid-svg-icons";
 
-const circleIcon = <FontAwesomeIcon icon={faCircle} className={styles.icon} />
+const circleIcon = (
+  <FontAwesomeIcon
+    icon={faCircle}
+    className={styles.icon}
+  />
+);
 
 // prop interface
 interface FeatureBoxProps {
-  heading: string
-  listItems: string[]
-  button: { text: string; link: string }
-  brandColor?: boolean
+  heading: string;
+  listItems: string[];
+  button: { text: string; link: string };
+  brandColor?: boolean;
 }
 
 // component
@@ -24,17 +29,20 @@ const FeatureBox: React.FC<FeatureBoxProps> = ({
 }) => {
   return (
     <div className={`${styles.box} ${brandColor ? styles.brand : styles.free}`}>
-      <h3 className={styles.heading}>{heading}</h3>
+      <h3 className={`heading-h3 ${styles.heading}`}>{heading}</h3>
 
       <div className={styles.listNBtn}>
         <ul className={`goto-paragraph ${styles.list}`}>
           {listItems.map((item) => {
             return (
-              <li className={styles.li} key={item}>
+              <li
+                className={styles.li}
+                key={item}
+              >
                 {circleIcon}
                 <span className={styles.para}>{item}</span>
               </li>
-            )
+            );
           })}
         </ul>
         <a
@@ -46,7 +54,7 @@ const FeatureBox: React.FC<FeatureBoxProps> = ({
         </a>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default FeatureBox
+export default FeatureBox;
