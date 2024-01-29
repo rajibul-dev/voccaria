@@ -33,6 +33,7 @@
   --gray-secondary: #2b2b2b;
 
   --brand-primary-500: #df5384;
+  --brand-primary-500--hover: #ba3a67;
   --brand-primary-700: #c4265d;
   --brand-secondary-300: #a2b6ff;
   --brand-secondary-400: #8199ee;
@@ -52,6 +53,8 @@
   --font-size-p-primary: 1.8rem;
 
   --default-transition: all ease 0.15s;
+
+  --box-border: 1px solid var(--black-primary);
 }
 
 /* Misc */
