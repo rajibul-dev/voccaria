@@ -4,6 +4,7 @@ import Patreon from "./sections/patreon/patreon";
 import Objective from "./sections/objective/objective";
 import LessonOptions from "./sections/lesson-options/lessonOptions";
 import Pricing from "./sections/pricing/pricing";
+import Scheduling from "./sections/scheduling/scheduling";
 
 export default function Mia() {
   return (
@@ -14,6 +15,7 @@ export default function Mia() {
       <Objective />
       <LessonOptions />
       <Pricing />
+      <Scheduling />
     </main>
   );
 }
