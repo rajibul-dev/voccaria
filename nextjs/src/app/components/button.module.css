@@ -6,6 +6,7 @@
   border-radius: 12px;
   transition: var(--default-transition);
   text-align: center;
+  border: var(--box-border);
 }
 
 /* sizes */
