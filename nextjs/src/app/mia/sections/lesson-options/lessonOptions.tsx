@@ -9,7 +9,7 @@ const lessonOptionsObj = {
     ],
     button: {
       text: "Get Free Lessons at One Voice",
-      link: "https://docs.google.com/forms/d/1dW-N6xyf7ATc6zCIL0rR1I63EN4A4U6JghhPA6xi2pM/viewform?edit_requested=true",
+      link: "https://discord.com/invite/4Z5JKYPhTe",
     },
   },
   paid: {
@@ -22,18 +22,18 @@ const lessonOptionsObj = {
     ],
     button: {
       text: "Apply for Private Paid Lessons",
-      link: "https://discord.com/invite/4Z5JKYPhTe",
+      link: "https://docs.google.com/forms/d/1dW-N6xyf7ATc6zCIL0rR1I63EN4A4U6JghhPA6xi2pM/viewform?edit_requested=true",
     },
   },
-}
-const { free, paid } = lessonOptionsObj
+};
+const { free, paid } = lessonOptionsObj;
 
 // styles
-import styles from "./lessonOptions.module.css"
+import styles from "./lessonOptions.module.css";
 
 // components
-import HeadingPair from "@/app/components/headingPair"
-import FeatureBox from "./components/featureBox"
+import HeadingPair from "@/app/components/headingPair";
+import FeatureBox from "./components/featureBox";
 
 export default function LessonOptions() {
   return (
@@ -61,5 +61,5 @@ export default function LessonOptions() {
         </div>
       </div>
     </section>
-  )
+  );
 }
