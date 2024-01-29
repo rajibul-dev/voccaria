@@ -1,19 +1,19 @@
 // styles
-import HeadingPairStyles from "./headingpair.module.css"
+import HeadingPairStyles from "./headingpair.module.css";
 
 interface HeadingPairProps {
-  tertiary: string
-  heading: string
-  headingClassName?: string
-  tertiaryClassName?: string
-  isCentered?: boolean
-  moreMargin?: boolean
+  tertiary: string;
+  heading: any;
+  className?: string;
+  tertiaryClassName?: string;
+  isCentered?: boolean;
+  moreMargin?: boolean;
 }
 
 const HeadingPair: React.FC<HeadingPairProps> = ({
   tertiary,
   heading,
-  headingClassName = "",
+  className = "",
   tertiaryClassName = "",
   isCentered = false,
   moreMargin = false,
@@ -28,14 +28,14 @@ const HeadingPair: React.FC<HeadingPairProps> = ({
         {tertiary}
       </span>
       <h2
-        className={`section-heading ${headingClassName} ${
+        className={`section-heading ${className} ${
           isCentered ? HeadingPairStyles.center : ""
         } ${moreMargin ? HeadingPairStyles.moreMargin : ""}`}
       >
         {heading}
       </h2>
     </>
-  )
-}
+  );
+};
 
-export default HeadingPair
+export default HeadingPair;
