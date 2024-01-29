@@ -8,7 +8,7 @@
   margin: 0 auto;
 }
 
-@media (max-width: 48.375em) {
+@media (max-width: 54.125em) {
   .grid {
     width: 100%;
     grid-template-columns: 1fr;

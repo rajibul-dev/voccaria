@@ -17,6 +17,7 @@ export default function Pricing() {
           heading="Paid lesson options"
           isCentered={true}
           className={styles.heading}
+          moreMargin={true}
         />
         <PricingCards />
       </div>
