@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 // styles
@@ -42,13 +44,15 @@ const Button: React.FC<ButtonProps> = ({
 
   // button element
   else {
-    <button
-      onClick={onClick}
-      className={`${ButtonStyles.button} ${ButtonStyles[type]} ${ButtonStyles[size]} ${className}`}
-      style={displayStyle}
-    >
-      {children}
-    </button>;
+    return (
+      <button
+        onClick={onClick}
+        className={`${ButtonStyles.button} ${ButtonStyles[type]} ${ButtonStyles[size]} ${className}`}
+        style={displayStyle}
+      >
+        {children}
+      </button>
+    );
   }
 };
 
