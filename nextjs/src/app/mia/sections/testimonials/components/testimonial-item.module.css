@@ -1,0 +1,26 @@
+.item {
+  display: flex;
+  gap: 1.6rem;
+  flex-direction: column;
+  padding: 3rem 6.5rem;
+  background-color: var(--lavender-blush-vibrant);
+  box-shadow: 1rem 1rem 0 var(--testimonial-box-shadow);
+  border-radius: 10px;
+}
+.message,
+.name {
+  color: var(--brand-primary-700);
+  font-weight: 500;
+  letter-spacing: normal;
+  word-spacing: 1pt;
+}
+.name {
+  font-size: 2.2rem;
+}
+
+@media (max-width: 31.25em) {
+  .item {
+    padding: 3rem;
+    transform: translateX(-1rem);
+  }
+}
