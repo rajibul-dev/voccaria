@@ -33,7 +33,7 @@ export default function Scheduling() {
       className={`block ${styles.section}`}
       id="scheduling"
     >
-      <div className={`container ${styles.container}`}>
+      <div className={`container ${styles.containerTwoCol}`}>
         <div className={`${styles.textPortion}`}>
           <HeadingPair
             tertiary="Lesson scheduling"
