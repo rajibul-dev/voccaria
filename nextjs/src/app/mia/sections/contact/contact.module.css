@@ -1,0 +1,34 @@
+.section {
+  border-top: var(--section-border);
+  border-bottom: var(--section-border);
+  /* background-color: var(--lavender-blush); */
+}
+.container {
+}
+.imgBox {
+  align-self: center;
+  z-index: -5;
+}
+.textPortion {
+  justify-self: center;
+  width: 100%;
+}
+.image {
+  transform: scale(1.6) translateX(-8%);
+}
+
+@media (max-width: 50.5em) {
+  .container {
+    /* padding: 0 5%; */
+  }
+  .imgBox {
+    grid-row: 2 / 3;
+    width: 100%;
+  }
+  .textPortion {
+    justify-self: center;
+  }
+  .image {
+    transform: scale(1.3) translateX(0);
+  }
+}
