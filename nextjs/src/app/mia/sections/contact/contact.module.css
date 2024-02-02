@@ -4,6 +4,7 @@
   /* background-color: var(--lavender-blush); */
 }
 .container {
+  grid-template-columns: 0.9fr 1fr;
 }
 .imgBox {
   align-self: center;
@@ -14,21 +15,24 @@
   width: 100%;
 }
 .image {
-  transform: scale(1.6) translateX(-8%);
+  transform: scale(1.7) translateX(-9%);
 }
 
 @media (max-width: 50.5em) {
   .container {
-    /* padding: 0 5%; */
+    grid-template-columns: 1fr;
   }
   .imgBox {
     grid-row: 2 / 3;
     width: 100%;
+    overflow: hidden;
   }
   .textPortion {
     justify-self: center;
   }
   .image {
     transform: scale(1.3) translateX(0);
+    object-fit: contain;
+    overflow: hidden;
   }
 }
