@@ -1,6 +1,6 @@
 /* .section {
 } */
-.container {
+.containerTwoCol {
   max-width: 120rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -14,6 +14,8 @@
 .imageBox {
   justify-self: end;
 }
+.textPortion {
+}
 
 @media (max-width: 54.375em) {
   .imageBox {
@@ -21,7 +23,7 @@
   }
 }
 @media (max-width: 50.5em) {
-  .container {
+  .containerTwoCol {
     grid-template-columns: 1fr;
     row-gap: 4.8rem;
   }
