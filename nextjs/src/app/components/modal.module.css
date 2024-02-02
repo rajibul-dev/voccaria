@@ -1,0 +1,52 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100dvh;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.4);
+  transition: all 0.2s;
+}
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--white-primary);
+  transition: all 0.5s;
+  width: 60rem;
+  overflow-y: scroll;
+  transition: all 0.3s ease;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+  max-height: 80vh;
+  height: auto;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 2.4rem 3rem;
+  border-bottom: var(--box-border);
+}
+.heading {
+  margin-bottom: 0;
+}
+.iconSpan {
+  cursor: pointer;
+}
+.crossIcon {
+  font-size: 3.2rem;
+  cursor: pointer;
+}
+.main {
+  padding: 2.4rem 3rem;
+}
+
+@media (max-width: 33.25em) {
+  .popup {
+    width: 85%;
+  }
+}
