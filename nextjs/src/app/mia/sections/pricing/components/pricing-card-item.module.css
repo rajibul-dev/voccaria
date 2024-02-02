@@ -5,7 +5,7 @@
   margin: 0 auto;
   padding: 4rem;
   padding-top: 5rem;
-  border-radius: 6px;
+  border-radius: var(--usual-border-radius);
   /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
   border: var(--box-border);
   overflow: hidden;

@@ -9,7 +9,7 @@
   margin-inline: auto;
   display: grid;
   grid-template-columns: 1fr 1.5fr;
-  border-radius: 6px;
+  border-radius: var(--usual-border-radius);
   overflow: hidden;
   /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
   border: var(--box-border);

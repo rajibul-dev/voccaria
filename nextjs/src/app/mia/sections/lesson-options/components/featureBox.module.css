@@ -1,7 +1,7 @@
 .box {
   background-color: var(--lavender-blush);
   padding: 4rem;
-  border-radius: 6px;
+  border-radius: var(--usual-border-radius);
   transition: var(--default-transition);
   padding-bottom: 5.2rem;
   width: fit-content;
@@ -42,7 +42,7 @@
   background-color: var(--white-primary);
   color: var(--black-primary);
   display: block;
-  border-radius: 6px;
+  border-radius: var(--usual-border-radius);
   padding: 1.6rem 1.4rem;
   line-height: 1.5;
   font-weight: 700;
