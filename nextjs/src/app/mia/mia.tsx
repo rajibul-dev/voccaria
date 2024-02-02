@@ -5,6 +5,7 @@ import Objective from "./sections/objective/objective";
 import LessonOptions from "./sections/lesson-options/lessonOptions";
 import Pricing from "./sections/pricing/pricing";
 import Scheduling from "./sections/scheduling/scheduling";
+import Contact from "./sections/contact/contact";
 
 export default function Mia() {
   return (
@@ -16,6 +17,7 @@ export default function Mia() {
       <LessonOptions />
       <Pricing />
       <Scheduling />
+      <Contact />
     </main>
   );
 }
