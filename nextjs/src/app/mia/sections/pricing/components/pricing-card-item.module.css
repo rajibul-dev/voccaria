@@ -54,7 +54,7 @@
   background-color: var(--brand-primary-500);
   left: 50%;
   top: 0;
-  padding: 0.8rem 2rem;
+  padding: 0.3rem 2rem;
   transform: translateX(-50%);
   border: var(--box-border);
   border-top: none;
