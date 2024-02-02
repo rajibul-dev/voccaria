@@ -41,11 +41,15 @@
   --brand-secondary-300: #a2b6ff;
   --brand-secondary-400: #8199ee;
 
+  --brand-experimental-700: #c62d65;
+
   --magnolia-200: #f3f0ff;
 
   --pattens-blue: #cdecff;
 
   --lavender-blush: #fff0f6;
+
+  --lavender-blush-vibrant: #ffedf5;
 
   --pig-pink-200: #fff5fa;
   --pig-pink-300: #ffd8ec;
@@ -53,6 +57,8 @@
   --affair-500: #835c9a;
 
   --cranberry-600: #d6437e;
+
+  --testimonial-box-shadow: rgba(230, 71, 127, 0.298);
 
   --font-size-h1: 3.2rem;
   --font-size-secondary-heading: 3.6rem;
@@ -98,7 +104,11 @@ html {
 }
 
 /* Typography */
-p {
+p,
+blockquote,
+textarea,
+input,
+span {
   word-spacing: 0.8pt;
 }
 strong {
