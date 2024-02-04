@@ -61,6 +61,8 @@ export default function PricingCards() {
           key={item.heading}
           description={item.description}
           isRecommended={item?.recommended ?? false}
+          currency={item.currency}
+          amount={item.amount}
         />
       ))}
     </ul>
