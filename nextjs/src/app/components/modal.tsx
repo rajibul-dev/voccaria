@@ -12,15 +12,8 @@ import { createPortal } from "react-dom";
 
 // styles
 import styles from "./modal.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faX } from "@fortawesome/free-solid-svg-icons";
-
-const crossIcon = (
-  <FontAwesomeIcon
-    icon={faX}
-    className={styles.crossIcon}
-  />
-);
+import crossIcon from "../../../public/close.svg";
+import Image from "next/image";
 
 interface ModalContextProps {
   openName: string;
@@ -91,22 +84,37 @@ const Window: React.FC<WindowProps> = ({ children, name, heading }) => {
     [close],
   );
 
-  if (openName !== name) return null;
+  // disable body scroll when modal open
+  useEffect(() => {
+    if (openName === name) {
+      document.documentElement.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.documentElement.style.overflow = "auto";
+    };
+  }, [openName, name]);
+
+  const isActive = openName === name;
+
+  if (!isActive) return null;
 
   return createPortal(
-    <div className={styles.overlay}>
+    <div className={`${styles.overlay} ${isActive ? styles.active : ""}`}>
       <div
-        className={styles.popup}
+        className={`${styles.popup} ${isActive ? styles.active : ""}`}
         ref={ref}
       >
         <header className={styles.header}>
-          <h2 className={`section-heading ${styles.heading}`}>{heading}</h2>
-          <span
+          <h2 className={styles.heading}>{heading}</h2>
+          <Image
             onClick={close}
-            className={styles.iconSpan}
-          >
-            {crossIcon}
-          </span>
+            className={styles.crossIcon}
+            alt="close icon"
+            src={crossIcon}
+            placeholder="blur"
+            blurDataURL="../../../public/close.svg"
+          />
         </header>
         <main className={styles.main}>
           {cloneElement(children, { onCloseModal: close })}
