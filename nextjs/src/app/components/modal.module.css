@@ -7,14 +7,7 @@
   z-index: 1000;
   background-color: rgba(0, 0, 0, 0.4);
 
-  opacity: 0; /* Set initial opacity to 0 */
-  visibility: hidden; /* Hide initially */
-  transition: opacity 0.2s, visibility 0.2s; /* Add transitions for opacity and visibility */
   animation: fadeIn 0.2s ease-out; /* Add fadeIn animation */
-}
-.overlay.active {
-  opacity: 1; /* Make it visible when active class is added */
-  visibility: visible;
 }
 
 .popup {
@@ -31,14 +24,7 @@
   max-height: 80vh;
   height: auto;
 
-  opacity: 0; /* Set initial opacity to 0 */
-  visibility: hidden; /* Hide initially */
-  transition: opacity 0.2s, visibility 0.2s; /* Add transitions for opacity and visibility */
   animation: slideIn 0.2s ease-out; /* Add slideIn animation */
-}
-.popup.active {
-  opacity: 1; /* Make it visible when active class is added */
-  visibility: visible;
 }
 
 .header {
@@ -63,7 +49,7 @@
 
 @media (max-width: 33.25em) {
   .popup {
-    width: 85%;
+    width: 93%;
   }
 }
 

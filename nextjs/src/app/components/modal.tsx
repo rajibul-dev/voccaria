@@ -100,9 +100,9 @@ const Window: React.FC<WindowProps> = ({ children, name, heading }) => {
   if (!isActive) return null;
 
   return createPortal(
-    <div className={`${styles.overlay} ${isActive ? styles.active : ""}`}>
+    <div className={styles.overlay}>
       <div
-        className={`${styles.popup} ${isActive ? styles.active : ""}`}
+        className={styles.popup}
         ref={ref}
       >
         <header className={styles.header}>
