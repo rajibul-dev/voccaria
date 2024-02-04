@@ -1,3 +1,9 @@
+// Import dotenv and configure it
+import dotenv from "dotenv";
+dotenv.config();
+
+config.autoAddCss = false;
+
 import "./globals.css";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
@@ -30,8 +36,10 @@ export default function RootLayout({
       <head>
         <script
           id="paypal-script"
-          src="https://www.paypal.com/sdk/js?client-id=AWlVsjH3FBAgYWGVKCzU_voA0e27xMcOTEqoGnU2967MUU_o1aiSpRWzBYIYRmdGW651kNba9Fwwxvq6&components=buttons&currency=EUR"
+          src={`https://www.paypal.com/sdk/js?client-id=${process.env.PAYPAL_CLIENT_ID}&components=buttons&currency=EUR`}
           async
+          // @ts-ignore
+          as="script"
         ></script>
       </head>
       <body
