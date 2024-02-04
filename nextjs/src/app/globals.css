@@ -143,6 +143,27 @@ strong {
   transition: var(--default-transition);
 }
 
+/* nice scrollbar */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.01);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--brand-primary-500);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-primary-700);
+}
+
 /* Scale shift */
 @media (max-width: 68em) {
   html {
