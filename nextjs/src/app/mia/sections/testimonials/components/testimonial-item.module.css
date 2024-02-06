@@ -3,7 +3,7 @@
   gap: 1.6rem;
   flex-direction: column;
   padding: 3rem 6.5rem;
-  background-color: var(--lavender-blush-vibrant);
+  background-color: var(--lavender-blush-200);
   box-shadow: 1rem 1rem 0 var(--testimonial-box-shadow);
   border-radius: 10px;
 }

@@ -1,5 +1,5 @@
 .box {
-  background-color: var(--lavender-blush);
+  background-color: var(--lavender-blush-150);
   padding: 4rem;
   border-radius: var(--usual-border-radius);
   transition: var(--default-transition);
@@ -14,7 +14,7 @@
   justify-self: start;
 }
 .free {
-  border: var(--box-border);
+  border: var(--border-black);
 }
 .heading {
   margin-bottom: 3.2rem;
@@ -51,11 +51,11 @@
   transition: var(--default-transition);
 }
 .free .btn {
-  border: var(--box-border);
+  border: var(--border-black);
 }
 .free .btn:hover {
   background-color: var(--cranberry-600);
-  border: var(--box-border);
+  border: var(--border-black);
   color: var(--white-primary);
 }
 .listNBtn {
@@ -64,7 +64,7 @@
 }
 .brand {
   background-color: var(--cranberry-600);
-  border: var(--box-border);
+  border: var(--border-black);
 }
 .brand .heading,
 .brand .icon,
@@ -75,11 +75,11 @@
   font-weight: 700;
 }
 .brand .btn {
-  border: var(--box-border);
+  border: var(--border-black);
 }
 .brand .btn:hover {
   background-color: var(--brand-secondary-400);
-  border: var(--box-border);
+  border: var(--border-black);
   color: var(--white-primary);
 }
 

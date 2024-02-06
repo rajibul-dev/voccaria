@@ -1,12 +1,12 @@
 .button {
   display: inline-block;
-  font-size: var(--font-size-p-primary);
+  font-size: var(--font-size-paragraph-primary);
   font-weight: 600;
   background-color: var(--white-primary);
   border-radius: 12px;
   transition: var(--default-transition);
   text-align: center;
-  border: var(--box-border);
+  border: var(--border-black);
 }
 
 /* sizes */

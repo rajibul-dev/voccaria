@@ -6,7 +6,7 @@
   border-radius: 50px;
   cursor: pointer;
   /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
-  border: var(--box-border);
+  border: var(--border-black);
 
   overflow: hidden;
   transition: all 0.3s ease;
@@ -34,7 +34,7 @@
   transition: all 0.5s ease-out;
   line-height: 1.6;
   position: relative;
-  top: -2%;
+  top: -3%;
 }
 .text:hover {
   text-decoration: none;

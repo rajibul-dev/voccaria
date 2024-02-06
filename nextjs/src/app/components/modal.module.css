@@ -33,7 +33,7 @@
   justify-content: space-between;
   width: 100%;
   padding: 1.8rem 3rem;
-  border-bottom: var(--border-light);
+  border-bottom: var(--border-gray-200);
 }
 .heading {
   font-size: 2.8rem;

@@ -7,7 +7,7 @@
   padding-top: 5rem;
   border-radius: var(--usual-border-radius);
   /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-  border: var(--box-border);
+  border: var(--border-black);
   overflow: hidden;
 }
 .flex {
@@ -36,7 +36,7 @@
 }
 .description,
 .description strong {
-  color: var(--gray-secondary);
+  color: var(--gray-800);
   line-height: 1.5;
   margin-bottom: auto;
   font-size: 1.7rem;
@@ -49,14 +49,14 @@
   text-transform: uppercase;
   color: #fff;
   font-weight: 700;
-  font-size: var(--font-size-p-primary);
+  font-size: var(--font-size-paragraph-primary);
   letter-spacing: 0.5pt;
   background-color: var(--brand-primary-500);
   left: 50%;
   top: 0;
   padding: 0.3rem 2rem;
   transform: translateX(-50%);
-  border: var(--box-border);
+  border: var(--border-black);
   border-top: none;
 }
 .btn {

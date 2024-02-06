@@ -1,13 +1,13 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  border: var(--box-border);
+  border: var(--border-black);
   width: fit-content;
 }
 .item {
   display: inline-block;
   padding: 2.4rem;
-  border-bottom: var(--box-border);
+  border-bottom: var(--border-black);
   transition: var(--default-transition);
 }
 .item:last-child {

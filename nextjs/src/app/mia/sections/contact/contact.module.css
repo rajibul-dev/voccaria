@@ -1,7 +1,6 @@
 .section {
-  border-top: var(--section-border);
-  border-bottom: var(--section-border);
-  /* background-color: var(--lavender-blush); */
+  border-top: var(--border-gray-100);
+  border-bottom: var(--border-gray-100);
 }
 .container {
   grid-template-columns: 0.9fr 1fr;
