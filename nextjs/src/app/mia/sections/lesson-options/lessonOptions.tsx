@@ -37,7 +37,10 @@ import FeatureBox from "./components/featureBox";
 
 export default function LessonOptions() {
   return (
-    <section className={`block`}>
+    <section
+      id="lesson-options"
+      className={`block`}
+    >
       <div className={`container`}>
         <HeadingPair
           tertiary="Lesson options"

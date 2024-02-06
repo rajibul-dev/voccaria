@@ -13,8 +13,8 @@ import ContactForm from "./components/contact-form";
 export default function Contact() {
   return (
     <section
-      className={`block ${styles.section}`}
       id="contact"
+      className={`block ${styles.section}`}
     >
       <div
         className={`container ${styles.container} ${foreignStyles.containerTwoCol}`}

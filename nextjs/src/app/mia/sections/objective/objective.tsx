@@ -33,8 +33,8 @@ import YourOneVoiceImage from "../../../../../public/images/youronevoice.png";
 export default function Objective() {
   return (
     <section
-      className={`block ${ObjectiveStyles.section}`}
       id="objective"
+      className={`block ${ObjectiveStyles.section}`}
     >
       <div className={ObjectiveStyles.continaer}>
         <div className={ObjectiveStyles.textbox}>

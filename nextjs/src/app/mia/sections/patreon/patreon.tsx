@@ -13,8 +13,8 @@ import Button from "@/app/components/button";
 export default function Patreon() {
   return (
     <section
-      className={PatreonStyles.section}
       id="patreon"
+      className={PatreonStyles.section}
     >
       <div className={PatreonStyles.container}>
         {/* Image */}
