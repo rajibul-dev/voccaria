@@ -1,0 +1,23 @@
+.block {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 65;
+  height: 7.2rem;
+  background-color: var(--white-transparent);
+  box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.03);
+  backdrop-filter: blur(4px);
+}
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  max-width: 140rem;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+.logo {
+  width: 5rem;
+}

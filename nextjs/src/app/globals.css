@@ -34,12 +34,15 @@
 
   --font-size-heading-secondary: 3.6rem;
   --font-size-paragraph-primary: 1.8rem;
+  --font-size-span-small: 1.5rem;
 
   --default-transition: all ease 0.15s;
 
   --border-gray-100: 0.5px solid var(--gray-100);
   --border-gray-200: 1px solid var(--gray-200);
   --border-black: 1px solid var(--black-primary);
+
+  --white-transparent: rgba(255, 255, 255, 0.9);
 
   --usual-border-radius: 6px;
 }

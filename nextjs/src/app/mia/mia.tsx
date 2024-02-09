@@ -7,10 +7,12 @@ import Pricing from "./sections/pricing/pricing";
 import Scheduling from "./sections/scheduling/scheduling";
 import Contact from "./sections/contact/contact";
 import Testimonials from "./sections/testimonials/testimonials";
+import Navbar from "./navbar/navbar";
 
 export default function Mia() {
   return (
     <main>
+      <Navbar />
       <About />
       <Socials />
       <Patreon />
