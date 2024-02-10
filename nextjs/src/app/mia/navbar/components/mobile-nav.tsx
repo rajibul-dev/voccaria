@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect } from "react";
 import clsx from "clsx";
 import Image from "next/image";
@@ -50,34 +52,38 @@ const MobileNav: React.FC<MobileNavProps> = ({
     onOpen(false);
   }
 
-  return createPortal(
-    <>
-      <Overlay isOpen={navOpen}></Overlay>
-      <nav
-        ref={ref}
-        className={clsx(styles.container, navOpen && styles.come)}
-      >
-        <Image
-          className={styles.menuIcon}
-          src={menuIcon}
-          alt="3-line menu icon"
-          onClick={() => onOpen(false)}
-        />
-        <ul className={styles.flex}>
-          {links.map((link) => (
-            <li
-              className={styles.link}
-              key={link.selector}
-              onClick={() => handleClick(link.selector)}
-            >
-              {link.name}
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </>,
-    document?.body,
-  );
+  if (typeof window === "object") {
+    return createPortal(
+      <>
+        <Overlay isOpen={navOpen}></Overlay>
+        <nav
+          ref={ref}
+          className={clsx(styles.container, navOpen && styles.come)}
+        >
+          <Image
+            className={styles.menuIcon}
+            src={menuIcon}
+            alt="3-line menu icon"
+            onClick={() => onOpen(false)}
+          />
+          <ul className={styles.flex}>
+            {links.map((link) => (
+              <li
+                className={styles.link}
+                key={link.selector}
+                onClick={() => handleClick(link.selector)}
+              >
+                {link.name}
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </>,
+      document?.body,
+    );
+  }
+
+  return <div></div>;
 };
 
 export default MobileNav;
