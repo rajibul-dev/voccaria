@@ -4,6 +4,8 @@ dotenv.config();
 
 config.autoAddCss = false;
 
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 import "./globals.css";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
@@ -126,6 +128,7 @@ export default function RootLayout({
         className={montserrat.className}
       >
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );
