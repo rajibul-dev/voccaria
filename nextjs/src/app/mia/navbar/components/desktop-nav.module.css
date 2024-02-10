@@ -5,7 +5,7 @@
 .flex {
   display: flex;
   align-items: stretch;
-  gap: 4.8rem;
+  gap: 4rem;
   height: 100%;
 }
 .link {
@@ -26,4 +26,26 @@
   color: var(--brand-primary-700);
   border-bottom: 3px solid var(--brand-primary-700);
   padding-top: 3px;
+}
+
+/* Adjust navbar bigger screens */
+@media (max-width: 73em) and (min-width: 66em) {
+  .flex {
+    gap: 3rem;
+  }
+}
+@media (max-width: 66em) and (min-width: 53em) {
+  .flex {
+    gap: 2.5rem;
+  }
+  .link {
+    font-size: 1.3rem;
+  }
+}
+
+/* Remove */
+@media (max-width: 53em) {
+  .contianer {
+    display: none;
+  }
 }
