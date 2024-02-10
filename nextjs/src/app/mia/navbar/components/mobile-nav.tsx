@@ -25,6 +25,34 @@ const MobileNav: React.FC<MobileNavProps> = ({
 }) => {
   const ref: any = useOutsideClick(() => onOpen(false));
 
+  const content = (
+    <>
+      <Overlay isOpen={navOpen}></Overlay>
+      <nav
+        ref={ref}
+        className={clsx(styles.container, navOpen && styles.come)}
+      >
+        <Image
+          className={styles.menuIcon}
+          src={menuIcon}
+          alt="3-line menu icon"
+          onClick={() => onOpen(false)}
+        />
+        <ul className={styles.flex}>
+          {links.map((link) => (
+            <li
+              className={styles.link}
+              key={link.selector}
+              onClick={() => handleClick(link.selector)}
+            >
+              {link.name}
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </>
+  );
+
   // disable body scroll when modal open
   useEffect(() => {
     if (navOpen) {
@@ -52,37 +80,10 @@ const MobileNav: React.FC<MobileNavProps> = ({
     onOpen(false);
   }
 
-  // Check if document is defined before rendering
-  if (typeof document === "undefined") return null;
+  // Render the portal only on the client-side
+  if (typeof window === "undefined") return content;
 
-  return createPortal(
-    <>
-      <Overlay isOpen={navOpen}></Overlay>
-      <nav
-        ref={ref}
-        className={clsx(styles.container, navOpen && styles.come)}
-      >
-        <Image
-          className={styles.menuIcon}
-          src={menuIcon}
-          alt="3-line menu icon"
-          onClick={() => onOpen(false)}
-        />
-        <ul className={styles.flex}>
-          {links.map((link) => (
-            <li
-              className={styles.link}
-              key={link.selector}
-              onClick={() => handleClick(link.selector)}
-            >
-              {link.name}
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </>,
-    document?.body,
-  );
+  return createPortal(content, document?.body);
 };
 
 export default MobileNav;
