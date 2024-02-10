@@ -3,7 +3,7 @@
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiscord, faTwitch } from "@fortawesome/free-brands-svg-icons";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+// import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import streamElementsIcon from "../../../../../public/images/streamelements-logo.png";
 
 const discordIcon = (
