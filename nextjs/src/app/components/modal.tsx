@@ -14,15 +14,20 @@ import { createPortal } from "react-dom";
 import styles from "./modal.module.css";
 import crossIcon from "../../../public/close.svg";
 import Image from "next/image";
+import Overlay from "./overlay";
+
+// components
 
 interface ModalContextProps {
   openName: string;
+  openModalOverlay: boolean;
   close: () => void;
   open: (name: string) => void;
 }
 
 const ModalContext = createContext<ModalContextProps>({
   openName: "",
+  openModalOverlay: false,
   close: () => {},
   open: () => {},
 });
@@ -47,12 +52,16 @@ const Modal: React.FC<ModalProps> & {
   Window: React.FC<WindowProps>;
 } = ({ children }) => {
   const [openName, setOpenName] = useState("");
+  const [openModalOverlay, setOpenModalOverlay] = useState(false);
 
-  const open = (name: string) => setOpenName(name);
+  const open = (name: string) => {
+    setOpenName(name);
+    setOpenModalOverlay(true);
+  };
   const close = () => setOpenName("");
 
   return (
-    <ModalContext.Provider value={{ openName, close, open }}>
+    <ModalContext.Provider value={{ openName, close, open, openModalOverlay }}>
       {children}
     </ModalContext.Provider>
   );
@@ -65,7 +74,7 @@ const Open: React.FC<OpenProps> = ({ children, opens: windowOpenName }) => {
 };
 
 const Window: React.FC<WindowProps> = ({ children, name, heading }) => {
-  const { openName, close } = useContext(ModalContext);
+  const { openName, openModalOverlay, close } = useContext(ModalContext);
   const ref: any = useOutsideClick(close);
 
   // escape to cancel
@@ -100,7 +109,7 @@ const Window: React.FC<WindowProps> = ({ children, name, heading }) => {
   if (!isActive) return null;
 
   return createPortal(
-    <div className={styles.overlay}>
+    <Overlay isOpen={openModalOverlay}>
       <div
         className={styles.popup}
         ref={ref}
@@ -120,7 +129,7 @@ const Window: React.FC<WindowProps> = ({ children, name, heading }) => {
           {cloneElement(children, { onCloseModal: close })}
         </main>
       </div>
-    </div>,
+    </Overlay>,
     document.body,
   );
 };
