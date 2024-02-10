@@ -19,7 +19,7 @@ const DesktopNav: React.FC<DesktopNavProps> = ({ links }) => {
   useEffect(() => {
     // Find elements
     links.forEach((link) => {
-      sectionRefs.current[link.selector] = document.getElementById(
+      sectionRefs.current[link.selector] = document?.getElementById(
         link.selector,
       ) as HTMLDivElement; // Assume sections are divs
     });
@@ -59,7 +59,7 @@ const DesktopNav: React.FC<DesktopNavProps> = ({ links }) => {
     setActive(link);
     setClicked(true);
 
-    const targetElement = document.getElementById(link);
+    const targetElement = document?.getElementById(link);
     const headerOffset = document
       ?.querySelector("header")
       ?.getBoundingClientRect().height;

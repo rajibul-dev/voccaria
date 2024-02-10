@@ -35,7 +35,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
   }, [navOpen]);
 
   function handleClick(selector: string) {
-    const element = document.getElementById(selector);
+    const element = document?.getElementById(selector);
     const headerOffset =
       document?.querySelector("header")?.getBoundingClientRect().height || 0;
     const elementPosition = element?.getBoundingClientRect().top;

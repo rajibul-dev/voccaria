@@ -85,9 +85,9 @@ const Window: React.FC<WindowProps> = ({ children, name, heading }) => {
           close();
         }
       }
-      document.addEventListener("keydown", escapeKeyPress);
+      document?.addEventListener("keydown", escapeKeyPress);
       return () => {
-        document.removeEventListener("keydown", escapeKeyPress, true);
+        document?.removeEventListener("keydown", escapeKeyPress, true);
       };
     },
     [close],

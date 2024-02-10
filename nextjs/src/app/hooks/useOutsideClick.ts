@@ -10,10 +10,10 @@ export default function useOutsideClick(handler: any, listenCapturing = true) {
           handler();
       }
 
-      document.addEventListener("click", handleClick, listenCapturing);
+      document?.addEventListener("click", handleClick, listenCapturing);
 
       return () =>
-        document.removeEventListener("click", handleClick, listenCapturing);
+        document?.removeEventListener("click", handleClick, listenCapturing);
     },
     [handler, listenCapturing],
   );
