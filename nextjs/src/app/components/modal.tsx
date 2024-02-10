@@ -130,7 +130,7 @@ const Window: React.FC<WindowProps> = ({ children, name, heading }) => {
         </main>
       </div>
     </Overlay>,
-    document.body,
+    document?.body,
   );
 };
 

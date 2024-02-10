@@ -76,7 +76,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
         </ul>
       </nav>
     </>,
-    document.body,
+    document?.body,
   );
 };
 
