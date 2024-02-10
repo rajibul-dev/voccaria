@@ -5,6 +5,7 @@ dotenv.config();
 config.autoAddCss = false;
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 
 import "./globals.css";
 import type { Metadata } from "next";
@@ -129,6 +130,7 @@ export default function RootLayout({
       >
         {children}
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
