@@ -26,7 +26,10 @@ const Button: React.FC<ButtonProps> = ({
     console.log("button clicked");
   },
 }) => {
-  const displayStyle = { display: isBlock ? "block" : "inline-block" };
+  const displayStyle = {
+    display: isBlock ? "block" : "inline-block",
+    width: isBlock ? "100%" : "auto",
+  };
 
   // anchor element
   if (href) {
