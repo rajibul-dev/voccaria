@@ -3,6 +3,27 @@
   font-weight: 400;
   margin-bottom: 0.2rem;
 }
-.name {
+.description {
+  margin-bottom: 3rem;
+}
+.checkIcon,
+.xmarkIcon {
+  font-size: 4.4rem;
+}
+.checkIcon {
+  color: var(--success-primary-500);
+}
+.xmarkIcon {
+  color: var(--error-primary-500);
+}
+
+.message {
+  margin-bottom: 1.6rem;
+}
+
+.paymentDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
   margin-bottom: 3rem;
 }

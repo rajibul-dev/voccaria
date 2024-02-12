@@ -7,6 +7,7 @@ import styles from "./pricing-card-item.module.css";
 // components
 import Button from "@/app/components/button";
 import ItemDetails from "./checkout/item-details";
+import { useCallback, useState } from "react";
 
 interface PricingCardItemProps {
   price: string;
@@ -25,6 +26,12 @@ const PricingCardItem: React.FC<PricingCardItemProps> = ({
   currency = "",
   amount = 0,
 }) => {
+  const [modalHeading, setModalHeading] = useState<any>("Pay with PayPal");
+
+  const handleChangeModalHeading = useCallback((heading: any) => {
+    setModalHeading(heading);
+  }, []);
+
   const nameSlittedArray = name.split(" ");
   const sliceFirstPart = nameSlittedArray.slice(0, -2).join(" ");
   const sliceSecondPart = nameSlittedArray.slice(-2).join(" ");
@@ -63,13 +70,14 @@ const PricingCardItem: React.FC<PricingCardItemProps> = ({
           </Modal.Open>
           <Modal.Window
             name="payment-checkout"
-            heading="Pay with PayPal"
+            heading={modalHeading}
           >
             <ItemDetails
               currency={currency}
               amount={amount}
               name={name}
               price={price}
+              onChangeModalHeading={handleChangeModalHeading}
             />
           </Modal.Window>
         </Modal>

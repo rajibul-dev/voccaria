@@ -6,12 +6,14 @@ interface PaypalButtonProps {
   amount: number;
   currencyCode: string;
   name: string;
+  onPaymentDetails: any;
 }
 
 const PaypalButton: React.FC<PaypalButtonProps> = ({
   amount,
   currencyCode,
   name,
+  onPaymentDetails,
 }) => {
   const paypal = useRef<any>();
 
@@ -46,15 +48,18 @@ const PaypalButton: React.FC<PaypalButtonProps> = ({
           },
           onApprove: function (data: any, actions: any) {
             return actions.order.capture().then(function (details: any) {
-              alert(
-                "Transaction completed by " + details.payer.name.given_name,
-              );
+              console.log(details);
+              onPaymentDetails(details);
             });
+          },
+          onError(error: any) {
+            onPaymentDetails({ status: "FAILED", error });
+            console.error(error);
           },
         })
         .render(paypal.current);
     },
-    [amount, currencyCode, name],
+    [amount, currencyCode, name, onPaymentDetails],
   );
 
   return (
