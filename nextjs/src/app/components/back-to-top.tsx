@@ -1,12 +1,13 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 // styles
 import styles from "./back-to-top.module.css";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
 
 const arrowUpIcon = (
   <FontAwesomeIcon
