@@ -18,6 +18,9 @@
   --brand-secondary-300: #a2b6ff;
   --brand-secondary-400: #8199ee;
 
+  --success-primary-500: #059669;
+  --error-primary-500: #ef4444;
+
   --magnolia-200: #f3f0ff;
 
   --lavender-blush-150: #fff0f6;
@@ -85,6 +88,9 @@ span {
 }
 strong {
   font-weight: 700;
+}
+b {
+  font-weight: 600;
 }
 .section-heading {
   font-weight: 700;
