@@ -9,14 +9,16 @@ import React, {
 } from "react";
 import useOutsideClick from "../hooks/useOutsideClick";
 import { createPortal } from "react-dom";
+import Image from "next/image";
 
 // styles
 import styles from "./modal.module.css";
+
+// icons
 import crossIcon from "../../../public/close.svg";
-import Image from "next/image";
-import Overlay from "./overlay";
 
 // components
+import Overlay from "./overlay";
 
 interface ModalContextProps {
   openName: string;
@@ -44,7 +46,7 @@ interface OpenProps {
 interface WindowProps {
   children: React.ReactElement;
   name: string;
-  heading: string;
+  heading: any;
 }
 
 const Modal: React.FC<ModalProps> & {
@@ -76,6 +78,7 @@ const Open: React.FC<OpenProps> = ({ children, opens: windowOpenName }) => {
 const Window: React.FC<WindowProps> = ({ children, name, heading }) => {
   const { openName, openModalOverlay, close } = useContext(ModalContext);
   const ref: any = useOutsideClick(close);
+  const [showCloseIcon, setShowCloseIcon] = useState(true);
 
   // escape to cancel
   useEffect(
@@ -116,17 +119,19 @@ const Window: React.FC<WindowProps> = ({ children, name, heading }) => {
       >
         <header className={styles.header}>
           <h2 className={styles.heading}>{heading}</h2>
-          <Image
-            onClick={close}
-            className={styles.crossIcon}
-            alt="close icon"
-            src={crossIcon}
-            placeholder="blur"
-            blurDataURL="../../../public/close.svg"
-          />
+          {showCloseIcon && (
+            <Image
+              onClick={close}
+              className={styles.crossIcon}
+              alt="close icon"
+              src={crossIcon}
+              placeholder="blur"
+              blurDataURL="../../../public/close.svg"
+            />
+          )}
         </header>
         <main className={styles.main}>
-          {cloneElement(children, { onCloseModal: close })}
+          {cloneElement(children, { onCloseModal: close, setShowCloseIcon })}
         </main>
       </div>
     </Overlay>,
