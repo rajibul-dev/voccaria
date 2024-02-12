@@ -55,16 +55,19 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
   const handleAddDetails = useCallback((details: any) => {
     setPaymentDetails(details);
   }, []);
-  const handleCloseCrossIcon = useCallback(() => {
-    setShowCloseIcon(false);
-  }, [setShowCloseIcon]);
+  const handleShowCrossIcon = useCallback(
+    (bool: boolean) => {
+      setShowCloseIcon(bool);
+    },
+    [setShowCloseIcon],
+  );
 
   // Modal heading change
   useEffect(
     function () {
       switch (paymentDetails?.status) {
         case "COMPLETED":
-          handleCloseCrossIcon();
+          handleShowCrossIcon(false);
           onChangeModalHeading(
             <>
               {checkIcon}
@@ -74,6 +77,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
           break;
 
         case "FAILED":
+          handleShowCrossIcon(true);
           onChangeModalHeading(
             <>
               {xmarkIcon}
@@ -87,7 +91,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
           break;
       }
     },
-    [paymentDetails, onChangeModalHeading, handleCloseCrossIcon],
+    [paymentDetails, onChangeModalHeading, handleShowCrossIcon],
   );
 
   return (
