@@ -9,6 +9,7 @@ import Contact from "./sections/contact/contact";
 import Testimonials from "./sections/testimonials/testimonials";
 import Navbar from "./navbar/navbar";
 import BackToTop from "../components/back-to-top";
+import Mission from "./sections/mission/mission";
 
 export default function Mia() {
   return (
@@ -18,6 +19,7 @@ export default function Mia() {
         <About />
         <Socials />
         <Patreon />
+        <Mission />
         <PaidObjective />
         <LessonOptions />
         <Pricing />

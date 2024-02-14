@@ -40,7 +40,7 @@ export default function PaidObjective() {
         <div className={styles.textbox}>
           <HeadingPair
             className={styles.heading}
-            tertiary="Paid Lesson Objective"
+            tertiary="Your Success Plan"
             heading="Our collaborative goals"
           />
           <Features features={features} />

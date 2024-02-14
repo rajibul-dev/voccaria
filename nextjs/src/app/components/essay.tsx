@@ -14,11 +14,11 @@ interface ParaProps {
 
 const Essay: React.FC<EssayProps> & {
   Para: React.FC<ParaProps>;
-} = ({ children, className }) => {
+} = ({ children, className = "" }) => {
   return <div className={`${styles.wrapper} ${className}`}>{children}</div>;
 };
 
-const Para: React.FC<ParaProps> = ({ children, className }) => {
+const Para: React.FC<ParaProps> = ({ children, className = "" }) => {
   return (
     <p className={`goto-paragraph ${styles.para} ${className}`}>{children}</p>
   );

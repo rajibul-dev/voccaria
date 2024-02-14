@@ -25,6 +25,10 @@ const navData = [
     selector: "patreon",
   },
   {
+    name: "How we teach",
+    selector: "mission",
+  },
+  {
     name: "Objective",
     selector: "objective",
   },
