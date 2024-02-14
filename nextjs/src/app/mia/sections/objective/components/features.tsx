@@ -1,20 +1,23 @@
 interface FeatureProps {
-  features: any[]
+  features: any[];
 }
 
 // styles
-import FeatureStyles from "./features.module.css"
+import styles from "./features.module.css";
 
 const Features: React.FC<FeatureProps> = ({ features }) => {
   return (
-    <ul className={FeatureStyles.paras}>
+    <ul className={styles.paras}>
       {features.map((para, i) => (
-        <li className={`goto-paragraph`} key={i}>
+        <li
+          className={`goto-paragraph`}
+          key={i}
+        >
           {para}
         </li>
       ))}
     </ul>
-  )
-}
+  );
+};
 
-export default Features
+export default Features;

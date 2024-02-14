@@ -20,7 +20,7 @@ const features = [
 ];
 
 // styles
-import ObjectiveStyles from "./objective.module.css";
+import styles from "./objective.module.css";
 
 // components
 import HeadingPair from "@/app/components/headingPair";
@@ -34,19 +34,19 @@ export default function Objective() {
   return (
     <section
       id="objective"
-      className={`block ${ObjectiveStyles.section}`}
+      className={`block ${styles.section}`}
     >
-      <div className={ObjectiveStyles.continaer}>
-        <div className={ObjectiveStyles.textbox}>
+      <div className={styles.continaer}>
+        <div className={styles.textbox}>
           <HeadingPair
-            className={ObjectiveStyles.heading}
+            className={styles.heading}
             tertiary="Paid Lesson Objective"
             heading="Our collaborative goals"
           />
           <Features features={features} />
         </div>
         <Image
-          className={ObjectiveStyles.image}
+          className={styles.image}
           src={YourOneVoiceImage}
           alt="Your One Voice discord server channel structure"
           placeholder="blur"

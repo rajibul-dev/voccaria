@@ -9,6 +9,7 @@
   display: grid;
   grid-template-columns: auto auto;
   justify-content: start;
+  align-items: center;
   gap: 15rem;
 }
 .textbox {
@@ -16,7 +17,6 @@
 }
 .image {
   width: 27.5rem;
-  align-self: center;
 }
 
 @media screen and (max-width: 948px) {
