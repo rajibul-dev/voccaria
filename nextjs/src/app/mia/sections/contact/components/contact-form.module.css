@@ -14,7 +14,8 @@
 .btn {
   background-color: var(--brand-primary-500);
   display: inline-block;
-  width: 40%;
+  align-self: flex-start;
+  padding-inline: 5rem;
 }
 .btn:hover {
   background-color: var(--brand-primary-500--hover);

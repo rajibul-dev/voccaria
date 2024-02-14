@@ -65,7 +65,6 @@ export default function ContactForm() {
 
       <Button
         size="small"
-        isBlock={false}
         className={styles.btn}
       >
         Submit
