@@ -1,7 +1,7 @@
 import About from "./sections/about/about";
 import Socials from "./sections/socials/socials";
 import Patreon from "./sections/patreon/patreon";
-import Objective from "./sections/objective/objective";
+import PaidObjective from "./sections/paid-objective/paid-objective";
 import LessonOptions from "./sections/lesson-options/lessonOptions";
 import Pricing from "./sections/pricing/pricing";
 import Scheduling from "./sections/scheduling/scheduling";
@@ -18,7 +18,7 @@ export default function Mia() {
         <About />
         <Socials />
         <Patreon />
-        <Objective />
+        <PaidObjective />
         <LessonOptions />
         <Pricing />
         <Scheduling />

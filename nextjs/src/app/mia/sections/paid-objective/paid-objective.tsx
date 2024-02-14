@@ -20,7 +20,7 @@ const features = [
 ];
 
 // styles
-import styles from "./objective.module.css";
+import styles from "./paid-objective.module.css";
 
 // components
 import HeadingPair from "@/app/components/headingPair";
@@ -30,7 +30,7 @@ import Features from "./components/features";
 import Image from "next/image";
 import YourOneVoiceImage from "../../../../../public/images/youronevoice.png";
 
-export default function Objective() {
+export default function PaidObjective() {
   return (
     <section
       id="objective"
