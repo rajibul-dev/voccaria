@@ -14,9 +14,16 @@
   --brand-primary-500: #df5384;
   --brand-primary-500--hover: #ba3a67;
   --brand-primary-700: #c4265d;
+  --brand-primary-800: #aa1146;
 
   --brand-secondary-300: #a2b6ff;
   --brand-secondary-400: #8199ee;
+
+  --gradient-primary: linear-gradient(
+    to top left,
+    var(--brand-primary-700),
+    #fa85ae
+  );
 
   --success-primary-500: #059669;
   --error-primary-500: #ef4444;
@@ -138,6 +145,18 @@ b {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: var(--brand-primary-700);
+}
+
+.inline-a {
+  color: var(--brand-primary-800);
+  font-weight: 500;
+}
+.inline-a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.highlight {
 }
 
 /* Scale shift */

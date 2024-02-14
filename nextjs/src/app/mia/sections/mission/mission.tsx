@@ -35,8 +35,15 @@ export default function Mission() {
               the challenges of not having access to real-time, one-on-one
               guidance. My work is dedicated to providing FREE lessons without
               any gimmicks or attempts to sell a program. I have shared my
-              unique approaches entirely free of charge on the Discord server I
-              created, which currently has over 5,000 members.
+              unique approaches entirely free of charge on the{" "}
+              <a
+                className="inline-a"
+                href="https://discord.com/invite/4Z5JKYPhTe"
+                target="_blank"
+              >
+                Discord server I created
+              </a>
+              , which currently has over 5,000 members.
             </Essay.Para>
             <Essay.Para>
               My teaching method is straightforward—fewer mind tricks, more
