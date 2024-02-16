@@ -11,10 +11,10 @@ interface TestimonialListProps {
 const TestimonialList: React.FC<TestimonialListProps> = ({ testimonials }) => {
   return (
     <ul className={styles.list}>
-      {testimonials.map((item: any) => (
+      {testimonials.map((item: any, i: number) => (
         <TestimonialItem
           item={item}
-          key={item.message}
+          key={i}
         />
       ))}
     </ul>
