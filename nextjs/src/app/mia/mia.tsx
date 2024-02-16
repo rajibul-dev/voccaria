@@ -10,11 +10,13 @@ import Testimonials from "./sections/testimonials/testimonials";
 import Navbar from "./navbar/navbar";
 import BackToTop from "../components/back-to-top";
 import Mission from "./sections/mission/mission";
+import SeoPurposeH1 from "./sections/seo-purpose-h1/seo-purpose-h1";
 
 export default function Mia() {
   return (
     <>
       <main>
+        <SeoPurposeH1 />
         <Navbar />
         <About />
         <Socials />
