@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect } from "react";
+
 import About from "./sections/about/about";
 import Socials from "./sections/socials/socials";
 import Patreon from "./sections/patreon/patreon";
@@ -13,6 +17,14 @@ import Mission from "./sections/mission/mission";
 import SeoPurposeH1 from "./sections/seo-purpose-h1/seo-purpose-h1";
 
 export default function Mia() {
+  useEffect(() => {
+    const links: any = document.querySelectorAll('a[target="_blank"]');
+
+    links.forEach((link: any) => {
+      link.rel = "noopener noreferrer";
+    });
+  }, []);
+
   return (
     <>
       <main>
