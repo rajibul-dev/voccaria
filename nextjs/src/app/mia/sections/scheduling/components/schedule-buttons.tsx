@@ -23,6 +23,7 @@ const ScheduleButtons: React.FC<ScheduleButtonsProps> = ({
             key={item.name}
             href={item.link}
             target="_blank"
+            ref={`noopener noreferrer`}
           >
             <h3 className={`heading-h3 ${styles.heading}`}>{item.name}</h3>
             <p className={`goto-paragraph ${styles.description}`}>
