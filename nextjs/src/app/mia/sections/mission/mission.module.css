@@ -64,6 +64,8 @@
     margin-inline: auto;
   }
   .resourceImg {
+    user-select: none;
+    z-index: -999999;
     transform: scale(1.3);
   }
 }
