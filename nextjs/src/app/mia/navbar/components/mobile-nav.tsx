@@ -3,12 +3,14 @@
 import React, { useEffect } from "react";
 import clsx from "clsx";
 import Image from "next/image";
+import { createPortal } from "react-dom";
+import useOutsideClick from "@/app/hooks/useOutsideClick";
+
+// components
+import Overlay from "@/app/components/overlay";
 
 // styles
 import styles from "./mobile-nav.module.css";
-import Overlay from "@/app/components/overlay";
-import { createPortal } from "react-dom";
-import useOutsideClick from "@/app/hooks/useOutsideClick";
 
 interface MobileNavProps {
   links: { name: string; selector: string }[];
