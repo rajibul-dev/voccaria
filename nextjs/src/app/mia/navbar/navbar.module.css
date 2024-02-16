@@ -15,7 +15,7 @@
   justify-content: space-between;
   gap: 2rem;
   height: 100%;
-  max-width: 140rem;
+  max-width: 150rem;
   margin: 0 auto;
   padding: 0 5%;
 }
@@ -31,6 +31,12 @@
 }
 
 /* Adjust navbar bigger screens */
+@media (min-width: 100em) {
+  .container {
+    max-width: 180rem;
+  }
+}
+
 @media (max-width: 73em) and (min-width: 66em) {
 }
 @media (max-width: 66em) and (min-width: 53em) {

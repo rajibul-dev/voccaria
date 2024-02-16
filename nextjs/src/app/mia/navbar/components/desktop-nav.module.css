@@ -29,6 +29,12 @@
 }
 
 /* Adjust navbar bigger screens */
+@media (max-width: 83.375em) and (min-width: 66em) {
+  .link {
+    font-size: 1.2rem;
+  }
+}
+
 @media (max-width: 73em) and (min-width: 66em) {
   .flex {
     gap: 3rem;
@@ -36,10 +42,10 @@
 }
 @media (max-width: 66em) and (min-width: 53em) {
   .flex {
-    gap: 2.5rem;
+    gap: 2rem;
   }
   .link {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 }
 
