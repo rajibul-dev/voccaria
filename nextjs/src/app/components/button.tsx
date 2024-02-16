@@ -37,7 +37,6 @@ const Button: React.FC<ButtonProps> = ({
       <a
         href={href}
         target="_blank"
-        ref={`noopener noreferrer`}
         className={`${ButtonStyles.button} ${ButtonStyles[type]} ${ButtonStyles[size]} ${className}`}
         style={displayStyle}
       >

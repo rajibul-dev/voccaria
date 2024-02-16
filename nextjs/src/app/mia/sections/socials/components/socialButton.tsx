@@ -28,7 +28,6 @@ const socialButton: React.FC<SocialButtonProps> = ({
     <a
       href={link}
       target="_blank"
-      ref={`noopener noreferrer`}
       style={{ ...styles }}
       className={`${className} ${socialButtonStyles.button}`}
     >

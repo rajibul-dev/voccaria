@@ -49,7 +49,6 @@ const FeatureBox: React.FC<FeatureBoxProps> = ({
           className={`goto-paragraph ${styles.btn}`}
           href={button.link}
           target="_blank"
-          ref={`noopener noreferrer`}
         >
           {button.text}
         </a>

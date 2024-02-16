@@ -43,7 +43,6 @@ export default function Mission() {
                 className="inline-a"
                 href="https://discord.com/invite/4Z5JKYPhTe"
                 target="_blank"
-                ref={`noopener noreferrer`}
               >
                 Discord server I created
               </a>
