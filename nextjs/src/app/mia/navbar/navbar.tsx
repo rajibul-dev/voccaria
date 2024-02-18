@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 
 // styles
@@ -12,7 +13,6 @@ import menuIcon from "../../../../public/menu.svg";
 // components
 import DesktopNav from "./components/desktop-nav";
 import MobileNav from "./components/mobile-nav";
-import { useState } from "react";
 
 // page navigation data
 const navData = [
@@ -64,6 +64,7 @@ export default function Navbar() {
           src={miaLogo}
           className={styles.logo}
           alt="Mia heart logo | Voccaria"
+          sizes="(min-width: 1100px) 50px, (min-width: 500px) 45px, 40px"
           placeholder="blur"
           blurDataURL="../../../../public/images/mia-heart-logo.png"
           onClick={() => {
@@ -72,6 +73,7 @@ export default function Navbar() {
               behavior: "smooth",
             });
           }}
+          priority
         />
 
         <DesktopNav links={navData} />
@@ -82,6 +84,7 @@ export default function Navbar() {
           alt="3-line menu icon"
           placeholder="empty"
           onClick={() => setNavOpen((cur) => !cur)}
+          priority
         />
         <MobileNav
           navOpen={navOpen}

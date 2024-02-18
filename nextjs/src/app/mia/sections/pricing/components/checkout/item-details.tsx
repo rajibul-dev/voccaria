@@ -4,7 +4,9 @@ import { useCallback, useEffect, useState } from "react";
 
 // styles
 import styles from "./item-details.module.css";
-import PaypalButton from "./paypalButton";
+
+// component
+const PaypalButton = dynamic(() => import("./paypalButton"));
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,6 +15,7 @@ import {
   faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "@/app/components/button";
+import dynamic from "next/dynamic";
 
 const checkIcon = (
   <FontAwesomeIcon

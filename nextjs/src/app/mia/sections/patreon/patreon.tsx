@@ -22,7 +22,8 @@ export default function Patreon() {
           className={PatreonStyles.avatar}
           src={PatreonAvatar}
           alt="Mia voice teacher cartoon avatar"
-          priority={true}
+          priority
+          sizes="(min-width: 1100px) 280px, (min-width: 500px) 252px, (min-width: 460px) 224px, 65vw"
         />
 
         {/* Text and buttons */}

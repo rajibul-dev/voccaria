@@ -14,10 +14,10 @@
   max-width: 80ch;
 }
 .image {
-  width: 50rem;
   justify-self: center;
 }
 .lessonImg {
+  width: 55rem;
   grid-column: 5/-1;
   filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
 }
@@ -25,7 +25,8 @@
   grid-column: 1/5;
   grid-row: 2/3;
   justify-self: start;
-  width: 55rem;
+  width: 58rem;
+  z-index: -55;
 }
 .para1 {
   grid-column: 1/5;

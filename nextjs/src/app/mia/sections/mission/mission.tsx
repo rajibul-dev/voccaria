@@ -63,6 +63,8 @@ export default function Mission() {
             alt="Mia voice teacher one-on-one free lesson"
             placeholder="blur"
             blurDataURL="@/../../public/images/live-lesson.png"
+            // sizes="(min-width: 1320px) calc(-3.27vw + 593px), (min-width: 900px) calc(37.25vw + 66px), (min-width: 640px) 495px, (min-width: 500px) calc(37.5vw + 263px), 83.89vw"
+            priority
           />
 
           <Essay className={`${styles.textWrapper} ${styles.para2}`}>
@@ -91,6 +93,7 @@ export default function Mission() {
             alt="Internet resources illustration"
             placeholder="blur"
             blurDataURL="@/../../public/images/resources.png"
+            // sizes="(min-width: 1320px) calc(-3.27vw + 593px), (min-width: 900px) calc(37.25vw + 66px), (min-width: 640px) 495px, (min-width: 500px) calc(37.5vw + 263px), 83.89vw"
           />
         </div>
       </div>

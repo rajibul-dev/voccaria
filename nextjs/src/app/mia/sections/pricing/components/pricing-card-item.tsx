@@ -1,13 +1,15 @@
 "use client";
 
+import { useCallback, useState } from "react";
+import dynamic from "next/dynamic";
+
 // styles
 import Modal from "@/app/components/modal";
 import styles from "./pricing-card-item.module.css";
 
 // components
 import Button from "@/app/components/button";
-import ItemDetails from "./checkout/item-details";
-import { useCallback, useState } from "react";
+const ItemDetails = dynamic(() => import("./checkout/item-details"));
 
 interface PricingCardItemProps {
   price: string;

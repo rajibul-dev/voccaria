@@ -26,6 +26,7 @@ export default function Contact() {
             alt="Contact form, contact me illustration"
             placeholder="blur"
             blurDataURL="../../../../../public/images/contact-me.png"
+            // sizes="(min-width: 1280px) calc(-4.77vw + 555px), (min-width: 820px) calc(35.91vw + 43px), 90vw"
           />
         </div>
         <div className={styles.textPortion}>

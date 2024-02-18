@@ -2,12 +2,13 @@
 
 import React, { useEffect } from "react";
 import clsx from "clsx";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { createPortal } from "react-dom";
 import useOutsideClick from "@/app/hooks/useOutsideClick";
 
 // components
-import Overlay from "@/app/components/overlay";
+const Overlay = dynamic(() => import("@/app/components/overlay"));
 
 // styles
 import styles from "./mobile-nav.module.css";
@@ -39,6 +40,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
           src={menuIcon}
           alt="3-line menu icon"
           onClick={() => onOpen(false)}
+          priority
         />
         <ul className={styles.flex}>
           {links.map((link) => (

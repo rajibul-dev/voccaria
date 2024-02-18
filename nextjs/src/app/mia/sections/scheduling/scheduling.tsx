@@ -49,6 +49,7 @@ export default function Scheduling() {
             alt="Booking a date illustration art vector graphic"
             placeholder="blur"
             blurDataURL="../../../../../public/images/schedule.jpg"
+            // sizes="(min-width: 1220px) calc(-3.65vw + 545px), (min-width: 820px) calc(37.89vw + 45px), (min-width: 520px) 450px, (min-width: 480px) calc(250vw - 800px), calc(81.25vw + 26px)"
           />
         </div>
       </div>

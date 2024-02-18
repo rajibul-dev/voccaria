@@ -69,6 +69,8 @@ const socialItems = [
         placeholder="blur"
         blurDataURL={"../../../../../public/images/streamelements-logo.png"}
         className={SocialsStyles.streamElementsLogo}
+        // sizes="(min-width: 1980px) 57px, 46px"
+        priority
       />
     ),
     bgColor: "#020923",
