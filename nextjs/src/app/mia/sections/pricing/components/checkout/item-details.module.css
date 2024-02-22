@@ -1,3 +1,9 @@
+.price,
+.description,
+.message,
+.paymentDetails {
+  color: var(--gray-800);
+}
 .price {
   font-size: 4rem;
   font-weight: 400;

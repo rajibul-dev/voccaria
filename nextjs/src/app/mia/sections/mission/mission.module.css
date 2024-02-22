@@ -71,9 +71,9 @@
   }
 }
 @media (max-width: 28.125em) {
-  .section {
+  /* .section {
     border-top: none;
-  }
+  } */
 }
 @media (max-width: 31.25em) {
   .container {

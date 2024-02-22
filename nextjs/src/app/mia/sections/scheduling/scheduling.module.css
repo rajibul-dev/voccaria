@@ -1,5 +1,6 @@
-/* .section {
-} */
+.section {
+  border-bottom: var(--border-gray-200);
+}
 .containerTwoCol {
   max-width: 120rem;
   display: grid;

@@ -14,7 +14,7 @@
   justify-content: center;
   height: 100%;
   cursor: pointer;
-  color: var(--black-primary);
+  color: var(--gray-800);
   font-weight: 500;
   font-size: var(--font-size-span-small);
   transition: color 0.1s;

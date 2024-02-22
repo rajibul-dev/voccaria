@@ -50,8 +50,12 @@
   margin-top: 3.8rem;
   transition: var(--default-transition);
 }
+.free .para {
+  color: var(--black-primary);
+}
 .free .btn {
   border: var(--border-black);
+  color: var(--gray-800);
 }
 .free .btn:hover {
   background-color: var(--cranberry-600);

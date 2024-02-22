@@ -14,7 +14,8 @@
   border-bottom: none;
 }
 .item:hover,
-.item:hover .description {
+.item:hover .description,
+.item:hover .heading {
   background-color: var(--brand-primary-500);
   color: var(--white-primary);
 }
@@ -23,6 +24,7 @@
 }
 .description {
   max-width: 35ch;
+  color: var(--gray-800);
 }
 
 @media (max-width: 50.5em) {

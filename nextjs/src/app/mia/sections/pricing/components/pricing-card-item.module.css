@@ -33,6 +33,7 @@
 .description,
 .name {
   text-align: center;
+  color: var(--gray-800);
 }
 .description,
 .description strong {
