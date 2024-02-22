@@ -50,6 +50,9 @@
   margin-top: 3.8rem;
   transition: var(--default-transition);
 }
+.free .icon {
+  color: var(--gray-800);
+}
 .free .para {
   color: var(--black-primary);
 }
