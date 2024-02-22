@@ -3,6 +3,8 @@
   flex-direction: column;
   border: var(--border-black);
   width: fit-content;
+  overflow: hidden;
+  border-radius: var(--usual-border-radius);
 }
 .item {
   display: inline-block;

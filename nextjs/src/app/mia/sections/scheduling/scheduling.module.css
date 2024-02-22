@@ -11,6 +11,7 @@
 }
 .image {
   width: 50rem;
+  border-radius: var(--usual-border-radius);
 }
 .imageBox {
   justify-self: end;
