@@ -40,7 +40,7 @@
 }
 .btn {
   background-color: var(--white-primary);
-  color: var(--black-primary);
+  color: var(--gray-800);
   display: block;
   border-radius: var(--usual-border-radius);
   padding: 1.6rem 1.4rem;
@@ -55,7 +55,6 @@
 }
 .free .btn {
   border: var(--border-black);
-  color: var(--gray-800);
 }
 .free .btn:hover {
   background-color: var(--cranberry-600);
