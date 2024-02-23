@@ -2,6 +2,7 @@
   padding-top: 0;
   padding-bottom: 0;
   padding-inline: 5%;
+  border-bottom: var(--border-gray-200);
 }
 .wrapper {
   display: flex;

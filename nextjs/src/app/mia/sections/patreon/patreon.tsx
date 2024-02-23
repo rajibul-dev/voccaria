@@ -12,10 +12,7 @@ import Button from "@/app/components/button";
 // component
 export default function Patreon() {
   return (
-    <section
-      id="patreon"
-      className={PatreonStyles.section}
-    >
+    <aside className={PatreonStyles.section}>
       <div className={PatreonStyles.container}>
         {/* Image */}
         <Image
@@ -41,6 +38,6 @@ export default function Patreon() {
           </Button>
         </div>
       </div>
-    </section>
+    </aside>
   );
 }

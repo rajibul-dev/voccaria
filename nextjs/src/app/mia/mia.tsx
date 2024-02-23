@@ -32,10 +32,10 @@ export default function Mia() {
         <Navbar />
         <About />
         <Socials />
-        <Patreon />
         <Mission />
         <PaidObjective />
         <LessonOptions />
+        <Patreon />
         <Pricing />
         <Scheduling />
         <Contact />

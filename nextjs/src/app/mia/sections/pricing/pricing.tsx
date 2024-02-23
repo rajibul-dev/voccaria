@@ -13,7 +13,7 @@ export default function Pricing() {
     >
       <div className={`container`}>
         <HeadingPair
-          tertiary="Pricing"
+          tertiary="Paid Lessons"
           heading="Paid lesson options"
           isCentered={true}
           className={styles.heading}

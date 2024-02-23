@@ -21,10 +21,6 @@ const navData = [
     selector: "about",
   },
   {
-    name: "Patreon",
-    selector: "patreon",
-  },
-  {
     name: "How we teach",
     selector: "mission",
   },
@@ -37,7 +33,7 @@ const navData = [
     selector: "lesson-options",
   },
   {
-    name: "Pricing",
+    name: "Paid Lessons",
     selector: "pricing",
   },
   {
