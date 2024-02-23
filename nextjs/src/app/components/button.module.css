@@ -3,7 +3,7 @@
   font-size: var(--font-size-paragraph-primary);
   font-weight: 600;
   background-color: var(--white-primary);
-  border-radius: 12px;
+  border-radius: var(--usual-border-radius);
   transition: var(--default-transition);
   text-align: center;
   border: var(--border-black);

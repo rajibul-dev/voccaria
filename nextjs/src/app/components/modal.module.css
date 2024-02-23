@@ -23,6 +23,7 @@
   scrollbar-width: none; /* Firefox, Chrome, etc. */
   max-height: 80vh;
   height: auto;
+  border-radius: var(--usual-border-radius);
 
   animation: slideIn 0.2s ease-out; /* Add slideIn animation */
 }
