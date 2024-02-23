@@ -21,7 +21,7 @@ const BackToTop = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollThreshold = 10000;
+      const scrollThreshold = 10500;
       if (window.scrollY >= scrollThreshold) {
         setShowButton(true);
       } else {
