@@ -45,7 +45,12 @@ const socialItems = [
   {
     name: "twitch",
     link: "https://www.twitch.tv/miavoiceteacher",
-    expandedText: "I stream every Monday! Vocal Coach Reacts!",
+    expandedText: (
+      <>
+        I stream every Monday!
+        <br /> Vocal Coach Reacts!
+      </>
+    ),
     icon: twitchIcon,
     bgColor: "#6441a5",
     isExpanded: false,

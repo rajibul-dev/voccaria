@@ -1,6 +1,7 @@
 .socialsSection {
   padding-top: 0;
   padding-bottom: 0;
+  padding-inline: 5%;
 }
 .wrapper {
   display: flex;
@@ -23,8 +24,9 @@
   transform: translateY(-5%);
 }
 
-@media screen and (max-width: 532px) {
+@media screen and (max-width: 832px) {
   .wrapper {
+    flex-direction: column;
     height: 100%;
     gap: 3.2rem;
   }

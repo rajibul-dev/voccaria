@@ -2,7 +2,7 @@
   background-color: #4e59d2 !important;
 }
 .twitch:hover {
-  width: 38rem;
+  width: 37rem;
   height: 9.4rem;
   transform: translateY(-1.8rem);
 }
@@ -24,10 +24,10 @@
 }
 
 .twitch:hover .text {
-  max-width: 22ch;
+  /* max-width: 22ch; */
   display: inline-block;
   text-align: center;
-  transform: translateX(-2rem) translateY(1.6rem);
+  transform: translateY(1.6rem);
   animation: late-text-visibility 1s;
 }
 .twitch:not(:hover) .text {
@@ -38,12 +38,34 @@
 }
 
 @media screen and (max-width: 832px) {
-  .twitch:hover .text {
+  /* .twitch:hover .text {
     display: none;
   }
   .twitch:hover {
     height: 6rem !important;
     transform: translateY(0);
+  }
+  .twitch:hover .icon-box {
+    transform: translateY(0);
+  } */
+}
+@media screen and (max-width: 832px) {
+  .twitch {
+    height: fit-content !important;
+    display: flex !important;
+    padding: 2rem 0 !important;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .twitch .text {
+    display: inline-block !important;
+    position: relative;
+    margin: 0;
+  }
+  .twitch:hover .text {
+    /* max-width: 22ch; */
+    transform: translateY(0);
+    animation: none;
   }
   .twitch:hover .icon-box {
     transform: translateY(0);

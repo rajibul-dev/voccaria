@@ -4,7 +4,7 @@ import "./odds.css";
 
 interface SocialButtonProps {
   icon: any;
-  text: string;
+  text: any;
   backgroundColor: string;
   className: string;
   link: string;
