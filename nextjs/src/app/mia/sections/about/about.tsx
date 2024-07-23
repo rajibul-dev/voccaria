@@ -17,11 +17,11 @@ const aboutMiaText = [
     approach.
   </>,
   <>
-    Currently in my fourth and final year pursuing a degree in Psychology and
-    Vocal Pedagogy, I am well-equipped to teach individuals with general joint
-    hypermobility, GERD, ADHD/ADD, and those on the autism spectrum. I firmly
-    believe that posture, physical well-being, and mental health are essential
-    for both exceptional singing and a fulfilling life.
+    I studied Psychology and Vocal Pedagogy at university and I am well-equipped
+    to teach individuals with general joint hypermobility, GERD, ADHD/ADD, and
+    those on the autism spectrum. I firmly believe that posture, physical
+    well-being, and mental health are essential for both exceptional singing and
+    a fulfilling life.
   </>,
   <>
     As a voice teacher, I help beginners grasp the fundamentals efficiently and
