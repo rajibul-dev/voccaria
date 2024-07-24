@@ -6,25 +6,74 @@ import { useState } from "react";
 import Input from "@/app/components/input";
 import styles from "./contact-form.module.css";
 import Button from "@/app/components/button";
+import { Text } from "@chakra-ui/react";
+import { sendEmail } from "@/lib/api";
+
+const initValues = { name: "", email: "", subject: "", message: "" };
+
+const initialState = { isLoading: false, error: "", values: initValues };
 
 export default function ContactForm() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [subject, setSubject] = useState("");
-  const [message, setMessage] = useState("");
+  const [state, setState] = useState(initialState);
+
+  const { values, isLoading, error } = state;
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { target } = e;
+
+    setState((prev) => ({
+      ...prev,
+      error: "",
+      values: {
+        ...prev.values,
+        [target.name]: target.value,
+      },
+    }));
+  }
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const trimmedValues = {
+      name: values.name.trim(),
+      email: values.email.trim(),
+      ...(values.subject.trim() && { subject: values.subject.trim() }),
+      message: values.message.trim(),
+    };
+
+    if (!trimmedValues.name || !trimmedValues.email || !trimmedValues.message) {
+      return setState((prev) => {
+        return { ...prev, error: `Please fill the required fields` };
+      });
+    }
+
+    sendEmail(trimmedValues);
+  }
 
   return (
     <form
       className={styles.form}
-      action="https://formspree.io/f/xkneonrz"
-      method="POST"
+      onSubmit={handleSubmit}
+      // action="https://formspree.io/f/xkneonrz"
+      // method="POST"
     >
+      {error && (
+        <Text
+          color="red.400"
+          fontSize="large"
+          mb={4}
+          fontWeight={600}
+        >
+          {error}
+        </Text>
+      )}
+
       <Input
         label="Name"
         name="name"
         placeholder="John Titor"
-        onChange={(e: any) => setName(e.target.value)}
-        value={name}
+        onChange={handleChange}
+        value={values.name}
         required={true}
         className={styles.input}
       />
@@ -34,8 +83,8 @@ export default function ContactForm() {
         name="email"
         type="email"
         placeholder="example@mail.com"
-        onChange={(e: any) => setEmail(e.target.value)}
-        value={email}
+        onChange={handleChange}
+        value={values.email}
         required={true}
         className={styles.input}
         maxlength={100}
@@ -45,8 +94,8 @@ export default function ContactForm() {
         label="Subject (optional)"
         name="subject"
         placeholder="Subject of the message"
-        onChange={(e: any) => setSubject(e.target.value)}
-        value={subject}
+        onChange={handleChange}
+        value={values.subject}
         className={styles.input}
         maxlength={150}
       />
@@ -55,8 +104,8 @@ export default function ContactForm() {
         label="Message"
         name="message"
         placeholder="Type your message here..."
-        onChange={(e: any) => setMessage(e.target.value)}
-        value={message}
+        onChange={handleChange}
+        value={values.message}
         required={true}
         className={styles.input}
         maxlength={5000}
