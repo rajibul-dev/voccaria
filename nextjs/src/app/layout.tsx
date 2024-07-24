@@ -9,6 +9,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
 // The following import prevents a Font Awesome icon server-side rendering bug,
@@ -98,7 +99,32 @@ export default function RootLayout({
         suppressHydrationWarning={true}
         className={montserrat.className}
       >
-        <ChakraProvider>{children}</ChakraProvider>
+        <ChakraProvider>
+          <Toaster
+            position="bottom-center"
+            gutter={12}
+            containerStyle={{
+              margin: "8px",
+            }}
+            toastOptions={{
+              success: {
+                duration: 4000,
+              },
+              error: {
+                duration: 10000,
+              },
+              style: {
+                fontSize: "16px",
+                maxWidth: "500px",
+                padding: "16px 24px",
+                backgroundColor: "var(--white-primary)",
+                color: "var(--gray-800)",
+                zIndex: 3,
+              },
+            }}
+          />
+          {children}
+        </ChakraProvider>
         <SpeedInsights />
         <Analytics />
       </body>
