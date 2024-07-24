@@ -1,5 +1,9 @@
 import { mailOptions, transporter } from "@/config/nodemailer";
 
+function withHTMLLineBreaks(str: string) {
+  return str.replace(/(\r\n|\r|\n)/g, "<br>");
+}
+
 const CONTACT_MESSAGE_FIELDS = {
   name: "Name",
   email: "Email",
@@ -15,8 +19,19 @@ const generateEmailContent = (data: any) => {
     "",
   );
   const htmlData = Object.entries(data).reduce((str, [key, val]) => {
-    // @ts-ignore
-    return (str += `<h3 class="form-heading" align="left">${CONTACT_MESSAGE_FIELDS[key]}</h3><p class="form-answer" align="left">${val}</p>`);
+    switch (key) {
+      case "message":
+        return (str += `<h3 class="form-heading" align="left">${
+          CONTACT_MESSAGE_FIELDS[key]
+        }</h3><p class="form-answer" align="left">${
+          // @ts-ignore
+          withHTMLLineBreaks(val)
+        }</p>`);
+
+      default:
+        // @ts-ignore
+        return (str += `<h3 class="form-heading" align="left">${CONTACT_MESSAGE_FIELDS[key]}</h3><p class="form-answer" align="left">${val}</p>`);
+    }
   }, "");
 
   return {
