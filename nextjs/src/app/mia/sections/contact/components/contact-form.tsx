@@ -6,8 +6,9 @@ import { useState } from "react";
 import Input from "@/app/components/input";
 import styles from "./contact-form.module.css";
 import Button from "@/app/components/button";
-import { Text } from "@chakra-ui/react";
+import { Spinner, Text, useToast } from "@chakra-ui/react";
 import { sendEmail } from "@/lib/api";
+import toast from "react-hot-toast";
 
 const initValues = { name: "", email: "", subject: "", message: "" };
 
@@ -15,7 +16,6 @@ const initialState = { isLoading: false, error: "", values: initValues };
 
 export default function ContactForm() {
   const [state, setState] = useState(initialState);
-
   const { values, isLoading, error } = state;
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -33,6 +33,10 @@ export default function ContactForm() {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setState((prev) => ({
+      ...prev,
+      isLoading: true,
+    }));
 
     const trimmedValues = {
       name: values.name.trim(),
@@ -43,11 +47,25 @@ export default function ContactForm() {
 
     if (!trimmedValues.name || !trimmedValues.email || !trimmedValues.message) {
       return setState((prev) => {
-        return { ...prev, error: `Please fill the required fields` };
+        return {
+          ...prev,
+          isLoading: false,
+          error: `Please fill the required fields`,
+        };
       });
     }
 
-    sendEmail(trimmedValues);
+    try {
+      sendEmail(trimmedValues);
+      setState(initialState);
+      toast.success("Successfully sent message!");
+    } catch (error: any) {
+      setState((prev) => ({
+        ...prev,
+        isLoading: false,
+        error: error.message,
+      }));
+    }
   }
 
   return (
@@ -115,8 +133,18 @@ export default function ContactForm() {
       <Button
         size="small"
         className={styles.btn}
+        disabled={isLoading}
       >
         Submit
+        {isLoading && (
+          <>
+            &nbsp;&nbsp;&nbsp;
+            <Spinner
+              display={"inline-block"}
+              mr={-6}
+            />
+          </>
+        )}
       </Button>
     </form>
   );
