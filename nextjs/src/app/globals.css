@@ -129,6 +129,10 @@ b {
   border-radius: 12px;
   transition: var(--default-transition);
 }
+button:disabled {
+  cursor: not-allowed;
+  filter: brightness(95%);
+}
 
 /* nice scrollbar */
 /* width */
