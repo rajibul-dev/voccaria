@@ -1,9 +1,9 @@
-import Mia from "./mia/mia"
+import Mia from "./mia/mia";
 
 export default function Home() {
   return (
     <>
       <Mia />
     </>
-  )
+  );
 }
