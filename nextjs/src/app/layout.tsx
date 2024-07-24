@@ -4,18 +4,20 @@ dotenv.config();
 
 config.autoAddCss = false;
 
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
-import "./globals.css";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
+import "./globals.css";
 
 // The following import prevents a Font Awesome icon server-side rendering bug,
 // where the icons flash from a very large icon down to a properly sized one:
 import "@fortawesome/fontawesome-svg-core/styles.css";
 // Prevent fontawesome from adding its CSS since we did it manually above:
 import { config } from "@fortawesome/fontawesome-svg-core";
+
+import { ChakraProvider } from "@chakra-ui/react";
 
 config.autoAddCss = false; /* eslint-disable import/first */
 
@@ -96,7 +98,7 @@ export default function RootLayout({
         suppressHydrationWarning={true}
         className={montserrat.className}
       >
-        {children}
+        <ChakraProvider>{children}</ChakraProvider>
         <SpeedInsights />
         <Analytics />
       </body>
