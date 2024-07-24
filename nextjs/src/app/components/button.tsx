@@ -13,6 +13,7 @@ interface ButtonProps {
   className?: string;
   onClick?: () => void;
   isBlock?: boolean;
+  disabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -25,6 +26,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick = () => {
     console.log("button clicked");
   },
+  ...props
 }) => {
   const displayStyle = {
     display: isBlock ? "block" : "inline-block",
@@ -39,6 +41,7 @@ const Button: React.FC<ButtonProps> = ({
         target="_blank"
         className={`${ButtonStyles.button} ${ButtonStyles[type]} ${ButtonStyles[size]} ${className}`}
         style={displayStyle}
+        {...props}
       >
         {children}
       </a>
@@ -52,6 +55,7 @@ const Button: React.FC<ButtonProps> = ({
         onClick={onClick}
         className={`${ButtonStyles.button} ${ButtonStyles[type]} ${ButtonStyles[size]} ${className}`}
         style={displayStyle}
+        {...props}
       >
         {children}
       </button>
