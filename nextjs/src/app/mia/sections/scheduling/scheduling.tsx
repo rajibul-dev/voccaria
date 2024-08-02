@@ -21,7 +21,7 @@ const schedulingData = [
   {
     name: "Schedule from Discord",
     description:
-      "Clicking this will open my Discord profile Mia#0006. We can decide a time for our lessons from there.",
+      "Clicking this will open my Discord profile mia0006. We can decide a time for our lessons from there.",
     link: "https://discord.com/users/140513822069882881",
     buttonLabel: "To my Discord",
   },
