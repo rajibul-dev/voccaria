@@ -11,8 +11,9 @@
   overflow: hidden;
   transition: all 0.3s ease;
 }
-.button:first-child {
+.button:last-child {
   width: 35rem;
+  order: -1;
 }
 .iconBox {
   display: inline-block;

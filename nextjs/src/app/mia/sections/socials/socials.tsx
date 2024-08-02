@@ -2,7 +2,12 @@
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDiscord, faTwitch } from "@fortawesome/free-brands-svg-icons";
+import {
+  faDiscord,
+  faTwitch,
+  faPatreon,
+  faYoutube,
+} from "@fortawesome/free-brands-svg-icons";
 // import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import streamElementsIcon from "../../../../../public/images/streamelements-logo.png";
 
@@ -15,6 +20,18 @@ const discordIcon = (
 const twitchIcon = (
   <FontAwesomeIcon
     icon={faTwitch}
+    className={SocialsStyles.icon}
+  />
+);
+const patreonIcon = (
+  <FontAwesomeIcon
+    icon={faPatreon}
+    className={SocialsStyles.icon}
+  />
+);
+const youtubeIcon = (
+  <FontAwesomeIcon
+    icon={faYoutube}
     className={SocialsStyles.icon}
   />
 );
@@ -35,34 +52,35 @@ import Image from "next/image";
 // social items object
 const socialItems = [
   {
-    name: "discord",
-    link: "http://discordapp.com/users/140513822069882881",
-    expandedText: "Contact me on Discord",
-    icon: discordIcon,
-    bgColor: "#5865f2",
-    isExpanded: true,
-  },
-  {
     name: "twitch",
     link: "https://www.twitch.tv/miavoiceteacher",
     expandedText: (
       <>
-        I stream every Tuesday!
-        <br /> Vocal Coach Reacts!
+        I stream every TUE and THU!
+        <br />
+        Vocal Coach Reacts!
       </>
     ),
     icon: twitchIcon,
     bgColor: "#6441a5",
     isExpanded: false,
   },
-  // {
-  //   name: "streamelements",
-  //   link: "https://streamelements.com/miavoiceteacher/tip",
-  //   expandedText: "My tipping page",
-  //   icon: heartIcon,
-  //   bgColor: "#fb3c6c",
-  //   isExpanded: false,
-  // },
+  {
+    name: "youtube",
+    link: "https://www.youtube.com/channel/UCP81Xp_j1hK2w1DbVvuItmQ",
+    expandedText: "My YouTube Channel",
+    icon: youtubeIcon,
+    bgColor: "#FF0000",
+    isExpanded: false,
+  },
+  {
+    name: "patreon",
+    link: "https://www.patreon.com/MiaVoiceTeacher",
+    expandedText: "My Patreon",
+    icon: patreonIcon,
+    bgColor: "#f96854",
+    isExpanded: false,
+  },
   {
     name: "streamelements",
     link: "https://streamelements.com/miavoiceteacher/tip",
@@ -80,6 +98,14 @@ const socialItems = [
     ),
     bgColor: "#020923",
     isExpanded: false,
+  },
+  {
+    name: "discord",
+    link: "http://discordapp.com/users/140513822069882881",
+    expandedText: "Contact me on Discord",
+    icon: discordIcon,
+    bgColor: "#5865f2",
+    isExpanded: true,
   },
 ];
 
