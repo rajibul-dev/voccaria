@@ -1,0 +1,21 @@
+.wrapper {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  flex-wrap: auto;
+  margin-left: 0.3rem;
+  border-bottom: 2px solid var(--affair-600);
+  line-height: 1.3;
+}
+
+.img {
+  display: inline;
+  width: 3rem;
+  height: auto;
+  align-self: start;
+  border-radius: 50%;
+}
+
+.text {
+  color: var(--affair-600);
+}
