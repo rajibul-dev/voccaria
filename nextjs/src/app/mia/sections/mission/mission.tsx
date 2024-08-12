@@ -46,7 +46,7 @@ export default function Mission() {
               >
                 Discord server I created
               </a>
-              , which currently has over 6,000 members.
+              , which currently has over 7,000 members.
             </Essay.Para>
             <Essay.Para>
               My teaching method is straightforward—fewer mind tricks, more
