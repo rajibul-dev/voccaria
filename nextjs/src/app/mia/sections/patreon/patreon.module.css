@@ -31,8 +31,13 @@
   margin-top: 4rem;
 }
 
+.textHighlight {
+  color: var(--affair-600);
+  font-weight: 900;
+}
+
 /* adjusting patreon component for adding the voccaria logo and more text */
-@media screen and (min-width: 725px) {
+/* @media screen and (min-width: 725px) {
   .container {
     grid-template-columns: 0.85fr 1.5fr;
   }
@@ -43,7 +48,7 @@
   .btn {
     margin-top: 3.2rem;
   }
-}
+} */
 
 @media screen and (max-width: 725px) {
   .container {
@@ -89,16 +94,17 @@
     line-height: 1.5;
   }
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 379px) {
   .heading {
-    font-size: 3rem;
+    font-size: 2.8rem;
   }
+}
+
+@media screen and (max-width: 352px) {
   .textbox {
     padding-inline: 2%;
   }
-}
-@media screen and (max-width: 367px) {
   .heading {
-    font-size: 2.8rem;
+    font-size: 2.6rem;
   }
 }
