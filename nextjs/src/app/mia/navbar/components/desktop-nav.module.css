@@ -29,15 +29,20 @@
 }
 
 /* Adjust navbar bigger screens */
-@media (max-width: 83.375em) and (min-width: 66em) {
-  .link {
-    font-size: 1.2rem;
+@media (max-width: 90em) and (min-width: 85.625em) {
+  /* 1440px to 1370px */
+  .flex {
+    gap: 3rem;
   }
 }
 
-@media (max-width: 73em) and (min-width: 66em) {
+@media (max-width: 85.625em) and (min-width: 66em) {
+  /* 1370px to 1058 */
+  .link {
+    font-size: 1.3rem;
+  }
   .flex {
-    gap: 3rem;
+    gap: 2rem;
   }
 }
 @media (max-width: 66em) and (min-width: 53em) {
@@ -50,7 +55,7 @@
 }
 
 /* Remove */
-@media (max-width: 53em) {
+@media (max-width: 58.5em) {
   .contianer {
     display: none;
   }

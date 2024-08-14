@@ -43,7 +43,7 @@
 }
 
 /* show menu icon */
-@media (min-width: 53em) {
+@media (min-width: 58.5em) {
   .menuIcon {
     display: none;
   }
