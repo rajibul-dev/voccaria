@@ -48,7 +48,7 @@ export default function Patreon() {
               <>
                 Support me on Patreon!
                 <br />
-                Get exclusive perks!`
+                Get exclusive perks!
               </>
             }
             className={styles.heading}
