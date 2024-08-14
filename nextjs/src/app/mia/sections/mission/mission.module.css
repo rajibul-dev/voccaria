@@ -1,3 +1,6 @@
+.section {
+  border-top: var(--border-gray-200);
+}
 .grid {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -76,5 +79,10 @@
   }
   .heading {
     margin-bottom: 2.4rem;
+  }
+}
+@media screen and (max-width: 450px) {
+  .section {
+    border-top: none;
   }
 }
