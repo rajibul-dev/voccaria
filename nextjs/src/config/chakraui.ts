@@ -10,6 +10,9 @@ const chakraTheme = extendTheme({
       },
     },
   },
+  breakpoints: {
+    pricingOneCol: "54.125em",
+  },
 });
 
 export default chakraTheme;
