@@ -17,9 +17,13 @@ interface PricingDetails {
 
 interface PricingCardsProps {
   pricingDetails: PricingDetails[];
+  countdownEnd?: boolean; // temp
 }
 
-const PricingCards: React.FC<PricingCardsProps> = ({ pricingDetails }) => {
+const PricingCards: React.FC<PricingCardsProps> = ({
+  pricingDetails,
+  countdownEnd, // temp
+}) => {
   return (
     <ul className={styles.grid}>
       {pricingDetails.map((item) => (
@@ -31,6 +35,8 @@ const PricingCards: React.FC<PricingCardsProps> = ({ pricingDetails }) => {
           isRecommended={item?.recommended ?? false}
           currency={item.currency}
           amount={item.amount}
+          // temp
+          countdownEnd={countdownEnd}
         />
       ))}
     </ul>

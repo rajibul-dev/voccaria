@@ -18,6 +18,7 @@ interface PricingCardItemProps {
   isRecommended?: boolean;
   currency?: string;
   amount?: number;
+  countdownEnd?: boolean; // temp
 }
 
 const PricingCardItem: React.FC<PricingCardItemProps> = ({
@@ -27,6 +28,7 @@ const PricingCardItem: React.FC<PricingCardItemProps> = ({
   isRecommended,
   currency = "",
   amount = 0,
+  countdownEnd, // temp
 }) => {
   const [modalHeading, setModalHeading] = useState<any>("Pay with PayPal");
 
@@ -48,9 +50,10 @@ const PricingCardItem: React.FC<PricingCardItemProps> = ({
 
   return (
     <li
+      // partial temp
       className={`${styles.card} ${
         isRecommended ? styles.recommendedTagContainer : ""
-      }`}
+      } ${!countdownEnd ? styles.cardMoreHeight : ""}`}
     >
       {isRecommended && (
         <span className={styles.recommendedTag}>Recommended</span>

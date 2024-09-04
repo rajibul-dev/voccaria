@@ -71,8 +71,11 @@
 @media (min-width: 48.375em) {
   .card:nth-child(3),
   .card:nth-child(4) {
-    height: 47.2rem;
     padding-top: 7rem;
+  }
+  .cardMoreHeight:nth-child(3),
+  .cardMoreHeight:nth-child(4) {
+    height: 47.2rem;
   }
 }
 
