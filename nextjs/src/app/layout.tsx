@@ -19,6 +19,8 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 
 import { ChakraProvider } from "@chakra-ui/react";
+import chakraTheme from "../config/chakraui";
+import { Providers } from "./providers";
 
 config.autoAddCss = false; /* eslint-disable import/first */
 
@@ -99,32 +101,7 @@ export default function RootLayout({
         suppressHydrationWarning={true}
         className={montserrat.className}
       >
-        <ChakraProvider>
-          <Toaster
-            position="bottom-center"
-            gutter={12}
-            containerStyle={{
-              margin: "8px",
-            }}
-            toastOptions={{
-              success: {
-                duration: 4000,
-              },
-              error: {
-                duration: 10000,
-              },
-              style: {
-                fontSize: "16px",
-                maxWidth: "500px",
-                padding: "16px 24px",
-                backgroundColor: "var(--white-primary)",
-                color: "var(--gray-800)",
-                zIndex: 3,
-              },
-            }}
-          />
-          {children}
-        </ChakraProvider>
+        <Providers>{children}</Providers>
         <SpeedInsights />
         <Analytics />
       </body>
