@@ -12,6 +12,7 @@ const chakraTheme = extendTheme({
   },
   breakpoints: {
     pricingOneCol: "54.125em",
+    headingLeftAligned: "26.25em",
   },
 });
 
