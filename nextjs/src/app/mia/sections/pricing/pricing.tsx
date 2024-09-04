@@ -178,8 +178,12 @@ export default function Pricing() {
             mt="-1rem"
             mb="6rem"
             fontWeight={500}
+            textAlign={{
+              headingLeftAligned: "center",
+              base: "left",
+            }}
           >
-            <p style={{ textAlign: "center" }}>
+            <p>
               There will be a change in pricing from the beginning of October.
               <br />
               <strong>Countdown: {countdown}</strong>
