@@ -6,6 +6,7 @@ const chakraTheme = extendTheme({
       body: {
         fontFamily: "inherit",
         fontSize: "var(--font-size-paragraph-primary)",
+        wordSpacing: "0.8pt",
       },
     },
   },

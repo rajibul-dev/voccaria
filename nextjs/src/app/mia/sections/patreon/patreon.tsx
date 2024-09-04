@@ -56,20 +56,13 @@ export default function Patreon() {
           />
 
           <UnorderedList
-            fontFamily={"inherit"}
-            fontSize={"var(--font-size-paragraph-primary)"}
             fontWeight={500}
             spacing={3}
             lineHeight={1.5}
             className={styles.ul}
           >
             {patreonFeatures.map((item) => (
-              <ListItem
-                style={{ wordSpacing: "0.8pt" }}
-                key={item}
-              >
-                {item}
-              </ListItem>
+              <ListItem key={item}>{item}</ListItem>
             ))}
           </UnorderedList>
 
