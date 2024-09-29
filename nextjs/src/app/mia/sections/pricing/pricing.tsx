@@ -1,6 +1,6 @@
 import { Alert } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { addSeconds, isAfter } from "date-fns";
+import { isAfter } from "date-fns";
 
 // styles
 import styles from "./pricing.module.css";
@@ -124,7 +124,7 @@ export default function Pricing() {
 
       const days = Math.floor(difference / (1000 * 60 * 60 * 24));
       const hours = Math.floor(
-        (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+        (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
       );
       const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((difference % (1000 * 60)) / 1000);
@@ -149,10 +149,7 @@ export default function Pricing() {
   }, [countdownEnd]);
 
   return (
-    <section
-      id="pricing"
-      className={`block ${styles.section}`}
-    >
+    <section id="pricing" className={`block ${styles.section}`}>
       <div className={`container`}>
         <HeadingPair
           tertiary="Paid Lessons"
