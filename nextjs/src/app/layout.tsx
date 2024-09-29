@@ -9,7 +9,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
 // The following import prevents a Font Awesome icon server-side rendering bug,
@@ -18,8 +17,6 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 // Prevent fontawesome from adding its CSS since we did it manually above:
 import { config } from "@fortawesome/fontawesome-svg-core";
 
-import { ChakraProvider } from "@chakra-ui/react";
-import chakraTheme from "../config/chakraui";
 import { Providers } from "./providers";
 
 config.autoAddCss = false; /* eslint-disable import/first */
@@ -97,10 +94,7 @@ export default function RootLayout({
           as="script"
         ></script>
       </head>
-      <body
-        suppressHydrationWarning={true}
-        className={montserrat.className}
-      >
+      <body suppressHydrationWarning={true} className={montserrat.className}>
         <Providers>{children}</Providers>
         <SpeedInsights />
         <Analytics />
