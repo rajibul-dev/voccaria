@@ -19,6 +19,8 @@ interface PricingCardItemProps {
   currency?: string;
   amount?: number;
   countdownEnd?: boolean; // temp
+  className?: string;
+  moreDescription?: string;
 }
 
 const PricingCardItem: React.FC<PricingCardItemProps> = ({
@@ -29,6 +31,8 @@ const PricingCardItem: React.FC<PricingCardItemProps> = ({
   currency = "",
   amount = 0,
   countdownEnd, // temp
+  className = "",
+  moreDescription,
 }) => {
   const [modalHeading, setModalHeading] = useState<any>("Pay with PayPal");
 
@@ -53,7 +57,7 @@ const PricingCardItem: React.FC<PricingCardItemProps> = ({
       // partial temp
       className={`${styles.card} ${
         isRecommended ? styles.recommendedTagContainer : ""
-      } ${!countdownEnd ? styles.cardMoreHeight : ""}`}
+      } ${!countdownEnd ? styles.cardMoreHeight : ""} ${styles[className]}`}
     >
       {isRecommended && (
         <span className={styles.recommendedTag}>Recommended</span>
@@ -73,16 +77,14 @@ const PricingCardItem: React.FC<PricingCardItemProps> = ({
               Buy now
             </Button>
           </Modal.Open>
-          <Modal.Window
-            name="payment-checkout"
-            heading={modalHeading}
-          >
+          <Modal.Window name="payment-checkout" heading={modalHeading}>
             <ItemDetails
               currency={currency}
               amount={amount}
               name={name}
               price={price}
               onChangeModalHeading={handleChangeModalHeading}
+              moreDescription={moreDescription}
             />
           </Modal.Window>
         </Modal>

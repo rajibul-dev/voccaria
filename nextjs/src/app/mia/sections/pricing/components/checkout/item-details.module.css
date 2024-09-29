@@ -12,6 +12,13 @@
 .description {
   margin-bottom: 3rem;
 }
+.description.hasMoreDescription {
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+.description.hasMoreDescription::after {
+  content: ":";
+}
 .checkIcon,
 .xmarkIcon {
   font-size: 4.4rem;

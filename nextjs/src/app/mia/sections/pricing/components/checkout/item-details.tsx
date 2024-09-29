@@ -18,16 +18,10 @@ import Button from "@/app/components/button";
 import dynamic from "next/dynamic";
 
 const checkIcon = (
-  <FontAwesomeIcon
-    icon={faCircleCheck}
-    className={styles.checkIcon}
-  />
+  <FontAwesomeIcon icon={faCircleCheck} className={styles.checkIcon} />
 );
 const xmarkIcon = (
-  <FontAwesomeIcon
-    icon={faCircleXmark}
-    className={styles.xmarkIcon}
-  />
+  <FontAwesomeIcon icon={faCircleXmark} className={styles.xmarkIcon} />
 );
 
 interface ItemDetailsProps {
@@ -38,6 +32,7 @@ interface ItemDetailsProps {
   onChangeModalHeading: any;
   onCloseModal?: any;
   setShowCloseIcon?: any;
+  moreDescription?: string;
 }
 
 const ItemDetails: React.FC<ItemDetailsProps> = ({
@@ -48,6 +43,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
   onChangeModalHeading,
   onCloseModal,
   setShowCloseIcon,
+  moreDescription = null,
 }) => {
   const [paymentDetails, setPaymentDetails] = useState<any>(null);
   const isPaymentSuccessful = paymentDetails?.status === "COMPLETED";
@@ -62,7 +58,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
     (bool: boolean) => {
       setShowCloseIcon(bool);
     },
-    [setShowCloseIcon],
+    [setShowCloseIcon]
   );
 
   // Modal heading change
@@ -75,7 +71,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
             <>
               {checkIcon}
               <span>Payment Successful!</span>
-            </>,
+            </>
           );
           break;
 
@@ -85,7 +81,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
             <>
               {xmarkIcon}
               <span>Transaction Failed</span>
-            </>,
+            </>
           );
           break;
 
@@ -94,7 +90,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
           break;
       }
     },
-    [paymentDetails, onChangeModalHeading, handleShowCrossIcon],
+    [paymentDetails, onChangeModalHeading, handleShowCrossIcon]
   );
 
   return (
@@ -102,7 +98,23 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
       <h3 className={styles.price}>{price}</h3>
 
       {!isPaymentSuccessful && (
-        <p className={`goto-paragraph ${styles.description}`}>{name}</p>
+        <>
+          <p
+            className={`goto-paragraph ${styles.description} ${
+              moreDescription ? styles.hasMoreDescription : ""
+            }`}
+          >
+            {name}
+          </p>
+          {moreDescription && (
+            <p
+              // style={{ marginTop: "-2rem" }}
+              className={`goto-paragraph ${styles.description}`}
+            >
+              {moreDescription}
+            </p>
+          )}
+        </>
       )}
       {isPaymentSuccessful && (
         <p className={`goto-paragraph ${styles.message}`}>
@@ -130,11 +142,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
           onPaymentDetails={handleAddDetails}
         />
       ) : (
-        <Button
-          type="secondary"
-          isBlock
-          onClick={onCloseModal}
-        >
+        <Button type="secondary" isBlock onClick={onCloseModal}>
           Close
         </Button>
       )}

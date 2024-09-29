@@ -15,6 +15,17 @@ const oldPricingDetails = [
   {
     currency: "eur",
     currencySymbol: "€",
+    amount: 20,
+    heading: "Recording Review + Custom Vocal Development Plan (one-time)",
+    description:
+      "A personalized, in-depth review of your vocal habits and techniques. You'll receive a custom roadmap designed to help you achieve your vocal goals with clear, actionable steps.",
+    className: "recordingReviewCard",
+    moreDescription:
+      "Send your recordings and a detailed description of the sound and style you're aiming for to begin your customized vocal journey!",
+  },
+  {
+    currency: "eur",
+    currencySymbol: "€",
     amount: 40,
     heading: "Singular 30-minute voice lesson",
     description: "A short session to get you going in the right direction!",
@@ -58,6 +69,17 @@ const oldPricingDetails = [
 
 const newPricingDetails = [
   // Euro dollar instences
+  {
+    currency: "eur",
+    currencySymbol: "€",
+    amount: 20,
+    heading: "Recording Review + Custom Vocal Development Plan (one-time)",
+    description:
+      "A personalized, in-depth review of your vocal habits and techniques. You'll receive a custom roadmap designed to help you achieve your vocal goals with clear, actionable steps.",
+    className: "recordingReviewCard",
+    moreDescription:
+      "Send your recordings and a detailed description of the sound and style you're aiming for to begin your customized vocal journey!",
+  },
   {
     currency: "eur",
     currencySymbol: "€",

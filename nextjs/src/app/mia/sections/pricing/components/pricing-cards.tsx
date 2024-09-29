@@ -13,6 +13,8 @@ interface PricingDetails {
   heading: string;
   description: string | React.ReactNode;
   recommended?: boolean;
+  className?: string;
+  moreDescription?: string;
 }
 
 interface PricingCardsProps {
@@ -35,6 +37,8 @@ const PricingCards: React.FC<PricingCardsProps> = ({
           isRecommended={item?.recommended ?? false}
           currency={item.currency}
           amount={item.amount}
+          className={item?.className}
+          moreDescription={item?.moreDescription}
           // temp
           countdownEnd={countdownEnd}
         />

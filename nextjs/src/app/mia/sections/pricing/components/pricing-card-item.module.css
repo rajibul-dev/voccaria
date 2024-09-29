@@ -69,13 +69,40 @@
 
 /* adjustments */
 @media (min-width: 48.375em) {
-  .card:nth-child(3),
-  .card:nth-child(4) {
+  .card:nth-child(4),
+  .card:nth-child(5) {
     padding-top: 7rem;
   }
-  .cardMoreHeight:nth-child(3),
-  .cardMoreHeight:nth-child(4) {
+  .cardMoreHeight:nth-child(4),
+  .cardMoreHeight:nth-child(5) {
     height: 47.2rem;
+  }
+}
+
+@media (min-width: 48.375em) {
+  .recordingReviewCard {
+    grid-column: 1 / -1;
+    width: 80%;
+    height: 46rem;
+  }
+  .recordingReviewCard h3,
+  .recordingReviewCard p {
+    padding-inline: 1rem;
+  }
+}
+@media (max-width: 54.0625em) and (min-width: 48.375em) {
+  .recordingReviewCard {
+    height: auto;
+    width: 47rem;
+    padding-bottom: 4rem !important;
+    padding-top: 5rem;
+  }
+  .recordingReviewCard h3,
+  .recordingReviewCard p {
+    padding-inline: 0;
+  }
+  .recordingReviewCard p {
+    margin-bottom: 6rem;
   }
 }
 
