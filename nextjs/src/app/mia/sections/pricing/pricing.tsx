@@ -143,6 +143,7 @@ export default function Pricing() {
 
     if (countdownEnd) {
       setPricingDetails(newPricingDetails);
+      clearInterval(interval);
     }
 
     return () => clearInterval(interval);
