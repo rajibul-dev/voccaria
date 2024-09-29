@@ -119,6 +119,22 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
       {isPaymentSuccessful && (
         <p className={`goto-paragraph ${styles.message}`}>
           Your payment for <b>{name}</b> was successful! Thank you!
+          {moreDescription && (
+            <>
+              <br /> You can submit the recording and the description of your
+              desired sound and style on{" "}
+              <a
+                href="https://discord.com/users/140513822069882881"
+                className="inline-a"
+              >
+                my Discord mia0006
+              </a>{" "}
+              or on my email{" "}
+              <a href="mailto:voccaria@gmail.com" className="inline-a">
+                voccaria@gmail.com
+              </a>
+            </>
+          )}
         </p>
       )}
       {isPaymentSuccessful && (
