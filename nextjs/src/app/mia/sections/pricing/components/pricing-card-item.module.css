@@ -10,6 +10,9 @@
   border: var(--border-black);
   overflow: hidden;
 }
+.cardWhenNoDescription {
+  height: 38rem;
+}
 .flex {
   display: flex;
   flex-direction: column;
@@ -42,6 +45,9 @@
   margin-bottom: auto;
   font-size: 1.7rem;
 }
+.nameWhenNoDescription {
+  margin-bottom: auto;
+}
 .recommendedTagContainer {
   position: relative;
 }
@@ -69,13 +75,8 @@
 
 /* adjustments */
 @media (min-width: 48.375em) {
-  .card:nth-child(4),
-  .card:nth-child(5) {
-    padding-top: 7rem;
-  }
-  .cardMoreHeight:nth-child(4),
-  .cardMoreHeight:nth-child(5) {
-    height: 47.2rem;
+  .recommendedRow {
+    padding-top: 7.5rem;
   }
 }
 
@@ -116,6 +117,9 @@
   .recommendedTagContainer {
     padding-top: 9rem;
   }
+  .recommendedYetNoDescription {
+    padding-top: 8rem;
+  }
   .price {
     font-size: 5.6rem;
   }
@@ -126,6 +130,9 @@
     margin-bottom: 8rem;
     font-size: 1.915rem;
     line-height: 1.6;
+  }
+  .nameWhenNoDescription {
+    margin-bottom: 7rem;
   }
 }
 

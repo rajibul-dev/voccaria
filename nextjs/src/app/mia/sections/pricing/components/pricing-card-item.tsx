@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import dynamic from "next/dynamic";
 
 // styles
@@ -14,13 +14,13 @@ const ItemDetails = dynamic(() => import("./checkout/item-details"));
 interface PricingCardItemProps {
   price: string;
   name: string;
-  description: any;
+  description: string | React.ReactNode | null;
   isRecommended?: boolean;
   currency?: string;
   amount?: number;
-  countdownEnd?: boolean; // temp
   className?: string;
   moreDescription?: string;
+  recommendedRow?: boolean;
 }
 
 const PricingCardItem: React.FC<PricingCardItemProps> = ({
@@ -30,9 +30,9 @@ const PricingCardItem: React.FC<PricingCardItemProps> = ({
   isRecommended,
   currency = "",
   amount = 0,
-  countdownEnd, // temp
   className = "",
   moreDescription,
+  recommendedRow,
 }) => {
   const [modalHeading, setModalHeading] = useState<any>("Pay with PayPal");
 
@@ -57,15 +57,25 @@ const PricingCardItem: React.FC<PricingCardItemProps> = ({
       // partial temp
       className={`${styles.card} ${
         isRecommended ? styles.recommendedTagContainer : ""
-      } ${!countdownEnd ? styles.cardMoreHeight : ""} ${styles[className]}`}
+      } ${recommendedRow ? styles.recommendedRow : ""} ${styles[className]} ${
+        !description ? styles.cardWhenNoDescription : ""
+      } ${
+        !description && isRecommended ? styles.recommendedYetNoDescription : ""
+      }`}
     >
       {isRecommended && (
         <span className={styles.recommendedTag}>Recommended</span>
       )}
       <div className={styles.flex}>
         <span className={styles.price}>{price}</span>
-        <h3 className={styles.name}>{cookedName}</h3>
-        <p className={styles.description}>{description}</p>
+        <h3
+          className={`${styles.name} ${
+            !description ? styles.nameWhenNoDescription : ""
+          }`}
+        >
+          {cookedName}
+        </h3>
+        {description && <p className={styles.description}>{description}</p>}
         <Modal>
           <Modal.Open opens="payment-checkout">
             <Button
