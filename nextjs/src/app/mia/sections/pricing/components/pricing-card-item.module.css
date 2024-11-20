@@ -131,6 +131,9 @@
     font-size: 1.915rem;
     line-height: 1.6;
   }
+  .recordingReviewCard p {
+    margin-bottom: 6.5rem;
+  }
   .nameWhenNoDescription {
     margin-bottom: 7rem;
   }
