@@ -12,10 +12,10 @@ const pricingDetails = [
   {
     currency: "eur",
     currencySymbol: "€",
-    amount: 20,
+    amount: 50,
     heading: "Recording Review + Custom Vocal Development Plan (one-time)",
     description:
-      "A personalized, in-depth review of your vocal habits and techniques. You'll receive a custom roadmap designed to help you achieve your vocal goals with clear, actionable steps.",
+      "A personalized, in-depth review of your vocal habits and techniques, along with detailed feedback on what can be improved and how. You'll also receive a custom roadmap designed to help you achieve your vocal goals with clear, actionable steps.",
     className: "recordingReviewCard",
     moreDescription:
       "Send your recordings and a detailed description of the sound and style you're aiming for to begin your customized vocal journey!",
