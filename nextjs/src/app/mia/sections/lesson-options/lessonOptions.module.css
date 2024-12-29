@@ -5,8 +5,18 @@
   align-items: start;
 }
 
+.responsiveLineBreak {
+  display: none;
+}
+
 @media screen and (max-width: 840px) {
   .boxPair {
     grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 427px) {
+  .responsiveLineBreak {
+    display: inline;
   }
 }

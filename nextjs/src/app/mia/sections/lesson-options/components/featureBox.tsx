@@ -4,13 +4,9 @@ import styles from "./featureBox.module.css";
 // icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
+import SubtleInfo from "@/app/components/subtle-info";
 
-const circleIcon = (
-  <FontAwesomeIcon
-    icon={faCircle}
-    className={styles.icon}
-  />
-);
+const circleIcon = <FontAwesomeIcon icon={faCircle} className={styles.icon} />;
 
 // prop interface
 interface FeatureBoxProps {
@@ -18,6 +14,7 @@ interface FeatureBoxProps {
   listItems: string[];
   button: { text: string; link: string };
   brandColor?: boolean;
+  lightInfo?: string | React.ReactNode;
 }
 
 // component
@@ -26,6 +23,7 @@ const FeatureBox: React.FC<FeatureBoxProps> = ({
   listItems,
   button,
   brandColor = false,
+  lightInfo,
 }) => {
   return (
     <div className={`${styles.box} ${brandColor ? styles.brand : styles.free}`}>
@@ -35,10 +33,7 @@ const FeatureBox: React.FC<FeatureBoxProps> = ({
         <ul className={`goto-paragraph ${styles.list}`}>
           {listItems.map((item) => {
             return (
-              <li
-                className={styles.li}
-                key={item}
-              >
+              <li className={styles.li} key={item}>
                 {circleIcon}
                 <span className={styles.para}>{item}</span>
               </li>
@@ -52,6 +47,11 @@ const FeatureBox: React.FC<FeatureBoxProps> = ({
         >
           {button.text}
         </a>
+        {lightInfo && (
+          <SubtleInfo mode="dark" className={styles.lightInfo}>
+            {lightInfo}
+          </SubtleInfo>
+        )}
       </div>
     </div>
   );

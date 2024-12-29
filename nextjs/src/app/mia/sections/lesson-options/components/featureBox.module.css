@@ -3,7 +3,7 @@
   padding: 4rem;
   border-radius: var(--usual-border-radius);
   transition: var(--default-transition);
-  padding-bottom: 5.2rem;
+  padding-bottom: 5.8rem;
   width: fit-content;
   height: fit-content;
 }
@@ -47,7 +47,7 @@
   line-height: 1.5;
   font-weight: 700;
   text-align: center;
-  margin-top: 3.8rem;
+  margin-top: 3.4rem;
   transition: var(--default-transition);
 }
 .free .icon {
@@ -67,6 +67,7 @@
 .listNBtn {
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 .brand {
   background-color: var(--cranberry-600);
@@ -88,6 +89,12 @@
   border: var(--border-black);
   color: var(--white-primary);
 }
+.lightInfo {
+  position: absolute;
+  bottom: -3.2rem;
+  /* bottom: -7%; */
+  font-size: 1.4rem;
+}
 
 @media screen and (max-width: 840px) {
   .box:nth-child(2),
@@ -104,5 +111,16 @@
 @media screen and (max-width: 420px) {
   .box {
     padding-inline: 7%;
+  }
+}
+@media screen and (max-width: 427px) {
+  .lightInfo {
+    bottom: -5rem;
+  }
+  .box {
+    padding-bottom: 5.2rem;
+  }
+  .brand {
+    padding-bottom: 7.2rem;
   }
 }

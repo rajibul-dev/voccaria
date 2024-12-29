@@ -24,6 +24,12 @@ const lessonOptionsObj = {
       text: "Apply for Private Paid Lessons",
       link: "https://docs.google.com/forms/d/1dW-N6xyf7ATc6zCIL0rR1I63EN4A4U6JghhPA6xi2pM/viewform?edit_requested=true",
     },
+    lightInfo: (
+      <>
+        Free consultation available before starting
+        <br className={styles.responsiveLineBreak}></br> paid lessons
+      </>
+    ),
   },
 };
 const { free, paid } = lessonOptionsObj;
@@ -37,10 +43,7 @@ import FeatureBox from "./components/featureBox";
 
 export default function LessonOptions() {
   return (
-    <section
-      id="lesson-options"
-      className={`block`}
-    >
+    <section id="lesson-options" className={`block`}>
       <div className={`container`}>
         <HeadingPair
           tertiary="Lesson options"
@@ -60,6 +63,7 @@ export default function LessonOptions() {
             listItems={paid.listItems}
             button={paid.button}
             brandColor={true}
+            lightInfo={paid.lightInfo}
           />
         </div>
       </div>
