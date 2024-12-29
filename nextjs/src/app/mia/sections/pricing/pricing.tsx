@@ -13,7 +13,8 @@ const pricingDetails = [
     currency: "eur",
     currencySymbol: "€",
     amount: 50,
-    heading: "Recording Review + Custom Vocal Development Plan (one-time)",
+    heading:
+      "Written Recording Review + Custom Vocal Development Plan (Offline Written/Video Feedback, One-Time)",
     description:
       "A personalized, in-depth review of your vocal habits and techniques, along with detailed feedback on what can be improved and how. You'll also receive a custom roadmap designed to help you achieve your vocal goals with clear, actionable steps.",
     className: "recordingReviewCard",
