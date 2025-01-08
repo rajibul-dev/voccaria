@@ -12,28 +12,16 @@ import {
 import streamElementsIcon from "../../../../../public/images/streamelements-logo.png";
 
 const discordIcon = (
-  <FontAwesomeIcon
-    icon={faDiscord}
-    className={SocialsStyles.icon}
-  />
+  <FontAwesomeIcon icon={faDiscord} className={SocialsStyles.icon} />
 );
 const twitchIcon = (
-  <FontAwesomeIcon
-    icon={faTwitch}
-    className={SocialsStyles.icon}
-  />
+  <FontAwesomeIcon icon={faTwitch} className={SocialsStyles.icon} />
 );
 const patreonIcon = (
-  <FontAwesomeIcon
-    icon={faPatreon}
-    className={SocialsStyles.icon}
-  />
+  <FontAwesomeIcon icon={faPatreon} className={SocialsStyles.icon} />
 );
 const youtubeIcon = (
-  <FontAwesomeIcon
-    icon={faYoutube}
-    className={SocialsStyles.icon}
-  />
+  <FontAwesomeIcon icon={faYoutube} className={SocialsStyles.icon} />
 );
 // const heartIcon = (
 //   <FontAwesomeIcon
@@ -50,7 +38,7 @@ import SocialButton from "./components/socialButton";
 import Image from "next/image";
 
 // social items object
-const socialItems = [
+export const socialItems = [
   {
     name: "twitch",
     link: "https://www.twitch.tv/miavoiceteacher",
@@ -111,10 +99,7 @@ const socialItems = [
 
 export default function socials() {
   return (
-    <section
-      id="socials"
-      className={`block ${SocialsStyles.socialsSection}`}
-    >
+    <section id="socials" className={`block ${SocialsStyles.socialsSection}`}>
       <div className={SocialsStyles.wrapper}>
         {socialItems.map((item) => (
           <SocialButton
