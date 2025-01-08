@@ -31,11 +31,9 @@ export default function Mission() {
               available for those unable to afford voice lessons. I understand
               the challenges of not having access to real-time, one-on-one
               guidance. My work is dedicated to{" "}
-              <strong>
-                providing FREE lessons without any gimmicks or attempts to sell
-                a program.
-              </strong>{" "}
-              I have shared my unique approaches entirely free of charge on the{" "}
+              <strong>providing FREE lessons</strong> without any gimmicks or
+              attempts to sell a program. I have shared my unique approaches
+              entirely free of charge on the{" "}
               <a
                 className="inline-a"
                 href="https://discord.com/invite/4Z5JKYPhTe"
