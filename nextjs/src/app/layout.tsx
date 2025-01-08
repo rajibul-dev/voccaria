@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://voccaria.com"),
   title: "Voccaria - Free Voice Lessons, Resources, and Community",
   description:
-    "Voccaria is an organization dedicated to teaching people how to sing using sustainable, strain-free techniques, with a mission to provide a safe, supportive environment where anyone can learn to sing—for free.",
+    "Voccaria offers free singing lessons, resources, and community in a supportive environment.",
   icons: {
     icon: ["/logo-icon-pack/favicon.ico"],
     apple: ["/logo-icon-pack/apple-touch-icon.png"],
