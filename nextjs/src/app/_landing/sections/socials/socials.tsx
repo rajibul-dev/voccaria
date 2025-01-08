@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -38,7 +38,7 @@ import SocialButton from "./components/socialButton";
 import Image from "next/image";
 
 // social items object
-export const socialItems = [
+const socialItems = [
   {
     name: "twitch",
     link: "https://www.twitch.tv/miavoiceteacher",

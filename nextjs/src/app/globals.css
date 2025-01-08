@@ -168,6 +168,16 @@ button:disabled {
 .highlight {
 }
 
+.seo-purpose-and-hidden {
+  position: absolute;
+  width: 0;
+  height: 0;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0, 0, 0, 0); /* Modern method for off-screen content */
+}
+
 /* Scale shift */
 /* 1118px */
 @media (max-width: 69.875em) {
