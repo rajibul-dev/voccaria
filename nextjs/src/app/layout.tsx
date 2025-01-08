@@ -6,6 +6,7 @@ config.autoAddCss = false;
 
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import type { Viewport } from "next";
 
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
@@ -20,6 +21,10 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 import { Providers } from "./providers";
 
 config.autoAddCss = false; /* eslint-disable import/first */
+
+export const viewport: Viewport = {
+  themeColor: "#c4265d",
+};
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -67,7 +72,6 @@ export const metadata: Metadata = {
     "Voccaria",
   ],
   authors: [{ name: "Mia", url: "https://voccaria.com" }],
-  themeColor: "#c4265d",
   applicationName: "Voccaria",
   openGraph: {
     title: "Voccaria",
@@ -84,7 +88,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <script
           id="paypal-script"
@@ -94,7 +98,7 @@ export default function RootLayout({
           as="script"
         ></script>
       </head>
-      <body suppressHydrationWarning={true} className={montserrat.className}>
+      <body className={montserrat.className}>
         <Providers>{children}</Providers>
         <SpeedInsights />
         <Analytics />

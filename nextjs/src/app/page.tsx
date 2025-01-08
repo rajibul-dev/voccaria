@@ -1,4 +1,4 @@
-import Mia from "./mia/mia";
+import Mia from "./_landing/mia";
 
 export default function Home() {
   return (
