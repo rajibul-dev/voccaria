@@ -1,0 +1,6 @@
+.btn {
+  background-color: var(--brand-primary-500);
+}
+.btn:hover {
+  background-color: var(--brand-primary-500--hover);
+}
