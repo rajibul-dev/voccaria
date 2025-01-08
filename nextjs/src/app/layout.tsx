@@ -32,9 +32,9 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://voccaria.com"),
-  title: "Voccaria - Voice Lessons, Singing Resources & Community",
+  title: "Voccaria - Free Voice Lessons, Resources, and Community",
   description:
-    "Voccaria is an organization created for the purpose of teaching people how to sing using sustainable, strain free techniques.",
+    "Voccaria is an organization dedicated to teaching people how to sing using sustainable, strain-free techniques, with a mission to provide a safe, supportive environment where anyone can learn to sing—for free.",
   icons: {
     icon: ["/logo-icon-pack/favicon.ico"],
     apple: ["/logo-icon-pack/apple-touch-icon.png"],
