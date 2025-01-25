@@ -6,7 +6,7 @@ import { useState } from "react";
 import Input from "@/app/_components/input";
 import styles from "./contact-form.module.css";
 import Button from "@/app/_components/button";
-import { Spinner, Text, useToast } from "@chakra-ui/react";
+import { Spinner, Text } from "@chakra-ui/react";
 import { sendEmail } from "@/lib/api";
 import toast from "react-hot-toast";
 
