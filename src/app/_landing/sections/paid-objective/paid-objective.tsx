@@ -32,7 +32,7 @@ import YourOneVoiceImage from "../../../../../public/images/youronevoice.png";
 
 export default function PaidObjective() {
   return (
-    <section id="objective" className={`block ${styles.section}`}>
+    <section id="objective" className={`section-block ${styles.section}`}>
       <div className={styles.continaer}>
         <div className={styles.textbox}>
           <HeadingPair

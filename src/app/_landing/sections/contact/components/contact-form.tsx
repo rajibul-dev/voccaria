@@ -6,7 +6,6 @@ import { useState } from "react";
 import Input from "@/app/_components/input";
 import styles from "./contact-form.module.css";
 import Button from "@/app/_components/button";
-import { Spinner, Text } from "@chakra-ui/react";
 import { sendEmail } from "@/lib/api";
 import toast from "react-hot-toast";
 
@@ -76,9 +75,9 @@ export default function ContactForm() {
       // method="POST"
     >
       {error && (
-        <Text color="red.400" fontSize="large" mb={4} fontWeight={600}>
+        <span className="text-red-600 font-semibold inline-block !mb-5">
           {error}
-        </Text>
+        </span>
       )}
 
       <Input
@@ -125,14 +124,12 @@ export default function ContactForm() {
         isTextarea={true}
       />
 
-      <Button size="small" className={styles.btn} disabled={isLoading}>
-        Submit
-        {isLoading && (
-          <>
-            &nbsp;&nbsp;&nbsp;
-            <Spinner display={"inline-block"} mr={-6} />
-          </>
-        )}
+      <Button
+        size="small"
+        className={`${styles.btn} ${isLoading ? "cursor-not-allowed" : ""}`}
+        disabled={isLoading}
+      >
+        {isLoading ? "Submitting..." : "Submit"}
       </Button>
     </form>
   );

@@ -29,7 +29,7 @@ const schedulingData = [
 
 export default function Scheduling() {
   return (
-    <section id="scheduling" className={`block ${styles.section}`}>
+    <section id="scheduling" className={`section-block ${styles.section}`}>
       <div className={`container ${styles.containerTwoCol}`}>
         <div className={`${styles.textPortion}`}>
           <HeadingPair

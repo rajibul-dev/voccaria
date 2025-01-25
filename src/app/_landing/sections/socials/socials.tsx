@@ -99,7 +99,10 @@ const socialItems = [
 
 export default function socials() {
   return (
-    <section id="socials" className={`block ${SocialsStyles.socialsSection}`}>
+    <section
+      id="socials"
+      className={`section-block ${SocialsStyles.socialsSection}`}
+    >
       <div className={SocialsStyles.wrapper}>
         {socialItems.map((item) => (
           <SocialButton

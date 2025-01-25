@@ -56,7 +56,7 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section id="testimonials" className={`block ${styles.section}`}>
+    <section id="testimonials" className={`section-block ${styles.section}`}>
       <div className={`container ${styles.container}`}>
         <HeadingPair
           tertiary="Testimonials"

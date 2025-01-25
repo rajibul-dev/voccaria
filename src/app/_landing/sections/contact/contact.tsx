@@ -12,7 +12,7 @@ import ContactForm from "./components/contact-form";
 
 export default function Contact() {
   return (
-    <section id="contact" className={`block ${styles.section}`}>
+    <section id="contact" className={`section-block ${styles.section}`}>
       <div
         className={`container ${styles.container} ${foreignStyles.containerTwoCol}`}
       >

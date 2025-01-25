@@ -13,7 +13,7 @@ import resourceImage from "@/../../public/images/resources.png";
 
 export default function Mission() {
   return (
-    <section id="mission" className={`block ${styles.section}`}>
+    <section id="mission" className={`section-block ${styles.section}`}>
       <div className={`container ${styles.container}`}>
         <HeadingPair
           tertiary="How we teach"
