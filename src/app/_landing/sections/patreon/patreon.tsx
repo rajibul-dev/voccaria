@@ -5,14 +5,11 @@ import styles from "./patreon.module.css";
 
 // image
 import PatreonAvatar from "../../../../../public/images/mia-patron.png";
-// import VoccariaLogoSrc from "../../../../../public/images/voccaria-logo.jpg";
-// import VoccariaLogoSrcVOnly from "../../../../../public/images/voccaria-logo-v-only.jpg";
 
 // components
 import Button from "@/app/_components/button";
 import HeadingPair from "@/app/_components/headingPair";
 import { ListItem, UnorderedList } from "@chakra-ui/react";
-// import InlineImageWithText from "@/app/components/inline-image-with-text";
 
 const patreonFeatures = [
   "I will hear YOUR recordings and react to them live",
@@ -49,7 +46,7 @@ export default function Patreon() {
               </>
             }
             className={styles.heading}
-            tertiaryClassName={styles.tertiary}
+            tertiaryClassName={`${styles.tertiary} !mb-[10px]`}
           />
 
           <UnorderedList
