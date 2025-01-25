@@ -10,10 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 const arrowUpIcon = (
-  <FontAwesomeIcon
-    icon={faArrowUp}
-    className={styles.icon}
-  />
+  <FontAwesomeIcon icon={faArrowUp} className={styles.icon} />
 );
 
 const BackToTop = () => {
