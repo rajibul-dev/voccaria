@@ -52,7 +52,7 @@ export default function Patreon() {
 
           <ul
             role="list"
-            className={`font-medium flex flex-col gap-4 ${styles.ul}`}
+            className={`font-medium flex flex-col gap-3.5 ${styles.ul}`}
           >
             {patreonFeatures.map((item) => (
               <li className="flex gap-4" key={item}>
@@ -60,7 +60,7 @@ export default function Patreon() {
                   icon={faCircle}
                   className="w-3 translate-y-[5px]"
                 />
-                <span>{item}</span>
+                <p>{item}</p>
               </li>
             ))}
           </ul>

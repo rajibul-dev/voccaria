@@ -42,6 +42,10 @@
   font-weight: 900;
 }
 
+.ul {
+  font-size: 1.8rem;
+}
+
 /* adjusting patreon component for adding the voccaria logo and more text */
 /* @media screen and (min-width: 725px) {
   .container {

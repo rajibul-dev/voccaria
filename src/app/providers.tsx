@@ -1,15 +1,10 @@
 "use client";
 
-import chakraTheme from "@/config/chakraui";
-import { ChakraProvider } from "@chakra-ui/react";
 import { Toaster } from "react-hot-toast";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <ChakraProvider
-      theme={chakraTheme}
-      cssVarsRoot=":root"
-    >
+    <>
       <Toaster
         position="bottom-center"
         gutter={12}
@@ -34,6 +29,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
         }}
       />
       {children}
-    </ChakraProvider>
+    </>
   );
 }
