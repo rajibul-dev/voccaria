@@ -14,7 +14,7 @@ export default function Contact() {
   return (
     <section id="contact" className={`section-block ${styles.section}`}>
       <div
-        className={`container ${styles.container} ${foreignStyles.containerTwoCol}`}
+        className={`old-container ${styles.container} ${foreignStyles.containerTwoCol}`}
       >
         <div className={styles.imgBox}>
           <Image

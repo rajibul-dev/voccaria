@@ -58,7 +58,7 @@ const pricingDetails = [
 export default function Pricing() {
   return (
     <section id="pricing" className={`section-block ${styles.section}`}>
-      <div className={`container`}>
+      <div className={`old-container`}>
         <HeadingPair
           tertiary="Paid Lessons"
           heading="Paid lesson options"

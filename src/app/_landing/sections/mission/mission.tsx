@@ -14,7 +14,7 @@ import resourceImage from "@/../../public/images/resources.png";
 export default function Mission() {
   return (
     <section id="mission" className={`section-block ${styles.section}`}>
-      <div className={`container ${styles.container}`}>
+      <div className={`old-container ${styles.container}`}>
         <HeadingPair
           tertiary="How we teach"
           heading="Free Learning, Real Transformation"

@@ -45,15 +45,9 @@ import AboutText from "./components/aboutText";
 // component
 export default function About() {
   return (
-    <section
-      id="about"
-      className={`${AboutStyles.about}`}
-    >
-      <div className={`container ${AboutStyles.container}`}>
-        <ImageWithBadge
-          srcImage={MiaImage}
-          srcBadge={MiaBadge}
-        />
+    <section id="about" className={`${AboutStyles.about}`}>
+      <div className={`old-container ${AboutStyles.container}`}>
+        <ImageWithBadge srcImage={MiaImage} srcBadge={MiaBadge} />
         <AboutText text={aboutMiaText} />
       </div>
     </section>
