@@ -13,6 +13,7 @@ import menuIcon from "../../../../public/menu.svg";
 // components
 import DesktopNav from "./components/desktop-nav";
 import MobileNav from "./components/mobile-nav";
+import OldLogo from "@/app/_components/OldLogo";
 
 // page navigation data
 const navData = [
@@ -60,21 +61,7 @@ export default function Navbar() {
   return (
     <header className={styles.block}>
       <div className={`${styles.container}`}>
-        <Image
-          src={miaLogo}
-          className={styles.logo}
-          alt="Mia heart logo | Voccaria"
-          sizes="(min-width: 1100px) 50px, (min-width: 500px) 45px, 40px"
-          placeholder="blur"
-          blurDataURL="../../../../public/images/mia-heart-logo.png"
-          onClick={() => {
-            window.scrollTo({
-              top: 0,
-              behavior: "smooth",
-            });
-          }}
-          priority
-        />
+        <OldLogo />
 
         <DesktopNav links={navData} />
 
