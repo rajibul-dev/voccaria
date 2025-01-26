@@ -96,7 +96,7 @@
   box-sizing: border-box;
 }
 
-html {
+html.old-page {
   font-size: 62.5%;
   overflow-x: hidden;
 }
@@ -105,7 +105,7 @@ html {
 .section-block {
   padding: 9.6rem 0;
 }
-.container {
+.old-page .container {
   max-width: 130rem;
   margin: 0 auto;
   padding: 0 5%;
@@ -202,13 +202,13 @@ button:disabled {
 /* Scale shift */
 /* 1118px */
 @media (max-width: 69.875em) {
-  html {
+  html.old-page {
     font-size: 56.25%;
   }
 }
 
 @media (max-width: 500px) {
-  html {
+  html.old-page {
     font-size: 50%;
   }
   :root {
