@@ -38,7 +38,7 @@ const { free, paid } = lessonOptionsObj;
 import styles from "./lessonOptions.module.css";
 
 // components
-import HeadingPair from "@/app/_components/headingPair";
+import HeadingPair from "@/app/_old-components/headingPair";
 import FeatureBox from "./components/featureBox";
 
 export default function LessonOptions() {

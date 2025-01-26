@@ -3,9 +3,9 @@
 import { useState } from "react";
 
 // styles
-import Input from "@/app/_components/input";
+import Input from "@/app/_old-components/input";
 import styles from "./contact-form.module.css";
-import Button from "@/app/_components/button";
+import Button from "@/app/_old-components/button";
 import { sendEmail } from "@/lib/api";
 import toast from "react-hot-toast";
 

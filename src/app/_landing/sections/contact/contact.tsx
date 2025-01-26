@@ -7,7 +7,7 @@ import ContactMeImg from "../../../../../public/images/contact-me.png";
 import Image from "next/image";
 
 // components
-import HeadingPair from "@/app/_components/headingPair";
+import HeadingPair from "@/app/_old-components/headingPair";
 import ContactForm from "./components/contact-form";
 
 export default function Contact() {

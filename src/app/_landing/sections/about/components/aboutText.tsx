@@ -1,4 +1,4 @@
-import { Essay } from "@/app/_components/essay";
+import { Essay } from "@/app/_old-components/essay";
 import AboutTextStyles from "./aboutText.module.css";
 
 interface AboutTextProps {

@@ -7,8 +7,8 @@ import styles from "./patreon.module.css";
 import PatreonAvatar from "../../../../../public/images/mia-patron.png";
 
 // components
-import Button from "@/app/_components/button";
-import HeadingPair from "@/app/_components/headingPair";
+import Button from "@/app/_old-components/button";
+import HeadingPair from "@/app/_old-components/headingPair";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 

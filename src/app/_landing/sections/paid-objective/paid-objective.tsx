@@ -23,7 +23,7 @@ const features = [
 import styles from "./paid-objective.module.css";
 
 // components
-import HeadingPair from "@/app/_components/headingPair";
+import HeadingPair from "@/app/_old-components/headingPair";
 import Features from "./components/features";
 
 // image

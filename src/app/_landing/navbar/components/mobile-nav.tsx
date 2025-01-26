@@ -8,7 +8,7 @@ import { createPortal } from "react-dom";
 import useOutsideClick from "@/app/_hooks/useOutsideClick";
 
 // components
-const Overlay = dynamic(() => import("@/app/_components/overlay"));
+const Overlay = dynamic(() => import("@/app/_old-components/overlay"));
 
 // styles
 import styles from "./mobile-nav.module.css";

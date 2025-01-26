@@ -4,7 +4,7 @@ import styles from "./featureBox.module.css";
 // icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
-import SubtleInfo from "@/app/_components/subtle-info";
+import SubtleInfo from "@/app/_old-components/subtle-info";
 
 const circleIcon = <FontAwesomeIcon icon={faCircle} className={styles.icon} />;
 

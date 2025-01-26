@@ -3,7 +3,7 @@ import TestimonialList from "./components/testimonial-list";
 import styles from "./testimonials.module.css";
 
 // components
-import HeadingPair from "@/app/_components/headingPair";
+import HeadingPair from "@/app/_old-components/headingPair";
 
 // testimonials
 const testimonials = [

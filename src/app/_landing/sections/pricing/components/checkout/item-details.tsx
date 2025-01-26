@@ -14,7 +14,7 @@ import {
   faCircleCheck,
   faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import Button from "@/app/_components/button";
+import Button from "@/app/_old-components/button";
 import dynamic from "next/dynamic";
 
 const checkIcon = (

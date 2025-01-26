@@ -3,7 +3,7 @@ import ScheduleButtons from "./components/schedule-buttons";
 import styles from "./scheduling.module.css";
 
 // components
-import HeadingPair from "@/app/_components/headingPair";
+import HeadingPair from "@/app/_old-components/headingPair";
 
 // image
 import scheduleImage from "../../../../../public/images/schedule.jpg";

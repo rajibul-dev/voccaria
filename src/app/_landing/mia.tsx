@@ -8,7 +8,7 @@ import Scheduling from "./sections/scheduling/scheduling";
 import Contact from "./sections/contact/contact";
 import Testimonials from "./sections/testimonials/testimonials";
 import Navbar from "./navbar/navbar";
-import BackToTop from "../_components/back-to-top";
+import BackToTop from "../_old-components/back-to-top";
 import Mission from "./sections/mission/mission";
 import SeoPurposeH1 from "./sections/seo-purpose-h1/seo-purpose-h1";
 

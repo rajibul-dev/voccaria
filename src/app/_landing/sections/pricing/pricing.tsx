@@ -2,7 +2,7 @@
 import styles from "./pricing.module.css";
 
 // componrnts
-import HeadingPair from "@/app/_components/headingPair";
+import HeadingPair from "@/app/_old-components/headingPair";
 import PricingCards from "./components/pricing-cards";
 
 // create the pricing credentials object (temp)

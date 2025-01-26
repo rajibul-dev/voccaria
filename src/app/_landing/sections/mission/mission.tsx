@@ -4,8 +4,8 @@ import Image from "next/image";
 import styles from "./mission.module.css";
 
 // components
-import HeadingPair from "@/app/_components/headingPair";
-import { Essay } from "@/app/_components/essay";
+import HeadingPair from "@/app/_old-components/headingPair";
+import { Essay } from "@/app/_old-components/essay";
 
 // images
 import lessonImage from "@/../../public/images/live-lesson.png";

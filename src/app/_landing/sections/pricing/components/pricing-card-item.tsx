@@ -1,12 +1,12 @@
 import React from "react";
 
 // styles
-import Modal from "@/app/_components/modal";
+import Modal from "@/app/_old-components/modal";
 import styles from "./pricing-card-item.module.css";
 import dynamic from "next/dynamic";
 
 // components
-import Button from "@/app/_components/button";
+import Button from "@/app/_old-components/button";
 
 const ClientCheckoutModalWindow = dynamic(
   () => import("./checkout/client-checkout-modal-window")

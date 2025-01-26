@@ -2,8 +2,8 @@
 
 import { useCallback, useState } from "react";
 import dynamic from "next/dynamic";
-import Modal from "@/app/_components/modal";
-import Button from "@/app/_components/button";
+import Modal from "@/app/_old-components/modal";
+import Button from "@/app/_old-components/button";
 
 import styles from "./client-checkout-modal-window.module.css";
 

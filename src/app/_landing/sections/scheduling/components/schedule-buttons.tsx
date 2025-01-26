@@ -1,5 +1,5 @@
 // styles
-import Button from "@/app/_components/button";
+import Button from "@/app/_old-components/button";
 import styles from "./schedule-buttons.module.css";
 
 interface ScheduleButtonsProps {
