@@ -19,6 +19,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 
 import { Providers } from "./providers";
+import { headers } from "next/headers";
 
 config.autoAddCss = false; /* eslint-disable import/first */
 
@@ -82,13 +83,21 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const headerList = await headers();
+  const pathname = headerList.get("x-current-path");
+  const isRoot = pathname === "/";
+
   return (
-    <html className="old-page" lang="en" suppressHydrationWarning>
+    <html
+      className={isRoot ? "old-page" : ""}
+      lang="en"
+      suppressHydrationWarning
+    >
       <head>
         <script
           id="paypal-script"
