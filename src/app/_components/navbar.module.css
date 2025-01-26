@@ -23,12 +23,6 @@
   cursor: pointer;
   width: 5rem;
 }
-.menuIcon {
-  display: flex;
-  height: 100%;
-  width: 3.7rem;
-  cursor: pointer;
-}
 
 /* Adjust navbar bigger screens */
 @media (min-width: 100em) {
@@ -43,8 +37,8 @@
 }
 
 /* show menu icon */
-@media (min-width: 58.5em) {
+/* @media (min-width: 58.5em) {
   .menuIcon {
     display: none;
   }
-}
+} */

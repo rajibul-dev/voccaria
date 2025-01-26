@@ -1,0 +1,35 @@
+.menuContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 2rem;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+.menuContainer:hover .menuIcon {
+}
+.menuIcon {
+  display: flex;
+  height: 100%;
+  width: 2rem;
+  cursor: pointer;
+  /* CHANGE COLOR */
+  fill: var(--gray-800);
+}
+.menuLabel {
+  font-size: 1.6rem;
+  /* CHANGE COLOR */
+  color: var(--gray-800);
+}
+
+@media (max-width: 32em) {
+  .menuContainer {
+    padding-inline: 0;
+  }
+  .menuIcon {
+    width: 3.6rem;
+  }
+  .menuLabel {
+    display: none;
+  }
+}

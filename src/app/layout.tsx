@@ -1,4 +1,3 @@
-// Import dotenv and configure it
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -20,6 +19,7 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 
 import { Providers } from "./providers";
 import { headers } from "next/headers";
+import Navbar from "./_components/navbar";
 
 config.autoAddCss = false; /* eslint-disable import/first */
 
@@ -89,7 +89,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const headerList = await headers();
-  const pathname = headerList.get("x-current-path");
+  const pathname = headerList.get("x-current-path") || "";
   const isRoot = pathname === "/";
 
   return (
@@ -108,7 +108,10 @@ export default async function RootLayout({
         ></script>
       </head>
       <body className={montserrat.className}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Navbar pathname={pathname} isRoot={isRoot} />
+          <div>{children}</div>
+        </Providers>
         <SpeedInsights />
         <Analytics />
       </body>

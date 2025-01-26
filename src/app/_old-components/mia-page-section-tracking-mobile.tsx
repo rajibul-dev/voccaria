@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import clsx from "clsx";
 import dynamic from "next/dynamic";
-import Image from "next/image";
+import MenuIcon from "/public/menu.svg";
 import { createPortal } from "react-dom";
 import useOutsideClick from "@/app/_hooks/useOutsideClick";
 
@@ -11,34 +11,24 @@ import useOutsideClick from "@/app/_hooks/useOutsideClick";
 const Overlay = dynamic(() => import("@/app/_old-components/overlay"));
 
 // styles
-import styles from "./mobile-nav.module.css";
+import styles from "./mia-page-section-tracking-mobile.module.css";
 
-interface MobileNavProps {
+interface MiaPageSectionTrackingMobileProps {
   links: { name: string; selector: string }[];
   navOpen: boolean;
-  menuIcon: any;
   onOpen: any;
 }
 
-const MobileNav: React.FC<MobileNavProps> = ({
-  links,
-  menuIcon,
-  navOpen,
-  onOpen,
-}) => {
+const MiaPageSectionTrackingMobile: React.FC<
+  MiaPageSectionTrackingMobileProps
+> = ({ links, navOpen, onOpen }) => {
   const ref: any = useOutsideClick(() => onOpen(false));
 
   const content = (
     <>
       <Overlay isOpen={navOpen}></Overlay>
       <nav ref={ref} className={clsx(styles.container, navOpen && styles.come)}>
-        <Image
-          className={styles.menuIcon}
-          src={menuIcon}
-          alt="3-line menu icon"
-          onClick={() => onOpen(false)}
-          priority
-        />
+        <MenuIcon className={styles.menuIcon} onClick={() => onOpen(false)} />
         <ul className={styles.flex}>
           {links.map((link) => (
             <li
@@ -87,4 +77,4 @@ const MobileNav: React.FC<MobileNavProps> = ({
   return createPortal(content, document?.body);
 };
 
-export default MobileNav;
+export default MiaPageSectionTrackingMobile;

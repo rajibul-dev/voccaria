@@ -10,7 +10,6 @@ export default function OldLogo() {
       className={`${styles.logo}`}
       alt="Mia heart logo | Voccaria"
       placeholder="blur"
-      blurDataURL="/public/images/mia-heart-logo.png"
       onClick={() => {
         window.scrollTo({
           top: 0,

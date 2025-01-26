@@ -3,15 +3,17 @@
 import React, { useEffect, useRef, useState } from "react";
 
 // styles
-import styles from "./desktop-nav.module.css";
+import styles from "./mia-page-section-tracking-desktop.module.css";
 
-interface DesktopNavProps {
+interface MiaPageSectionTrackingDesktopProps {
   links: { name: string; selector: string }[];
 }
 
 let scrollTimeout: any;
 
-const DesktopNav: React.FC<DesktopNavProps> = ({ links }) => {
+const MiaPageSectionTrackingDesktop: React.FC<
+  MiaPageSectionTrackingDesktopProps
+> = ({ links }) => {
   const [active, setActive] = useState("");
   const [clicked, setClicked] = useState(false);
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -20,7 +22,7 @@ const DesktopNav: React.FC<DesktopNavProps> = ({ links }) => {
     // Find elements
     links.forEach((link) => {
       sectionRefs.current[link.selector] = document?.getElementById(
-        link.selector,
+        link.selector
       ) as HTMLDivElement; // Assume sections are divs
     });
 
@@ -96,4 +98,4 @@ const DesktopNav: React.FC<DesktopNavProps> = ({ links }) => {
   );
 };
 
-export default DesktopNav;
+export default MiaPageSectionTrackingDesktop;
