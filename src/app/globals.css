@@ -1,6 +1,66 @@
 @import "tailwindcss";
 
 @theme {
+  --color-dull-violet-100: #f3eff6;
+  --color-dull-violet-200: #dccee4;
+  --color-dull-violet-300: #c4add2;
+  --color-dull-violet-400: #ad8cc0;
+  --color-dull-violet-500: #956bae;
+  --color-dull-violet-600: #7c5194;
+  --color-dull-violet-700: #603f73;
+  --color-dull-violet-800: #452d52;
+  --color-dull-violet-900: #291b31;
+
+  --color-my-violet-100: #f4eafa;
+  --color-my-violet-200: #dfc0f1;
+  --color-my-violet-300: #ca96e8;
+  --color-my-violet-400: #b56cdf;
+  --color-my-violet-500: #a042d6;
+  --color-my-violet-600: #8629bd;
+  --color-my-violet-700: #682093;
+  --color-my-violet-800: #4a1769;
+  --color-my-violet-900: #2d0e3f;
+
+  --color-my-pink-100: #fde7f2;
+  --color-my-pink-200: #fab7d8;
+  --color-my-pink-300: #f787be;
+  --color-my-pink-400: #f457a4;
+  --color-my-pink-500: #f1278a;
+  --color-my-pink-600: #d80e70;
+  --color-my-pink-700: #a80b57;
+  --color-my-pink-800: #78083e;
+  --color-my-pink-900: #480525;
+
+  --color-my-indigo-100: #e5ebff;
+  --color-my-indigo-200: #b3c3ff;
+  --color-my-indigo-300: #809bff;
+  --color-my-indigo-400: #4d73ff;
+  --color-my-indigo-500: #1a4bff;
+  --color-my-indigo-600: #0031e6;
+  --color-my-indigo-700: #0026b3;
+  --color-my-indigo-800: #001b80;
+  --color-my-indigo-900: #00104d;
+
+  --color-my-gold-100: #fff7e5;
+  --color-my-gold-200: #ffe8b3;
+  --color-my-gold-300: #ffd980;
+  --color-my-gold-400: #ffc94d;
+  --color-my-gold-500: #ffba1a;
+  --color-my-gold-600: #e6a000;
+  --color-my-gold-700: #b37d00;
+  --color-my-gold-800: #805900;
+  --color-my-gold-900: #4d3500;
+
+  --color-my-teal-100: #e9fbfb;
+  --color-my-teal-200: #bef4f3;
+  --color-my-teal-300: #92eceb;
+  --color-my-teal-400: #67e5e3;
+  --color-my-teal-500: #3bdddb;
+  --color-my-teal-600: #22c4c2;
+  --color-my-teal-700: #1a9897;
+  --color-my-teal-800: #136d6c;
+  --color-my-teal-900: #0b4141;
+
   --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
   --background-image-gradient-conic: conic-gradient(
     from 180deg at 50% 50%,
