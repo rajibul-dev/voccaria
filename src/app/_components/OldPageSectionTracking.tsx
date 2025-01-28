@@ -51,11 +51,17 @@ export default function OldPageSectionTracking() {
   return (
     <>
       <div
-        className={`${styles.menuContainer} font-medium hover:bg-gray-100/50`}
+        className={`${styles.menuContainer} font-medium hover:bg-gray-100/50 group`}
         onClick={() => setNavOpen((cur) => !cur)}
       >
-        <MenuIcon className={`${styles.menuIcon}`} />
-        <span className={`${styles.menuLabel}`}>On this page</span>
+        <MenuIcon
+          className={`${styles.menuIcon} fill-slate-600 group-hover:fill-my-pink-600 stroke-5`}
+        />
+        <span
+          className={`${styles.menuLabel} text-slate-600 group-hover:text-my-pink-600`}
+        >
+          On this page
+        </span>
       </div>
 
       <MiaPageSectionTrackingMobile

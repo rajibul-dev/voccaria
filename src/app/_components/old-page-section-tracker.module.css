@@ -6,20 +6,18 @@
   cursor: pointer;
   transition: all 0.1s;
 }
-.menuContainer:hover .menuIcon {
-}
 .menuIcon {
   display: flex;
   height: 100%;
   width: 2rem;
   cursor: pointer;
   /* CHANGE COLOR */
-  fill: var(--gray-800);
+  /* fill: var(--gray-800); */
 }
 .menuLabel {
   font-size: 1.6rem;
   /* CHANGE COLOR */
-  color: var(--gray-800);
+  /* color: var(--gray-800); */
 }
 
 @media (max-width: 32em) {
@@ -28,6 +26,7 @@
   }
   .menuIcon {
     width: 3.6rem;
+    margin-left: 2rem;
   }
   .menuLabel {
     display: none;

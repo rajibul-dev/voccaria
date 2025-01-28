@@ -31,6 +31,16 @@
   --color-my-pink-800: #78083e;
   --color-my-pink-900: #480525;
 
+  --color-my-warm-pink-100: #fce8f0;
+  --color-my-warm-pink-200: #fce8f0;
+  --color-my-warm-pink-300: #f7bbd2;
+  --color-my-warm-pink-400: #f18db4;
+  --color-my-warm-pink-500: #ec6097;
+  --color-my-warm-pink-600: #e63279;
+  --color-my-warm-pink-700: #9f134a;
+  --color-my-warm-pink-800: #720e35;
+  --color-my-warm-pink-900: #440820;
+
   --color-my-indigo-100: #e5ebff;
   --color-my-indigo-200: #b3c3ff;
   --color-my-indigo-300: #809bff;
@@ -66,6 +76,10 @@
     from 180deg at 50% 50%,
     var(--tw-gradient-stops)
   );
+}
+
+.header-margin {
+  margin-top: 11rem;
 }
 
 /*
@@ -156,7 +170,7 @@
   box-sizing: border-box;
 }
 
-html.old-page {
+html.old-scaling {
   font-size: 62.5%;
   overflow-x: hidden;
 }
@@ -262,13 +276,13 @@ button:disabled {
 /* Scale shift */
 /* 1118px */
 @media (max-width: 69.875em) {
-  html.old-page {
+  html.old-scaling {
     font-size: 56.25%;
   }
 }
 
 @media (max-width: 500px) {
-  html.old-page {
+  html.old-scaling {
     font-size: 50%;
   }
   :root {

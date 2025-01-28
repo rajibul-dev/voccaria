@@ -10,6 +10,7 @@ import type { Viewport } from "next";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
+import styles from "./conditionals.module.css";
 
 // The following import prevents a Font Awesome icon server-side rendering bug,
 // where the icons flash from a very large icon down to a properly sized one:
@@ -17,9 +18,9 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 // Prevent fontawesome from adding its CSS since we did it manually above:
 import { config } from "@fortawesome/fontawesome-svg-core";
 
+import Navbar from "./_components/navbar";
 import { Providers } from "./providers";
 import { headers } from "next/headers";
-import Navbar from "./_components/navbar";
 
 config.autoAddCss = false; /* eslint-disable import/first */
 
@@ -94,7 +95,7 @@ export default async function RootLayout({
 
   return (
     <html
-      className={isRoot ? "old-page" : ""}
+      className={isRoot ? "old-scaling" : ""}
       lang="en"
       suppressHydrationWarning
     >
@@ -109,8 +110,8 @@ export default async function RootLayout({
       </head>
       <body className={montserrat.className}>
         <Providers>
-          <Navbar pathname={pathname} isRoot={isRoot} />
-          <div>{children}</div>
+          <Navbar />
+          <div className={isRoot ? styles.headerMargin : ""}>{children}</div>
         </Providers>
         <SpeedInsights />
         <Analytics />

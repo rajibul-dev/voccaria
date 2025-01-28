@@ -9,7 +9,6 @@ export default function OldLogo() {
       src={miaLogo}
       className={`${styles.logo}`}
       alt="Mia heart logo | Voccaria"
-      placeholder="blur"
       onClick={() => {
         window.scrollTo({
           top: 0,

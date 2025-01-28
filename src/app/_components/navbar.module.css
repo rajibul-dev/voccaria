@@ -1,27 +1,16 @@
 .block {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  z-index: 65;
   height: 7.2rem;
-  background-color: var(--white-transparent);
   box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.03);
-  backdrop-filter: blur(4px);
 }
 .container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   gap: 2rem;
-  height: 100%;
   max-width: 150rem;
-  margin: 0 auto;
   padding: 0 5%;
 }
-.logo {
-  cursor: pointer;
-  width: 5rem;
+
+.navLinkWrapper {
+  gap: 2rem;
+  font-size: 1.6rem;
 }
 
 /* Adjust navbar bigger screens */
@@ -31,14 +20,9 @@
   }
 }
 
-@media (max-width: 73em) and (min-width: 66em) {
-}
-@media (max-width: 66em) and (min-width: 53em) {
-}
-
-/* show menu icon */
-/* @media (min-width: 58.5em) {
-  .menuIcon {
-    display: none;
+@media (max-width: 27em) {
+  .navLinkWrapper {
+    font-size: 1.85rem;
+    gap: 2.8rem;
   }
-} */
+}
