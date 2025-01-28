@@ -15,7 +15,7 @@ import Image from "next/image";
 import styles from "./modal.module.css";
 
 // icons
-import crossIcon from "../../../public/close.svg";
+import CrossIcon from "/public/close.svg";
 
 // components
 import Overlay from "./overlay";
@@ -117,14 +117,7 @@ const Window: React.FC<WindowProps> = ({ children, name, heading }) => {
         <header className={styles.header}>
           <h2 className={styles.heading}>{heading}</h2>
           {showCloseIcon && (
-            <Image
-              onClick={close}
-              className={styles.crossIcon}
-              alt="close icon"
-              src={crossIcon}
-              placeholder="blur"
-              blurDataURL="../../../public/close.svg"
-            />
+            <CrossIcon onClick={close} className={styles.crossIcon} />
           )}
         </header>
         <main className={styles.main}>

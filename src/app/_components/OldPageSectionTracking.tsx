@@ -55,10 +55,10 @@ export default function OldPageSectionTracking() {
         onClick={() => setNavOpen((cur) => !cur)}
       >
         <MenuIcon
-          className={`${styles.menuIcon} fill-slate-600 group-hover:fill-my-pink-600 stroke-5`}
+          className={`${styles.menuIcon} fill-slate-700 group-hover:fill-my-pink-600 stroke-5`}
         />
         <span
-          className={`${styles.menuLabel} text-slate-600 group-hover:text-my-pink-600`}
+          className={`${styles.menuLabel} text-slate-700 group-hover:text-my-pink-600`}
         >
           On this page
         </span>

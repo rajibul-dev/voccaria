@@ -6,7 +6,7 @@ interface PaypalButtonProps {
   amount: number;
   currencyCode: string;
   name: string;
-  onPaymentDetails: any;
+  onPaymentDetails?: any;
 }
 
 const PaypalButton: React.FC<PaypalButtonProps> = ({
@@ -59,15 +59,10 @@ const PaypalButton: React.FC<PaypalButtonProps> = ({
         })
         .render(paypal.current);
     },
-    [amount, currencyCode, name, onPaymentDetails],
+    [amount, currencyCode, name, onPaymentDetails]
   );
 
-  return (
-    <div
-      style={{ marginBottom: "-10px" }}
-      ref={paypal}
-    ></div>
-  );
+  return <div style={{ marginBottom: "-10px" }} ref={paypal}></div>;
 };
 
 export default PaypalButton;

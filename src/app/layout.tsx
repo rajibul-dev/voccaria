@@ -10,7 +10,6 @@ import type { Viewport } from "next";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
-import styles from "./conditionals.module.css";
 
 // The following import prevents a Font Awesome icon server-side rendering bug,
 // where the icons flash from a very large icon down to a properly sized one:
@@ -111,7 +110,7 @@ export default async function RootLayout({
       <body className={montserrat.className}>
         <Providers>
           <Navbar />
-          <div className={isRoot ? styles.headerMargin : ""}>{children}</div>
+          <div>{children}</div>
         </Providers>
         <SpeedInsights />
         <Analytics />

@@ -40,7 +40,7 @@ const Button: React.FC<ButtonProps> = ({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className={`${ButtonStyles.button} ${ButtonStyles[type]} ${ButtonStyles[size]} ${className}`}
+        className={`${ButtonStyles.button} ${ButtonStyles[type]} ${ButtonStyles[size]} ${className} cursor-pointer`}
         style={displayStyle}
         {...props}
       >
@@ -54,7 +54,7 @@ const Button: React.FC<ButtonProps> = ({
     return (
       <button
         onClick={onClick}
-        className={`${ButtonStyles.button} ${ButtonStyles[type]} ${ButtonStyles[size]} ${className}`}
+        className={`${ButtonStyles.button} ${ButtonStyles[type]} ${ButtonStyles[size]} ${className} cursor-pointer`}
         style={displayStyle}
         {...props}
       >
