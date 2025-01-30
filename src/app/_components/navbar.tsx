@@ -5,11 +5,10 @@ import styles from "./navbar.module.css";
 
 // components
 import OldLogo from "@/app/_components/OldLogo";
-import OldPageSectionTracking from "./OldPageSectionTracking";
 import Link from "next/link";
 import { useIsOldPage } from "../_context/IsOldPage";
 import Logo from "./Logo";
-import Modal from "../_old-components/modal";
+import OldPageSectionTracking from "./OldPageSectionTracking";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -18,6 +17,8 @@ const navLinks = [
 
 export default function Navbar() {
   const { isRoot, pathname } = useIsOldPage();
+
+  if (pathname?.startsWith("/studio")) return null;
 
   return (
     <header
