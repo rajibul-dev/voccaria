@@ -9,8 +9,18 @@ export default {
       type: 'string',
     },
     {
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: {
+        source: 'title',
+        maxLength: 96,
+      },
+      validation: (Rule: any) => Rule.required(),
+    },
+    {
       name: 'description',
-      title: 'Some description',
+      title: 'Description (optional)',
       type: 'text',
     },
   ],
