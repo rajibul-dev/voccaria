@@ -11,18 +11,22 @@ export default {
       name: 'title',
       type: 'string',
       title: 'Title',
+      description: `Note: the title will be the Heading 1 (H1) of the post's page, so please don't use another H1 in the main content.`,
     },
     {
       name: 'slug',
       type: 'slug',
       title: 'Slug / ID of this post',
+      description: `This ID sets the post’s URL: "voccaria.com/blog/<slug>". Click "Generate" after adding the title.`,
       options: {
         source: 'title',
       },
+      validation: (Rule: any) => Rule.required(),
     },
     {
       name: 'ofCategory',
-      title: 'Belongs to which Category?',
+      title: 'Category',
+      description: 'Select the category this item belongs to.',
       type: 'reference',
       to: {type: 'category'},
     },
@@ -62,6 +66,12 @@ export default {
           },
         },
       ],
+    },
+    {
+      name: 'postTags',
+      title: 'Tags (optional)',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'category'}]}],
     },
   ],
 
