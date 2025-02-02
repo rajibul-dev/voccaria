@@ -6,7 +6,7 @@ import { useState } from "react";
 import Input from "@/app/_old-components/input";
 import styles from "./contact-form.module.css";
 import Button from "@/app/_old-components/button";
-import { sendEmail } from "@/lib/api";
+import { sendEmail } from "@/lib/sendEmailAPICall";
 import toast from "react-hot-toast";
 
 const initValues = { name: "", email: "", subject: "", message: "" };
