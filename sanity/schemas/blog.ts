@@ -73,18 +73,26 @@ export default {
       type: 'array',
       of: [{type: 'reference', to: [{type: 'category'}]}],
     },
+    {
+      name: 'postIndexInCategory',
+      title: 'Post index in category',
+      description:
+        'This is to determine the order of post when showing it in a structed way with categories. Specefically on the discord style sidebar and the blog index screen.',
+      type: 'number',
+    },
   ],
 
   preview: {
     select: {
       title: 'title',
       category: 'ofCategory.title',
+      postIndex: 'postIndexInCategory',
       description: 'smallDescription',
     },
     prepare(selection: any) {
-      const {category} = selection
+      const {category, postIndex} = selection
       return Object.assign({}, selection, {
-        subtitle: category && `${category}`,
+        subtitle: category && `${category}${postIndex ? ` • ${postIndex}` : ''}`,
       })
     },
   },
