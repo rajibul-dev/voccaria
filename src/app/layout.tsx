@@ -17,7 +17,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 // Prevent fontawesome from adding its CSS since we did it manually above:
 import { config } from "@fortawesome/fontawesome-svg-core";
 
-import Navbar from "./_components/navbar";
+import Navbar from "./_components/Navbar";
 import { Providers } from "./providers";
 import { headers } from "next/headers";
 
