@@ -46,7 +46,6 @@ export const POSTS_IN_CATEGORY_SORTBY_INDEX = (categorySlug: string) => `
     slug,
     smallDescription,
     postIndexInCategory,
-    content
   }
 `;
 
@@ -59,6 +58,24 @@ export const POSTS_IN_CATEGORY_SORTBY_TIME_ASC = (categorySlug: string) => `
     smallDescription,
     postIndexInCategory,
     _createdAt,
+  }
+`;
+
+export const GET_POST = (slug: string) => `
+  *[_type == "blog" && slug.current == "${slug}"][0] {
+    _id,
+    title,
+    slug,
+    ofCategory->{
+      title,
+      slug
+    },
+    smallDescription,
+    postTags[]->{
+      title,
+      slug
+    },
+    postIndexInCategory,
     content
   }
 `;
