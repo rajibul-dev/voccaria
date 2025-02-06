@@ -20,7 +20,8 @@ export default function Page() {
             <p className="text-lg text-slate-800 max-w-[54ch] mb-8 max-sm:text-base max-sm:mb-5.5">
               This blog is a resource for teaching you singing / about the
               voice. I'm Mia and I am the founder of Voccaria, and the author of
-              this blog. The posts will be structred sequentially like a course.
+              this blog. The posts will be structured sequentially like a
+              course.
             </p>
 
             <BlogSearchBar />
