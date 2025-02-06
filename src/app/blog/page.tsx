@@ -29,6 +29,7 @@ export default function Page() {
           <div>
             <Image
               src={blogIllustration}
+              priority
               alt="Voccaria blog illustration"
               className="w-70 h-80 object-cover rounded-full hue-rotate-[340deg]"
             />
