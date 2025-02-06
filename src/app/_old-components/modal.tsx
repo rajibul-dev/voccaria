@@ -7,9 +7,8 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import useOutsideClick from "../_hooks/useOutsideClick";
 import { createPortal } from "react-dom";
-import Image from "next/image";
+import useOutsideClick from "../_hooks/useOutsideClick";
 
 // styles
 import styles from "./modal.module.css";
