@@ -109,7 +109,7 @@ export default async function RootLayout({
           // @ts-ignore
           as="script"
         ></script>
-        <script src="/theme.js"></script>
+        <script src="/theme.js" async></script>
       </head>
       <body className={`${montserrat.className}`}>
         <Providers>
