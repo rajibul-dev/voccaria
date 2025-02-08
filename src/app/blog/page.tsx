@@ -10,14 +10,14 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <main className="px-6">
+    <main className="px-6 dark:bg-gray-900 min-h-screen transition-colors">
       <section className="pt-32">
         <div className="flex max-w-5xl mx-auto items-center justify-between gap-8 max-md:flex-col">
           <div className="">
-            <h1 className="mb-4 text-5xl font-bold text-slate-600 tracking-tight max-sm:text-4xl max-sm:mb-3">
+            <h1 className="mb-4 text-5xl font-bold text-slate-600 tracking-tight max-sm:text-4xl max-sm:mb-3 dark:text-my-pink-300">
               Voccaria Blog
             </h1>
-            <p className="text-lg text-slate-800 max-w-[54ch] mb-8 max-sm:text-base max-sm:mb-5.5">
+            <p className="text-lg text-slate-800 max-w-[54ch] mb-8 max-sm:text-base max-sm:mb-5.5 dark:text-gray-50 font-medium">
               This blog is a resource for teaching you singing / about the
               voice. I'm Mia and I am the founder of Voccaria, and the author of
               this blog. The posts will be structured sequentially like a
