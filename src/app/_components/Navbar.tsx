@@ -50,8 +50,6 @@ export default function Navbar() {
               !isRoot ? "dark:text-slate-200" : ""
             }`}
           >
-            {!isRoot && <DarkModeToggler />}
-
             {navLinks.map(({ href, label }) => (
               <li className={`${isRoot ? styles.li : ""} h-full`} key={href}>
                 <Link
@@ -73,6 +71,8 @@ export default function Navbar() {
                 </Link>
               </li>
             ))}
+
+            {!isRoot && <DarkModeToggler />}
 
             {isRoot && (
               <li>

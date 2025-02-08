@@ -30,11 +30,11 @@ export default function DarkModeToggler() {
   }
 
   return (
-    <li
+    <button
       onClick={toggleDarkMode}
-      className="*:fill-slate-600 *:dark:fill-slate-200 *:transition-colors cursor-pointer *:w-7 *:h-7 px-2 py-1.5 hover:bg-slate-100 hover:dark:bg-slate-700 transition-colors rounded-sm *:max-sm:w-6 *:-max-sm:h-6"
+      className="*:fill-slate-600 *:dark:fill-slate-200 *:transition-colors cursor-pointer *:w-7 *:h-7 px-2 py-1.5 hover:bg-slate-100 hover:dark:bg-slate-700 transition-colors rounded-sm"
     >
       {theme === "light" ? <IoMoon /> : <MdLightMode />}
-    </li>
+    </button>
   );
 }
