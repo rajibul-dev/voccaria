@@ -51,7 +51,7 @@ export default function OldPageSectionTracking() {
   return (
     <>
       <div
-        className={`${styles.menuContainer} font-medium hover:bg-gray-100/50 group`}
+        className={`${styles.menuContainer} font-medium hover:bg-gray-100/50 group rounded-lg`}
         onClick={() => setNavOpen((cur) => !cur)}
       >
         <MenuIcon
