@@ -24,7 +24,6 @@
   grid-row: 2/3;
   justify-self: start;
   width: 58rem;
-  z-index: -55;
 }
 .para1 {
   grid-column: 1/5;
@@ -64,7 +63,6 @@
   }
   .resourceImg {
     user-select: none;
-    z-index: -999999;
     transform: scale(1.3);
   }
 }

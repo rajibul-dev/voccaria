@@ -8,8 +8,8 @@ import HeadingPair from "@/app/_old-components/headingPair";
 import { Essay } from "@/app/_old-components/essay";
 
 // images
-import lessonImage from "@/../../public/images/live-lesson.png";
-import resourceImage from "@/../../public/images/resources-illustration.png";
+import lessonImage from "/public/images/live-lesson.png";
+import resourceImage from "/public/images/resources-illustration.png";
 
 export default function Mission() {
   return (
@@ -86,6 +86,7 @@ export default function Mission() {
             src={resourceImage}
             alt="Internet resources illustration"
             placeholder="blur"
+            priority
           />
         </div>
       </div>
