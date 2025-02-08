@@ -6,7 +6,7 @@ import styles from "./scheduling.module.css";
 import HeadingPair from "@/app/_old-components/headingPair";
 
 // image
-import scheduleImage from "../../../../../public/images/schedule.jpg";
+import scheduleImage from "/public/images/schedule.jpg";
 import Image from "next/image";
 
 // scheduling button text and links
@@ -45,7 +45,7 @@ export default function Scheduling() {
             src={scheduleImage}
             alt="Booking a date illustration art vector graphic"
             placeholder="blur"
-            blurDataURL="../../../../../public/images/schedule.jpg"
+            blurDataURL="/public/images/schedule.jpg"
             // sizes="(min-width: 1220px) calc(-3.65vw + 545px), (min-width: 820px) calc(37.89vw + 45px), (min-width: 520px) 450px, (min-width: 480px) calc(250vw - 800px), calc(81.25vw + 26px)"
           />
         </div>

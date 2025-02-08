@@ -38,8 +38,8 @@ import AboutStyles from "./about.module.css";
 import ImageWithBadge from "./components/imageWithBadge";
 
 // images..
-import MiaImage from "../../../../../public/images/Mia.jpeg";
-import MiaBadge from "../../../../../public/images/vtt-badge.png";
+import MiaImage from "/public/images/Mia.jpeg";
+import MiaBadge from "/public/images/vtt-badge.png";
 import AboutText from "./components/aboutText";
 
 // component

@@ -9,7 +9,7 @@ import {
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 // import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import streamElementsIcon from "../../../../../public/images/streamelements-logo.png";
+import streamElementsIcon from "/public/images/streamelements-logo.png";
 
 const discordIcon = (
   <FontAwesomeIcon icon={faDiscord} className={SocialsStyles.icon} />
@@ -78,7 +78,7 @@ const socialItems = [
         src={streamElementsIcon}
         alt="StreamElements logo"
         placeholder="blur"
-        blurDataURL={"../../../../../public/images/streamelements-logo.png"}
+        blurDataURL={"/public/images/streamelements-logo.png"}
         className={SocialsStyles.streamElementsLogo}
         // sizes="(min-width: 1980px) 57px, 46px"
         priority

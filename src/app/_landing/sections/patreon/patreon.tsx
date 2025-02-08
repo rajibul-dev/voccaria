@@ -4,7 +4,7 @@ import Image from "next/image";
 import styles from "./patreon.module.css";
 
 // image
-import PatreonAvatar from "../../../../../public/images/mia-patron.png";
+import PatreonAvatar from "/public/images/mia-patron.png";
 
 // components
 import Button from "@/app/_old-components/button";
