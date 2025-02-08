@@ -9,7 +9,7 @@ import { Essay } from "@/app/_old-components/essay";
 
 // images
 import lessonImage from "@/../../public/images/live-lesson.png";
-import resourceImage from "@/../../public/images/resources.png";
+import resourceImage from "@/../../public/images/resources-illustration.png";
 
 export default function Mission() {
   return (
@@ -59,7 +59,6 @@ export default function Mission() {
             alt="Mia voice teacher one-on-one free lesson"
             placeholder="blur"
             blurDataURL="@/../../public/images/live-lesson.png"
-            // sizes="(min-width: 1320px) calc(-3.27vw + 593px), (min-width: 900px) calc(37.25vw + 66px), (min-width: 640px) 495px, (min-width: 500px) calc(37.5vw + 263px), 83.89vw"
             priority
           />
 
@@ -88,8 +87,7 @@ export default function Mission() {
             src={resourceImage}
             alt="Internet resources illustration"
             placeholder="blur"
-            blurDataURL="@/../../public/images/resources.png"
-            // sizes="(min-width: 1320px) calc(-3.27vw + 593px), (min-width: 900px) calc(37.25vw + 66px), (min-width: 640px) 495px, (min-width: 500px) calc(37.5vw + 263px), 83.89vw"
+            blurDataURL="/public/images/resources-illustration.png"
           />
         </div>
       </div>

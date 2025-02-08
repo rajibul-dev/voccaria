@@ -13,7 +13,7 @@
   width: 100%;
 }
 .image {
-  transform: scale(1.7) translateX(-9%);
+  transform: scale(1.4) translateX(-11%);
 }
 
 @media (max-width: 50.5em) {
