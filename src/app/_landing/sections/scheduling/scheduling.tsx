@@ -45,7 +45,7 @@ export default function Scheduling() {
             src={scheduleImage}
             alt="Booking a date illustration art vector graphic"
             placeholder="blur"
-            blurDataURL="/public/images/schedule.jpg"
+            blurDataURL="@/public/images/schedule.jpg"
           />
         </div>
       </div>
