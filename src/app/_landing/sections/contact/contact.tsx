@@ -22,6 +22,7 @@ export default function Contact() {
             src={ContactMeImg}
             alt="Contact form, contact me illustration"
             placeholder="blur"
+            blurDataURL="/public/images/contact-me-illustration.png"
           />
         </div>
         <div className={styles.textPortion}>

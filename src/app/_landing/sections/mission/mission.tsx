@@ -58,6 +58,7 @@ export default function Mission() {
             src={lessonImage}
             alt="Mia voice teacher one-on-one free lesson"
             placeholder="blur"
+            blurDataURL="/public/images/live-lesson.png"
             priority
           />
 
@@ -86,6 +87,7 @@ export default function Mission() {
             src={resourceImage}
             alt="Internet resources illustration"
             placeholder="blur"
+            blurDataURL="/public/images/resources-illustration.png"
             priority
           />
         </div>

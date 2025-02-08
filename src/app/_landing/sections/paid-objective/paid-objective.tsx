@@ -47,6 +47,7 @@ export default function PaidObjective() {
           src={YourOneVoiceImage}
           alt="Your One Voice discord server channel structure"
           placeholder="blur"
+          blurDataURL="/public/images/youronevoice.png"
           sizes="(min-width: 2380px) calc(-5vw + 373px), (min-width: 1100px) calc(-1.59vw + 292px), (min-width: 940px) 248px, (min-width: 800px) calc(28.33vw - 13px), (min-width: 500px) 270px, (min-width: 460px) 240px, 65.71vw"
         />
       </div>
