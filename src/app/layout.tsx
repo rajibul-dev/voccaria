@@ -109,7 +109,8 @@ export default async function RootLayout({
           // @ts-ignore
           as="script"
         ></script>
-        <script src="/initialLoadAdjustments.js" async></script>
+        <link rel="preload" href="/initialLoadAdjustments.js" as="script" />
+        <script src="/initialLoadAdjustments.js" defer></script>
       </head>
       <body className={`${montserrat.className} dark:bg-gray-900`}>
         <Providers>
