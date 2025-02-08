@@ -14,7 +14,7 @@ import SeoPurposeH1 from "./_landing/sections/seo-purpose-h1/seo-purpose-h1";
 export default function Page() {
   return (
     <>
-      <main>
+      <main className="bg-white">
         <SeoPurposeH1 />
         <About />
         <Socials />

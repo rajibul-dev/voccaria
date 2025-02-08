@@ -109,9 +109,9 @@ export default async function RootLayout({
           // @ts-ignore
           as="script"
         ></script>
-        <script src="/theme.js" async></script>
+        <script src="/initialLoadAdjustments.js" async></script>
       </head>
-      <body className={`${montserrat.className}`}>
+      <body className={`${montserrat.className} dark:bg-gray-900`}>
         <Providers>
           <Navbar />
           <div>{children}</div>

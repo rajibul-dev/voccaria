@@ -78,7 +78,6 @@ const socialItems = [
         src={streamElementsIcon}
         alt="StreamElements logo"
         placeholder="blur"
-        blurDataURL={"/public/images/streamelements-logo.png"}
         className={SocialsStyles.streamElementsLogo}
         // sizes="(min-width: 1980px) 57px, 46px"
         priority
