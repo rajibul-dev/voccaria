@@ -19,6 +19,7 @@ const ImageWithBadge: React.FC<ImageWithBadgeProps> = ({
         sizes="(min-width: 1380px) calc(-3.95vw + 510px), (min-width: 900px) calc(30vw + 47px), (min-width: 580px) 54vw, (min-width: 500px) 81.67vw, 75.56vw"
         alt="Mia Image"
         placeholder="blur"
+        blurDataURL="/public/images/Mia.jpeg"
         priority
       />
       <Image
