@@ -8,6 +8,7 @@
   background-color: var(--brand-primary-500);
   border-radius: 50%;
   transition: all 0.2s;
+  cursor: pointer;
 }
 .button:hover {
   background-color: var(--brand-primary-500--hover);
