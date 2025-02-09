@@ -1,0 +1,31 @@
+import { client } from "./sanityClient";
+import * as queries from "./sanityQueries";
+
+// Fetch all blog posts
+export const getAllBlogPosts = async () => {
+  return await client.fetch(queries.ALL_BLOG_POSTS);
+};
+
+// Fetch paginated blog posts
+export const getPaginatedBlogPosts = async (start = 0, limit = 10) => {
+  return await client.fetch(queries.ALL_BLOG_POSTS_PAGINATED(start, limit));
+};
+
+// Fetch posts in a category sorted by index
+export const getPostsInCategoryByIndex = async (categorySlug: string) => {
+  return await client.fetch(
+    queries.POSTS_IN_CATEGORY_SORTBY_INDEX(categorySlug)
+  );
+};
+
+// Fetch posts in a category sorted by creation time
+export const getPostsInCategoryByTimeAsc = async (categorySlug: string) => {
+  return await client.fetch(
+    queries.POSTS_IN_CATEGORY_SORTBY_TIME_ASC(categorySlug)
+  );
+};
+
+// Fetch a single post by slug
+export const getPost = async (slug: string) => {
+  return await client.fetch(queries.GET_POST(slug));
+};
