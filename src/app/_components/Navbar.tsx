@@ -6,10 +6,10 @@ import styles from "./navbar.module.css";
 // components
 import OldLogo from "@/app/_components/OldLogo";
 import Link from "next/link";
-import { useIsOldPage } from "../_context/IsOldPage";
 import Logo from "./Logo";
 import OldPageSectionTracking from "./OldPageSectionTracking";
 import DarkModeToggler from "./DarkModeToggler";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -17,9 +17,8 @@ const navLinks = [
 ];
 
 export default function Navbar() {
-  const { isRoot, pathname } = useIsOldPage();
-
-  if (pathname?.startsWith("/studio")) return null;
+  const pathname = usePathname();
+  const isRoot = pathname === "/";
 
   return (
     <header
