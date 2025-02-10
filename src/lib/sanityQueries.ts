@@ -13,13 +13,11 @@ export const ALL_BLOG_POSTS = `
       "currentSlug": slug.current
     },
     _createdAt
-  } | order(postIndexInCategory asc)
+  } | order(_createdAt desc)
 `;
 
 export const ALL_BLOG_POSTS_PAGINATED = (start = 0, limit = 10) => `
-  *[_type == "blog"] | order(postIndexInCategory asc) [${start}...${
-    start + limit
-  }] {
+  *[_type == "blog"] | order(_createdAt desc) [${start}...${start + limit}] {
     _id,
     title,
     "currentSlug": slug.current,
@@ -32,8 +30,8 @@ export const ALL_BLOG_POSTS_PAGINATED = (start = 0, limit = 10) => `
       title,
       slug
     },
+    _createdAt,
     postIndexInCategory,
-    content
   }
 `;
 
@@ -78,3 +76,5 @@ export const GET_POST = (slug: string) => `
     content
   }
 `;
+
+export const TOTAL_BLOG_POSTS_COUNT = `count(*[_type == "blog"])`;

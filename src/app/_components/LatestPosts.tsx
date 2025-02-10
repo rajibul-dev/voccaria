@@ -1,12 +1,19 @@
 import { formatDateTime } from "@/lib/dateFns";
-import { getAllBlogPosts } from "@/lib/sanityFetchers";
+import {
+  getPaginatedBlogPosts,
+  getTotalBlogPostsCount,
+} from "@/lib/sanityFetchers";
 import Link from "next/link";
+import LoadMoreButton from "./LoadMoreButton";
+
+const INITIAL_LIMIT = 5;
 
 export default async function LatestPosts() {
-  const posts = await getAllBlogPosts();
+  const posts = await getPaginatedBlogPosts(0, INITIAL_LIMIT);
+  const totalPosts = await getTotalBlogPostsCount();
 
   return (
-    <ul className="flex flex-col gap-5">
+    <ul className="flex flex-col items-center gap-5">
       {posts.map(
         ({
           title,
@@ -34,6 +41,10 @@ export default async function LatestPosts() {
             </Link>
           </li>
         ),
+      )}
+
+      {totalPosts > INITIAL_LIMIT && (
+        <LoadMoreButton initialLimit={INITIAL_LIMIT} totalPosts={totalPosts} />
       )}
     </ul>
   );

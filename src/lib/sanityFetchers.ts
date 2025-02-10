@@ -37,3 +37,8 @@ export const getPostsInCategoryByTimeAsc = async (
 export const getPost = async (slug: string): Promise<BlogPost> => {
   return await client.fetch<BlogPost>(queries.GET_POST(slug));
 };
+
+// Get total post count
+export const getTotalBlogPostsCount = async (): Promise<number> => {
+  return await client.fetch(queries.TOTAL_BLOG_POSTS_COUNT);
+};
