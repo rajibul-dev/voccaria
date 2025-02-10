@@ -112,7 +112,7 @@ export default async function RootLayout({
         <link rel="preload" href="/initialLoadAdjustments.js" as="script" />
         <script src="/initialLoadAdjustments.js" defer></script>
       </head>
-      <body className={`${montserrat.className} dark:bg-gray-900`}>
+      <body className={`${montserrat.className} antialiased dark:bg-gray-900`}>
         <Providers>
           <Navbar />
           <div>{children}</div>
