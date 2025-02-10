@@ -5,6 +5,8 @@ import blogIllustration from "/public/images/blog-illustration.jpg";
 import BlogSearchBar from "../_components/BlogSearchBar";
 import LatestPosts from "../_components/LatestPosts";
 
+export const revalidate = 0; // for now
+
 export const metadata: Metadata = {
   title: "Blog",
 };
