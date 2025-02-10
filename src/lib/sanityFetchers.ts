@@ -1,3 +1,5 @@
+"use server";
+
 import { client } from "./sanityClient";
 import * as queries from "./sanityQueries";
 
