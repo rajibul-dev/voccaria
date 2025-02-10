@@ -22,9 +22,4 @@
 
   // Run on initial load
   updateHtmlClass();
-
-  // Listen for Next.js route changes (if available)
-  if (typeof window !== "undefined" && window.next) {
-    window.next.router.events.on("routeChangeComplete", updateHtmlClass);
-  }
 })();
