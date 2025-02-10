@@ -32,7 +32,7 @@ export default function DarkModeToggler() {
   return (
     <button
       onClick={toggleDarkMode}
-      className="*:fill-slate-600 *:dark:fill-slate-200 *:transition-colors cursor-pointer *:w-7 *:h-7 px-2 py-1.5 hover:bg-slate-100 hover:dark:bg-slate-700 transition-colors rounded-sm"
+      className="cursor-pointer rounded-sm px-2 py-1.5 transition-colors *:h-7 *:w-7 *:fill-slate-600 *:transition-colors hover:bg-slate-100 *:dark:fill-slate-200 hover:dark:bg-slate-700"
     >
       {theme === "light" ? <IoMoon /> : <MdLightMode />}
     </button>
