@@ -8,7 +8,7 @@ export default function Logo() {
       <Link href={"/"}>
         <Image
           src={logoImg}
-          className="w-38 max-sm:w-30 -translate-y-0.5 dark:brightness-105"
+          className="w-38 -translate-y-0.5 max-sm:w-30 dark:brightness-105"
           alt="Voccaria logo"
           priority
         />

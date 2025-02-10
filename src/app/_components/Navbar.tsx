@@ -26,14 +26,14 @@ export default function Navbar() {
         isRoot
           ? styles.block
           : "h-18 shadow-[0_12px_32px_rgba(0,0,0,0.03)] max-xl:h-16.5 max-sm:h-14.5"
-      } bg-white/90 fixed top-0 w-full z-[65] backdrop-blur-[4px] transition-colors ${
+      } fixed top-0 z-[65] w-full bg-white/90 backdrop-blur-[4px] transition-colors ${
         !isRoot ? "dark:bg-gray-800/90" : ""
       }`}
     >
       <div
         className={`${
-          isRoot ? styles.container : "gap-5 max-w-9/10 !mx-auto"
-        } flex items-center justify-between h-full mx-auto`}
+          isRoot ? styles.container : "!mx-auto max-w-9/10 gap-5"
+        } mx-auto flex h-full items-center justify-between`}
       >
         {isRoot && <OldLogo />}
 
@@ -44,8 +44,8 @@ export default function Navbar() {
             className={`${
               isRoot
                 ? styles.navLinkWrapper
-                : "text-base gap-8 max-xl:text-md max-sm:text-sm max-sm:gap-6"
-            } flex items-center text-slate-700 h-full ${
+                : "max-xl:text-md gap-8 text-base max-sm:gap-6 max-sm:text-sm"
+            } flex h-full items-center text-slate-700 ${
               !isRoot ? "dark:text-slate-200" : ""
             }`}
           >
@@ -56,7 +56,7 @@ export default function Navbar() {
                     isRoot ? styles.navLink : ""
                   } hover:text-my-pink-600 ${
                     !isRoot ? "hover:dark:text-my-pink-300" : ""
-                  } font-medium transition-colors duration-100 h-full flex items-center ${
+                  } flex h-full items-center font-medium transition-colors duration-100 ${
                     pathname === href
                       ? `text-my-pink-600 ${
                           !isRoot ? "dark:text-my-pink-300" : ""
