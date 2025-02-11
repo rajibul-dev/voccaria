@@ -1,3 +1,3 @@
 export default function BlogSidebar() {
-  return <>Sidebar</>;
+  return <div className="">Sidebar</div>;
 }
