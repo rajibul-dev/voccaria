@@ -22,6 +22,7 @@ export default function Navbar() {
 
   return (
     <header
+      id="header"
       className={`${
         isRoot
           ? styles.block
