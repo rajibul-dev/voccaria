@@ -50,27 +50,32 @@ export default function Navbar() {
               !isRoot ? "dark:text-slate-200" : ""
             }`}
           >
-            {navLinks.map(({ href, label }) => (
-              <li className={`${isRoot ? styles.li : ""} h-full`} key={href}>
-                <Link
-                  className={`${
-                    isRoot ? styles.navLink : ""
-                  } hover:text-my-pink-600 ${
-                    !isRoot ? "hover:dark:text-my-pink-300" : ""
-                  } flex h-full items-center font-medium transition-colors duration-100 ${
-                    pathname === href
-                      ? `text-my-pink-600 ${
-                          !isRoot ? "dark:text-my-pink-300" : ""
-                        }`
-                      : ""
-                  }`}
-                  href={href}
-                  aria-label={label}
-                >
-                  {label}
-                </Link>
-              </li>
-            ))}
+            {navLinks.map(({ href, label }) => {
+              const isActive =
+                pathname === href || pathname.startsWith(`${href}/`);
+
+              return (
+                <li className={`${isRoot ? styles.li : ""} h-full`} key={href}>
+                  <Link
+                    className={`${
+                      isRoot ? styles.navLink : ""
+                    } hover:text-my-pink-600 ${
+                      !isRoot ? "hover:dark:text-my-pink-300" : ""
+                    } flex h-full items-center font-medium transition-colors duration-100 ${
+                      isActive
+                        ? `text-my-pink-600 ${
+                            !isRoot ? "dark:text-my-pink-300" : ""
+                          }`
+                        : ""
+                    }`}
+                    href={href}
+                    aria-label={label}
+                  >
+                    {label}
+                  </Link>
+                </li>
+              );
+            })}
 
             {!isRoot && <DarkModeToggler />}
 
