@@ -58,14 +58,14 @@ export default function LoadMoreButton({
             ({
               title,
               smallDescription,
-              currentSlug,
+              slug,
               _id,
               _createdAt,
               ofCategory,
             }) => (
               <li key={_id}>
                 <Link
-                  href={`/blog/${currentSlug}`}
+                  href={`/blog/${slug}`}
                   className="flex flex-col gap-2 rounded-lg border border-gray-200 bg-gray-100 p-6 shadow-sm hover:bg-gray-200 max-sm:px-3 max-sm:py-5 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
                 >
                   <h3 className="text-2xl leading-9 font-bold text-slate-500 max-sm:text-xl max-sm:leading-7.5 dark:text-gray-100">
