@@ -11,18 +11,20 @@ export default function HeaderHeightSync({
   props?: any;
 }) {
   const [headerHeight, setHeaderHeight] = useState(0);
+  const [isReady, setIsReady] = useState(false); // Opacity control
 
   useEffect(() => {
     const header = document.getElementById("header");
     if (!header) return;
 
-    const updateHeight = () => setHeaderHeight(header.offsetHeight);
+    const updateHeight = () => {
+      setHeaderHeight(header.offsetHeight);
+      setIsReady(true); // Enable opacity transition after first update
+    };
 
-    // Observe height changes
     const observer = new ResizeObserver(updateHeight);
     observer.observe(header);
 
-    // Initial set
     updateHeight();
 
     return () => observer.disconnect();
@@ -32,7 +34,12 @@ export default function HeaderHeightSync({
     <div
       className={className}
       {...props}
-      style={{ paddingTop: headerHeight, height: "100dvh" }}
+      style={{
+        paddingTop: headerHeight,
+        height: "100dvh",
+        transition: "padding-top 0.2s ease-in-out, opacity 0.3s ease-in-out",
+        opacity: isReady ? 1 : 0, // Fade-in effect
+      }}
     >
       {children}
     </div>
