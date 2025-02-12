@@ -1,6 +1,7 @@
 import BackButton from "@/app/_components/BackButton";
 import { formatDateTime } from "@/lib/dateFns";
 import { getPost } from "@/lib/sanityFetchers";
+import { Metadata } from "next";
 import { PortableText } from "next-sanity";
 
 const extractPlainText = (blocks: any) => {
@@ -55,6 +56,15 @@ const PortableTextComponents = {
     ),
   },
 };
+
+export async function generateMetadata(props: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const params = await props.params;
+  const { slug } = params;
+  const { title, smallDescription } = await getPost(slug);
+  return { title: `${title}`, description: `${smallDescription}` };
+}
 
 export default async function Page(props: {
   params: Promise<{ slug: string }>;
