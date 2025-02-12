@@ -6,7 +6,7 @@ export default function layout({ children }: { children: ReactNode }) {
   return (
     <>
       <div className="flex h-full overflow-hidden">
-        <HeaderHeightSync className="w-1/4">
+        <HeaderHeightSync className="w-1/5 max-md:hidden">
           <aside className="h-full overflow-auto border-r-1 border-gray-200 bg-gray-50 text-white dark:border-r-2 dark:border-gray-800 dark:bg-gray-900">
             <BlogSidebar />
           </aside>
