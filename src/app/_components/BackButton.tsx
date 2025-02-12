@@ -15,13 +15,13 @@ export default function BackButton({
   return (
     <button
       onClick={() => router.back()}
-      className={`group mt-10 -mb-8 flex cursor-pointer items-center gap-1 text-sm text-slate-500 transition-colors max-sm:mt-7 max-sm:-mb-4 dark:text-slate-400 ${className}`}
+      className={`group flex cursor-pointer items-center gap-1 text-sm text-gray-500 transition-colors dark:text-gray-400 ${className}`}
     >
       <MdArrowBack
         size={15}
-        className="group-hover:fill-slate-600 dark:group-hover:fill-slate-300"
+        className="group-hover:fill-gray-600 dark:group-hover:fill-gray-300"
       />
-      <span className="group-hover:text-slate-600 dark:group-hover:text-slate-300">
+      <span className="group-hover:text-gray-600 dark:group-hover:text-gray-300">
         {children}
       </span>
     </button>

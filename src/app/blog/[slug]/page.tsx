@@ -81,7 +81,7 @@ export default async function Page(props: {
 
   return (
     <>
-      <div className="mx-auto max-w-4xl px-5">
+      <div className="mx-auto mt-10 -mb-8 max-w-4xl px-5 max-sm:mt-7 max-sm:-mb-4">
         <BackButton className="">Back to blog</BackButton>
       </div>
       <article className="mx-auto max-w-4xl px-5 pt-15 pb-15 max-sm:pt-10">
