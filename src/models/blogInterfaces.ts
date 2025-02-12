@@ -1,17 +1,17 @@
 export interface Category {
   title: string;
-  currentSlug: string;
+  slug: string;
 }
 
 export interface PostTag {
   title: string;
-  currentSlug: string;
+  slug: string;
 }
 
 export interface BlogPost {
   _id: string;
   title: string;
-  currentSlug: string;
+  slug: string;
   ofCategory?: Category;
   smallDescription?: string;
   postTags?: PostTag[];

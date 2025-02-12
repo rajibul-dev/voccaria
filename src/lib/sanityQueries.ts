@@ -2,15 +2,15 @@ export const ALL_BLOG_POSTS = `
   *[_type == "blog"]{
     _id,
     title,
-    "currentSlug": slug.current,
+    "slug": slug.current,
     ofCategory->{
       title,
-      "currentSlug": slug.current
+      "slug": slug.current
     },
     smallDescription,
     postTags[]->{
       title,
-      "currentSlug": slug.current
+      "slug": slug.current
     },
     _createdAt
   } | order(_createdAt desc)
@@ -20,7 +20,7 @@ export const ALL_BLOG_POSTS_PAGINATED = (start = 0, limit = 10) => `
   *[_type == "blog"] | order(_createdAt desc) [${start}...${start + limit}] {
     _id,
     title,
-    "currentSlug": slug.current,
+    "slug": slug.current,
     ofCategory->{
       title,
       slug
@@ -40,7 +40,7 @@ export const POSTS_IN_CATEGORY_SORTBY_INDEX = (categorySlug: string) => `
   | order(postIndexInCategory asc) {
     _id,
     title,
-    "currentSlug": slug.current,
+    "slug": slug.current,
     smallDescription,
     postIndexInCategory,
   }
@@ -51,7 +51,7 @@ export const POSTS_IN_CATEGORY_SORTBY_TIME_ASC = (categorySlug: string) => `
   | order(_createdAt asc) {
     _id,
     title,
-    "currentSlug": slug.current,
+    "slug": slug.current,
     smallDescription,
     postIndexInCategory,
     _createdAt,
@@ -62,18 +62,19 @@ export const GET_POST = (slug: string) => `
   *[_type == "blog" && slug.current == "${slug}"][0] {
     _id,
     title,
-    "currentSlug": slug.current,
+    "slug": slug.current,
     ofCategory->{
       title,
-      slug
+      "slug": slug.current,
     },
     smallDescription,
     postTags[]->{
       title,
-      "currentSlug": slug.current,
+      "slug": slug.current,
     },
     postIndexInCategory,
-    content
+    content,
+    _createdAt,
   }
 `;
 
