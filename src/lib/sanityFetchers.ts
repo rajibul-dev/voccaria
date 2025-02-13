@@ -42,3 +42,7 @@ export const getPost = async (slug: string): Promise<BlogPost> => {
 export const getTotalBlogPostsCount = async (): Promise<number> => {
   return await client.fetch(queries.TOTAL_BLOG_POSTS_COUNT);
 };
+
+export const getAllBlogPostsForSearch = async () => {
+  return await client.fetch(queries.ALL_BLOG_POSTS_FOR_SEARCH);
+};

@@ -79,3 +79,21 @@ export const GET_POST = (slug: string) => `
 `;
 
 export const TOTAL_BLOG_POSTS_COUNT = `count(*[_type == "blog"])`;
+
+export const ALL_BLOG_POSTS_FOR_SEARCH = `
+  *[_type == "blog"]{
+    _id,
+    title,
+    "slug": slug.current,
+    ofCategory->{
+      title,
+      "slug": slug.current
+    },
+    smallDescription,
+    postTags[]->{
+      title,
+      "slug": slug.current
+    },
+    content
+  } | order(_createdAt desc)
+`;
