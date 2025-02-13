@@ -1,16 +1,26 @@
-import { createContext, useReducer, useContext, ReactNode } from "react";
+"use client";
+
+import {
+  createContext,
+  useReducer,
+  useContext,
+  ReactNode,
+  useEffect,
+} from "react";
 import Fuse from "fuse.js";
 
 // Define the structure of state
 interface SearchState {
   query: string;
   results: any[];
+  isOpen: boolean;
 }
 
 // Actions
 type SearchAction =
   | { type: "SET_QUERY"; payload: string }
-  | { type: "SET_RESULTS"; payload: any[] };
+  | { type: "SET_RESULTS"; payload: any[] }
+  | { type: "TOGGLE_SEARCH"; payload?: boolean };
 
 // Reducer function
 const searchReducer = (
@@ -22,6 +32,8 @@ const searchReducer = (
       return { ...state, query: action.payload };
     case "SET_RESULTS":
       return { ...state, results: action.payload };
+    case "TOGGLE_SEARCH":
+      return { ...state, isOpen: action.payload ?? !state.isOpen };
     default:
       return state;
   }
@@ -31,9 +43,11 @@ const searchReducer = (
 const SearchContext = createContext<{
   state: SearchState;
   handleSearch: (query: string) => void;
+  toggleSearch: (forceState?: boolean) => void;
 }>({
-  state: { query: "", results: [] },
-  handleSearch: () => {}, // Placeholder
+  state: { query: "", results: [], isOpen: false },
+  handleSearch: () => {},
+  toggleSearch: () => {},
 });
 
 // Provider component
@@ -47,11 +61,12 @@ export const SearchProvider = ({
   const [state, dispatch] = useReducer(searchReducer, {
     query: "",
     results: [],
+    isOpen: false,
   });
 
   // Setup Fuse.js for searching
   const fuse = new Fuse(data, {
-    keys: ["title", "content"], // CHANGE: Customize for headings too
+    keys: ["title", "content"], // Customize for headings too
     threshold: 0.3,
     includeMatches: true,
   });
@@ -67,8 +82,30 @@ export const SearchProvider = ({
     dispatch({ type: "SET_RESULTS", payload: results });
   };
 
+  // Toggle search popup
+  const toggleSearch = (forceState?: boolean) => {
+    dispatch({ type: "TOGGLE_SEARCH", payload: forceState });
+  };
+
+  // Listen for Ctrl + K to open search
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key === "k") {
+        e.preventDefault();
+        toggleSearch(true);
+      } else if (e.key === "Escape") {
+        toggleSearch(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
-    <SearchContext.Provider value={{ state, handleSearch }}>
+    <SearchContext.Provider value={{ state, handleSearch, toggleSearch }}>
       {children}
     </SearchContext.Provider>
   );
