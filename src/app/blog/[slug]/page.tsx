@@ -33,7 +33,7 @@ const PortableTextComponents = {
         new URL(value.url).searchParams.get("v") || value.url.split("/").pop();
 
       return (
-        <div className="my-9 aspect-video max-w-150">
+        <div className="my-9 aspect-video max-w-160">
           <iframe
             className="h-full w-full"
             src={`https://www.youtube.com/embed/${videoId}`}
