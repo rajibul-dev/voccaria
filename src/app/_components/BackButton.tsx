@@ -15,7 +15,7 @@ export default function BackButton({
   return (
     <button
       onClick={() => router.back()}
-      className={`group flex cursor-pointer items-center gap-1 text-sm text-gray-500 transition-colors dark:text-gray-400 ${className}`}
+      className={`group flex cursor-pointer items-center gap-1 text-sm text-gray-400 transition-colors dark:text-gray-400 ${className}`}
     >
       <MdArrowBack
         size={15}
