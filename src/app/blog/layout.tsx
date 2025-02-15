@@ -64,7 +64,6 @@ export default async function BlogLayout({
 }) {
   const data: BlogPost[] = await getAllBlogPostsForSearch();
   const optimizedForSearchData = structureContent(data);
-  console.log(optimizedForSearchData[0]);
 
   return (
     <SearchProvider data={optimizedForSearchData}>
