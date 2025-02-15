@@ -1,8 +1,11 @@
+import clsx from "clsx";
 import BackButton from "@/app/_components/BackButton";
 import { formatDateTime } from "@/lib/dateFns";
 import { getPost } from "@/lib/sanityFetchers";
 import { Metadata } from "next";
 import { PortableText } from "next-sanity";
+
+const PREFER_SMALL_TEXTS = true; // Toggle this to true for smaller text
 
 const extractPlainText = (blocks: any) => {
   return blocks.reduce((acc: any, block: any) => {
@@ -26,12 +29,11 @@ const PortableTextComponents = {
     youtube: ({ value }: { value: { url: string } }) => {
       if (!value?.url) return null;
 
-      // Extract YouTube video ID from URL
       const videoId =
         new URL(value.url).searchParams.get("v") || value.url.split("/").pop();
 
       return (
-        <div className="mt-8 aspect-video">
+        <div className="my-9 mt-8 aspect-video max-w-150">
           <iframe
             className="h-full w-full"
             src={`https://www.youtube.com/embed/${videoId}`}
@@ -77,15 +79,18 @@ export default async function Page(props: {
     extractPlainText(content) + smallDescription || "",
   );
 
-  console.log(content);
-
   return (
     <>
       <div className="mx-auto mt-10 -mb-8 max-w-4xl px-5 max-sm:mt-7 max-sm:-mb-4">
         <BackButton className="">Back to blog</BackButton>
       </div>
       <article className="mx-auto max-w-4xl px-5 pt-15 pb-15 max-sm:pt-10">
-        <header className="mb-10">
+        <header
+          className={clsx({
+            "prose-h2:mt-10": !PREFER_SMALL_TEXTS,
+            "prose-h2:mt-8": PREFER_SMALL_TEXTS,
+          })}
+        >
           <time
             dateTime={_createdAt}
             className="text-my-pink-600 dark:text-my-pink-300 mb-4 inline-block text-base font-bold"
@@ -98,15 +103,42 @@ export default async function Page(props: {
           >
             &nbsp;&nbsp;•&nbsp;&nbsp;{readingTime} min read
           </time>
-          <h1 className="mb-4 text-4xl leading-12.5 font-bold tracking-tighter text-slate-600 max-sm:text-[1.625rem] max-sm:leading-9.5 dark:text-slate-100">
+          <h1
+            className={clsx(
+              "mb-4 font-bold tracking-tighter text-slate-600 dark:text-slate-100",
+              {
+                "text-4xl leading-12.5 max-sm:text-[1.625rem] max-sm:leading-9.5":
+                  !PREFER_SMALL_TEXTS, // Default (large)
+                "text-3xl leading-10 max-sm:text-[1.625rem] max-sm:leading-9.5":
+                  PREFER_SMALL_TEXTS, // Smaller text
+              },
+            )}
+          >
             {title}
           </h1>
-          <p className="text-lg leading-8 text-slate-800 max-sm:text-base max-sm:leading-7 dark:text-slate-300">
+          <p
+            className={clsx("text-slate-800 dark:text-slate-300", {
+              "text-lg leading-8 max-sm:text-base max-sm:leading-7":
+                !PREFER_SMALL_TEXTS, // Default (large)
+              "text-base leading-7 max-sm:text-base max-sm:leading-7":
+                PREFER_SMALL_TEXTS, // Smaller text
+            })}
+          >
             {smallDescription}
           </p>
         </header>
 
-        <section className="prose prose-slate max-sm:prose-base max-sm:prose-h2:leading-9 max-sm:prose-h2:mb-4 prose-a:text-my-pink-600 dark:prose-a:text-my-pink-300 prose-li:marker:text-slate-700 dark:prose-li:marker:text-slate-200 prose-headings:tracking-tight prose-strong:text-slate-600 prose-h2:mt-10 dark:prose-strong:text-slate-200 prose-headings:text-slate-600 dark:prose-headings:text-slate-100 prose-lg prose-h2:mb-5 dark:prose-invert w-full max-w-none">
+        <section
+          className={clsx(
+            "prose prose-slate prose-a:text-my-pink-600 dark:prose-a:text-my-pink-300 prose-li:marker:text-slate-700 dark:prose-li:marker:text-slate-200 prose-headings:tracking-tight prose-strong:text-slate-600 dark:prose-strong:text-slate-200 prose-headings:text-slate-600 dark:prose-headings:text-slate-100 prose-h2:mb-5 dark:prose-invert prose-h4:mt-4 w-full max-w-none",
+            {
+              "prose-lg max-sm:prose-base max-sm:prose-h2:leading-9 max-sm:prose-h2:mb-4 prose-h2:mt-10":
+                !PREFER_SMALL_TEXTS, // Default (large)
+              "prose-base max-sm:prose-base max-sm:prose-h2:leading-9 max-sm:prose-h2:mb-4 prose-h2:mt-8 max-sm:prose-p:my-3.5":
+                PREFER_SMALL_TEXTS, // Smaller text
+            },
+          )}
+        >
           <PortableText
             value={content as any}
             components={PortableTextComponents as any}
