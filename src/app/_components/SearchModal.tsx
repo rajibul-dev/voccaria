@@ -26,7 +26,7 @@ export default function SearchModal() {
     >
       <DialogTitle className="sr-only">Blog Search</DialogTitle>
       <DialogDescription className="sr-only">
-        This is Voccaria blog's search bar
+        This is Voccaria blog's search bar. What are you looking for?
       </DialogDescription>
       <div
         className="w-full max-w-lg rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900"
@@ -37,7 +37,7 @@ export default function SearchModal() {
           <Command.CommandInput
             value={state.query}
             onValueChange={handleSearch}
-            placeholder="Search blog posts..."
+            placeholder="What are you looking for?"
             className="mb-5 w-full rounded-lg border-1 border-slate-500 bg-slate-200 px-5 py-2.5 text-lg text-slate-600 outline-none placeholder:text-slate-500/80 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-slate-400/80"
           />
           <span
