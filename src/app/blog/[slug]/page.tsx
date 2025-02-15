@@ -109,7 +109,7 @@ export default async function Page(props: {
               {
                 "text-4xl leading-12.5 max-sm:text-[1.625rem] max-sm:leading-9.5":
                   !PREFER_SMALL_TEXTS, // Default (large)
-                "text-3xl leading-10 max-sm:text-[1.625rem] max-sm:leading-9.5":
+                "text-3xl leading-11 max-sm:text-[1.625rem] max-sm:leading-9.5":
                   PREFER_SMALL_TEXTS, // Smaller text
               },
             )}
