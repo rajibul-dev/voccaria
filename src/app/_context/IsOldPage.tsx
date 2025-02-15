@@ -27,16 +27,8 @@ export default function IsOldPageProvider({ children }: any) {
     }
   }, [pathname]);
 
-  if (isRoot === null) {
-    return (
-      <div className="flex items-center justify-center w-full h-dvh">
-        <ScaleShiftSpinner />
-      </div>
-    );
-  }
-
   return (
-    <ContextObj.Provider value={{ pathname, isRoot }}>
+    <ContextObj.Provider value={{ pathname, isRoot: Boolean(isRoot) }}>
       {children}
     </ContextObj.Provider>
   );
