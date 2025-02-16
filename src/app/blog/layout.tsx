@@ -6,12 +6,6 @@ import { SearchProvider } from "../_context/SearchContext";
 import SearchModal from "../_components/SearchModal";
 import { BlogPost, Category } from "@/models/blogInterfaces";
 
-type Section = {
-  type: "heading" | "paragraph";
-  level?: number; // only for headings
-  text: string;
-};
-
 type StructuredContent = {
   id: string;
   title: string;
@@ -21,6 +15,7 @@ type StructuredContent = {
   tags: string[] | null;
   sections: { heading: string; text: string }[];
   content: string;
+  typeOf: string;
 };
 
 function structureContent(data: any[]): StructuredContent[] {
@@ -56,6 +51,7 @@ function structureContent(data: any[]): StructuredContent[] {
       tags: post.postTags || null,
       sections,
       content: content.trim(),
+      typeOf: "post",
     };
   });
 }
@@ -65,13 +61,23 @@ export default async function BlogLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const data: BlogPost[] = (await getAllBlogPostsForSearch())[0];
+  const data: BlogPost[] = await getAllBlogPostsForSearch();
   const categories: Category[] = await getAllCategories();
+  const categoriesWithTypeDefined: Category[] = categories.map((category) => ({
+    ...category,
+    typeOf: "category",
+  }));
 
-  const optimizedForSearchData = [...structureContent([data]), ...categories];
+  const optimizedForSearchData = [
+    ...structureContent(data),
+    ...categoriesWithTypeDefined,
+  ];
 
   return (
-    <SearchProvider data={optimizedForSearchData} categories={categories}>
+    <SearchProvider
+      data={optimizedForSearchData}
+      categories={categoriesWithTypeDefined}
+    >
       {children}
       <SearchModal />
     </SearchProvider>

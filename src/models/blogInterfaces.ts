@@ -2,6 +2,7 @@ export interface Category {
   title: string;
   slug: string;
   order?: number;
+  typeOf?: string;
 }
 
 export interface PostTag {
@@ -19,4 +20,5 @@ export interface BlogPost {
   postIndexInCategory?: number;
   _createdAt: string;
   content?: string;
+  typeOf?: string;
 }
