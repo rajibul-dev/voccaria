@@ -1,7 +1,10 @@
-import { getAllBlogPostsForSearch } from "@/lib/sanityFetchers";
+import {
+  getAllBlogPostsForSearch,
+  getAllCategories,
+} from "@/lib/sanityFetchers";
 import { SearchProvider } from "../_context/SearchContext";
 import SearchModal from "../_components/SearchModal";
-import { BlogPost } from "@/models/blogInterfaces";
+import { BlogPost, Category } from "@/models/blogInterfaces";
 
 type Section = {
   type: "heading" | "paragraph";
@@ -62,11 +65,13 @@ export default async function BlogLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const data: BlogPost[] = await getAllBlogPostsForSearch();
-  const optimizedForSearchData = structureContent(data);
+  const data: BlogPost[] = (await getAllBlogPostsForSearch())[0];
+  const categories: Category[] = await getAllCategories();
+
+  const optimizedForSearchData = [...structureContent([data]), ...categories];
 
   return (
-    <SearchProvider data={optimizedForSearchData}>
+    <SearchProvider data={optimizedForSearchData} categories={categories}>
       {children}
       <SearchModal />
     </SearchProvider>

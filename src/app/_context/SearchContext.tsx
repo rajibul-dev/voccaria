@@ -8,6 +8,7 @@ import {
   useEffect,
 } from "react";
 import Fuse from "fuse.js";
+import { Category } from "@/models/blogInterfaces";
 
 // Define the structure of state
 interface SearchState {
@@ -54,9 +55,11 @@ const SearchContext = createContext<{
 export const SearchProvider = ({
   children,
   data,
+  categories,
 }: {
   children: ReactNode;
-  data: any[];
+  data: any;
+  categories?: Category[];
 }) => {
   const [state, dispatch] = useReducer(searchReducer, {
     query: "",
@@ -79,7 +82,7 @@ export const SearchProvider = ({
   const handleSearch = (query: string) => {
     dispatch({ type: "SET_QUERY", payload: query });
     if (query.trim() === "") {
-      dispatch({ type: "SET_RESULTS", payload: [] });
+      dispatch({ type: "SET_RESULTS", payload: categories || [] });
       return;
     }
     const results = fuse.search(query).map((res) => res.item);
@@ -106,6 +109,10 @@ export const SearchProvider = ({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
+  }, []);
+
+  useEffect(() => {
+    dispatch({ type: "SET_RESULTS", payload: categories || [] });
   }, []);
 
   return (
