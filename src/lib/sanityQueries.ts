@@ -107,6 +107,7 @@ export const GET_ALL_CATEGORIES = `*[_type == 'category'] {
 export const GET_FIRST_POST_SLUG_OF_CATEGORY = (category: string) => `
   *[_type == 'blog' && ofCategory->slug.current == "${category}"] {
     "slug": slug.current,
-    postIndexInCategory
-  } | order(postIndexInCategory asc)[0].slug
+    postIndexInCategory,
+    _createdAt
+  } | order(defined(postIndexInCategory) desc, postIndexInCategory asc, _createdAt asc)[0].slug
 `;
