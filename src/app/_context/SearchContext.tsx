@@ -6,6 +6,7 @@ import {
   useContext,
   ReactNode,
   useEffect,
+  useCallback,
 } from "react";
 import Fuse from "fuse.js";
 import { Category } from "@/models/blogInterfaces";
@@ -90,9 +91,12 @@ export const SearchProvider = ({
   };
 
   // Toggle search popup
-  const toggleSearch = (forceState?: boolean) => {
-    dispatch({ type: "TOGGLE_SEARCH", payload: forceState });
-  };
+  const toggleSearch = useCallback(
+    (forceState?: boolean) => {
+      dispatch({ type: "TOGGLE_SEARCH", payload: forceState ?? !state.isOpen });
+    },
+    [dispatch],
+  );
 
   // Listen for Ctrl + K to open search
   useEffect(() => {
