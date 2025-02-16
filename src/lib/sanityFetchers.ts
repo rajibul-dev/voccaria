@@ -50,3 +50,9 @@ export const getAllBlogPostsForSearch = async () => {
 export const getAllCategories = async (): Promise<Category[]> => {
   return await client.fetch(queries.GET_ALL_CATEGORIES);
 };
+
+export const getFirstPostSlugOfCategory = async (
+  category: string,
+): Promise<string> => {
+  return await client.fetch(queries.GET_FIRST_POST_SLUG_OF_CATEGORY(category));
+};

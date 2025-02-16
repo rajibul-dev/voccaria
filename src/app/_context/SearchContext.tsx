@@ -71,11 +71,11 @@ export const SearchProvider = ({
   // Setup Fuse.js for searching
   const fuse = new Fuse(data, {
     keys: [
-      { name: "title", weight: 0.5 }, // High priority for title
+      { name: "title", weight: 0.6 }, // High priority for title
       { name: "sections.heading", weight: 0.3 }, // Searches each section's heading
       { name: "sections.text", weight: 0.2 }, // Searches each section's text
     ],
-    threshold: 0.3,
+    threshold: 0.6,
     includeMatches: true,
   });
 

@@ -3,6 +3,7 @@ export interface Category {
   slug: string;
   order?: number;
   typeOf?: string;
+  firstPostSlug?: string;
 }
 
 export interface PostTag {

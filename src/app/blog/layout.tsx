@@ -1,6 +1,7 @@
 import {
   getAllBlogPostsForSearch,
   getAllCategories,
+  getFirstPostSlugOfCategory,
 } from "@/lib/sanityFetchers";
 import { SearchProvider } from "../_context/SearchContext";
 import SearchModal from "../_components/SearchModal";
@@ -63,20 +64,32 @@ export default async function BlogLayout({
 }) {
   const data: BlogPost[] = await getAllBlogPostsForSearch();
   const categories: Category[] = await getAllCategories();
-  const categoriesWithTypeDefined: Category[] = categories.map((category) => ({
-    ...category,
-    typeOf: "category",
-  }));
+  const categoriesWithMoreInfo: Category[] = (
+    await Promise.all(
+      categories.map(async (category) => {
+        const firstPostSlug = await getFirstPostSlugOfCategory(category.slug);
+
+        if (!firstPostSlug) return null; // Mark for removal
+        return {
+          ...category,
+          typeOf: "category",
+          firstPostSlug,
+        };
+      }),
+    )
+  ).filter((category) => category !== null); // Ensure only valid objects remain
+
+  console.log(categoriesWithMoreInfo);
 
   const optimizedForSearchData = [
     ...structureContent(data),
-    ...categoriesWithTypeDefined,
+    ...categoriesWithMoreInfo,
   ];
 
   return (
     <SearchProvider
       data={optimizedForSearchData}
-      categories={categoriesWithTypeDefined}
+      categories={categoriesWithMoreInfo}
     >
       {children}
       <SearchModal />
