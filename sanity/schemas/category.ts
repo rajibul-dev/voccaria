@@ -23,5 +23,10 @@ export default {
       title: 'Description (optional)',
       type: 'text',
     },
+    {
+      name: 'order',
+      title: 'Category order',
+      type: 'number',
+    },
   ],
 }

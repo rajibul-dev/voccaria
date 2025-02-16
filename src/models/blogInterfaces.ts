@@ -1,6 +1,7 @@
 export interface Category {
   title: string;
   slug: string;
+  order?: number;
 }
 
 export interface PostTag {
