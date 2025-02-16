@@ -6,15 +6,18 @@ import { MdArrowBack } from "react-icons/md";
 export default function BackButton({
   children,
   className,
+  path,
 }: {
   children: ReactNode;
   className?: string;
+  path?: string;
 }) {
   const router = useRouter();
+  const handler = !path ? () => router.back() : () => router.push(path);
 
   return (
     <button
-      onClick={() => router.back()}
+      onClick={handler}
       className={`group flex cursor-pointer items-center gap-1 text-sm text-gray-400 transition-colors dark:text-gray-400 ${className}`}
     >
       <MdArrowBack
