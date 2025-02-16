@@ -95,7 +95,7 @@ export const SearchProvider = ({
     (forceState?: boolean) => {
       dispatch({ type: "TOGGLE_SEARCH", payload: forceState ?? !state.isOpen });
     },
-    [dispatch],
+    [dispatch, state.isOpen],
   );
 
   // Listen for Ctrl + K to open search
@@ -103,7 +103,7 @@ export const SearchProvider = ({
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.ctrlKey && e.key === "k") {
         e.preventDefault();
-        toggleSearch(true);
+        toggleSearch(!state.isOpen);
       } else if (e.key === "Escape") {
         toggleSearch(false);
       }
@@ -113,7 +113,7 @@ export const SearchProvider = ({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [toggleSearch, state.isOpen]);
 
   useEffect(() => {
     dispatch({ type: "SET_RESULTS", payload: categories || [] });
