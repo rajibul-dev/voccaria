@@ -79,8 +79,6 @@ export default async function BlogLayout({
     )
   ).filter((category) => category !== null); // Ensure only valid objects remain
 
-  console.log(categoriesWithMoreInfo);
-
   const optimizedForSearchData = [
     ...structureContent(data),
     ...categoriesWithMoreInfo,
