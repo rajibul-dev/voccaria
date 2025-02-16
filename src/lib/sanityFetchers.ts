@@ -1,4 +1,4 @@
-import { BlogPost } from "@/models/blogInterfaces";
+import { BlogPost, Category } from "@/models/blogInterfaces";
 import { client } from "./sanityClient";
 import * as queries from "./sanityQueries";
 
@@ -45,4 +45,8 @@ export const getTotalBlogPostsCount = async (): Promise<number> => {
 
 export const getAllBlogPostsForSearch = async () => {
   return await client.fetch(queries.ALL_BLOG_POSTS_FOR_SEARCH);
+};
+
+export const getAllCategories = async (): Promise<Category[]> => {
+  return await client.fetch(queries.GET_ALL_CATEGORIES);
 };

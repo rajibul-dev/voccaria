@@ -97,3 +97,9 @@ export const ALL_BLOG_POSTS_FOR_SEARCH = `
     content
   } | order(_createdAt desc)
 `;
+
+export const GET_ALL_CATEGORIES = `*[_type == 'category'] {
+  "slug": slug.current,
+  title,
+  order
+} | order(order asc)`;
