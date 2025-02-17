@@ -95,13 +95,13 @@ export default async function Page(props: {
         >
           <time
             dateTime={_createdAt}
-            className="text-my-pink-600 dark:text-my-pink-300 mb-4 inline-block text-base font-bold"
+            className="text-my-pink-600 dark:text-my-pink-300 mb-4 inline-block text-base font-medium"
           >
             {formatDateTime(_createdAt)}
           </time>
           <time
             dateTime={`PT${readingTime}M`}
-            className="text-my-pink-600 dark:text-my-pink-300 mb-4 inline-block text-base font-bold"
+            className="text-my-pink-600 dark:text-my-pink-300 mb-4 inline-block text-base font-medium"
           >
             &nbsp;&nbsp;•&nbsp;&nbsp;{readingTime} min read
           </time>
