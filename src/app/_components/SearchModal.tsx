@@ -148,7 +148,7 @@ export default function SearchModal() {
                   value={result.slug}
                 >
                   {!extractMatchedPortion ? (
-                    <div className="flex items-baseline gap-3 rounded-md px-2 py-2 group-hover:bg-slate-200 dark:group-hover:bg-slate-700">
+                    <div className="flex items-baseline gap-3 rounded-md px-3 py-3 group-hover:bg-slate-200 dark:group-hover:bg-slate-700">
                       <BsFileEarmarkText
                         size={18}
                         className="shrink-0 translate-y-0.5"
@@ -157,7 +157,7 @@ export default function SearchModal() {
                     </div>
                   ) : (
                     <div>
-                      <div className="flex items-baseline gap-3 rounded-md px-2 py-2 group-hover:bg-slate-200 dark:group-hover:bg-slate-700">
+                      <div className="flex items-baseline gap-3 rounded-md px-3 py-3 group-hover:bg-slate-200 dark:group-hover:bg-slate-700">
                         <LuText className="shrink-0 translate-y-0.5" />
                         <div className="flex flex-col">
                           {highlightedMatch?.heading && (
@@ -176,6 +176,9 @@ export default function SearchModal() {
                               }}
                             />
                           )}
+                          <span className="mt-1 text-sm text-gray-300 dark:text-gray-500">
+                            {result.title}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -192,7 +195,7 @@ export default function SearchModal() {
                   }}
                   className="group cursor-pointer list-none bg-gray-100 text-slate-700 dark:bg-gray-800 dark:text-slate-100"
                 >
-                  <div className="flex items-center gap-3 rounded-md px-2 py-2 group-hover:bg-slate-200 dark:group-hover:bg-slate-700">
+                  <div className="flex items-center gap-3 rounded-md px-3 py-3 group-hover:bg-slate-200 dark:group-hover:bg-slate-700">
                     <IoDocumentTextOutline
                       size={26}
                       className="-translate-y-0.5"
