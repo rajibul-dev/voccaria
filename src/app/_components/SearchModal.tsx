@@ -1,14 +1,64 @@
 "use client";
 
-import { useEffect, useCallback } from "react";
-import * as Command from "cmdk";
-import { useSearch } from "../_context/SearchContext";
-import useOutsideClick from "../_hooks/useOutsideClick";
-import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 import { BlogPost, Category } from "@/models/blogInterfaces";
+import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
+import * as Command from "cmdk";
 import { useRouter } from "next/navigation";
+import { useCallback, useEffect } from "react";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { LuText } from "react-icons/lu";
+import { BsFileEarmarkText } from "react-icons/bs";
+import { useSearch } from "../_context/SearchContext";
+import useOutsideClick from "../_hooks/useOutsideClick";
+
+type MatchesObject = { heading?: string; text?: string };
+
+function extractMatch(query: string, result: any): MatchesObject | null {
+  if (!query && !result) return null;
+  if (!result.sections) return null;
+
+  const matches: { heading?: string; text?: string } = {};
+
+  // Check if the query matches any section heading
+  for (const section of result.sections) {
+    if (section.heading.toLowerCase().includes(query.toLowerCase())) {
+      matches.heading = section.heading;
+    }
+  }
+
+  // Check if the query matches inside any section text
+  for (const section of result.sections) {
+    const index = section.text.toLowerCase().indexOf(query.toLowerCase());
+    if (index !== -1) {
+      // Extract a snippet around the matched query
+      const snippetStart = Math.max(0, index - 20);
+      const snippetEnd = Math.min(
+        section.text.length,
+        index + query.length + 20,
+      );
+      matches.text =
+        "..." + section.text.slice(snippetStart, snippetEnd) + "...";
+    }
+  }
+
+  // Return the object if any match is found, otherwise return null
+  return Object.keys(matches).length > 0 ? matches : null;
+}
+
+function highlightMatchedText(
+  matches: MatchesObject | null,
+  query: string,
+): MatchesObject | null {
+  if (!matches || !query) return matches;
+
+  const boldify = (text: string) =>
+    text.replace(new RegExp(`(${query})`, "gi"), "<strong>$1</strong>");
+
+  return {
+    heading: matches.heading ? boldify(matches.heading) : undefined,
+    text: matches.text ? boldify(matches.text) : undefined,
+  };
+}
 
 export default function SearchModal() {
   const {
@@ -66,6 +116,12 @@ export default function SearchModal() {
         <Command.CommandList className="[&>div]:flex [&>div]:flex-col [&>div]:gap-1.5">
           {results.length > 0 ? (
             results.map((result: (BlogPost & Category) | any) => {
+              const extractMatchedPortion = extractMatch(query, result);
+              const highlightedMatch = highlightMatchedText(
+                extractMatchedPortion,
+                query,
+              );
+
               const postUI = (
                 <li
                   key={Math.random()}
@@ -73,13 +129,42 @@ export default function SearchModal() {
                     router.push(`/blog/${result.slug}`);
                     toggleSearch(false);
                   }}
-                  className="group cursor-pointer list-none text-slate-700 dark:text-slate-100"
+                  className="group cursor-pointer list-none bg-gray-100 text-slate-700 dark:bg-gray-800 dark:text-slate-100"
                   value={result.slug}
                 >
-                  <div className="flex items-baseline gap-3 rounded-md px-2 py-2 group-hover:bg-slate-200 dark:group-hover:bg-slate-700">
-                    <LuText className="shrink-0 translate-y-0.5" />
-                    <span>{result.title}</span>
-                  </div>
+                  {!extractMatchedPortion ? (
+                    <div className="flex items-baseline gap-3 rounded-md px-2 py-2 group-hover:bg-slate-200 dark:group-hover:bg-slate-700">
+                      <BsFileEarmarkText
+                        size={18}
+                        className="shrink-0 translate-y-0.5"
+                      />
+                      <span className="font-medium">{result.title}</span>
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="flex items-baseline gap-3 rounded-md px-2 py-2 group-hover:bg-slate-200 dark:group-hover:bg-slate-700">
+                        <LuText className="shrink-0 translate-y-0.5" />
+                        <div className="flex flex-col">
+                          {highlightedMatch?.heading && (
+                            <span
+                              className="font-medium"
+                              dangerouslySetInnerHTML={{
+                                __html: highlightedMatch.heading,
+                              }}
+                            />
+                          )}
+                          {highlightedMatch?.text && (
+                            <span
+                              className="font-light"
+                              dangerouslySetInnerHTML={{
+                                __html: highlightedMatch.text,
+                              }}
+                            />
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </li>
               );
 
@@ -90,7 +175,7 @@ export default function SearchModal() {
                     router.push(`/blog/${result.firstPostSlug}`);
                     toggleSearch(false);
                   }}
-                  className="group cursor-pointer list-none text-slate-700 dark:text-slate-100"
+                  className="group cursor-pointer list-none bg-gray-100 text-slate-700 dark:bg-gray-800 dark:text-slate-100"
                 >
                   <div className="flex items-center gap-3 rounded-md px-2 py-2 group-hover:bg-slate-200 dark:group-hover:bg-slate-700">
                     <IoDocumentTextOutline
@@ -114,9 +199,9 @@ export default function SearchModal() {
               }
             })
           ) : (
-            <Command.CommandItem className="text-center text-slate-700 dark:text-slate-100">
+            <li className="list-none text-center text-slate-700 dark:text-slate-100">
               No results found.
-            </Command.CommandItem>
+            </li>
           )}
         </Command.CommandList>
       </div>
