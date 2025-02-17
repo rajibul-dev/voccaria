@@ -65,31 +65,32 @@ export default function SearchModal() {
 
         <Command.CommandList className="[&>div]:flex [&>div]:flex-col [&>div]:gap-1.5">
           {results.length > 0 ? (
-            results.map((result: BlogPost & Category, index) => {
+            results.map((result: (BlogPost & Category) | any) => {
               const postUI = (
-                <Command.CommandItem
-                  key={index}
-                  onSelect={() => {
+                <li
+                  key={Math.random()}
+                  onClick={() => {
                     router.push(`/blog/${result.slug}`);
                     toggleSearch(false);
                   }}
-                  className="group cursor-pointer text-slate-700 dark:text-slate-100"
+                  className="group cursor-pointer list-none text-slate-700 dark:text-slate-100"
+                  value={result.slug}
                 >
                   <div className="flex items-baseline gap-3 rounded-md px-2 py-2 group-hover:bg-slate-200 dark:group-hover:bg-slate-700">
                     <LuText className="shrink-0 translate-y-0.5" />
                     <span>{result.title}</span>
                   </div>
-                </Command.CommandItem>
+                </li>
               );
 
               const categoryUI = (
-                <Command.CommandItem
-                  key={index}
-                  onSelect={() => {
+                <li
+                  key={Math.random()}
+                  onClick={() => {
                     router.push(`/blog/${result.firstPostSlug}`);
                     toggleSearch(false);
                   }}
-                  className="group cursor-pointer text-slate-700 dark:text-slate-100"
+                  className="group cursor-pointer list-none text-slate-700 dark:text-slate-100"
                 >
                   <div className="flex items-center gap-3 rounded-md px-2 py-2 group-hover:bg-slate-200 dark:group-hover:bg-slate-700">
                     <IoDocumentTextOutline
@@ -100,7 +101,7 @@ export default function SearchModal() {
                       {result.title}
                     </span>
                   </div>
-                </Command.CommandItem>
+                </li>
               );
 
               switch (result.typeOf) {
