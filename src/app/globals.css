@@ -250,6 +250,7 @@ button:disabled {
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: var(--brand-primary-500);
+  border-radius: 9px;
 }
 
 /* Handle on hover */
