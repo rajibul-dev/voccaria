@@ -83,6 +83,16 @@ export default function SearchModal() {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
 
+  useEffect(() => {
+    if (isOpen) {
+      history.pushState(null, document.title, location.href);
+      window.addEventListener("popstate", function (event) {
+        history.pushState(null, document.title, location.href);
+        toggleSearch(false);
+      });
+    }
+  }, [isOpen]);
+
   return (
     <Command.CommandDialog
       open={isOpen}
