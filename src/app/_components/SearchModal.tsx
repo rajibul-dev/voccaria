@@ -37,7 +37,7 @@ export default function SearchModal() {
     <Command.CommandDialog
       open={isOpen}
       onOpenChange={toggleSearch}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+      className="fixed inset-0 z-100 flex items-center justify-center bg-black/50"
     >
       <DialogTitle className="sr-only">Blog Search</DialogTitle>
       <DialogDescription className="sr-only">
@@ -46,7 +46,7 @@ export default function SearchModal() {
 
       <div
         ref={modalRef}
-        className="w-full max-w-lg rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900"
+        className="max-h-140 w-full max-w-lg overflow-y-auto rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900 [@media(max-height:600px)]:max-h-3/4"
       >
         <div className="relative">
           <Command.CommandInput
