@@ -12,6 +12,7 @@ import Logo from "./Logo";
 import OldPageSectionTracking from "./OldPageSectionTracking";
 import DarkModeToggler from "./DarkModeToggler";
 import { usePathname } from "next/navigation";
+import BlogSearchBarOnNav from "./BlogSearchBarOnNav";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -21,6 +22,7 @@ const navLinks = [
 export default function Navbar() {
   const pathname = usePathname();
   const isRoot = pathname === "/";
+  const isPostPage = pathname.startsWith(`/blog/`);
 
   return (
     <header
@@ -51,6 +53,12 @@ export default function Navbar() {
                 : "max-xl:text-md gap-8 text-base max-sm:gap-6 max-sm:text-sm dark:text-slate-200",
             )}
           >
+            {isPostPage && (
+              <li>
+                <BlogSearchBarOnNav />
+              </li>
+            )}
+
             {navLinks.map(({ href, label }) => {
               const isActive =
                 pathname === href || pathname.startsWith(`${href}/`);
