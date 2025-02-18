@@ -7,7 +7,7 @@ export default function BlogSearchBar() {
 
   return (
     <div className="group" onClick={() => toggleSearch(true)}>
-      <div className="mx-auto flex w-full cursor-pointer items-center overflow-hidden rounded-md border-2 border-slate-400 bg-slate-100 px-4 py-2.5 transition-colors group-hover:border-slate-500 max-sm:border-1 dark:border-slate-700 dark:bg-slate-800 group-hover:dark:border-slate-500">
+      <div className="mx-auto flex w-full cursor-pointer items-center overflow-hidden rounded-md border-2 border-slate-400 bg-slate-100 px-4 py-2.5 transition-colors group-hover:border-slate-500 max-sm:border-1 dark:border-slate-600 dark:bg-slate-800 group-hover:dark:border-slate-500">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 192.904 192.904"
