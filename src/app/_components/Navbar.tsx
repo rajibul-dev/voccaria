@@ -54,7 +54,7 @@ export default function Navbar() {
             )}
           >
             {isPostPage && (
-              <li>
+              <li className="max-sm:order-4 max-sm:-ml-4">
                 <BlogSearchBarOnNav />
               </li>
             )}
@@ -84,7 +84,11 @@ export default function Navbar() {
               );
             })}
 
-            {!isRoot && <DarkModeToggler />}
+            {!isRoot && (
+              <li className={clsx({ "-ml-2": isPostPage })}>
+                <DarkModeToggler />
+              </li>
+            )}
 
             {isRoot && (
               <li>
