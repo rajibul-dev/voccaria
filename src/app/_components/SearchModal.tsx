@@ -3,7 +3,7 @@
 import { BlogPost, Category } from "@/models/blogInterfaces";
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 import * as Command from "cmdk";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { LuText } from "react-icons/lu";
@@ -68,13 +68,16 @@ export default function SearchModal() {
   } = useSearch();
   const modalRef = useOutsideClick<HTMLDivElement>(() => toggleSearch(false));
   const router = useRouter();
+  const pathname = usePathname();
 
   // Memoized event handler to prevent unnecessary re-renders
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === "Escape") toggleSearch(false);
+      if (pathname.startsWith("/blog")) {
+        if (e.key === "Escape") toggleSearch(false);
+      }
     },
-    [toggleSearch],
+    [toggleSearch, pathname],
   );
 
   // Effect for handling keyboard events efficiently

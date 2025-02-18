@@ -20,6 +20,7 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 import Navbar from "./_components/Navbar";
 import { Providers } from "./providers";
 import { headers } from "next/headers";
+import SearchContextProviderWrapper from "./_components/SearchContextProviderWrapper";
 
 config.autoAddCss = false; /* eslint-disable import/first */
 
@@ -141,10 +142,12 @@ export default async function RootLayout({
         />
       </head>
       <body className={`${montserrat.className} antialiased dark:bg-gray-900`}>
-        <Providers>
-          <Navbar />
-          <div>{children}</div>
-        </Providers>
+        <SearchContextProviderWrapper>
+          <Providers>
+            <Navbar />
+            <div>{children}</div>
+          </Providers>
+        </SearchContextProviderWrapper>
         <SpeedInsights />
         <Analytics />
       </body>

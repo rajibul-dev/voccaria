@@ -1,11 +1,11 @@
+import { BlogPost, Category } from "@/models/blogInterfaces";
+import { SearchProvider } from "../_context/SearchContext";
 import {
   getAllBlogPostsForSearch,
   getAllCategories,
   getFirstPostSlugOfCategory,
 } from "@/lib/sanityFetchers";
-import { SearchProvider } from "../_context/SearchContext";
-import SearchModal from "../_components/SearchModal";
-import { BlogPost, Category } from "@/models/blogInterfaces";
+import SearchModal from "./SearchModal";
 
 type StructuredContent = {
   id: string;
@@ -57,7 +57,7 @@ function structureContent(data: any[]): StructuredContent[] {
   });
 }
 
-export default async function BlogLayout({
+export default async function SearchContextProviderWrapper({
   children,
 }: {
   children: React.ReactNode;
