@@ -10,6 +10,7 @@ import {
 } from "react";
 import Fuse from "fuse.js";
 import { Category } from "@/models/blogInterfaces";
+import { usePathname } from "next/navigation";
 
 // Define the structure of state
 interface SearchState {
@@ -67,6 +68,8 @@ export const SearchProvider = ({
     results: [],
     isOpen: false,
   });
+  const pathname = usePathname();
+  const isBlogPage = pathname.startsWith("/blog");
 
   // Setup Fuse.js for searching
   const fuse = new Fuse(data, {
@@ -101,11 +104,13 @@ export const SearchProvider = ({
   // Listen for Ctrl + K to open search
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.key === "k") {
-        e.preventDefault();
-        toggleSearch(!state.isOpen);
-      } else if (e.key === "Escape") {
-        toggleSearch(false);
+      if (isBlogPage) {
+        if (e.ctrlKey && e.key === "k") {
+          e.preventDefault();
+          toggleSearch(!state.isOpen);
+        } else if (e.key === "Escape") {
+          toggleSearch(false);
+        }
       }
     };
 
@@ -113,7 +118,7 @@ export const SearchProvider = ({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [toggleSearch, state.isOpen]);
+  }, [toggleSearch, state.isOpen, pathname]);
 
   useEffect(() => {
     dispatch({ type: "SET_RESULTS", payload: categories || [] });
