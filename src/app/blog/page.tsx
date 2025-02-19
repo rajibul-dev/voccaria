@@ -1,9 +1,11 @@
 import { Metadata } from "next";
 import Image from "next/image";
 
-import blogIllustration from "/public/images/blog-illustration.jpg";
+import { Suspense } from "react";
 import BlogSearchBar from "../_components/BlogSearchBar";
 import LatestPosts from "../_components/LatestPosts";
+import Spinner from "../_components/Spinner";
+import blogIllustration from "/public/images/blog-illustration.jpg";
 
 export const revalidate = 0; // for now
 
@@ -46,7 +48,9 @@ export default function Page() {
           <h2 className="dark:text-my-pink-300 mb-8 text-3xl font-bold text-slate-600 max-sm:mb-6 max-sm:text-2xl">
             Latest Posts
           </h2>
-          <LatestPosts />
+          <Suspense fallback={<Spinner />}>
+            <LatestPosts />
+          </Suspense>
         </div>
       </section>
     </main>
