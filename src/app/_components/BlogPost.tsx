@@ -86,15 +86,12 @@ export default async function BlogPost({ slug }: { slug: string }) {
           &nbsp;&nbsp;•&nbsp;&nbsp;{readingTime} min read
         </time>
         <h1
-          className={clsx(
-            "mb-4 font-bold tracking-tighter text-slate-600 dark:text-slate-100",
-            {
-              "text-4xl leading-12.5 max-sm:text-[1.625rem] max-sm:leading-9.5":
-                !PREFER_SMALL_TEXTS, // Default (large)
-              "text-3xl leading-11 max-sm:text-[1.625rem] max-sm:leading-9.5":
-                PREFER_SMALL_TEXTS, // Smaller text
-            },
-          )}
+          className={clsx("mb-4 font-bold text-slate-600 dark:text-slate-100", {
+            "text-4xl leading-12.5 tracking-tighter max-sm:text-[1.625rem] max-sm:leading-9.5":
+              !PREFER_SMALL_TEXTS, // Default (large)
+            "text-3xl leading-11 tracking-tight max-sm:text-[1.625rem] max-sm:leading-9.5":
+              PREFER_SMALL_TEXTS, // Smaller text
+          })}
         >
           {title}
         </h1>
