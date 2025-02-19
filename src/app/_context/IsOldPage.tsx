@@ -2,7 +2,6 @@
 
 import { usePathname } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
-import ScaleShiftSpinner from "../_components/ScaleShiftSpinner";
 
 interface IsOldPageProps {
   pathname: string | null;
@@ -26,14 +25,6 @@ export default function IsOldPageProvider({ children }: any) {
       html.classList.remove("old-scaling");
     }
   }, [pathname]);
-
-  // if (isRoot === null) {
-  //   return (
-  //     <div className="flex items-center justify-center w-full h-dvh">
-  //       <ScaleShiftSpinner />
-  //     </div>
-  //   );
-  // }
 
   return (
     <ContextObj.Provider value={{ pathname, isRoot: Boolean(isRoot) }}>
