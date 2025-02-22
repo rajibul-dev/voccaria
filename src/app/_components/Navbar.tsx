@@ -7,15 +7,15 @@ import styles from "./navbar.module.css";
 
 // components
 import OldLogo from "@/app/_components/OldLogo";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { IoMenu } from "react-icons/io5";
 import BlogSearchBarOnNav from "./BlogSearchBarOnNav";
 import DarkModeToggler from "./DarkModeToggler";
 import Logo from "./Logo";
 import OldPageSectionTracking from "./OldPageSectionTracking";
-import Drawer from "@mui/material/Drawer";
-import { useState } from "react";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -61,9 +61,13 @@ export default function Navbar() {
             >
               <IoMenu />
             </button>
-            <Drawer onClose={toggleDrawer(false)} open={open}>
-              ABCD
-            </Drawer>
+            <SwipeableDrawer
+              onClose={toggleDrawer(false)}
+              open={open}
+              onOpen={toggleDrawer(true)}
+            >
+              <div className="h-full w-70 bg-gray-100 dark:bg-gray-800"></div>
+            </SwipeableDrawer>
           </>
         )}
         {isRoot ? <OldLogo /> : <Logo pathname={pathname} />}
