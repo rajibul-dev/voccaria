@@ -16,9 +16,9 @@ export default function BlogSideDrawer({ data }: BlogSideDrawerProps) {
     [key: string]: boolean;
   }>(() => {
     if (typeof window !== "undefined") {
-      return JSON.parse(localStorage.getItem("openCategories") || "{}");
+      const storedState = localStorage.getItem("openCategories");
+      if (storedState) return JSON.parse(storedState);
     }
-
     // Default all categories to open
     return Object.fromEntries(
       data.map(({ category }) => [category.slug, true]),
