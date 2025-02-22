@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
+
+import { useHeaderHeight } from "@/app/_context/HeaderHeightContext";
 
 export default function HeaderHeightSync({
   children,
@@ -10,32 +11,14 @@ export default function HeaderHeightSync({
   className?: string;
   props?: any;
 }) {
-  const [headerHeight, setHeaderHeight] = useState(0);
-  const [isReady, setIsReady] = useState(false); // Opacity control
-
-  useEffect(() => {
-    const header = document.getElementById("header");
-    if (!header) return;
-
-    const updateHeight = () => {
-      setHeaderHeight(header.offsetHeight);
-      setIsReady(true); // Enable opacity transition after first update
-    };
-
-    const observer = new ResizeObserver(updateHeight);
-    observer.observe(header);
-
-    updateHeight();
-
-    return () => observer.disconnect();
-  }, []);
+  const { headerHeight, isReady } = useHeaderHeight();
 
   return (
     <div
       className={className}
       {...props}
       style={{
-        paddingTop: headerHeight,
+        paddingTop: headerHeight, // Dynamically apply padding
         height: "100dvh",
         transition: "padding-top 0.2s ease-in-out, opacity 0.3s ease-in-out",
         opacity: isReady ? 1 : 0, // Fade-in effect
