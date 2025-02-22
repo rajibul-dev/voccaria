@@ -12,7 +12,7 @@ export default function layout({ children }: { children: ReactNode }) {
           </aside>
         </HeaderHeightSync>
 
-        <HeaderHeightSync className="h-screen w-full overflow-auto">
+        <HeaderHeightSync className="h-dvh w-full overflow-auto">
           <main className="">{children}</main>
         </HeaderHeightSync>
       </div>

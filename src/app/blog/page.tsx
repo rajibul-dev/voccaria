@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <main className="min-h-screen px-6 pb-20 transition-colors dark:bg-gray-900">
+    <main className="min-h-dvh px-6 pb-20 transition-colors dark:bg-gray-900">
       <section className="pt-32 pb-8 max-sm:pt-28 max-sm:pb-4">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-8 max-md:flex-col">
           <div className="">
