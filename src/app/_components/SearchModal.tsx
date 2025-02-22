@@ -91,7 +91,7 @@ export default function SearchModal() {
         toggleSearch(false);
       });
     }
-  }, [isOpen]);
+  }, [isOpen, toggleSearch]);
 
   return (
     <Command.CommandDialog

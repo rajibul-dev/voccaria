@@ -118,11 +118,11 @@ export const SearchProvider = ({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [toggleSearch, state.isOpen, pathname]);
+  }, [toggleSearch, state.isOpen, isBlogPage]);
 
   useEffect(() => {
     dispatch({ type: "SET_RESULTS", payload: categories || [] });
-  }, []);
+  }, [categories]);
 
   return (
     <SearchContext.Provider value={{ state, handleSearch, toggleSearch }}>
