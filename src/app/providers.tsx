@@ -2,12 +2,12 @@
 
 import { Toaster } from "react-hot-toast";
 import IsOldPageProvider from "./_context/IsOldPage";
-import { HamburgerMenuProvider } from "./_context/HamburgerMenuContext";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <HamburgerMenuProvider>
+      <AppRouterCacheProvider>
         <IsOldPageProvider>
           <Toaster
             position="bottom-center"
@@ -34,7 +34,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
           />
           {children}
         </IsOldPageProvider>
-      </HamburgerMenuProvider>
+      </AppRouterCacheProvider>
     </>
   );
 }

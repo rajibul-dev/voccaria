@@ -8,11 +8,14 @@ import styles from "./navbar.module.css";
 // components
 import OldLogo from "@/app/_components/OldLogo";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { IoMenu } from "react-icons/io5";
+import BlogSearchBarOnNav from "./BlogSearchBarOnNav";
+import DarkModeToggler from "./DarkModeToggler";
 import Logo from "./Logo";
 import OldPageSectionTracking from "./OldPageSectionTracking";
-import DarkModeToggler from "./DarkModeToggler";
-import { usePathname } from "next/navigation";
-import BlogSearchBarOnNav from "./BlogSearchBarOnNav";
+import Drawer from "@mui/material/Drawer";
+import { useState } from "react";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -23,6 +26,11 @@ export default function Navbar() {
   const pathname = usePathname();
   const isRoot = pathname === "/";
   const isPostPage = pathname.startsWith(`/blog/`);
+  const [open, setOpen] = useState(false);
+
+  const toggleDrawer = (newOpen: boolean) => () => {
+    setOpen(newOpen);
+  };
 
   return (
     <header
@@ -40,9 +48,25 @@ export default function Navbar() {
         className={clsx(
           "mx-auto flex h-full items-center justify-between",
           isRoot ? styles.container : "!mx-auto max-w-9/10 gap-5",
+          { "justify-normal": isPostPage },
         )}
       >
-        {isRoot ? <OldLogo /> : <Logo />}
+        {isPostPage && (
+          <>
+            <button
+              onClick={toggleDrawer(true)}
+              className={clsx(
+                `-mr-3 -ml-5 cursor-pointer rounded-sm px-2 py-1.5 transition-colors *:h-7 *:w-7 *:text-slate-600 *:transition-colors hover:bg-slate-100 md:hidden *:dark:text-slate-200 hover:dark:bg-slate-700 [@media(max-width:28.25em)]:-ml-2.5`,
+              )}
+            >
+              <IoMenu />
+            </button>
+            <Drawer onClose={toggleDrawer(false)} open={open}>
+              ABCD
+            </Drawer>
+          </>
+        )}
+        {isRoot ? <OldLogo /> : <Logo pathname={pathname} />}
 
         <nav className="h-full" aria-label="Main navigation">
           <ul
