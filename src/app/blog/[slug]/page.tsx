@@ -16,8 +16,11 @@ export async function generateMetadata(props: {
   return { title: `${title}`, description: `${smallDescription}` };
 }
 
-export default function Page({ params }: { params: { slug: string } }) {
-  const paramsPromise = Promise.resolve(params);
+export default async function Page(props: {
+  params: Promise<{ slug: string }>;
+}) {
+  const params = await props.params;
+  const { slug } = params;
 
   return (
     <>
@@ -28,7 +31,7 @@ export default function Page({ params }: { params: { slug: string } }) {
       </div>
 
       <Suspense fallback={<Spinner />}>
-        <BlogPost params={paramsPromise} />
+        <BlogPost slug={slug} />
       </Suspense>
     </>
   );

@@ -57,12 +57,7 @@ const PortableTextComponents = {
   },
 };
 
-export default async function BlogPost({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const slug = (await params).slug;
+export default async function BlogPost({ slug }: { slug: string }) {
   const { title, smallDescription, content, _createdAt } =
     await getPostNCached(slug);
 
