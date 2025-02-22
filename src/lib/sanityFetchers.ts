@@ -1,6 +1,7 @@
 import { BlogPost, Category } from "@/models/blogInterfaces";
 import { client } from "./sanityClient";
 import * as queries from "./sanityQueries";
+import { cache } from "react";
 
 // Fetch all blog posts
 export const getAllBlogPosts = async (): Promise<BlogPost[]> => {
@@ -56,3 +57,7 @@ export const getFirstPostSlugOfCategory = async (
 ): Promise<string> => {
   return await client.fetch(queries.GET_FIRST_POST_SLUG_OF_CATEGORY(category));
 };
+
+export const getPostNCached = cache(
+  async (slug: string) => await getPost(slug),
+);

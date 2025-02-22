@@ -1,7 +1,7 @@
 import { formatDateTime } from "@/lib/dateFns";
+import { getPostNCached } from "@/lib/sanityFetchers";
 import clsx from "clsx";
 import { PortableText } from "next-sanity";
-import { getPostNCache } from "../blog/[slug]/page";
 
 const PREFER_SMALL_TEXTS = true; // Toggle this to true for smaller text
 
@@ -64,7 +64,7 @@ export default async function BlogPost({
 }) {
   const slug = (await params).slug;
   const { title, smallDescription, content, _createdAt } =
-    await getPostNCache(slug);
+    await getPostNCached(slug);
 
   const { readingTime } = getReadingStats(
     extractPlainText(content) + smallDescription || "",
