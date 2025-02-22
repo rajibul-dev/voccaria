@@ -16,6 +16,7 @@ import BlogSearchBarOnNav from "./BlogSearchBarOnNav";
 import DarkModeToggler from "./DarkModeToggler";
 import Logo from "./Logo";
 import OldPageSectionTracking from "./OldPageSectionTracking";
+import BlogSidebarData from "./BlogSidebarData";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -66,7 +67,9 @@ export default function Navbar() {
               open={open}
               onOpen={toggleDrawer(true)}
             >
-              <div className="h-full w-70 bg-gray-100 dark:bg-gray-800"></div>
+              <div className="h-full w-81 overflow-y-auto bg-gray-100 pt-12 pb-8 dark:bg-gray-800">
+                <BlogSidebarData />
+              </div>
             </SwipeableDrawer>
           </>
         )}
