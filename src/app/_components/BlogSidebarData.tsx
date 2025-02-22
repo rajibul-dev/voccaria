@@ -5,7 +5,7 @@ export default function BlogSidebarData() {
   const { data, loading } = useSidebar();
 
   if (loading) {
-    return <p className="text-gray-400">Loading categories...</p>;
+    return <p className="px-4 text-gray-400">Loading categories...</p>;
   }
 
   return <BlogSideDrawer data={data} />;
