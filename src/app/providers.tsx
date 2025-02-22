@@ -3,11 +3,12 @@
 import { Toaster } from "react-hot-toast";
 import IsOldPageProvider from "./_context/IsOldPage";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
+import { SidebarProvider } from "./_context/SidebarContext";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <AppRouterCacheProvider>
+    <AppRouterCacheProvider>
+      <SidebarProvider>
         <IsOldPageProvider>
           <Toaster
             position="bottom-center"
@@ -34,7 +35,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
           />
           {children}
         </IsOldPageProvider>
-      </AppRouterCacheProvider>
-    </>
+      </SidebarProvider>
+    </AppRouterCacheProvider>
   );
 }
