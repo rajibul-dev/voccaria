@@ -19,6 +19,8 @@ export async function generateMetadata(props: {
 }
 
 export default function Page({ params }: { params: { slug: string } }) {
+  const paramsPromise = Promise.resolve(params);
+
   return (
     <>
       <div className="mx-auto mt-10 -mb-8 max-w-4xl px-5 max-sm:mt-7 max-sm:-mb-4">
@@ -28,7 +30,7 @@ export default function Page({ params }: { params: { slug: string } }) {
       </div>
 
       <Suspense fallback={<Spinner />}>
-        <BlogPost slug={params.slug} />
+        <BlogPost params={paramsPromise} />
       </Suspense>
     </>
   );
