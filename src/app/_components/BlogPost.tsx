@@ -2,6 +2,7 @@ import { formatDateTime } from "@/lib/dateFns";
 import { getPost } from "@/lib/sanityFetchers";
 import clsx from "clsx";
 import { PortableText } from "next-sanity";
+import { notFound } from "next/navigation";
 
 const PREFER_SMALL_TEXTS = true; // Toggle this to true for smaller text
 
@@ -58,7 +59,13 @@ const PortableTextComponents = {
 };
 
 export default async function BlogPost({ slug }: { slug: string }) {
-  const { title, smallDescription, content, _createdAt } = await getPost(slug);
+  const post = await getPost(slug);
+
+  if (!post) {
+    notFound();
+  }
+
+  const { title, smallDescription, content, _createdAt } = post;
 
   const { readingTime } = getReadingStats(
     extractPlainText(content) + smallDescription || "",
