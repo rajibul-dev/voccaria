@@ -73,16 +73,14 @@ export const SearchProvider = ({
 
   const fuse = new Fuse(data, {
     keys: [
-      { name: "title", weight: 0.4 },
+      { name: "title", weight: 0.8 }, // Prioritize title
       { name: "sections.heading", weight: 0.5 },
-      { name: "sections.text", weight: 0.5 },
+      { name: "sections.text", weight: 0.4 },
     ],
-    threshold: 0.3, // Make the search more sensitive
+    threshold: 0.35,
     includeMatches: true,
-    findAllMatches: true, // Ensure partial matches are captured
-    useExtendedSearch: true, // Allow prefix and suffix matching
-    minMatchCharLength: 1, // Avoid single-character searches from failing
-    ignoreLocation: true, // Prevent position bias affecting results
+    minMatchCharLength: 1,
+    ignoreLocation: true,
   });
 
   // Handle search function
