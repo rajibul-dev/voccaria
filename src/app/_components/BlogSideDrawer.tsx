@@ -52,7 +52,7 @@ export default function BlogSideDrawer({
         <div key={category.slug}>
           {/* Category Header */}
           <button
-            className="flex w-full cursor-pointer items-center justify-between rounded-md px-3 py-2 text-left text-sm font-bold tracking-wide text-slate-600 uppercase [word-spacing:3pt] hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+            className="text-dull-violet-600 hover:bg-dull-violet-100 dark:text-dull-violet-300 dark:hover:bg-dull-violet-800 flex w-full cursor-pointer items-center justify-between rounded-md px-3 py-2 text-left text-sm font-bold tracking-wide uppercase [word-spacing:3pt]"
             onClick={() => toggleCategory(category.slug)}
           >
             {category.title}
