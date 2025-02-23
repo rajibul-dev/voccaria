@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect } from "react";
 
-export default function notFound() {
+export default function NotFound() {
   useEffect(() => {
     if (localStorage.getItem("theme") === "dark") {
       document.documentElement.classList.add("dark");
