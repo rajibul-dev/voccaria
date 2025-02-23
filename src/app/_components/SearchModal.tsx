@@ -3,7 +3,7 @@
 import { BlogPost, Category } from "@/models/blogInterfaces";
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 import * as Command from "cmdk";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { useCallback, useEffect } from "react";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { LuText } from "react-icons/lu";
@@ -11,49 +11,42 @@ import { BsFileEarmarkText } from "react-icons/bs";
 import { useSearch } from "../_context/SearchContext";
 import useOutsideClick from "../_hooks/useOutsideClick";
 
+// Define the shape for section matches
 type MatchesObject = {
-  title?: string;
   heading?: string;
   text?: string;
 };
 
 function extractMatch(query: string, result: any): MatchesObject | null {
-  if (!query && !result) return null;
-  if (!result.sections) return null;
-
+  if (!query || !result || !result.sections) return null;
   const matches: MatchesObject = {};
 
-  // Check if the query matches in the title
-  if (
-    result.title &&
-    result.title.toLowerCase().includes(query.toLowerCase())
-  ) {
-    matches.title = result.title;
-  }
-
-  // Check if the query matches any section heading
+  // Check each section heading for a match
   for (const section of result.sections) {
-    if (section.heading.toLowerCase().includes(query.toLowerCase())) {
+    if (
+      section.heading &&
+      section.heading.toLowerCase().includes(query.toLowerCase())
+    ) {
       matches.heading = section.heading;
     }
   }
 
-  // Check if the query matches inside any section text
+  // Check section texts
   for (const section of result.sections) {
-    const index = section.text.toLowerCase().indexOf(query.toLowerCase());
-    if (index !== -1) {
-      // Extract a snippet around the matched query
-      const snippetStart = Math.max(0, index - 20);
-      const snippetEnd = Math.min(
-        section.text.length,
-        index + query.length + 20,
-      );
-      matches.text =
-        "..." + section.text.slice(snippetStart, snippetEnd) + "...";
+    if (section.text) {
+      const index = section.text.toLowerCase().indexOf(query.toLowerCase());
+      if (index !== -1) {
+        const snippetStart = Math.max(0, index - 20);
+        const snippetEnd = Math.min(
+          section.text.length,
+          index + query.length + 20,
+        );
+        matches.text =
+          "..." + section.text.slice(snippetStart, snippetEnd) + "...";
+      }
     }
   }
 
-  // Return the object if any match is found, otherwise return null
   return Object.keys(matches).length > 0 ? matches : null;
 }
 
@@ -67,7 +60,6 @@ function highlightMatchedText(
     text.replace(new RegExp(`(${query})`, "gi"), "<strong>$1</strong>");
 
   return {
-    title: matches.title ? boldify(matches.title) : undefined,
     heading: matches.heading ? boldify(matches.heading) : undefined,
     text: matches.text ? boldify(matches.text) : undefined,
   };
@@ -82,7 +74,7 @@ export default function SearchModal() {
   const modalRef = useOutsideClick<HTMLDivElement>(() => toggleSearch(false));
   const router = useRouter();
 
-  // Memoized event handler to prevent unnecessary re-renders
+  // Close search on Escape key press
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") toggleSearch(false);
@@ -90,16 +82,16 @@ export default function SearchModal() {
     [toggleSearch],
   );
 
-  // Effect for handling keyboard events efficiently
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
 
+  // Prevent browser back button from closing search unexpectedly
   useEffect(() => {
     if (isOpen) {
       history.pushState(null, document.title, location.href);
-      window.addEventListener("popstate", function (event) {
+      window.addEventListener("popstate", function () {
         history.pushState(null, document.title, location.href);
         toggleSearch(false);
       });
@@ -135,7 +127,7 @@ export default function SearchModal() {
           />
           <span
             onClick={() => toggleSearch(false)}
-            className="absolute top-[50%] right-3 w-fit -translate-y-[27px] cursor-pointer rounded-sm border border-slate-400 bg-slate-200 px-2.5 py-1 text-xs font-bold text-slate-400 transition-colors group-hover:text-slate-500 hover:bg-slate-300 max-sm:hidden dark:bg-slate-700 group-hover:dark:text-slate-400 dark:hover:bg-slate-800"
+            className="absolute top-[50%] right-3 w-fit -translate-y-[27px] cursor-pointer rounded-sm border border-slate-400 bg-slate-200 px-2.5 py-1 text-xs font-bold text-slate-400 transition-colors hover:bg-slate-300 max-sm:hidden dark:bg-slate-700 dark:hover:bg-slate-800"
           >
             Esc
           </span>
@@ -144,36 +136,70 @@ export default function SearchModal() {
         <Command.CommandList className="[&>div]:flex [&>div]:flex-col [&>div]:gap-1.5">
           {results.length > 0 ? (
             results.map((result: (BlogPost & Category) | any) => {
-              const extractMatchedPortion = extractMatch(query, result);
+              // Determine if the title itself matches
+              const titleMatches = result.title
+                .toLowerCase()
+                .includes(query.toLowerCase());
+              // Extract section matches from content
+              const sectionMatches = extractMatch(query, result);
               const highlightedMatch = highlightMatchedText(
-                extractMatchedPortion,
+                sectionMatches,
                 query,
               );
 
-              const postUI = (
-                <li
-                  key={Math.random()}
-                  onClick={() => {
-                    router.push(`/blog/${result.slug}`);
-                    toggleSearch(false);
-                  }}
-                  className="group cursor-pointer list-none bg-gray-100 text-slate-700 dark:bg-gray-800 dark:text-slate-100"
-                  value={result.slug}
-                >
-                  {!extractMatchedPortion ? (
-                    <div className="flex items-baseline gap-3 rounded-md px-3 py-3 group-hover:bg-slate-200 dark:group-hover:bg-slate-700">
-                      <BsFileEarmarkText
-                        size={18}
-                        className="shrink-0 translate-y-0.5"
-                      />
-                      <span className="font-medium">{result.title}</span>
-                    </div>
-                  ) : (
-                    <div>
+              // For "post" results, we want to possibly render two items:
+              if (!result.typeOf || result.typeOf === "post") {
+                const items = [];
+                // Always render title match if found
+                if (titleMatches) {
+                  items.push(
+                    <li
+                      key={`${result.slug}-title`}
+                      onClick={() => {
+                        router.push(`/blog/${result.slug}`);
+                        toggleSearch(false);
+                      }}
+                      className="group cursor-pointer list-none bg-gray-100 text-slate-700 dark:bg-gray-800 dark:text-slate-100"
+                      value={result.slug}
+                    >
+                      <div className="flex items-baseline gap-3 rounded-md px-3 py-3 group-hover:bg-slate-200 dark:group-hover:bg-slate-700">
+                        <BsFileEarmarkText
+                          size={18}
+                          className="shrink-0 translate-y-0.5"
+                        />
+                        <span
+                          className="font-bold"
+                          // Boldify the query in the title:
+                          dangerouslySetInnerHTML={{
+                            __html: result.title.replace(
+                              new RegExp(`(${query})`, "gi"),
+                              "<strong>$1</strong>",
+                            ),
+                          }}
+                        />
+                      </div>
+                    </li>,
+                  );
+                }
+                // Render content match if present
+                if (
+                  highlightedMatch &&
+                  (highlightedMatch.heading || highlightedMatch.text)
+                ) {
+                  items.push(
+                    <li
+                      key={`${result.slug}-section`}
+                      onClick={() => {
+                        router.push(`/blog/${result.slug}`);
+                        toggleSearch(false);
+                      }}
+                      className="group cursor-pointer list-none bg-gray-100 text-slate-700 dark:bg-gray-800 dark:text-slate-100"
+                      value={result.slug}
+                    >
                       <div className="flex items-baseline gap-3 rounded-md px-3 py-3 group-hover:bg-slate-200 dark:group-hover:bg-slate-700">
                         <LuText className="shrink-0 translate-y-0.5" />
                         <div className="flex flex-col">
-                          {highlightedMatch?.heading && (
+                          {highlightedMatch.heading && (
                             <span
                               className="font-medium"
                               dangerouslySetInnerHTML={{
@@ -181,7 +207,7 @@ export default function SearchModal() {
                               }}
                             />
                           )}
-                          {highlightedMatch?.text && (
+                          {highlightedMatch.text && (
                             <span
                               className="font-light"
                               dangerouslySetInnerHTML={{
@@ -189,53 +215,79 @@ export default function SearchModal() {
                               }}
                             />
                           )}
-                          {highlightedMatch?.title ? (
-                            <span
-                              className="mt-1 text-sm text-gray-300 dark:text-gray-500"
-                              dangerouslySetInnerHTML={{
-                                __html: highlightedMatch.title,
-                              }}
-                            ></span>
-                          ) : (
-                            <span className="mt-1 text-sm text-gray-300 dark:text-gray-500">
-                              {result.title}
-                            </span>
-                          )}
+                          <span className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                            {result.title}
+                          </span>
                         </div>
                       </div>
+                    </li>,
+                  );
+                }
+                // Fallback: if no title or section matches, show a default item.
+                if (items.length === 0) {
+                  items.push(
+                    <li
+                      key={`${result.slug}-default`}
+                      onClick={() => {
+                        router.push(`/blog/${result.slug}`);
+                        toggleSearch(false);
+                      }}
+                      className="group cursor-pointer list-none bg-gray-100 text-slate-700 dark:bg-gray-800 dark:text-slate-100"
+                      value={result.slug}
+                    >
+                      <div className="flex items-baseline gap-3 rounded-md px-3 py-3 group-hover:bg-slate-200 dark:group-hover:bg-slate-700">
+                        <BsFileEarmarkText
+                          size={18}
+                          className="shrink-0 translate-y-0.5"
+                        />
+                        <span className="font-medium">{result.title}</span>
+                      </div>
+                    </li>,
+                  );
+                }
+                return items;
+              } else if (result.typeOf === "category") {
+                // For category results, render a single item.
+                return (
+                  <li
+                    key={`${result.slug}-category`}
+                    onClick={() => {
+                      router.push(`/blog/${result.firstPostSlug}`);
+                      toggleSearch(false);
+                    }}
+                    className="group cursor-pointer list-none bg-gray-100 text-slate-700 dark:bg-gray-800 dark:text-slate-100"
+                  >
+                    <div className="flex items-center gap-3 rounded-md px-3 py-3 group-hover:bg-slate-200 dark:group-hover:bg-slate-700">
+                      <IoDocumentTextOutline
+                        size={26}
+                        className="-translate-y-0.5"
+                      />
+                      <span className="text-lg font-medium tracking-normal">
+                        {result.title}
+                      </span>
                     </div>
-                  )}
-                </li>
-              );
-
-              const categoryUI = (
-                <li
-                  key={Math.random()}
-                  onClick={() => {
-                    router.push(`/blog/${result.firstPostSlug}`);
-                    toggleSearch(false);
-                  }}
-                  className="group cursor-pointer list-none bg-gray-100 text-slate-700 dark:bg-gray-800 dark:text-slate-100"
-                >
-                  <div className="flex items-center gap-3 rounded-md px-3 py-3 group-hover:bg-slate-200 dark:group-hover:bg-slate-700">
-                    <IoDocumentTextOutline
-                      size={26}
-                      className="-translate-y-0.5"
-                    />
-                    <span className="text-lg font-medium tracking-normal">
-                      {result.title}
-                    </span>
-                  </div>
-                </li>
-              );
-
-              switch (result.typeOf) {
-                case "post":
-                  return postUI;
-                case "category":
-                  return categoryUI;
-                default:
-                  return postUI;
+                  </li>
+                );
+              } else {
+                // Default fallback (shouldn't happen)
+                return (
+                  <li
+                    key={`${result.slug}-fallback`}
+                    onClick={() => {
+                      router.push(`/blog/${result.slug}`);
+                      toggleSearch(false);
+                    }}
+                    className="group cursor-pointer list-none bg-gray-100 text-slate-700 dark:bg-gray-800 dark:text-slate-100"
+                  >
+                    <div className="flex items-baseline gap-3 rounded-md px-3 py-3 group-hover:bg-slate-200 dark:group-hover:bg-slate-700">
+                      <BsFileEarmarkText
+                        size={18}
+                        className="shrink-0 translate-y-0.5"
+                      />
+                      <span className="font-medium">{result.title}</span>
+                    </div>
+                  </li>
+                );
               }
             })
           ) : (
