@@ -71,7 +71,7 @@ export default {
       name: 'postTags',
       title: 'Tags (optional)',
       type: 'array',
-      of: [{type: 'reference', to: [{type: 'category'}]}],
+      of: [{type: 'reference', to: [{type: 'tags'}]}],
     },
     {
       name: 'postIndexInCategory',
