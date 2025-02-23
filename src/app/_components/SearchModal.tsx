@@ -11,13 +11,25 @@ import { BsFileEarmarkText } from "react-icons/bs";
 import { useSearch } from "../_context/SearchContext";
 import useOutsideClick from "../_hooks/useOutsideClick";
 
-type MatchesObject = { heading?: string; text?: string };
+type MatchesObject = {
+  title?: string;
+  heading?: string;
+  text?: string;
+};
 
 function extractMatch(query: string, result: any): MatchesObject | null {
   if (!query && !result) return null;
   if (!result.sections) return null;
 
-  const matches: { heading?: string; text?: string } = {};
+  const matches: MatchesObject = {};
+
+  // Check if the query matches in the title
+  if (
+    result.title &&
+    result.title.toLowerCase().includes(query.toLowerCase())
+  ) {
+    matches.title = result.title;
+  }
 
   // Check if the query matches any section heading
   for (const section of result.sections) {
@@ -55,6 +67,7 @@ function highlightMatchedText(
     text.replace(new RegExp(`(${query})`, "gi"), "<strong>$1</strong>");
 
   return {
+    title: matches.title ? boldify(matches.title) : undefined,
     heading: matches.heading ? boldify(matches.heading) : undefined,
     text: matches.text ? boldify(matches.text) : undefined,
   };
@@ -176,9 +189,18 @@ export default function SearchModal() {
                               }}
                             />
                           )}
-                          <span className="mt-1 text-sm text-gray-300 dark:text-gray-500">
-                            {result.title}
-                          </span>
+                          {highlightedMatch?.title ? (
+                            <span
+                              className="mt-1 text-sm text-gray-300 dark:text-gray-500"
+                              dangerouslySetInnerHTML={{
+                                __html: highlightedMatch.title,
+                              }}
+                            ></span>
+                          ) : (
+                            <span className="mt-1 text-sm text-gray-300 dark:text-gray-500">
+                              {result.title}
+                            </span>
+                          )}
                         </div>
                       </div>
                     </div>
