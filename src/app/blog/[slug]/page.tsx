@@ -2,7 +2,7 @@ import BackButton from "@/app/_components/BackButton";
 import BlogPost from "@/app/_components/BlogPost";
 import KeepTrackOfLastRead from "@/app/_components/KeepTrackOfLastRead";
 import Spinner from "@/app/_components/Spinner";
-import { getPostNCached } from "@/lib/sanityFetchers";
+import { getPost } from "@/lib/sanityFetchers";
 import { Metadata } from "next";
 import { Suspense } from "react";
 
@@ -13,7 +13,7 @@ export async function generateMetadata(props: {
 }): Promise<Metadata> {
   const params = await props.params;
   const { slug } = params;
-  const { title, smallDescription } = await getPostNCached(slug);
+  const { title, smallDescription } = await getPost(slug);
   return { title: `${title}`, description: `${smallDescription}` };
 }
 

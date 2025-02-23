@@ -1,5 +1,5 @@
 import { formatDateTime } from "@/lib/dateFns";
-import { getPostNCached } from "@/lib/sanityFetchers";
+import { getPost } from "@/lib/sanityFetchers";
 import clsx from "clsx";
 import { PortableText } from "next-sanity";
 
@@ -58,8 +58,7 @@ const PortableTextComponents = {
 };
 
 export default async function BlogPost({ slug }: { slug: string }) {
-  const { title, smallDescription, content, _createdAt } =
-    await getPostNCached(slug);
+  const { title, smallDescription, content, _createdAt } = await getPost(slug);
 
   const { readingTime } = getReadingStats(
     extractPlainText(content) + smallDescription || "",
