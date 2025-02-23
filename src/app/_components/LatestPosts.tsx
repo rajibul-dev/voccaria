@@ -28,7 +28,7 @@ export default async function LatestPosts() {
                 {smallDescription}
               </p>
               <div className="mt-1 flex text-sm font-medium text-gray-500 dark:text-gray-400">
-                <span>{formatDateTime(_createdAt)}</span>
+                <time>{formatDateTime(_createdAt)}</time>
                 {ofCategory && <span>&nbsp;• {ofCategory.title}</span>}
               </div>
             </Link>
