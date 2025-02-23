@@ -2,11 +2,16 @@ import BackButton from "@/app/_components/BackButton";
 import BlogPost from "@/app/_components/BlogPost";
 import KeepTrackOfLastRead from "@/app/_components/KeepTrackOfLastRead";
 import Spinner from "@/app/_components/Spinner";
-import { getPost } from "@/lib/sanityFetchers";
+import { getAllBlogPosts, getPost } from "@/lib/sanityFetchers";
 import { Metadata } from "next";
 import { Suspense } from "react";
 
 export const revalidate = 0; // no cache storing for now
+
+export async function generateStaticParams() {
+  const allPosts = await getAllBlogPosts();
+  return allPosts.map((post) => ({ slug: post.slug }));
+}
 
 export async function generateMetadata(props: {
   params: Promise<{ slug: string }>;
