@@ -15,8 +15,8 @@ export default function layout({ children }: { children: ReactNode }) {
           </aside>
         </HeaderHeightSync>
 
-        <HeaderHeightSync className="h-dvh w-full overflow-auto">
-          <main className="pb-6 max-sm:pb-0 md:px-3">{children}</main>
+        <HeaderHeightSync className="flex h-dvh w-full flex-col overflow-auto">
+          <main className="mb-auto pb-6 max-sm:pb-0 md:px-3">{children}</main>
           <Footer />
         </HeaderHeightSync>
       </div>
