@@ -56,7 +56,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="border-t border-t-gray-300 py-18 max-md:py-14 dark:border-t-gray-700">
+      <section className="border-t border-t-gray-300 py-16 max-md:py-14 dark:border-t-gray-700">
         <div className="mx-auto max-w-[67rem] px-6">
           <Suspense fallback={<Spinner />}>
             <CategorizedPostsProvider>
