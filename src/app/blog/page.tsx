@@ -36,7 +36,9 @@ export async function generateStaticParams() {
   return [];
 }
 
-export default function Page() {
+export default async function Page() {
+  const firstPostSlug = await getFirstPostOfFirstCategory();
+
   return (
     <main className="min-h-dvh pb-20 transition-colors dark:bg-gray-900">
       <section className="pt-32 pb-8 max-sm:pt-28 max-sm:pb-4">
@@ -53,7 +55,7 @@ export default function Page() {
             </p>
 
             <div className="flex w-full gap-5">
-              <BlogHeroButton />
+              <BlogHeroButton firstPostSlug={firstPostSlug} />
               <BlogSearchBar />
             </div>
           </div>

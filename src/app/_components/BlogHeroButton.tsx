@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getFirstPostOfFirstCategory } from "@/lib/sanityFetchers";
+import { useEffect, useState } from "react";
 
-export default function BlogHeroButton() {
+export default function BlogHeroButton({
+  firstPostSlug,
+}: {
+  firstPostSlug: string;
+}) {
   const [lastRead, setLastRead] = useState<string | null>(null);
-  const [firstPost, setFirstPost] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -16,17 +18,11 @@ export default function BlogHeroButton() {
     }
   }, []);
 
-  useEffect(() => {
-    getFirstPostOfFirstCategory()
-      .then((slug) => setFirstPost(slug))
-      .catch((error) => console.error("Failed to fetch first post:", error));
-  }, []);
-
   const handleContinue = () => {
     if (lastRead) {
       router.push(`/blog/${lastRead}`);
-    } else if (firstPost) {
-      router.push(`/blog/${firstPost}`);
+    } else if (firstPostSlug) {
+      router.push(`/blog/${firstPostSlug}`);
     } else {
       router.push("/blog");
     }
