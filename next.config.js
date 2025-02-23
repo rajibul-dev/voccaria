@@ -7,6 +7,7 @@ const nextConfig = {
     });
     return config;
   },
+  productionBrowserSourceMaps: true, // Add this line.
 };
 
 module.exports = nextConfig;
