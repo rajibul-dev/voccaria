@@ -3,7 +3,7 @@
 import { BlogPost, Category } from "@/models/blogInterfaces";
 import clsx from "clsx";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa6";
 
@@ -31,18 +31,8 @@ export default function BlogSideDrawer({
     );
   });
 
-  const router = useRouter();
   const params = useParams();
   const currentSlug = params?.slug;
-
-  const handleNavigation = (slug: string) => {
-    if (isMobile && toggleDrawer) {
-      toggleDrawer(); // Close drawer first
-      router.push(`/blog/${slug}`);
-    } else {
-      router.push(`/blog/${slug}`);
-    }
-  };
 
   useEffect(() => {
     localStorage.setItem("openCategories", JSON.stringify(openCategories));
@@ -78,10 +68,16 @@ export default function BlogSideDrawer({
             <ul className="flex w-full flex-col">
               {posts.map((post) => (
                 <li key={post.slug}>
-                  <button
-                    onClick={() => handleNavigation(post.slug)}
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    shallow
+                    onClick={(e) => {
+                      if (isMobile) {
+                        toggleDrawer();
+                      }
+                    }}
                     className={clsx(
-                      "block w-full cursor-pointer rounded-md py-2 pr-2 pl-4 text-left text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-slate-100",
+                      "block rounded-md py-2 pr-2 pl-4 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-slate-100",
                       {
                         "bg-slate-200 text-slate-900! hover:bg-slate-200 hover:text-slate-900! dark:bg-slate-700! dark:text-slate-50! dark:hover:bg-slate-700! dark:hover:text-slate-50!":
                           currentSlug === post.slug,
@@ -89,7 +85,7 @@ export default function BlogSideDrawer({
                     )}
                   >
                     {post.title}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
