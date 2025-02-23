@@ -18,8 +18,14 @@ export async function generateMetadata(props: {
 }): Promise<Metadata> {
   const params = await props.params;
   const { slug } = params;
-  const { title, smallDescription } = await getPost(slug);
-  return { title: `${title}`, description: `${smallDescription}` };
+  const { title, smallDescription, postTags } = await getPost(slug);
+  const keywords = postTags?.map((tagObj) => tagObj.tag) || [];
+  keywords.push("learn singing");
+  return {
+    title: `${title}`,
+    description: `${smallDescription}`,
+    keywords,
+  };
 }
 
 export default async function Page(props: {
