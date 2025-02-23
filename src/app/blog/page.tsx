@@ -45,7 +45,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="pt-8 pb-18 max-sm:pt-4 max-sm:pb-24">
+      <section className="pt-8 pb-18 max-md:pb-16 max-sm:pt-4">
         <div className="mx-auto max-w-[67rem] px-6">
           <h2 className="dark:text-my-pink-300 mb-8 text-3xl font-bold text-slate-600 max-sm:mb-6 max-sm:text-2xl">
             Latest Posts
@@ -56,7 +56,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="border-t border-t-gray-300 py-18 dark:border-t-gray-700">
+      <section className="border-t border-t-gray-300 py-18 max-md:py-14 dark:border-t-gray-700">
         <div className="mx-auto max-w-[67rem] px-6">
           <Suspense fallback={<Spinner />}>
             <CategorizedPostsProvider>
