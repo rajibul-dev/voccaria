@@ -12,7 +12,8 @@ export const ALL_BLOG_POSTS = `
       title,
       "slug": slug.current
     },
-    _createdAt
+    _createdAt,
+    _updatedAt
   } | order(_createdAt desc)
 `;
 
@@ -31,6 +32,7 @@ export const ALL_BLOG_POSTS_PAGINATED = (start = 0, limit = 10) => `
       slug
     },
     _createdAt,
+    _updatedAt
     postIndexInCategory,
   }
 `;
@@ -44,6 +46,7 @@ export const POSTS_IN_CATEGORY_SORTBY_INDEX = (categorySlug: string) => `
     smallDescription,
     postIndexInCategory,
     _createdAt,
+    _updatedAt
   }
 `;
 
@@ -56,6 +59,7 @@ export const POSTS_IN_CATEGORY_SORTBY_TIME_ASC = (categorySlug: string) => `
     smallDescription,
     postIndexInCategory,
     _createdAt,
+    _updatedAt
   }
 `;
 
@@ -76,6 +80,7 @@ export const GET_POST = (slug: string) => `
     postIndexInCategory,
     content,
     _createdAt,
+    _updatedAt
   }
 `;
 
@@ -109,7 +114,8 @@ export const GET_FIRST_POST_SLUG_OF_CATEGORY = (category: string) => `
   *[_type == 'blog' && ofCategory->slug.current == "${category}"] {
     "slug": slug.current,
     postIndexInCategory,
-    _createdAt
+    _createdAt,
+    _updatedAt
   } | order(defined(postIndexInCategory) desc, postIndexInCategory asc, _createdAt asc)[0].slug
 `;
 

@@ -20,6 +20,7 @@ export interface BlogPost {
   postTags?: PostTag[];
   postIndexInCategory?: number;
   _createdAt: string;
+  _updatedAt?: string;
   content?: string;
   typeOf?: string;
 }
