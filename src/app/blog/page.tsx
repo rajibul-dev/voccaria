@@ -9,12 +9,32 @@ import blogIllustration from "/public/images/blog-illustration.jpg";
 import CategorizedPostsProvider from "../_components/CategorizedPostsProvider";
 import CategorizedPostsList from "../_components/CategorizedPostsList";
 import BlogHeroButton from "../_components/BlogHeroButton";
+import {
+  getAllCategories,
+  getFirstPostOfFirstCategory,
+  getPaginatedBlogPosts,
+  getPostsInCategoryByIndex,
+  getTotalBlogPostsCount,
+} from "@/lib/sanityFetchers";
 
 export const revalidate = 0; // for now
 
 export const metadata: Metadata = {
   title: "Blog",
 };
+
+export async function generateStaticParams() {
+  await getFirstPostOfFirstCategory();
+  await getPaginatedBlogPosts(0, 5);
+  await getTotalBlogPostsCount();
+  const categories = await getAllCategories();
+  await Promise.all(
+    categories.map(async (category) => {
+      await getPostsInCategoryByIndex(category.slug);
+    }),
+  );
+  return [];
+}
 
 export default function Page() {
   return (
