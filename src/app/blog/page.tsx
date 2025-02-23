@@ -15,9 +15,9 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <main className="min-h-dvh px-6 pb-20 transition-colors dark:bg-gray-900">
+    <main className="min-h-dvh pb-20 transition-colors dark:bg-gray-900">
       <section className="pt-32 pb-8 max-sm:pt-28 max-sm:pb-4">
-        <div className="mx-auto flex max-w-5xl items-center justify-between gap-8 max-md:flex-col">
+        <div className="mx-auto flex max-w-[67rem] items-center justify-between gap-8 px-6 max-md:flex-col">
           <div className="">
             <h1 className="dark:text-my-pink-300 mb-4 text-5xl font-extrabold tracking-tight text-slate-600 max-sm:mb-3 max-sm:text-4xl">
               Voccaria Blog
@@ -43,8 +43,8 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="py-8 max-sm:py-4">
-        <div className="mx-auto max-w-5xl">
+      <section className="pt-8 pb-24 max-sm:pt-4 max-sm:pb-24">
+        <div className="mx-auto max-w-[67rem] px-6">
           <h2 className="dark:text-my-pink-300 mb-8 text-3xl font-bold text-slate-600 max-sm:mb-6 max-sm:text-2xl">
             Latest Posts
           </h2>
@@ -52,6 +52,10 @@ export default function Page() {
             <LatestPosts />
           </Suspense>
         </div>
+      </section>
+
+      <section className="border-t border-t-gray-300 dark:border-t-gray-700">
+        <div className="mx-auto max-w-[67rem] px-6"></div>
       </section>
     </main>
   );
