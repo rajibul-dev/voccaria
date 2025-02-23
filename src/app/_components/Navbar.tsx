@@ -68,7 +68,10 @@ export default function Navbar() {
               onOpen={toggleDrawer(true)}
             >
               <div className="h-full w-81 overflow-y-auto bg-gray-100 pt-12 pb-8 dark:bg-gray-800">
-                <BlogSidebarData />
+                <BlogSidebarData
+                  isMobile={true}
+                  toggleDrawer={() => setOpen(false)}
+                />
               </div>
             </SwipeableDrawer>
           </>

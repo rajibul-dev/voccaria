@@ -3,15 +3,21 @@
 import { BlogPost, Category } from "@/models/blogInterfaces";
 import clsx from "clsx";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa6";
 
 interface BlogSideDrawerProps {
   data: { category: Category; posts: BlogPost[] }[];
+  isMobile?: boolean;
+  toggleDrawer?: any;
 }
 
-export default function BlogSideDrawer({ data }: BlogSideDrawerProps) {
+export default function BlogSideDrawer({
+  data,
+  isMobile = false,
+  toggleDrawer,
+}: BlogSideDrawerProps) {
   const [openCategories, setOpenCategories] = useState<{
     [key: string]: boolean;
   }>(() => {
@@ -25,8 +31,18 @@ export default function BlogSideDrawer({ data }: BlogSideDrawerProps) {
     );
   });
 
+  const router = useRouter();
   const params = useParams();
   const currentSlug = params?.slug;
+
+  const handleNavigation = (slug: string) => {
+    if (isMobile && toggleDrawer) {
+      toggleDrawer(); // Close drawer first
+      router.push(`/blog/${slug}`);
+    } else {
+      router.push(`/blog/${slug}`);
+    }
+  };
 
   useEffect(() => {
     localStorage.setItem("openCategories", JSON.stringify(openCategories));
@@ -62,11 +78,10 @@ export default function BlogSideDrawer({ data }: BlogSideDrawerProps) {
             <ul className="flex w-full flex-col">
               {posts.map((post) => (
                 <li key={post.slug}>
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    shallow
+                  <button
+                    onClick={() => handleNavigation(post.slug)}
                     className={clsx(
-                      "block rounded-md py-2 pr-2 pl-4 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-slate-100",
+                      "block w-full cursor-pointer rounded-md py-2 pr-2 pl-4 text-left text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-slate-100",
                       {
                         "bg-slate-200 text-slate-900! hover:bg-slate-200 hover:text-slate-900! dark:bg-slate-700! dark:text-slate-50! dark:hover:bg-slate-700! dark:hover:text-slate-50!":
                           currentSlug === post.slug,
@@ -74,7 +89,7 @@ export default function BlogSideDrawer({ data }: BlogSideDrawerProps) {
                     )}
                   >
                     {post.title}
-                  </Link>
+                  </button>
                 </li>
               ))}
             </ul>
