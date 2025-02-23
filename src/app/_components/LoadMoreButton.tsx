@@ -63,7 +63,7 @@ export default function LoadMoreButton({
               _createdAt,
               ofCategory,
             }) => (
-              <li key={_id}>
+              <li className="w-full" key={_id}>
                 <Link
                   href={`/blog/${slug}`}
                   className="flex flex-col gap-2 rounded-lg border border-gray-200 bg-gray-100 p-6 shadow-sm hover:bg-gray-200 max-sm:px-3 max-sm:py-5 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
