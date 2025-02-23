@@ -74,7 +74,7 @@ export const GET_POST = (slug: string) => `
     },
     smallDescription,
     postTags[]->{
-      title,
+      tag,
       "slug": slug.current,
     },
     postIndexInCategory,

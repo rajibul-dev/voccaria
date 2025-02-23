@@ -7,7 +7,7 @@ export interface Category {
 }
 
 export interface PostTag {
-  title: string;
+  tag: string;
   slug: string;
 }
 
