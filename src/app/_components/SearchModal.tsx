@@ -3,11 +3,11 @@
 import { BlogPost, Category } from "@/models/blogInterfaces";
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 import * as Command from "cmdk";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
+import { BsFileEarmarkText } from "react-icons/bs";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { LuText } from "react-icons/lu";
-import { BsFileEarmarkText } from "react-icons/bs";
 import { useSearch } from "../_context/SearchContext";
 import useOutsideClick from "../_hooks/useOutsideClick";
 
