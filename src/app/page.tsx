@@ -10,6 +10,7 @@ import Testimonials from "./_landing/sections/testimonials/testimonials";
 import BackToTop from "./_old-components/back-to-top";
 import Mission from "./_landing/sections/mission/mission";
 import SeoPurposeH1 from "./_landing/sections/seo-purpose-h1/seo-purpose-h1";
+import OldFooter from "./_old-components/old-footer";
 
 export default function Page() {
   return (
@@ -27,6 +28,7 @@ export default function Page() {
         <Contact />
         <Testimonials />
       </main>
+      <OldFooter />
       <BackToTop />
     </>
   );

@@ -1,4 +1,5 @@
 import BlogSidebar from "@/app/_components/BlogSidebar";
+import Footer from "@/app/_components/Footer";
 import HeaderHeightSync from "@/app/_components/HeaderHeightSync";
 import { DisableBodyScroll } from "@/app/_hooks/useDisableBodyScroll";
 import { ReactNode } from "react";
@@ -15,7 +16,8 @@ export default function layout({ children }: { children: ReactNode }) {
         </HeaderHeightSync>
 
         <HeaderHeightSync className="h-dvh w-full overflow-auto">
-          <main className="md:px-6">{children}</main>
+          <main className="pb-6 max-sm:pb-0 md:px-3">{children}</main>
+          <Footer />
         </HeaderHeightSync>
       </div>
     </>
