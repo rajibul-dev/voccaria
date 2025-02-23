@@ -43,6 +43,7 @@ export const POSTS_IN_CATEGORY_SORTBY_INDEX = (categorySlug: string) => `
     "slug": slug.current,
     smallDescription,
     postIndexInCategory,
+    _createdAt,
   }
 `;
 
