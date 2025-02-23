@@ -29,4 +29,17 @@ export default {
       type: 'number',
     },
   ],
+
+  preview: {
+    select: {
+      title: 'title',
+      order: 'order',
+    },
+    prepare(selection: any) {
+      const {title, order} = selection
+      return Object.assign({}, selection, {
+        subtitle: order && `Order #${order}`,
+      })
+    },
+  },
 }
