@@ -61,3 +61,7 @@ export const getFirstPostSlugOfCategory = async (
 export const getPostNCached = cache(
   async (slug: string) => await getPost(slug),
 );
+
+export const getFirstPostOfFirstCategory = async (): Promise<string> => {
+  return await client.fetch(queries.GET_FIRST_POST_OF_FIRST_CATEGORY);
+};

@@ -1,5 +1,6 @@
 import BackButton from "@/app/_components/BackButton";
 import BlogPost from "@/app/_components/BlogPost";
+import KeepTrackOfLastRead from "@/app/_components/KeepTrackOfLastRead";
 import Spinner from "@/app/_components/Spinner";
 import { getPostNCached } from "@/lib/sanityFetchers";
 import { Metadata } from "next";
@@ -24,6 +25,8 @@ export default async function Page(props: {
 
   return (
     <>
+      <KeepTrackOfLastRead slug={slug} />
+
       <div className="mx-auto mt-10 -mb-8 max-w-4xl px-5 max-sm:mt-7 max-sm:-mb-4">
         <BackButton className="" path="/blog">
           Back to blog

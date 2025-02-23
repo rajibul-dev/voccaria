@@ -112,3 +112,8 @@ export const GET_FIRST_POST_SLUG_OF_CATEGORY = (category: string) => `
     _createdAt
   } | order(defined(postIndexInCategory) desc, postIndexInCategory asc, _createdAt asc)[0].slug
 `;
+
+export const GET_FIRST_POST_OF_FIRST_CATEGORY = `
+ *[_type == "blog" && ofCategory->slug.current == *[_type == "category"] | order(order asc)[0].slug.current] 
+  | order(defined(postIndexInCategory) desc, postIndexInCategory asc, _createdAt asc)[0].slug.current
+`;

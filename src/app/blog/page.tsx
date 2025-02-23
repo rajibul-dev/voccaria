@@ -8,6 +8,7 @@ import Spinner from "../_components/Spinner";
 import blogIllustration from "/public/images/blog-illustration.jpg";
 import CategorizedPostsProvider from "../_components/CategorizedPostsProvider";
 import CategorizedPostsList from "../_components/CategorizedPostsList";
+import BlogHeroButton from "../_components/BlogHeroButton";
 
 export const revalidate = 0; // for now
 
@@ -31,7 +32,10 @@ export default function Page() {
               course.
             </p>
 
-            <BlogSearchBar />
+            <div className="flex w-full gap-5">
+              <BlogHeroButton />
+              <BlogSearchBar />
+            </div>
           </div>
 
           <div>
