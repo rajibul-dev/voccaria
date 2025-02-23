@@ -71,15 +71,18 @@ export const SearchProvider = ({
   const pathname = usePathname();
   const isBlogPage = pathname.startsWith("/blog");
 
-  // Setup Fuse.js for searching
   const fuse = new Fuse(data, {
     keys: [
       { name: "title", weight: 0.4 },
       { name: "sections.heading", weight: 0.5 },
       { name: "sections.text", weight: 0.5 },
     ],
-    threshold: 0.5,
+    threshold: 0.3, // Make the search more sensitive
     includeMatches: true,
+    findAllMatches: true, // Ensure partial matches are captured
+    useExtendedSearch: true, // Allow prefix and suffix matching
+    minMatchCharLength: 1, // Avoid single-character searches from failing
+    ignoreLocation: true, // Prevent position bias affecting results
   });
 
   // Handle search function
