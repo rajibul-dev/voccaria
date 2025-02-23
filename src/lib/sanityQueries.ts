@@ -32,7 +32,7 @@ export const ALL_BLOG_POSTS_PAGINATED = (start = 0, limit = 10) => `
       slug
     },
     _createdAt,
-    _updatedAt
+    _updatedAt,
     postIndexInCategory,
   }
 `;
