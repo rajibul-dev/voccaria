@@ -34,7 +34,7 @@ export const structure: StructureResolver = (S, context) =>
         .icon(VscPreview)
         .child(
           S.documentTypeList('category')
-            .title('Categories')
+            .title(`Posts in Category | btn does nothing =>`)
             .id('ordered-posts')
             .defaultOrdering([{field: 'orderRank', direction: 'asc'}])
             .child((categoryId) =>
