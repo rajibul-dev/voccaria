@@ -1,11 +1,13 @@
 import {PlayIcon} from '@sanity/icons'
 import {defineField} from 'sanity'
 import {YouTubePreview} from '../youtube/youtubePreview'
+import {MdArticle} from 'react-icons/md'
 
 export default {
   name: 'blog',
   type: 'document',
   title: 'Blog posts',
+  icon: MdArticle,
   fields: [
     {
       name: 'title',
@@ -79,6 +81,17 @@ export default {
       description:
         'This is to determine the order of post when showing it in a structed way with categories. Specefically on the discord style sidebar and the blog index screen.',
       type: 'number',
+      hidden: true,
+    },
+    {
+      name: 'orderRank',
+      title: 'Order Rank',
+      type: 'string',
+      description: 'This field is required for ordering blog posts using drag-and-drop.',
+      options: {
+        sortable: true, // Required for Sanity Orderable Document List
+      },
+      hidden: true,
     },
   ],
 
@@ -92,7 +105,7 @@ export default {
     prepare(selection: any) {
       const {category, postIndex} = selection
       return Object.assign({}, selection, {
-        subtitle: category && `${category}${postIndex ? ` • ${postIndex}` : ''}`,
+        subtitle: category && `${category}`,
       })
     },
   },

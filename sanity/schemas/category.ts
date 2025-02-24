@@ -1,7 +1,10 @@
+import {TbCategoryFilled} from 'react-icons/tb'
+
 export default {
   name: 'category',
   title: 'Categories',
   type: 'document',
+  icon: TbCategoryFilled,
   fields: [
     {
       name: 'title',
@@ -27,19 +30,17 @@ export default {
       name: 'order',
       title: 'Category order',
       type: 'number',
+      hidden: true,
+    },
+    {
+      name: 'orderRank',
+      title: 'Order Rank',
+      type: 'string',
+      description: 'This field is required for ordering blog posts using drag-and-drop.',
+      options: {
+        sortable: true, // Required for Sanity Orderable Document List
+      },
+      hidden: true,
     },
   ],
-
-  preview: {
-    select: {
-      title: 'title',
-      order: 'order',
-    },
-    prepare(selection: any) {
-      const {title, order} = selection
-      return Object.assign({}, selection, {
-        subtitle: order && `Order #${order}`,
-      })
-    },
-  },
 }
