@@ -15,7 +15,7 @@ import OldFooter from "./_old-components/old-footer";
 export default function Page() {
   return (
     <>
-      <main className="bg-white">
+      <main className="bg-white pb-4">
         <SeoPurposeH1 />
         <About />
         <Socials />
