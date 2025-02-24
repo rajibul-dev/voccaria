@@ -1,4 +1,5 @@
 import BlogSidebar from "@/app/_components/BlogSidebar";
+import BlogSidebarScrollManager from "@/app/_components/BlogSidebarScrollManager";
 import Footer from "@/app/_components/Footer";
 import HeaderHeightSync from "@/app/_components/HeaderHeightSync";
 import { DisableBodyScroll } from "@/app/_hooks/useDisableBodyScroll";
@@ -10,8 +11,12 @@ export default function layout({ children }: { children: ReactNode }) {
       <DisableBodyScroll />
       <div className="flex h-full overflow-hidden">
         <HeaderHeightSync className="w-105 max-md:hidden">
-          <aside className="h-full overflow-auto border-r-1 border-gray-200 bg-gray-50 text-white dark:border-r-2 dark:border-gray-800 dark:bg-gray-900">
+          <aside
+            className="h-full overflow-auto border-r-1 border-gray-200 bg-gray-50 text-white dark:border-r-2 dark:border-gray-800 dark:bg-gray-900"
+            id="blogSidebar"
+          >
             <BlogSidebar />
+            <BlogSidebarScrollManager sidebarId="blogSidebar" />
           </aside>
         </HeaderHeightSync>
 
