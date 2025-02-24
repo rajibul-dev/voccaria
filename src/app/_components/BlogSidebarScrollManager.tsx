@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 
 interface BlogSidebarScrollManagerProps {
   sidebarId: string; // Pass the ID of your sidebar
@@ -22,7 +22,7 @@ export default function BlogSidebarScrollManager({
   }, [sidebarId]);
 
   // Save scroll position whenever sidebar scrolls
-  useEffect(() => {
+  useLayoutEffect(() => {
     const sidebarElement = document.getElementById(sidebarId);
 
     if (!sidebarElement) return;

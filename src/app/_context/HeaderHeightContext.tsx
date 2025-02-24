@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useLayoutEffect, useState } from "react";
 
 interface HeaderHeightContextProps {
   headerHeight: number;
@@ -20,7 +20,7 @@ export function HeaderHeightProvider({
   const [headerHeight, setHeaderHeight] = useState(0);
   const [isReady, setIsReady] = useState(false); // Opacity control
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const header = document.getElementById("header");
     if (!header) return;
 
