@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { IoMoon } from "react-icons/io5";
 import { MdLightMode } from "react-icons/md";
 
@@ -7,7 +7,7 @@ type Theme = "dark" | "light" | null;
 export default function DarkModeToggler() {
   const [theme, setTheme] = useState<Theme>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (localStorage.getItem("theme") === "dark") {
       setTheme("dark");
     } else if (localStorage.getItem("theme") === "light") {
