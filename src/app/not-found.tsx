@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 export default function NotFound() {
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (localStorage.getItem("theme") === "dark") {
       document.documentElement.classList.add("dark");
     } else {

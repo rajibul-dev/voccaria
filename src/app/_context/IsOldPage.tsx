@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useLayoutEffect, useState } from "react";
 
 interface IsOldPageProps {
   pathname: string | null;
@@ -14,7 +14,7 @@ export default function IsOldPageProvider({ children }: any) {
   const pathname = usePathname() || "";
   const [isRoot, setIsRoot] = useState<boolean | null>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const html = document.documentElement;
     const isRoot = pathname === "/";
     setIsRoot(isRoot);

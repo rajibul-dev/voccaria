@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 export default function useDisableBodyScroll() {
-  useEffect(() => {
+  useLayoutEffect(() => {
     document.documentElement.style.overflow = "hidden";
     window.scrollTo(0, 0);
 
