@@ -1,6 +1,7 @@
 "use client";
 
 import styles from "../lessonOptions.module.css";
+import { GoArrowUpRight } from "react-icons/go";
 
 function scrollToPricing() {
   // @ts-ignore
@@ -19,7 +20,14 @@ function scrollToPricing() {
 export default function ScrollToPricingBtn() {
   return (
     <button onClick={scrollToPricing} className={styles.scrolToPricingBtn}>
-      Pricing & Lesson Types
+      <span>Pricing & Lesson Types</span>
+      <GoArrowUpRight
+        style={{
+          transform: "translateY(1.5px)",
+        }}
+        size={20}
+        strokeWidth={1.5}
+      />
     </button>
   );
 }

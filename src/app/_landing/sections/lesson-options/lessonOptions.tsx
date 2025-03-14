@@ -71,7 +71,7 @@ export default function LessonOptions() {
             lightInfo={paid.lightInfo}
           >
             <div className={styles.scrolToPricingBtnWrapper}>
-              {circleIcon}
+              {/* {circleIcon} */}
               <ScrollToPricingBtn />
             </div>
           </FeatureBox>
