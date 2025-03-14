@@ -5,6 +5,7 @@ import styles from "./featureBox.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import SubtleInfo from "@/app/_old-components/subtle-info";
+import { ReactNode } from "react";
 
 const circleIcon = <FontAwesomeIcon icon={faCircle} className={styles.icon} />;
 
@@ -15,6 +16,7 @@ interface FeatureBoxProps {
   button: { text: string; link: string };
   brandColor?: boolean;
   lightInfo?: string | React.ReactNode;
+  children?: ReactNode;
 }
 
 // component
@@ -24,6 +26,7 @@ const FeatureBox: React.FC<FeatureBoxProps> = ({
   button,
   brandColor = false,
   lightInfo,
+  children,
 }) => {
   return (
     <div className={`${styles.box} ${brandColor ? styles.brand : styles.free}`}>
@@ -40,6 +43,7 @@ const FeatureBox: React.FC<FeatureBoxProps> = ({
             );
           })}
         </ul>
+        {children}
         <a
           className={`goto-paragraph ${styles.btn}`}
           href={button.link}

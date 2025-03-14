@@ -9,6 +9,40 @@
   display: none;
 }
 
+.scrolToPricingBtnWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.6rem;
+}
+
+.scrolToPricingBtn {
+  margin-top: 1.8rem;
+  margin-bottom: -1.8rem;
+  color: var(--pig-pink-300);
+  font-weight: 700;
+  font-size: 1.8rem;
+  border-bottom: 2px solid var(--pig-pink-300);
+  width: fit-content;
+  padding-top: 0.2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.scrolToPricingBtn:hover {
+  color: var(--pig-pink-300);
+  border-color: var(--pig-pink-300);
+}
+
+.icon {
+  font-size: 2rem;
+  transform: translateY(1rem);
+  color: white;
+}
+
 @media screen and (max-width: 840px) {
   .boxPair {
     grid-template-columns: 1fr;
@@ -18,5 +52,11 @@
 @media screen and (max-width: 427px) {
   .responsiveLineBreak {
     display: inline;
+  }
+}
+
+@media screen and (max-width: 32em) {
+  .scrolToPricingBtn {
+    font-size: 1.86rem;
   }
 }

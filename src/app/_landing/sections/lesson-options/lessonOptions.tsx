@@ -40,6 +40,7 @@ import styles from "./lessonOptions.module.css";
 // components
 import HeadingPair from "@/app/_old-components/headingPair";
 import FeatureBox from "./components/featureBox";
+import ScrollToPricingBtn from "./components/scrollToPricingBtn";
 
 export default function LessonOptions() {
   return (
@@ -64,7 +65,11 @@ export default function LessonOptions() {
             button={paid.button}
             brandColor={true}
             lightInfo={paid.lightInfo}
-          />
+          >
+            <div className={styles.scrolToPricingBtnWrapper}>
+              <ScrollToPricingBtn />
+            </div>
+          </FeatureBox>
         </div>
       </div>
     </section>
