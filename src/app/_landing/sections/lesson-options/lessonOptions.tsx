@@ -40,6 +40,11 @@ import styles from "./lessonOptions.module.css";
 // components
 import HeadingPair from "@/app/_old-components/headingPair";
 import FeatureBox from "./components/featureBox";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle } from "@fortawesome/free-solid-svg-icons";
+import ScrollToPricingBtn from "./components/scrollToPricingBtn";
+
+const circleIcon = <FontAwesomeIcon icon={faCircle} className={styles.icon} />;
 
 export default function LessonOptions() {
   return (
@@ -64,7 +69,12 @@ export default function LessonOptions() {
             button={paid.button}
             brandColor={true}
             lightInfo={paid.lightInfo}
-          />
+          >
+            <div className={styles.scrolToPricingBtnWrapper}>
+              {circleIcon}
+              <ScrollToPricingBtn />
+            </div>
+          </FeatureBox>
         </div>
       </div>
     </section>

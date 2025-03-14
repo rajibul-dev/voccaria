@@ -59,7 +59,7 @@ export default function Navbar() {
   const [navOpen, setNavOpen] = useState(false);
 
   return (
-    <header className={styles.block}>
+    <header id="header" className={styles.block}>
       <div className={`${styles.container}`}>
         <OldLogo />
 
