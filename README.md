@@ -11,7 +11,7 @@ All lessons and most of the interactions currently happen on our **Discord serve
 ### 🔗 Live Links
 
 - 🌐 **Main Site**: [https://voccaria.com](https://voccaria.com/)
-- 🧪 **Dev Preview**: _[Insert Dev URL]_
+- 🧪 **Dev Preview**: [Vercel preview deploy link](https://voccaria-git-dev-deploy-rajidevteams-projects.vercel.app/blog?_vercel_share=F08mo7E70ACyYSd479QstedGjpptQiBt)
 - 💬 **Join the One Voice discord server**: [Discord Server Invite](https://discord.com/invite/4Z5JKYPhTe)
 
 ---
