@@ -1,34 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## 🎙️ Voccaria — A Home for Free, Supportive Vocal Education
 
-## Getting Started
+**Voccaria** is the official website for _One Voice_ — a mission-driven community dedicated to helping anyone learn to sing **freely and safely**. This site serves as a **landing and connection point** for learners to explore the free resources, get free singing lessons, and/or buy paid lessons.
 
-First, run the development server:
+All lessons and most of the interactions currently happen on our **Discord server**, where a warm, science-based, and supportive environment awaits.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+> Singing should never hurt—it should feel effortless. Voccaria exists to make high-quality, tension-free vocal training accessible to everyone.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 🔗 Live Links
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- 🌐 **Main Site**: [https://voccaria.com](https://voccaria.com/)
+- 🧪 **Dev Preview**: _[Insert Dev URL]_
+- 💬 **Join the One Voice discord server**: [Discord Server Invite](https://discord.com/invite/4Z5JKYPhTe)
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+### 🛠 Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Frontend:** Next.js + Tailwind CSS
+- **CMS:** Sanity (for dynamic blog content)
+- **Backend:** Next.js API routes (where needed)
+- **Deployment:** Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### 👤 About the Developer
 
-## Deploy on Vercel
+Crafted by [Rajibul Islam](https://www.linkedin.com/in/rajibul-dev), this project blends **real-world collaboration**, thoughtful design, and a deep respect for creative education. As a developer passionate about music, this site is both a technical project and a contribution to a meaningful mission.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### 🤝 Let's Connect
+
+- [LinkedIn](https://www.linkedin.com/in/rajibul-dev)
+- [Telegram](https://t.me/rajiraji201)
+- [GitHub](https://github.com/rajibul-de)
