@@ -1,0 +1,26 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend for Voccaria",
+  "main": "app.ts",
+  "scripts": {
+    "dev": "tsx watch src/app.ts",
+    "build": "tsc && node dist/app.js",
+    "tsc": "tsc --watch"
+  },
+  "keywords": [],
+  "author": "Rajibul Islam",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  }
+}
