@@ -5,7 +5,10 @@ import { StatusCodes } from "http-status-codes";
 import { hashPassword } from "../utils/hashPassword.js";
 import { sendAccountVerificationEmail } from "../helpers/sendAccountVerificationEmail.js";
 
-export async function register(request: Request, response: Response) {
+export async function register(
+  request: Request,
+  response: Response
+): Promise<any> {
   const { email, password, name } = request.body;
 
   const existingUser = await User.findOne({ email });
@@ -61,7 +64,10 @@ export async function register(request: Request, response: Response) {
   });
 }
 
-export async function verifyEmail(request: Request, response: Response) {
+export async function verifyEmail(
+  request: Request,
+  response: Response
+): Promise<any> {
   const { verificationToken, email } = request.body;
 
   const user = await User.findOne({ email, verificationToken });
@@ -94,7 +100,7 @@ export async function verifyEmail(request: Request, response: Response) {
 export async function requestNewVerificationEmail(
   request: Request,
   response: Response
-) {
+): Promise<any> {
   const { email } = request.body;
 
   const user = await User.findOne({ email });
@@ -132,12 +138,27 @@ export async function requestNewVerificationEmail(
   });
 }
 
-export async function forgotPassword(request: Request, response: Response) {}
+export async function forgotPassword(
+  request: Request,
+  response: Response
+): Promise<any> {}
 
-export async function login(request: Request, response: Response) {}
+export async function login(
+  request: Request,
+  response: Response
+): Promise<any> {}
 
-export async function resetPassword(request: Request, response: Response) {}
+export async function resetPassword(
+  request: Request,
+  response: Response
+): Promise<any> {}
 
-export async function changePassword(request: Request, response: Response) {}
+export async function changePassword(
+  request: Request,
+  response: Response
+): Promise<any> {}
 
-export async function logout(request: Request, response: Response) {}
+export async function logout(
+  request: Request,
+  response: Response
+): Promise<any> {}
