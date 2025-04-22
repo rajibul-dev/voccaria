@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema(
       required: [true, "Please provide your email"],
       trim: true,
       validate: {
-        validator: validator.isEmail,
+        validator: (email: string) => validator.isEmail(email),
         message: "Please provide valid email",
       },
     },
