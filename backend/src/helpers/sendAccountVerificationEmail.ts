@@ -14,7 +14,7 @@ export async function sendAccountVerificationEmail({
 }: SendVerificationEmailInterface) {
   try {
     await resend.emails.send({
-      from: "dev@voccaria.com",
+      from: "auth@voccaria.com",
       to: email,
       subject: "Verify your email address",
       react: EmailVerificationTemplate({ name, verificationLink }),
