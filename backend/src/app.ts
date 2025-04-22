@@ -1,16 +1,16 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import connectDB from "./db/connect.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware to parse JSON
 app.use(express.json());
 
-// Basic route
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello, World!");
-});
+// routes
+app.use("/api/v1/auth");
+app.use("/api/v1/users");
 
 const start = async () => {
   try {
