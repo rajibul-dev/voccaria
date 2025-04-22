@@ -1,3 +1,5 @@
+import { Request, Response } from "express";
+
 export function register(request: Request, response: Response) {}
 
 export function verifyEmail(request: Request, response: Response) {}

@@ -1,3 +1,5 @@
+import { Request, Response } from "express";
+
 export function getUser(request: Request, response: Response) {}
 
 export function getAllUsers(request: Request, response: Response) {}
