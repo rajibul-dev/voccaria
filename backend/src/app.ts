@@ -19,10 +19,11 @@ const start = async () => {
   try {
     await connectDB(process.env.MONGO_URL || "mongodb://localhost:27017");
     app.listen(PORT, () => {
-      console.log(`Server is running on http://localhost:${PORT}`);
+      console.log(`✅ Server is running on http://localhost:${PORT}`);
     });
   } catch (error) {
-    console.log(error);
+    console.log("❌ Error connecting to the database:", error);
+    console.error(error);
   }
 };
 
