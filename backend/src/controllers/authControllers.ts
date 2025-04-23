@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import { Request, Response } from "express";
-import User from "../models/User.js";
+import User, { IUser } from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
 import { hashPassword } from "../utils/hashPassword.js";
 import { sendAccountVerificationEmail } from "../helpers/sendAccountVerificationEmail.js";
@@ -9,7 +9,14 @@ export async function register(
   request: Request,
   response: Response
 ): Promise<any> {
-  const { email, password, name } = request.body;
+  const { email, password, name } = request.body || {};
+
+  if (!email || !password || !name) {
+    return response.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: "Please provide all required fields",
+    });
+  }
 
   const existingUser = await User.findOne({ email });
 
@@ -44,13 +51,22 @@ export async function register(
   const verificationLink = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}&email=${email}`;
   const hashedPassword = await hashPassword(password);
 
-  const user = await User.create({
-    email,
-    hashedPassword,
-    name,
-    role,
-    verificationToken,
-  });
+  let user: IUser;
+  try {
+    user = await User.create({
+      email,
+      hashedPassword,
+      name,
+      role,
+      verificationToken,
+    });
+  } catch (error) {
+    return response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: "Error creating user",
+      error: error.message,
+    });
+  }
 
   await sendAccountVerificationEmail({
     email: user.email,
@@ -68,9 +84,23 @@ export async function verifyEmail(
   request: Request,
   response: Response
 ): Promise<any> {
-  const { verificationToken, email } = request.body;
+  const { verificationToken, email } = request.body || {};
+
+  if (!verificationToken || !email) {
+    return response.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: "Verification token or email is missing",
+    });
+  }
 
   const user = await User.findOne({ email, verificationToken });
+
+  if (!user) {
+    return response.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: "User not found",
+    });
+  }
 
   if (user.isVerified) {
     return response.status(StatusCodes.BAD_REQUEST).json({
@@ -101,7 +131,14 @@ export async function requestNewVerificationEmail(
   request: Request,
   response: Response
 ): Promise<any> {
-  const { email } = request.body;
+  const { email } = request.body || {};
+
+  if (!email) {
+    return response.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: "Email is required",
+    });
+  }
 
   const user = await User.findOne({ email });
 
@@ -179,6 +216,7 @@ export async function logout(
         success: false,
         message: "Error logging out",
       });
+
     return response.status(StatusCodes.OK).json({
       success: true,
       message: "User logged out successfully",
