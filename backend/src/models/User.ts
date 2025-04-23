@@ -1,8 +1,28 @@
-import mongoose, { model } from "mongoose";
+import mongoose, { Schema, Document, Model } from "mongoose";
 import validator from "validator";
 import bcrypt from "bcryptjs";
 
-const UserSchema = new mongoose.Schema(
+export interface IUser extends Document {
+  name: string;
+  email: string;
+  hashedPassword: string;
+  role: "user" | "staff" | "raji" | "mia";
+  isVerified: boolean;
+  verified?: Date;
+  verificationToken?: string;
+  passwordToken?: string;
+  passwordTokenExpirationDate?: Date;
+  avatar?: string;
+  provider: "google" | "github" | "local";
+  providerId?: string;
+
+  createdAt: Date;
+  updatedAt: Date;
+
+  comparePassword(candidatePassword: string): Promise<boolean>;
+}
+
+const UserSchema: Schema<IUser> = new Schema(
   {
     name: {
       type: String,
@@ -37,39 +57,29 @@ const UserSchema = new mongoose.Schema(
     },
     verified: Date,
     verificationToken: String,
-    passwordToken: {
-      type: String,
-    },
-    passwordTokenExpirationDate: {
-      type: Date,
-    },
-    avatar: {
-      type: String,
-      // default: "",
-    },
+    passwordToken: String,
+    passwordTokenExpirationDate: Date,
+    avatar: String,
 
-    // For OAuth login
     provider: {
       type: String,
       enum: ["google", "github", "local"],
       default: "local",
     },
-    providerId: { type: String, default: null }, // null for local login
-
-    // for future if we want to add this feature
-    // accountColor: {
-    //   type: String,
-    //   enum: ["red", "blue", "green", "purple", "orange", "grey"],
-    // },
+    providerId: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true }
 );
 
 UserSchema.methods.comparePassword = async function (
-  canditatePassword: string
-) {
-  const isMatch = await bcrypt.compare(canditatePassword, this.hashedPassword);
-  return isMatch;
+  this: IUser,
+  candidatePassword: string
+): Promise<boolean> {
+  return await bcrypt.compare(candidatePassword, this.hashedPassword);
 };
 
-export default model("User", UserSchema);
+const User: Model<IUser> = mongoose.model<IUser>("User", UserSchema);
+export default User;
