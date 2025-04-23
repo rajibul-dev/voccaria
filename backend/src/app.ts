@@ -10,6 +10,7 @@ import MongoStore from "connect-mongo";
 
 import dotenv from "dotenv";
 import passport from "passport";
+import "./libs/passport/localStrategy.js";
 dotenv.config();
 
 export const app = express();

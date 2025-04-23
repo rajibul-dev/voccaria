@@ -7,6 +7,9 @@ export default passport.use(
     try {
       const user = await User.findOne({ email });
       if (!user) throw new Error("User not found");
+      if (!user.comparePassword(password)) {
+        throw new Error("Invalid password");
+      }
       done(null, user);
     } catch (error) {
       done(error, null);
