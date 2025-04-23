@@ -1,5 +1,5 @@
 import { resend } from "../libs/resend.js";
-import EmailVerificationTemplate from "../emails/emailVerification.js";
+import EmailVerificationTemplate from "../emails/EmailVerification.js";
 
 interface SendVerificationEmailInterface {
   email: string;
@@ -14,7 +14,7 @@ export async function sendAccountVerificationEmail({
 }: SendVerificationEmailInterface) {
   try {
     await resend.emails.send({
-      from: "auth@voccaria.com",
+      from: "Voccaria <hello@voccaria.com>",
       to: email,
       subject: "Verify your email address",
       react: EmailVerificationTemplate({ name, verificationLink }),

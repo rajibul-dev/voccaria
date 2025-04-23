@@ -48,7 +48,7 @@ export default function VerificationEmail({
           </Text>
         </Row>
         <Row>
-          <Button href={`${verificationLink}`} style={{ color: "#61dafb" }}>
+          <Button href={`${verificationLink}`} style={{ color: "#f1278a" }}>
             Verification link
           </Button>
         </Row>
