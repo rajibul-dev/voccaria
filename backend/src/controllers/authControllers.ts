@@ -146,7 +146,12 @@ export async function forgotPassword(
 export async function login(
   request: Request,
   response: Response
-): Promise<any> {}
+): Promise<any> {
+  response.status(StatusCodes.OK).json({
+    success: true,
+    message: "User logged in successfully",
+  });
+}
 
 export async function resetPassword(
   request: Request,
@@ -161,4 +166,22 @@ export async function changePassword(
 export async function logout(
   request: Request,
   response: Response
-): Promise<any> {}
+): Promise<any> {
+  if (!request.user) {
+    return response.status(StatusCodes.UNAUTHORIZED).json({
+      success: false,
+      message: "User not logged in",
+    });
+  }
+  request.logout((err) => {
+    if (err)
+      return response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        success: false,
+        message: "Error logging out",
+      });
+    return response.status(StatusCodes.OK).json({
+      success: true,
+      message: "User logged out successfully",
+    });
+  });
+}
