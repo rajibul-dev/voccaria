@@ -219,8 +219,7 @@ export async function getPasswordResetLink(
 
   return response.status(StatusCodes.OK).json({
     success: true,
-    message:
-      "If an account exists with this email, a password reset link has been sent.",
+    message: "A password reset link has been sent.",
   });
 }
 
