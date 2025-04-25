@@ -48,14 +48,21 @@ export default function VerificationEmail({
           </Text>
         </Row>
         <Row>
-          <Button href={`${verificationLink}`} style={{ color: "#f1278a" }}>
+          <Button
+            href={`${verificationLink}`}
+            style={{
+              fontSize: "24px",
+              color: "#fff",
+              padding: "16px 32px",
+              backgroundColor: "#f1278a",
+              borderRadius: "5px",
+            }}
+          >
             Verification link
           </Button>
         </Row>
         <Row>
-          <Text>
-            If you did not request this code, please ignore this email.
-          </Text>
+          <Text>If it wasn&apos;t you, please ignore this email.</Text>
         </Row>
       </Section>
     </Html>
