@@ -14,12 +14,12 @@ import {
 
 interface PasswordResetLinkProps {
   name: string;
-  verificationLink: string;
+  passwordLink: string;
 }
 
 export default function PasswordResetLink({
   name,
-  verificationLink,
+  passwordLink,
 }: PasswordResetLinkProps) {
   return (
     <Html lang="en" dir="ltr">
@@ -48,7 +48,7 @@ export default function PasswordResetLink({
         </Row>
         <Row>
           <Button
-            href={`${verificationLink}`}
+            href={`${passwordLink}`}
             style={{
               fontSize: "24px",
               color: "#fff",

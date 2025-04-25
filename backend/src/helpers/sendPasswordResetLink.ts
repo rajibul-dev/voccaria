@@ -4,20 +4,20 @@ import { resend } from "../libs/resend.js";
 interface SendPasswordResetLinkInterface {
   email: string;
   name: string;
-  verificationLink: string;
+  passwordLink: string;
 }
 
 export async function sendPasswordResetLink({
   email,
   name,
-  verificationLink,
+  passwordLink,
 }: SendPasswordResetLinkInterface) {
   try {
     await resend.emails.send({
       from: "Voccaria <no-reply@voccaria.com>",
       to: email,
       subject: "Link to reset your password",
-      react: PasswordResetLink({ name, verificationLink }),
+      react: PasswordResetLink({ name, passwordLink }),
     });
   } catch (error) {
     console.error("Error sending password reset link:", error);

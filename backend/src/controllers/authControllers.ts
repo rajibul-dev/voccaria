@@ -4,6 +4,8 @@ import User, { IUser } from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
 import { hashPassword } from "../helpers/hashPassword.js";
 import { sendAccountVerificationEmail } from "../helpers/sendAccountVerificationEmail.js";
+import { sendPasswordResetLink } from "../helpers/sendPasswordResetLink.js";
+import createHash from "../helpers/createHash.js";
 
 export async function register(
   request: Request,
@@ -175,11 +177,6 @@ export async function requestNewVerificationEmail(
   });
 }
 
-export async function forgotPassword(
-  request: Request,
-  response: Response
-): Promise<any> {}
-
 export async function login(
   request: Request,
   response: Response
@@ -190,15 +187,149 @@ export async function login(
   });
 }
 
+export async function getPasswordResetLink(
+  request: Request,
+  response: Response
+): Promise<any> {
+  const { email } = request.body || {};
+
+  if (!email) {
+    return response.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: "Please provide a valid email",
+    });
+  }
+
+  const user = await User.findOne({ email });
+
+  if (user) {
+    const passwordToken = crypto.randomBytes(70).toString("hex");
+    const passwordLink = `${process.env.FRONTEND_URL}/reset-password?token=${passwordToken}&email=${email}`;
+    const tenMinutes = 1000 * 60 * 10;
+    user.passwordResetToken = createHash(passwordToken);
+    user.passwordResetTokenExpires = new Date(Date.now() + tenMinutes);
+    await user.save();
+
+    await sendPasswordResetLink({
+      email: user.email,
+      passwordLink: passwordLink,
+      name: user.name,
+    });
+  }
+
+  return response.status(StatusCodes.OK).json({
+    success: true,
+    message:
+      "If an account exists with this email, a password reset link has been sent.",
+  });
+}
+
 export async function resetPassword(
   request: Request,
   response: Response
-): Promise<any> {}
+): Promise<any> {
+  const { email, token, password } = request.body || {};
+
+  if (!email || !token || !password) {
+    return response.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: "Credientials missing",
+    });
+  }
+
+  // we will need this for password token validity check
+  const currentDate = new Date(Date.now());
+
+  const user = await User.findOne({
+    email,
+  });
+
+  if (!user) {
+    return response.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: "User not found",
+    });
+  }
+
+  if (user.passwordResetToken !== createHash(token)) {
+    return response.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: "Invalid or expired token",
+    });
+  }
+
+  if (
+    user.passwordResetTokenExpires &&
+    user.passwordResetTokenExpires > currentDate
+  ) {
+    user.hashedPassword = await hashPassword(password);
+    user.passwordResetToken = null;
+    user.passwordResetTokenExpires = null;
+    await user.save();
+
+    return response.status(StatusCodes.OK).json({
+      success: true,
+      message: "Password reset successfully",
+    });
+  } else {
+    return response.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: "Token expired",
+    });
+  }
+}
 
 export async function changePassword(
   request: Request,
   response: Response
-): Promise<any> {}
+): Promise<any> {
+  if (!request.isAuthenticated?.() || !request.user) {
+    return response.status(StatusCodes.UNAUTHORIZED).json({
+      success: false,
+      message: "User not logged in",
+    });
+  }
+
+  const { currentPassword, newPassword } = request.body || {};
+  if (!currentPassword || !newPassword) {
+    return response.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: "Both current and new password are required",
+    });
+  }
+
+  console.log("request.user", request.user);
+  // @ts-ignore
+  const user = await User.findById(request.user._id);
+
+  if (!user) {
+    return response.status(StatusCodes.NOT_FOUND).json({
+      success: false,
+      message: "User not found",
+    });
+  }
+  const isMatch = await user.comparePassword(currentPassword);
+  if (!isMatch) {
+    return response.status(StatusCodes.UNAUTHORIZED).json({
+      success: false,
+      message: "Current password is incorrect",
+    });
+  }
+
+  if (currentPassword === newPassword) {
+    return response.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: "New password must be different from current password",
+    });
+  }
+
+  user.hashedPassword = await hashPassword(newPassword);
+  await user.save();
+  response.status(StatusCodes.OK).json({
+    success: true,
+    message: "Password changed successfully",
+  });
+}
 
 export async function logout(
   request: Request,
