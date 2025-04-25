@@ -10,8 +10,8 @@ export interface IUser extends Document {
   isVerified: boolean;
   verified?: Date;
   verificationToken?: string;
-  passwordToken?: string;
-  passwordTokenExpirationDate?: Date;
+  passwordResetToken?: string;
+  passwordResetTokenExpirationDate?: Date;
   avatar?: string;
   provider: "google" | "github" | "local";
   providerId?: string;
@@ -57,8 +57,8 @@ const UserSchema: Schema<IUser> = new Schema(
     },
     verified: Date,
     verificationToken: String,
-    passwordToken: String,
-    passwordTokenExpirationDate: Date,
+    passwordResetToken: String,
+    passwordResetTokenExpirationDate: Date,
     avatar: String,
 
     provider: {
