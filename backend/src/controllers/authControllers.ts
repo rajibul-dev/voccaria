@@ -2,7 +2,7 @@ import crypto from "crypto";
 import { Request, Response } from "express";
 import User, { IUser } from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
-import { hashPassword } from "../utils/hashPassword.js";
+import { hashPassword } from "../helpers/hashPassword.js";
 import { sendAccountVerificationEmail } from "../helpers/sendAccountVerificationEmail.js";
 
 export async function register(
