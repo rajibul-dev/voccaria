@@ -1,3 +1,6 @@
+"use client";
+
+import { isAfter } from "date-fns";
 import { useState, useEffect } from "react";
 
 interface Countdown {
@@ -11,16 +14,15 @@ export const useCountdown = (targetDate: Date) => {
   const [timeLeft, setTimeLeft] = useState<Countdown>(() =>
     calculateTimeLeft(targetDate),
   );
-  const [isComplete, setIsComplete] = useState<boolean>(false);
+  const isComplete = isAfter(new Date(), targetDate);
 
   useEffect(() => {
     const interval = setInterval(() => {
       const updatedTimeLeft = calculateTimeLeft(targetDate);
       setTimeLeft(updatedTimeLeft);
 
-      if (isCountdownComplete(updatedTimeLeft)) {
+      if (isComplete) {
         clearInterval(interval);
-        setIsComplete(true);
       }
     }, 1000);
 
@@ -42,11 +44,14 @@ const calculateTimeLeft = (targetDate: Date): Countdown => {
   };
 };
 
-const isCountdownComplete = (timeLeft: Countdown): boolean => {
-  return (
-    timeLeft.days === 0 &&
-    timeLeft.hours === 0 &&
-    timeLeft.minutes === 0 &&
-    timeLeft.seconds === 0
-  );
+export const useCountdownString = (timeLeft: Countdown) => {
+  let cookCountdownString = "";
+  if (timeLeft.days > 0) cookCountdownString += `${timeLeft.days}d `;
+  if (timeLeft.days > 0 || timeLeft.hours > 0)
+    cookCountdownString += `${timeLeft.hours}h `;
+  if (timeLeft.days > 0 || timeLeft.hours > 0 || timeLeft.minutes > 0)
+    cookCountdownString += `${timeLeft.minutes}m `;
+  cookCountdownString += `${timeLeft.seconds}s`;
+
+  return cookCountdownString;
 };

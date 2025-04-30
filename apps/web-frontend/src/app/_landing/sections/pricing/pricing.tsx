@@ -1,9 +1,14 @@
+"use client";
+
 // styles
 import styles from "./pricing.module.css";
 
 // componrnts
 import HeadingPair from "@/app/_old-components/headingPair";
 import PricingCards from "./components/pricing-cards";
+import { useCountdown, useCountdownString } from "@/app/_hooks/useCountdown";
+import { useEffect, useState } from "react";
+import { addSeconds } from "date-fns";
 
 // create the pricing credentials object (temp)
 
@@ -55,7 +60,21 @@ const pricingDetails = [
   },
 ];
 
+// testing countdown
+// const targetDateOutside: any = addSeconds(new Date(), 5);
+
+// June 1st 12 AM EEST
+const targetDateOutside: any = new Date("2025-06-01T00:00:00Z");
+
 export default function Pricing() {
+  const { timeLeft, isComplete } = useCountdown(targetDateOutside);
+
+  const [countdownString, setCountdownString] = useState("");
+
+  useEffect(() => {
+    setCountdownString(useCountdownString(timeLeft));
+  }, [timeLeft, isComplete]);
+
   return (
     <section id="pricing" className={`section-block ${styles.section}`}>
       <div className={`old-container`}>
@@ -66,6 +85,15 @@ export default function Pricing() {
           className={styles.heading}
           moreMargin={true}
         />
+
+        {/* Countdown UI */}
+        <div className="mx-auto mt-[-2rem] mb-[6rem] max-w-220 rounded-lg bg-orange-100 px-4 py-3 shadow-md">
+          <p className="text-center text-[1.8rem] leading-11">
+            There will be pricing changes from June 1
+            <br />
+            <strong>Countdown: {countdownString}</strong>
+          </p>
+        </div>
 
         <PricingCards pricingDetails={pricingDetails} />
       </div>
