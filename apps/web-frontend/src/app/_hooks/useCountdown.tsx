@@ -44,7 +44,7 @@ const calculateTimeLeft = (targetDate: Date): Countdown => {
   };
 };
 
-export const useCountdownString = (timeLeft: Countdown) => {
+export const makeCountdownString = (timeLeft: Countdown) => {
   let cookCountdownString = "";
   if (timeLeft.days > 0) cookCountdownString += `${timeLeft.days}d `;
   if (timeLeft.days > 0 || timeLeft.hours > 0)

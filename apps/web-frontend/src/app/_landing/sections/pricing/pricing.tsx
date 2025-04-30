@@ -6,7 +6,7 @@ import styles from "./pricing.module.css";
 // componrnts
 import HeadingPair from "@/app/_old-components/headingPair";
 import PricingCards from "./components/pricing-cards";
-import { useCountdown, useCountdownString } from "@/app/_hooks/useCountdown";
+import { useCountdown, makeCountdownString } from "@/app/_hooks/useCountdown";
 import { useEffect, useState } from "react";
 import { addSeconds } from "date-fns";
 
@@ -72,7 +72,7 @@ export default function Pricing() {
   const [countdownString, setCountdownString] = useState("");
 
   useEffect(() => {
-    setCountdownString(useCountdownString(timeLeft));
+    setCountdownString(makeCountdownString(timeLeft));
   }, [timeLeft, isComplete]);
 
   return (
