@@ -215,12 +215,17 @@ export async function getPasswordResetLink(
       passwordLink: passwordLink,
       name: user.name,
     });
-  }
 
-  return response.status(StatusCodes.OK).json({
-    success: true,
-    message: "A password reset link has been sent.",
-  });
+    return response.status(StatusCodes.OK).json({
+      success: true,
+      message: "A password reset link has been sent.",
+    });
+  } else {
+    return response.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: "User not found",
+    });
+  }
 }
 
 export async function resetPassword(
