@@ -23,8 +23,8 @@
 /* colors */
 .primary {
   color: var(--white-primary);
-  background-color: var(--brand-primary-700);
+  background-color: var(--brand-primary-500);
 }
 .primary:hover {
-  background-color: var(--brand-primary-500);
+  background-color: var(--brand-primary-500--hover);
 }
