@@ -194,6 +194,7 @@ export async function googleRedirect(
   return response.status(StatusCodes.OK).json({
     success: true,
     message: "User logged with google successfully",
+    data: request.user,
   });
 }
 
