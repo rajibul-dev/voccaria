@@ -16,7 +16,7 @@ export async function showMe(
 ): Promise<any> {
   return response.status(200).json({
     success: true,
-    user: request.user,
+    data: request.user,
   });
 }
 
