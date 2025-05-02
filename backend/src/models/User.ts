@@ -43,7 +43,6 @@ const UserSchema: Schema<IUser> = new Schema(
     },
     hashedPassword: {
       type: String,
-      required: [true, "Please provide password"],
     },
     role: {
       type: String,
@@ -63,7 +62,7 @@ const UserSchema: Schema<IUser> = new Schema(
 
     provider: {
       type: String,
-      enum: ["google", "github", "local"],
+      enum: ["google", "local"],
       default: "local",
     },
     providerId: {

@@ -187,6 +187,16 @@ export async function login(
   });
 }
 
+export async function googleRedirect(
+  request: Request,
+  response: Response
+): Promise<any> {
+  return response.status(StatusCodes.OK).json({
+    success: true,
+    message: "User logged with google successfully",
+  });
+}
+
 export async function getPasswordResetLink(
   request: Request,
   response: Response
