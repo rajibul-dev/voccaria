@@ -1,13 +1,36 @@
 import { Request, Response } from "express";
 
-export function getUser(request: Request, response: Response) {}
+export async function getUser(
+  request: Request,
+  response: Response
+): Promise<any> {}
 
-export function getAllUsers(request: Request, response: Response) {}
+export async function getAllUsers(
+  request: Request,
+  response: Response
+): Promise<any> {}
 
-export function showMe(request: Request, response: Response) {}
+export async function showMe(
+  request: Request,
+  response: Response
+): Promise<any> {
+  return response.status(200).json({
+    success: true,
+    user: request.user,
+  });
+}
 
-export function updateUser(request: Request, response: Response) {}
+export async function updateUser(
+  request: Request,
+  response: Response
+): Promise<any> {}
 
-export function updateAvatar(request: Request, response: Response) {}
+export async function updateAvatar(
+  request: Request,
+  response: Response
+): Promise<any> {}
 
-export function removeAvatar(request: Request, response: Response) {}
+export async function removeAvatar(
+  request: Request,
+  response: Response
+): Promise<any> {}

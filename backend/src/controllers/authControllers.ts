@@ -287,13 +287,6 @@ export async function changePassword(
   request: Request,
   response: Response
 ): Promise<any> {
-  if (!request.isAuthenticated?.() || !request.user) {
-    return response.status(StatusCodes.UNAUTHORIZED).json({
-      success: false,
-      message: "User not logged in",
-    });
-  }
-
   const { currentPassword, newPassword } = request.body || {};
   if (!currentPassword || !newPassword) {
     return response.status(StatusCodes.BAD_REQUEST).json({
