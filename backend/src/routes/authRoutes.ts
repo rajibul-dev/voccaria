@@ -11,6 +11,7 @@ import {
   resetPassword,
   verifyEmail,
 } from "../controllers/authControllers.js";
+import { authorizeUser } from "../middlewares/authorizeUserMiddleware.js";
 
 const router = Router();
 
@@ -21,6 +22,6 @@ router.post("/login", passport.authenticate("local"), login);
 router.post("/logout", logout);
 router.post("/forgot-password", getPasswordResetLink);
 router.post("/reset-password", resetPassword);
-router.post("/change-password", changePassword);
+router.post("/change-password", authorizeUser, changePassword);
 
 export default router;
