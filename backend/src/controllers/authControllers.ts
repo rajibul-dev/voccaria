@@ -335,7 +335,7 @@ export async function logout(
   if (!request.user) {
     return response.status(StatusCodes.UNAUTHORIZED).json({
       success: false,
-      message: "User not logged in",
+      message: "User already not logged in",
     });
   }
   request.logout((err) => {
