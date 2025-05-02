@@ -109,10 +109,10 @@ const newPricingDetails = [
 ];
 
 // testing countdown
-const targetDateOutside: any = addSeconds(new Date(), 5);
+// const targetDateOutside: any = addSeconds(new Date(), 5);
 
 // June 1st 12 AM EEST
-// const targetDateOutside: any = new Date("2025-06-01T00:00:00Z");
+const targetDateOutside: any = new Date("2025-06-01T00:00:00Z");
 
 export default function Pricing() {
   const { timeLeft, isComplete } = useCountdown(targetDateOutside);
