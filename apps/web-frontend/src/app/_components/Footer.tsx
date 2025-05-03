@@ -1,3 +1,4 @@
+import Link from "next/link";
 import TwoLogosAndSlash from "./TwoLogosAndSlash";
 
 export const footerLinks = [
@@ -44,11 +45,53 @@ export default function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="bg-gray-300 py-8 dark:bg-gray-700">
-      <div className="grid grid-cols-3 items-center justify-center px-3">
-        <div className="flex flex-col gap-5 border-b border-b-gray-700 pb-2 dark:border-b-gray-300">
+      <div className="grid grid-cols-3 items-end justify-center gap-12 px-3">
+        <div className="mb-1.5 flex flex-col gap-5 border-b border-b-gray-700 pb-2 dark:border-b-gray-300">
           <TwoLogosAndSlash />
           <p className="text-end text-gray-700 dark:text-gray-300">
             © {year} Voccaria. All rights reserved.
+          </p>
+        </div>
+
+        {/* Footer navigation sections */}
+        <div className="flex justify-center gap-12">
+          {footerLinks.map((section) => (
+            <nav
+              key={section.section}
+              aria-labelledby={`${section.section}-heading`}
+            >
+              <h2
+                id={`${section.section}-heading`}
+                className="mb-2 text-base font-semibold text-gray-800 dark:text-white"
+              >
+                {section.section}
+              </h2>
+              <ul className="space-y-1">
+                {section.links.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
+        </div>
+
+        {/* Showing my portfolio */}
+        <div className="mb-1.5 max-w-[28ch] border-b border-b-gray-700 pb-2 dark:border-b-gray-300">
+          <p className="text-end text-lg text-gray-700 dark:text-gray-300">
+            This website is designed and built by{" "}
+            <a
+              className="text-my-pink-700 hover:text-my-pink-600 dark:text-my-pink-400 dark:hover:text-my-pink-300 font-medium transition-colors"
+              href="https://www.notion.so/Portfolio-1cc7bdc1208c80bfa968c49fbf67118f?pvs=4"
+            >
+              Rajibul Islam
+            </a>
           </p>
         </div>
       </div>
