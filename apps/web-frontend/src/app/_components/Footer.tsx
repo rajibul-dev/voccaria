@@ -44,7 +44,7 @@ export const footerLinks = [
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="bg-gray-300 py-8 dark:bg-gray-700">
+    <footer className="bg-gray-300 pt-18 pb-14 dark:bg-gray-700">
       <div className="grid grid-cols-3 items-end justify-center gap-12 px-3">
         <div className="mb-1.5 flex flex-col gap-5 border-b border-b-gray-700 pb-2 dark:border-b-gray-300">
           <TwoLogosAndSlash />
@@ -72,6 +72,8 @@ export default function Footer() {
                     <Link
                       href={link.href}
                       className="text-sm text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       {link.name}
                     </Link>
@@ -88,6 +90,8 @@ export default function Footer() {
             This website is designed and built by{" "}
             <a
               className="text-my-pink-700 hover:text-my-pink-600 dark:text-my-pink-400 dark:hover:text-my-pink-300 font-medium transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
               href="https://www.notion.so/Portfolio-1cc7bdc1208c80bfa968c49fbf67118f?pvs=4"
             >
               Rajibul Islam
