@@ -12,7 +12,7 @@ export default function TwoLogosAndSlash() {
       />
 
       {/* Slash */}
-      <div className="h-20 w-[1px] rotate-25 bg-gray-500"></div>
+      <div className="h-20 w-[1px] rotate-25 bg-gray-500 dark:bg-gray-300"></div>
 
       <Image src={voccariaLogo} alt="Voccaria logo" className="w-55" />
     </div>
