@@ -44,11 +44,11 @@ export const footerLinks = [
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="bg-gray-300 pt-18 pb-14 dark:bg-gray-700">
+    <footer className="bg-gray-700 pt-18 pb-14">
       <div className="grid grid-cols-3 items-end justify-center gap-12 px-3">
-        <div className="mb-1.5 flex flex-col gap-5 border-b border-b-gray-700 pb-2 dark:border-b-gray-300">
+        <div className="mb-1.5 flex flex-col gap-5 border-b border-b-gray-300 pb-2">
           <TwoLogosAndSlash />
-          <p className="text-end text-gray-700 dark:text-gray-300">
+          <p className="text-end text-gray-300">
             © {year} Voccaria. All rights reserved.
           </p>
         </div>
@@ -62,21 +62,30 @@ export default function Footer() {
             >
               <h2
                 id={`${section.section}-heading`}
-                className="mb-2 text-base font-semibold text-gray-800 dark:text-white"
+                className="mb-2 text-base font-semibold text-white"
               >
                 {section.section}
               </h2>
               <ul className="space-y-1">
                 {section.links.map((link) => (
                   <li key={link.name}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {link.name}
-                    </Link>
+                    {link.href.startsWith("/") || link.href.startsWith("#") ? (
+                      <Link
+                        href={link.href}
+                        className="text-sm text-gray-300 transition-colors hover:text-white"
+                      >
+                        {link.name}
+                      </Link>
+                    ) : (
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-gray-300 transition-colors hover:text-white"
+                      >
+                        {link.name}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -85,11 +94,11 @@ export default function Footer() {
         </div>
 
         {/* Showing my portfolio */}
-        <div className="mb-1.5 max-w-[28ch] border-b border-b-gray-700 pb-2 dark:border-b-gray-300">
-          <p className="text-end text-lg text-gray-700 dark:text-gray-300">
+        <div className="mb-1.5 max-w-[28ch] border-b border-b-gray-300 pb-2">
+          <p className="text-end text-lg text-gray-300">
             This website is designed and built by{" "}
             <a
-              className="text-my-pink-700 hover:text-my-pink-600 dark:text-my-pink-400 dark:hover:text-my-pink-300 font-medium transition-colors"
+              className="text-my-pink-400 hover:text-my-pink-300 font-medium transition-colors"
               target="_blank"
               rel="noopener noreferrer"
               href="https://www.notion.so/Portfolio-1cc7bdc1208c80bfa968c49fbf67118f?pvs=4"
