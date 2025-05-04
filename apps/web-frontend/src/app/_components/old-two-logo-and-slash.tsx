@@ -12,12 +12,12 @@ export default function OldTwoLogosAndSlash() {
       />
 
       {/* Slash */}
-      <div className="h-[8rem] w-[1px] shrink-0 rotate-25 bg-gray-300"></div>
+      <div className="h-[8rem] w-[1px] shrink-0 rotate-25 bg-gray-700 dark:bg-gray-300"></div>
 
       <Image
         src={voccariaLogo}
         alt="Voccaria logo"
-        className="ml-[2.4rem] w-[22rem] brightness-105 max-[1100px]:w-[17.6rem] max-lg:w-[23rem]"
+        className="ml-[2.4rem] w-[22rem] max-[1100px]:w-[17.6rem] max-lg:w-[23rem] dark:brightness-105"
       />
     </div>
   );
