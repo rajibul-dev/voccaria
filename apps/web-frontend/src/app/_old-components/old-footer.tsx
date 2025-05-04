@@ -52,7 +52,7 @@ export default function OldFooter() {
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-[1.4rem] leading-[1.5] text-gray-600 transition-colors hover:text-gray-900 max-md:text-[1.8rem] max-md:leading-[1.7] dark:text-gray-300 dark:hover:text-white"
+                      className="text-[1.4rem] leading-[1.5] text-gray-700 transition-colors hover:text-gray-900 max-md:text-[1.8rem] max-md:leading-[1.7] dark:text-gray-300 dark:hover:text-white"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -78,7 +78,7 @@ export default function OldFooter() {
           >
             This website is designed and built by{" "}
             <a
-              className="text-my-pink-700 hover:text-my-pink-600 dark:text-my-pink-300 dark:hover:text-my-pink-400 font-medium transition-colors"
+              className="text-my-pink-600 hover:text-my-pink-500 dark:text-my-pink-300 dark:hover:text-my-pink-400 font-medium transition-colors"
               target="_blank"
               rel="noopener noreferrer"
               href="https://www.notion.so/Portfolio-1cc7bdc1208c80bfa968c49fbf67118f?pvs=4"
