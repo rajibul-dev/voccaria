@@ -9,14 +9,14 @@ export const footerLinks = [
   {
     section: "Website",
     links: [
-      { name: "About Mia", href: "#" },
+      { name: "About Mia", href: "/" },
       { name: "Blog", href: "/blog" },
-      { name: "Free lesson info", href: "#lesson-options" },
+      { name: "Free lesson info", href: "/#lesson-options" },
       {
         name: "Apply for paid lessons",
         href: "https://docs.google.com/forms/d/1dW-N6xyf7ATc6zCIL0rR1I63EN4A4U6JghhPA6xi2pM/viewform?edit_requested=true",
       },
-      { name: "Buy paid lessons", href: "#pricing" },
+      { name: "Buy paid lessons", href: "/#pricing" },
       {
         name: "Schedule a lesson",
         href: "https://calendly.com/miavocalcoach/gen-availability?month=2025-05",
