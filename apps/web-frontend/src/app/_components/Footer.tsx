@@ -52,16 +52,41 @@ export default function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="bg-gray-300 pt-14 pb-14 dark:bg-gray-700">
-      <div className="mx-auto grid grid-cols-3 items-end justify-center gap-12 px-3 max-[1100px]:grid-cols-1 max-[1100px]:!gap-8 max-[1100px]:px-5 max-xl:gap-4">
-        <div className="mb-1.5 flex flex-col gap-5 justify-self-end border-b border-b-gray-700 pb-2 max-[1100px]:order-2 max-[1100px]:max-w-[30ch] max-[1100px]:justify-self-center dark:border-b-gray-300">
+      <div
+        className={clsx(
+          "mx-auto grid grid-cols-3 items-end justify-center gap-12 px-3 max-[1100px]:grid-cols-1 max-[1100px]:!gap-8 max-[1100px]:px-5 max-xl:gap-4",
+          {
+            "max-[1600px]:gap-6 max-[1500px]:grid-cols-1 max-[1500px]:!gap-8 max-[1500px]:px-5":
+              isPostPage,
+          },
+        )}
+      >
+        <div
+          className={clsx(
+            "mb-1.5 flex flex-col gap-5 justify-self-end border-b border-b-gray-700 pb-2 max-[1100px]:order-2 max-[1100px]:max-w-[30ch] max-[1100px]:justify-self-center dark:border-b-gray-300",
+            {
+              "max-[1500px]:order-2 max-[1500px]:justify-self-center":
+                isPostPage,
+            },
+          )}
+        >
           <TwoLogosAndSlash />
-          <p className="text-end text-gray-700 max-[1100px]:text-center dark:text-gray-300">
+          <p
+            className={clsx(
+              "text-end text-gray-700 max-[1100px]:text-center dark:text-gray-300",
+              { "max-[1500px]:text-center": isPostPage },
+            )}
+          >
             © {year} Voccaria. All rights reserved.
           </p>
         </div>
 
         {/* Footer navigation sections */}
-        <div className="flex justify-center gap-12 max-xl:gap-8">
+        <div
+          className={clsx("flex justify-center gap-12 max-xl:gap-8", {
+            "": isPostPage,
+          })}
+        >
           {footerLinks.map((section) => (
             <nav
               key={section.section}
@@ -92,8 +117,21 @@ export default function Footer() {
         </div>
 
         {/* Showing my portfolio */}
-        <div className="mb-1.5 max-w-[30ch] justify-self-start border-b border-b-gray-700 pb-2 max-[1100px]:order-3 max-[1100px]:justify-self-center max-sm:w-full dark:border-b-gray-300">
-          <p className="text-end text-lg text-gray-700 max-[1100px]:text-start max-md:text-base dark:text-gray-300">
+        <div
+          className={clsx(
+            "mb-1.5 max-w-[30ch] justify-self-start border-b border-b-gray-700 pb-2 max-[1100px]:order-3 max-[1100px]:justify-self-center max-sm:w-full dark:border-b-gray-300",
+            {
+              "max-[1500px]:order-3 max-[1500px]:justify-self-center":
+                isPostPage,
+            },
+          )}
+        >
+          <p
+            className={clsx(
+              "text-end text-lg text-gray-700 max-[1100px]:text-start max-md:text-base dark:text-gray-300",
+              { "max-[1500px]:text-start": isPostPage },
+            )}
+          >
             This website is designed and built by{" "}
             <a
               className="text-my-pink-700 hover:text-my-pink-600 dark:text-my-pink-300 dark:hover:text-my-pink-400 font-medium transition-colors"
