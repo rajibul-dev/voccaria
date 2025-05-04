@@ -119,7 +119,7 @@ export default function Footer() {
         {/* Showing my portfolio */}
         <div
           className={clsx(
-            "mb-1.5 max-w-[30ch] justify-self-start border-b border-b-gray-700 pb-2 max-[1100px]:order-3 max-[1100px]:justify-self-center max-sm:w-full dark:border-b-gray-300",
+            "mb-1.5 max-w-[28ch] justify-self-start border-b border-b-gray-700 pb-2 max-[1100px]:order-3 max-[1100px]:justify-self-center max-sm:w-full dark:border-b-gray-300",
             {
               "max-[1500px]:order-3 max-[1500px]:justify-self-center":
                 isPostPage,
