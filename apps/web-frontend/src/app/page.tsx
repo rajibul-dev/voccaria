@@ -7,7 +7,7 @@ import Pricing from "./_landing/sections/pricing/pricing";
 import Scheduling from "./_landing/sections/scheduling/scheduling";
 import Contact from "./_landing/sections/contact/contact";
 import Testimonials from "./_landing/sections/testimonials/testimonials";
-import BackToTop from "./_old-components/back-to-top";
+// import BackToTop from "./_old-components/back-to-top";
 import Mission from "./_landing/sections/mission/mission";
 import SeoPurposeH1 from "./_landing/sections/seo-purpose-h1/seo-purpose-h1";
 import OldFooter from "./_old-components/old-footer";
@@ -29,7 +29,7 @@ export default function Page() {
         <Testimonials />
       </main>
       <OldFooter />
-      <BackToTop />
+      {/* <BackToTop /> */}
     </>
   );
 }

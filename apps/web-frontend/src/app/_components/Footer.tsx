@@ -63,7 +63,7 @@ export default function Footer() {
       >
         <div
           className={clsx(
-            "mb-1.5 flex flex-col gap-5 justify-self-end border-b border-b-gray-700 pb-2 max-[1100px]:order-2 max-[1100px]:max-w-[30ch] max-[1100px]:justify-self-center dark:border-b-gray-300",
+            "mb-1.5 flex flex-col gap-5 justify-self-end border-b border-b-gray-800 pb-2 max-[1100px]:order-2 max-[1100px]:max-w-[30ch] max-[1100px]:justify-self-center dark:border-b-gray-300",
             {
               "max-[1500px]:order-2 max-[1500px]:justify-self-center":
                 isPostPage,
@@ -73,7 +73,7 @@ export default function Footer() {
           <TwoLogosAndSlash />
           <p
             className={clsx(
-              "text-end text-gray-700 max-[1100px]:text-center dark:text-gray-300",
+              "text-end text-gray-800 max-[1100px]:text-center dark:text-gray-300",
               { "max-[1500px]:text-center": isPostPage },
             )}
           >
@@ -119,7 +119,7 @@ export default function Footer() {
         {/* Showing my portfolio */}
         <div
           className={clsx(
-            "mb-1.5 max-w-[28ch] justify-self-start border-b border-b-gray-700 pb-2 max-[1100px]:order-3 max-[1100px]:justify-self-center max-sm:w-full dark:border-b-gray-300",
+            "mb-1.5 max-w-[28ch] justify-self-start border-b border-b-gray-800 pb-2 max-[1100px]:order-3 max-[1100px]:justify-self-center max-sm:w-full dark:border-b-gray-300",
             {
               "max-[1500px]:order-3 max-[1500px]:justify-self-center":
                 isPostPage,
@@ -128,7 +128,7 @@ export default function Footer() {
         >
           <p
             className={clsx(
-              "text-end text-lg text-gray-700 max-[1100px]:text-start max-md:text-base dark:text-gray-300",
+              "text-end text-lg text-gray-800 max-[1100px]:text-start max-md:text-base dark:text-gray-300",
               { "max-[1500px]:text-start": isPostPage },
             )}
           >
