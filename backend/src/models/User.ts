@@ -13,8 +13,20 @@ export interface IUser extends Document {
   passwordResetToken?: string;
   passwordResetTokenExpires?: Date;
   avatar?: string;
-  provider: "google" | "github" | "local";
+  provider: "google" | "local";
   providerId?: string;
+
+  discord?: {
+    id?: string;
+    name?: string;
+  };
+
+  avatars: {
+    manual?: string;
+    google?: string;
+    discord?: string;
+    selected?: "manual" | "google" | "discord";
+  };
 
   createdAt: Date;
   updatedAt: Date;
@@ -50,6 +62,11 @@ const UserSchema: Schema<IUser> = new Schema(
       default: "user",
     },
 
+    discord: {
+      id: String,
+      name: String,
+    },
+
     isVerified: {
       type: Boolean,
       default: false,
@@ -58,7 +75,21 @@ const UserSchema: Schema<IUser> = new Schema(
     verificationToken: String,
     passwordResetToken: String,
     passwordResetTokenExpires: Date,
-    avatar: String,
+
+    avatars: {
+      manual: {
+        type: String,
+        default:
+          "https://upload.wikimedia.org/wikipedia/commons/7/7e/Circle-icons-profile.svg",
+      },
+      google: String,
+      discord: String,
+      selected: {
+        type: String,
+        enum: ["manual", "google", "discord"],
+        default: "manual",
+      },
+    },
 
     provider: {
       type: String,
