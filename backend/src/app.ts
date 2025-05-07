@@ -12,6 +12,8 @@ import dotenv from "dotenv";
 import passport from "passport";
 import "./libs/passport/localStrategy.js";
 import "./libs/passport/googleStrategy.js";
+import { StatusCodes } from "http-status-codes";
+import errorHandlerMiddleware from "./middlewares/errorHandlerMiddleware.js";
 dotenv.config();
 
 export const app = express();
@@ -52,6 +54,8 @@ app.get("/keep-alive", (request: Request, response: Response) => {
   console.log("Keep-alive ping received!");
   response.status(200).send("I'm awake!");
 });
+
+app.use(errorHandlerMiddleware);
 
 const start = async () => {
   try {
