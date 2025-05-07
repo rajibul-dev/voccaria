@@ -8,12 +8,13 @@ import {
   updateUser,
 } from "../controllers/userControllers.js";
 import { authorizeUser } from "../middlewares/authorizeUserMiddleware.js";
+import { requireRole } from "../middlewares/requireRole.js";
 
 const router = Router();
 
-// router
-//   .route("/")
-//   .get(authenticateUser, authorizePermissions("admin"), getAllUsers);
+router
+  .route("/")
+  .get(authorizeUser, requireRole("staff", "raji", "mia"), getAllUsers);
 router.route("/showMe").get(authorizeUser, showMe);
 // router.route("/updateUser").patch(authenticateUser, updateUser);
 // router.route("/updateAvatar").patch(authenticateUser, updateAvatar);
