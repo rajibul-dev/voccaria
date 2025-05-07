@@ -7,7 +7,10 @@ export function requireRole(...roles: string[]) {
     } else {
       return response
         .status(StatusCodes.FORBIDDEN)
-        .json({ message: "You don't have the permission to do this" });
+        .json({
+          success: false,
+          message: "You don't have the permission to do this",
+        });
     }
   };
 }
