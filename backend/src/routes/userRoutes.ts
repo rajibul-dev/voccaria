@@ -12,7 +12,7 @@ import { requireRole } from "../middlewares/requireRole.js";
 
 const router = Router();
 
-const allStaffRoles = ["staff", "raji", "mia"];
+export const allStaffRoles = ["staff", "raji", "mia"];
 
 router.route("/").get(authorizeUser, getAllUsers);
 router.route("/showMe").get(authorizeUser, showMe);
