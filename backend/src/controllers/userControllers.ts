@@ -49,10 +49,30 @@ export async function showMe(
   });
 }
 
-export async function updateUser(
+export async function updateMe(
   request: Request,
   response: Response
-): Promise<any> {}
+): Promise<any> {
+  const { _id } = request.user as IUser;
+  const { name } = request.body;
+
+  if (!name) {
+    return response.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: "Name is required",
+    });
+  }
+
+  const user = await User.findOne({ _id });
+  user.name = name;
+  await user.save();
+
+  return response.status(StatusCodes.OK).json({
+    success: true,
+    message: "User updated successfully",
+    data: user,
+  });
+}
 
 export async function updateAvatar(
   request: Request,
