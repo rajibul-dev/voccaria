@@ -15,10 +15,13 @@ const router = Router();
 export const allStaffRoles = ["staff", "raji", "mia"];
 
 router.route("/").get(authorizeUser, getAllUsers);
-router.route("/showMe").get(authorizeUser, showMe);
-// router.route("/updateUser").patch(authenticateUser, updateUser);
-// router.route("/updateAvatar").patch(authenticateUser, updateAvatar);
-// router.route("/removeAvatar").delete(authenticateUser, removeAvatar);
 router.route("/:id").get(authorizeUser, getUser);
+
+router.route("/me").get(authorizeUser, showMe).patch(authorizeUser, updateUser);
+
+router
+  .route("/me/avatar")
+  .patch(authorizeUser, updateAvatar)
+  .delete(authorizeUser, removeAvatar);
 
 export default router;
