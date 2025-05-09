@@ -10,8 +10,8 @@ const aboutMiaText = [
   <>
     My formal studies include the{" "}
     <strong>New York Vocal Coaching Teacher-Training Course</strong>, ongoing
-    study with Aliki Katriou (anatomy & distortion) and learning about
-    Feldenkrais through the{" "}
+    study with <strong>Aliki Katriou</strong> (anatomy & distortion) and
+    learning about Feldenkrais through the{" "}
     <strong>The Singing Self Program Teacher Track with Robert Sussuma</strong>.
     Earlier in my career I trained with <strong>Silva Makamian</strong>{" "}
     (musical-theatre & pop). I also draw on ideas and exercises inspired by
