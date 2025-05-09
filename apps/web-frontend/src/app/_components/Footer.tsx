@@ -10,7 +10,7 @@ export const footerLinks = [
     section: "Website",
     links: [
       { name: "About Mia", href: "/" },
-      { name: "Blog", href: "/blog" },
+      { name: "Blog (soon)", href: "/" },
       { name: "Free lesson info", href: "/#lesson-options" },
       {
         name: "Apply for paid lessons",
