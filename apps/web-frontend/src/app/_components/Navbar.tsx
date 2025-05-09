@@ -115,17 +115,20 @@ export default function Navbar() {
         )}
         {isRoot ? <OldLogo /> : <Logo pathname={pathname} />}
 
-        <MiaPageSectionTrackingDesktop links={navData} />
-
-        <IoMenu
-          className={`cursor-pointer p-[1rem] text-[6rem] text-slate-700 min-[936px]:hidden`}
-          onClick={() => setOpen((cur) => !cur)}
-        />
-        <MiaPageSectionTrackingMobile
-          navOpen={open}
-          onOpen={setOpen}
-          links={navData}
-        />
+        {isRoot && (
+          <>
+            <MiaPageSectionTrackingDesktop links={navData} />
+            <IoMenu
+              className={`cursor-pointer p-[1rem] text-[6rem] text-slate-700 min-[936px]:hidden`}
+              onClick={() => setOpen((cur) => !cur)}
+            />
+            <MiaPageSectionTrackingMobile
+              navOpen={open}
+              onOpen={setOpen}
+              links={navData}
+            />
+          </>
+        )}
       </div>
     </header>
   );
