@@ -2,7 +2,8 @@
   background-color: #4e59d2 !important;
 }
 .twitch:hover {
-  width: 43rem;
+  /* width: 43rem; */
+  width: 38.5rem;
   height: 9.4rem;
   transform: translateY(-1.8rem);
 }
