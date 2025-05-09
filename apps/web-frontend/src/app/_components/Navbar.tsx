@@ -8,19 +8,13 @@ import styles from "./navbar.module.css";
 // components
 import OldLogo from "@/app/_components/OldLogo";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { IoMenu } from "react-icons/io5";
-import BlogSearchBarOnNav from "./BlogSearchBarOnNav";
-import DarkModeToggler from "./DarkModeToggler";
-import Logo from "./Logo";
-import OldPageSectionTracking from "./OldPageSectionTracking";
-import BlogSidebarData from "./BlogSidebarData";
 import MiaPageSectionTrackingDesktop from "../_old-components/mia-page-section-tracking-desktop";
-import Image from "next/image";
 import MiaPageSectionTrackingMobile from "../_old-components/mia-page-section-tracking-mobile";
-import { set } from "date-fns";
+import BlogSidebarData from "./BlogSidebarData";
+import Logo from "./Logo";
 
 const navLinks = [
   { label: "Home", href: "/" },
