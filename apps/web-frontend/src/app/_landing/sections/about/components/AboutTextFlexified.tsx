@@ -5,7 +5,7 @@ interface AboutTextProps {
   text: any[];
 }
 
-const AboutText: React.FC<AboutTextProps> = ({ text }) => {
+const AboutTextFlexified: React.FC<AboutTextProps> = ({ text }) => {
   return (
     <div className={AboutTextStyles.aboutBox}>
       <h2 className={`section-heading ${AboutTextStyles.heading}`}>About Me</h2>
@@ -22,4 +22,4 @@ const AboutText: React.FC<AboutTextProps> = ({ text }) => {
   );
 };
 
-export default AboutText;
+export default AboutTextFlexified;

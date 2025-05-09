@@ -14,10 +14,10 @@
 }
 @media (min-width: 56.25em) {
   .miaImg {
-    margin-top: 4rem;
+    /* margin-top: 4rem; */
   }
   .imgBox {
-    transform: translateX(-5%);
+    /* transform: translateX(-5%); */
   }
 }
 

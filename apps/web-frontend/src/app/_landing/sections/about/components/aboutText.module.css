@@ -4,11 +4,11 @@
 .aboutText {
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
+  gap: 1rem !important;
 }
-.aboutText p:last-child {
+/* .aboutText p:last-child {
   margin-top: 0.5rem;
-}
+} */
 
 @media (min-width: 56.25em) {
   .aboutBox {
