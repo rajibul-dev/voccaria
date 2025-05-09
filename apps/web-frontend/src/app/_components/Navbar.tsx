@@ -17,10 +17,53 @@ import DarkModeToggler from "./DarkModeToggler";
 import Logo from "./Logo";
 import OldPageSectionTracking from "./OldPageSectionTracking";
 import BlogSidebarData from "./BlogSidebarData";
+import MiaPageSectionTrackingDesktop from "../_old-components/mia-page-section-tracking-desktop";
+import Image from "next/image";
+import MiaPageSectionTrackingMobile from "../_old-components/mia-page-section-tracking-mobile";
+import { set } from "date-fns";
 
 const navLinks = [
   { label: "Home", href: "/" },
   { label: "Blog", href: "/blog" },
+];
+
+const navData = [
+  {
+    name: "About Me",
+    selector: "about",
+  },
+  {
+    name: "Patreon",
+    selector: "patreon",
+  },
+  {
+    name: "How we teach",
+    selector: "mission",
+  },
+  {
+    name: "Objective",
+    selector: "objective",
+  },
+  {
+    name: "Lesson Options",
+    selector: "lesson-options",
+  },
+  {
+    name: "Paid Lessons",
+    selector: "pricing",
+  },
+  {
+    name: "Schedule a Lesson",
+    selector: "scheduling",
+  },
+  {
+    name: "Contact Me",
+    selector: "contact",
+  },
+  {
+    name: "Testimonials",
+    selector: "testimonials",
+  },
 ];
 
 export default function Navbar() {
@@ -78,59 +121,17 @@ export default function Navbar() {
         )}
         {isRoot ? <OldLogo /> : <Logo pathname={pathname} />}
 
-        <nav className="h-full" aria-label="Main navigation">
-          <ul
-            className={clsx(
-              "flex h-full items-center text-slate-700",
-              isRoot
-                ? styles.navLinkWrapper
-                : "max-xl:text-md gap-8 text-base max-sm:gap-6 max-sm:text-sm dark:text-slate-200",
-            )}
-          >
-            {isPostPage && (
-              <li className="max-sm:order-4 max-sm:-ml-4">
-                <BlogSearchBarOnNav />
-              </li>
-            )}
+        <MiaPageSectionTrackingDesktop links={navData} />
 
-            {navLinks.map(({ href, label }) => {
-              const isActive =
-                pathname === href || pathname.startsWith(`${href}/`);
-
-              return (
-                <li className={clsx("h-full", isRoot && styles.li)} key={href}>
-                  <Link
-                    className={clsx(
-                      "hover:text-my-pink-600 flex h-full items-center font-medium transition-colors duration-100",
-                      isRoot && styles.navLink,
-                      !isRoot && "hover:dark:text-my-pink-300",
-                      isActive &&
-                        (isRoot
-                          ? "text-my-pink-600"
-                          : "text-my-pink-600 dark:text-my-pink-300"),
-                    )}
-                    href={href}
-                    aria-label={label}
-                  >
-                    {label}
-                  </Link>
-                </li>
-              );
-            })}
-
-            {!isRoot && (
-              <li className={clsx({ "-ml-2": isPostPage })}>
-                <DarkModeToggler />
-              </li>
-            )}
-
-            {isRoot && (
-              <li>
-                <OldPageSectionTracking />
-              </li>
-            )}
-          </ul>
-        </nav>
+        <IoMenu
+          className={`cursor-pointer p-[1rem] text-[6rem] text-slate-700 min-[936px]:hidden`}
+          onClick={() => setOpen((cur) => !cur)}
+        />
+        <MiaPageSectionTrackingMobile
+          navOpen={open}
+          onOpen={setOpen}
+          links={navData}
+        />
       </div>
     </header>
   );
