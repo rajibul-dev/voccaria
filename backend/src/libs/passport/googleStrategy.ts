@@ -20,6 +20,7 @@ export default passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       const { sub: id, name, email, picture, email_verified } = profile._json;
+      const avatar = googleAvatarQualityImprove(picture);
       if (!email_verified) {
         return done(new Error("Email not verified"), null);
       }
@@ -62,14 +63,14 @@ export default passport.use(
               verified: new Date(Date.now()),
             });
 
-            newUser.avatars.google = await googleAvatarQualityImprove(picture);
+            newUser.avatars.google = avatar;
             newUser.avatars.selected = "google";
 
             newUser.google = {
               id,
               name,
               email,
-              avatar: await googleAvatarQualityImprove(picture),
+              avatar,
               email_verified,
             };
 
