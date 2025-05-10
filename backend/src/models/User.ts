@@ -26,6 +26,14 @@ export interface IUser extends Document {
     avatar?: string;
   };
 
+  google?: {
+    id?: string;
+    name?: string;
+    email?: string;
+    avatar?: string;
+    email_verified?: boolean;
+  };
+
   avatars: {
     manual?: string;
     google?: string;
@@ -75,6 +83,14 @@ const UserSchema: Schema<IUser> = new Schema(
       verified: Boolean,
       display_name: String,
       avatar: String,
+    },
+
+    google: {
+      id: String,
+      name: String,
+      email: String,
+      avatar: String,
+      email_verified: Boolean,
     },
 
     isVerified: {

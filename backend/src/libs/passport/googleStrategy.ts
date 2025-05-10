@@ -58,10 +58,22 @@ export default passport.use(
               email,
               providerId: id,
               provider: "google",
-              avatar: googleAvatarQualityImprove(picture),
               isVerified: true,
               verified: new Date(Date.now()),
             });
+
+            newUser.avatars.google = googleAvatarQualityImprove(picture);
+            newUser.avatars.selected = "google";
+
+            newUser.google = {
+              id,
+              name,
+              email,
+              avatar: googleAvatarQualityImprove(picture),
+              email_verified,
+            };
+
+            await newUser.save();
             return done(null, newUser);
           } catch (err) {
             return done(err, null);
