@@ -16,6 +16,7 @@
     "@react-email/components": "^0.0.36",
     "@types/passport-google-oauth20": "^2.0.16",
     "bcryptjs": "^3.0.2",
+    "cloudinary": "^2.6.1",
     "connect-mongo": "^5.1.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",

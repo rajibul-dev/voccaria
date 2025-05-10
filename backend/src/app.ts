@@ -13,6 +13,7 @@ import passport from "passport";
 import "./libs/passport/localStrategy.js";
 import "./libs/passport/googleStrategy.js";
 import "./libs/passport/discordStrategy.js";
+import "./libs/cloudinary.js";
 import errorHandlerMiddleware from "./middlewares/errorHandlerMiddleware.js";
 dotenv.config();
 
