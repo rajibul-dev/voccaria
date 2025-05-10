@@ -35,7 +35,7 @@ export async function getAllUsers(
   return response.status(StatusCodes.OK).json({
     success: true,
     message: "Users fetched successfully",
-    data: { ...users, length: users.length },
+    data: { users, length: users.length },
   });
 }
 
