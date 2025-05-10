@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  discordRedirect,
   getAllUsers,
   getUser,
   removeAvatar,
@@ -8,6 +9,7 @@ import {
   updateMe,
 } from "../controllers/userControllers.js";
 import { authorizeUser } from "../middlewares/authorizeUserMiddleware.js";
+import passport from "passport";
 
 const router = Router();
 
@@ -21,6 +23,14 @@ router
   .route("/me/avatar")
   .patch(authorizeUser, updateAvatar)
   .delete(authorizeUser, removeAvatar);
+
+router
+  .route("/discord-connect")
+  .get(authorizeUser, passport.authenticate("discord"));
+
+router
+  .route("/discord-connect/redirect")
+  .get(passport.authenticate("discord"), discordRedirect);
 
 router.route("/:id").get(authorizeUser, getUser);
 

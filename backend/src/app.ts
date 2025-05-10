@@ -12,7 +12,7 @@ import dotenv from "dotenv";
 import passport from "passport";
 import "./libs/passport/localStrategy.js";
 import "./libs/passport/googleStrategy.js";
-import { StatusCodes } from "http-status-codes";
+import "./libs/passport/discordStrategy.js";
 import errorHandlerMiddleware from "./middlewares/errorHandlerMiddleware.js";
 dotenv.config();
 

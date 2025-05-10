@@ -19,6 +19,11 @@ export interface IUser extends Document {
   discord?: {
     id?: string;
     name?: string;
+    username?: string;
+    email?: string;
+    verified?: boolean;
+    display_name?: string;
+    avatar?: string;
   };
 
   avatars: {
@@ -64,7 +69,12 @@ const UserSchema: Schema<IUser> = new Schema(
 
     discord: {
       id: String,
+      username: String,
       name: String,
+      email: String,
+      verified: Boolean,
+      display_name: String,
+      avatar: String,
     },
 
     isVerified: {

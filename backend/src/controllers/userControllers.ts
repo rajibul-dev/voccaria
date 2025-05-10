@@ -84,3 +84,14 @@ export async function removeAvatar(
   request: Request,
   response: Response
 ): Promise<any> {}
+
+export async function discordRedirect(
+  request: Request,
+  response: Response
+): Promise<any> {
+  return response.status(StatusCodes.OK).json({
+    success: true,
+    message: "Connected with discord account successfully",
+    data: request.user,
+  });
+}
