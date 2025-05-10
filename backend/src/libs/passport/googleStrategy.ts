@@ -62,14 +62,14 @@ export default passport.use(
               verified: new Date(Date.now()),
             });
 
-            newUser.avatars.google = googleAvatarQualityImprove(picture);
+            newUser.avatars.google = await googleAvatarQualityImprove(picture);
             newUser.avatars.selected = "google";
 
             newUser.google = {
               id,
               name,
               email,
-              avatar: googleAvatarQualityImprove(picture),
+              avatar: await googleAvatarQualityImprove(picture),
               email_verified,
             };
 

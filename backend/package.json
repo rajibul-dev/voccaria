@@ -26,6 +26,7 @@
     "mongodb": "^6.15.0",
     "mongoose": "^8.13.2",
     "morgan": "^1.10.0",
+    "node-fetch": "^3.3.2",
     "passport": "^0.7.0",
     "passport-discord": "^0.1.4",
     "passport-google": "^0.3.0",
