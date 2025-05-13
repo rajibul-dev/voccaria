@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import User, { defaultAvatar, IUser } from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
 import { v2 as cloudinary } from "cloudinary";
-import { deleteFromCloudinary } from "../helpers/cloudinaryHelpers.js";
+import { deleteAvatarFromCloudinary } from "../helpers/cloudinaryHelpers.js";
 
 export async function getUser(
   request: Request,
@@ -97,7 +97,7 @@ export async function addAvatar(
 
   // Destroy previous manual avatar if it was not the default one
   if (!wasDefaultAvatarPlaceholder && user.avatars.selected === "manual") {
-    await deleteFromCloudinary(user.avatars.manual);
+    await deleteAvatarFromCloudinary(user.avatars.manual);
   }
 
   const result = await cloudinary.uploader.upload((file as any).tempFilePath, {
@@ -193,7 +193,7 @@ export async function removeAvatar(
     });
   }
 
-  await deleteFromCloudinary(user.avatars.manual);
+  await deleteAvatarFromCloudinary(user.avatars.manual);
   user.avatars.manual = defaultAvatar;
 
   // If manual was selected, switch to Google or Discord, else fallback to default
