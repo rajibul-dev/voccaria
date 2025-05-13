@@ -118,6 +118,7 @@ const UserSchema: Schema<IUser> = new Schema(
         default: "manual",
       },
     },
+    avatar: String,
 
     provider: {
       type: String,
@@ -131,6 +132,11 @@ const UserSchema: Schema<IUser> = new Schema(
   },
   { timestamps: true }
 );
+
+// set the avatar field from the avatars field
+UserSchema.pre("save", function () {
+  this.avatar = this.avatars[this.avatars.selected];
+});
 
 UserSchema.methods.comparePassword = async function (
   this: IUser,

@@ -127,10 +127,37 @@ export async function addAvatar(
   });
 }
 
-export async function updateAvatar(
+export async function selectAvatarFromProviders(
   request: Request,
   response: Response
-): Promise<any> {}
+): Promise<any> {
+  const { select } = request.body;
+  const reqUser: IUser = request.user as IUser;
+  const user = await User.findById(reqUser._id);
+
+  if (!select) {
+    return response.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: "Please provide the 'select' field",
+    });
+  }
+
+  if (select === user.avatars.selected) {
+    return response.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: `Already selected ${select}`,
+    });
+  }
+
+  user.avatars.selected = select;
+  await user.save();
+
+  return response.status(StatusCodes.OK).json({
+    success: true,
+    message: `Chosen avatar from ${select} successfully`,
+    data: { url: user.avatar },
+  });
+}
 
 export async function removeAvatar(
   request: Request,

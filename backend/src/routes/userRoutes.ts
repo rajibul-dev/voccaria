@@ -6,7 +6,7 @@ import {
   getUser,
   removeAvatar,
   showMe,
-  updateAvatar,
+  selectAvatarFromProviders,
   updateMe,
 } from "../controllers/userControllers.js";
 import { authorizeUser } from "../middlewares/authorizeUserMiddleware.js";
@@ -23,7 +23,7 @@ router.route("/me").get(authorizeUser, showMe).patch(authorizeUser, updateMe);
 router
   .route("/me/avatar")
   .post(authorizeUser, addAvatar)
-  .patch(authorizeUser, updateAvatar)
+  .patch(authorizeUser, selectAvatarFromProviders)
   .delete(authorizeUser, removeAvatar);
 
 router
