@@ -121,32 +121,32 @@ export async function selectAvatarFromProviders(
   request: Request,
   response: Response
 ): Promise<any> {
-  const { select } = request.body;
+  const { provider } = request.body;
   const reqUser: IUser = request.user as IUser;
   const user = await User.findById(reqUser._id);
 
-  if (!select) {
+  if (!provider) {
     return response.status(StatusCodes.BAD_REQUEST).json({
       success: false,
       message: "Please provide the 'select' field",
     });
   }
 
-  if (select === user.avatars.selected) {
+  if (provider === user.avatars.selected) {
     return response.status(StatusCodes.BAD_REQUEST).json({
       success: false,
-      message: `Already selected ${select}`,
+      message: `Already selected ${provider}`,
     });
   }
 
-  const hasSelectedAvatar = !!user.avatars[select];
+  const hasSelectedAvatar = !!user.avatars[provider];
 
   // If the selected provider is not available
   if (!hasSelectedAvatar) {
     const fallback =
-      select === "discord" && user.avatars.google
+      provider === "discord" && user.avatars.google
         ? "google"
-        : select === "google" && user.avatars.discord
+        : provider === "google" && user.avatars.discord
           ? "discord"
           : null;
 
@@ -155,7 +155,7 @@ export async function selectAvatarFromProviders(
     } else {
       return response.status(StatusCodes.BAD_REQUEST).json({
         success: false,
-        message: `No avatar in your ${select}, or other provider`,
+        message: `No avatar in your ${provider}, or other provider`,
       });
     }
 
@@ -163,18 +163,18 @@ export async function selectAvatarFromProviders(
 
     return response.status(StatusCodes.OK).json({
       success: true,
-      message: `Fallback used — '${fallback || "manual"}' selected as '${select}' was not available.`,
+      message: `Fallback used — '${fallback || "manual"}' selected as '${provider}' was not available.`,
       data: { url: user.avatar },
     });
   }
 
   // If selected provider is valid and present
-  user.avatars.selected = select;
+  user.avatars.selected = provider;
   await user.save();
 
   return response.status(StatusCodes.OK).json({
     success: true,
-    message: `Chosen avatar from '${select}' successfully.`,
+    message: `Chosen avatar from '${provider}' successfully.`,
     data: { url: user.avatar },
   });
 }
