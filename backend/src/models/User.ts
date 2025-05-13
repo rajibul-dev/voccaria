@@ -118,7 +118,7 @@ const UserSchema: Schema<IUser> = new Schema(
         default: "manual",
       },
     },
-    avatar: String,
+    avatar: defaultAvatar,
 
     provider: {
       type: String,

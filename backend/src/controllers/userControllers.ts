@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import User, { defaultAvatar, IUser } from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
 import { v2 as cloudinary } from "cloudinary";
+import { deleteFromCloudinary } from "../helpers/cloudinaryHelpers.js";
 
 export async function getUser(
   request: Request,
@@ -96,18 +97,7 @@ export async function addAvatar(
 
   // Destroy previous manual avatar if it was not the default one
   if (!wasDefaultAvatarPlaceholder && user.avatars.selected === "manual") {
-    try {
-      // Extract public_id from URL
-      const publicIdMatch = user.avatars.manual.match(
-        /\/v\d+\/(.+)\.(jpg|jpeg|png|webp)/
-      );
-      if (publicIdMatch && publicIdMatch[1]) {
-        const publicId = publicIdMatch[1];
-        await cloudinary.uploader.destroy(publicId);
-      }
-    } catch (error) {
-      console.warn("Failed to delete previous avatar:", error);
-    }
+    await deleteFromCloudinary(user.avatars.manual);
   }
 
   const result = await cloudinary.uploader.upload((file as any).tempFilePath, {
@@ -162,7 +152,37 @@ export async function selectAvatarFromProviders(
 export async function removeAvatar(
   request: Request,
   response: Response
-): Promise<any> {}
+): Promise<any> {
+  const reqUser: IUser = request.user as IUser;
+  const user = await User.findById(reqUser._id);
+
+  if (user.avatar === defaultAvatar && user.avatars.manual === defaultAvatar) {
+    return response.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: `There is no avatar to delete`,
+    });
+  }
+
+  await deleteFromCloudinary(user.avatars.manual);
+  user.avatars.manual = defaultAvatar;
+
+  // If manual was selected, switch to Google or Discord, else fallback to default
+  // if (user.avatars.selected === "manual") {
+  //   user.avatars.selected = user.avatars.google
+  //     ? "google"
+  //     : user.avatars.discord
+  //       ? "discord"
+  //       : "manual";
+  // }
+
+  await user.save();
+
+  return response.status(StatusCodes.OK).json({
+    success: true,
+    message: `Avatar removed successfully`,
+    data: { url: user.avatar },
+  });
+}
 
 export async function discordRedirect(
   request: Request,
