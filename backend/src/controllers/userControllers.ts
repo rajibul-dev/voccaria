@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import User, { IUser } from "../models/User.js";
+import User, { defaultAvatar, IUser } from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
+import { v2 as cloudinary } from "cloudinary";
 
 export async function getUser(
   request: Request,
@@ -72,6 +73,57 @@ export async function updateMe(
     success: true,
     message: "User updated successfully",
     data: user,
+  });
+}
+
+export async function addAvatar(
+  request: Request,
+  response: Response
+): Promise<any> {
+  const reqUser: IUser = request.user as IUser;
+  const user = await User.findById(reqUser._id);
+  const file = request.files?.avatar;
+  const folderPath = `voccaria/avatars/${user._id}`;
+  const previousAvatar = user.avatars[user.avatars.selected] || null;
+  const wasDefaultAvatarPlaceholder = previousAvatar === defaultAvatar;
+
+  if (!file) {
+    return response.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: "No file selected",
+    });
+  }
+
+  // Destroy previous manual avatar if it was not the default one
+  if (!wasDefaultAvatarPlaceholder && user.avatars.selected === "manual") {
+    try {
+      // Extract public_id from URL
+      const publicIdMatch = user.avatars.manual.match(
+        /\/v\d+\/(.+)\.(jpg|jpeg|png|webp)/
+      );
+      if (publicIdMatch && publicIdMatch[1]) {
+        const publicId = publicIdMatch[1];
+        await cloudinary.uploader.destroy(publicId);
+      }
+    } catch (error) {
+      console.warn("Failed to delete previous avatar:", error);
+    }
+  }
+
+  const result = await cloudinary.uploader.upload((file as any).tempFilePath, {
+    folder: folderPath,
+    public_id: (file as any).name.split(".")[0],
+    resource_type: "auto",
+  });
+
+  user.avatars.manual = result.secure_url;
+  user.avatars.selected = "manual";
+  await user.save();
+
+  return response.status(StatusCodes.CREATED).json({
+    success: true,
+    message: "Uploaded avatar successfully",
+    data: { url: result.secure_url },
   });
 }
 

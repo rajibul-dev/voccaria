@@ -14,6 +14,7 @@ import "./libs/passport/localStrategy.js";
 import "./libs/passport/googleStrategy.js";
 import "./libs/passport/discordStrategy.js";
 import "./libs/cloudinary.js";
+import fileUpload from "express-fileupload";
 import errorHandlerMiddleware from "./middlewares/errorHandlerMiddleware.js";
 dotenv.config();
 
@@ -23,6 +24,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 
 app.use(express.json());
+app.use(fileUpload({ useTempFiles: true }));
 app.use(morgan("dev"));
 app.use(cookiePrser(process.env.JWT_SECRET));
 app.use(

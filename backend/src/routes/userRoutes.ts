@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  addAvatar,
   discordRedirect,
   getAllUsers,
   getUser,
@@ -21,6 +22,7 @@ router.route("/me").get(authorizeUser, showMe).patch(authorizeUser, updateMe);
 
 router
   .route("/me/avatar")
+  .post(authorizeUser, addAvatar)
   .patch(authorizeUser, updateAvatar)
   .delete(authorizeUser, removeAvatar);
 
