@@ -139,12 +139,42 @@ export async function selectAvatarFromProviders(
     });
   }
 
+  const hasSelectedAvatar = !!user.avatars[select];
+
+  // If the selected provider is not available
+  if (!hasSelectedAvatar) {
+    const fallback =
+      select === "discord" && user.avatars.google
+        ? "google"
+        : select === "google" && user.avatars.discord
+          ? "discord"
+          : null;
+
+    if (fallback) {
+      user.avatars.selected = fallback;
+    } else {
+      return response.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        message: `No avatar in your ${select}, or other provider`,
+      });
+    }
+
+    await user.save();
+
+    return response.status(StatusCodes.OK).json({
+      success: true,
+      message: `Fallback used — '${fallback || "manual"}' selected as '${select}' was not available.`,
+      data: { url: user.avatar },
+    });
+  }
+
+  // If selected provider is valid and present
   user.avatars.selected = select;
   await user.save();
 
   return response.status(StatusCodes.OK).json({
     success: true,
-    message: `Chosen avatar from ${select} successfully`,
+    message: `Chosen avatar from '${select}' successfully.`,
     data: { url: user.avatar },
   });
 }
