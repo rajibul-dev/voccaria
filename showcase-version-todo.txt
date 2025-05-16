@@ -55,7 +55,7 @@ deploy major updates whiile hiding blog
 [] think of route path structure
   - /schedule/availability GET, POST, PATCH routes
 [] think of data model structure
-  - StudentAvailability model: { userId, day, startTime, endTime, timezone }
+  - StudentAvailability model: { userId, day, startTime, endTime, timezone, repeatWeekly: Boolean }
 [] implement its CRUD
 Mia will be able to:
 [] The features, explaining with route paths
