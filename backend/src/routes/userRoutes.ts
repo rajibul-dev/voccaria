@@ -14,8 +14,6 @@ import passport from "passport";
 
 const router = Router();
 
-export const allStaffRoles = ["staff", "raji", "mia"];
-
 router.route("/").get(authorizeUser, getAllUsers);
 
 router.route("/me").get(authorizeUser, showMe).patch(authorizeUser, updateMe);
