@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
-import User, { defaultAvatar, IUser } from "../models/User.js";
+import User, { IUser } from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
 import { v2 as cloudinary } from "cloudinary";
 import { deleteAvatarFromCloudinary } from "../helpers/cloudinaryHelpers.js";
+import { DEFAULT_AVATAR } from "../constants/assets.js";
 
 export async function getUser(
   request: Request,
@@ -86,7 +87,7 @@ export async function addAvatar(
   const file = request.files?.avatar;
   const folderPath = `voccaria/avatars/${user._id}`;
   const previousAvatar = user.avatars[user.avatars.selected] || null;
-  const wasDefaultAvatarPlaceholder = previousAvatar === defaultAvatar;
+  const wasDefaultAvatarPlaceholder = previousAvatar === DEFAULT_AVATAR;
 
   if (!file) {
     return response.status(StatusCodes.BAD_REQUEST).json({
@@ -186,7 +187,10 @@ export async function removeAvatar(
   const reqUser: IUser = request.user as IUser;
   const user = await User.findById(reqUser._id);
 
-  if (user.avatar === defaultAvatar && user.avatars.manual === defaultAvatar) {
+  if (
+    user.avatar === DEFAULT_AVATAR &&
+    user.avatars.manual === DEFAULT_AVATAR
+  ) {
     return response.status(StatusCodes.BAD_REQUEST).json({
       success: false,
       message: `There is no avatar to delete`,
@@ -194,7 +198,7 @@ export async function removeAvatar(
   }
 
   await deleteAvatarFromCloudinary(user.avatars.manual);
-  user.avatars.manual = defaultAvatar;
+  user.avatars.manual = DEFAULT_AVATAR;
 
   // If manual was selected, switch to Google or Discord, else fallback to default
   // if (user.avatars.selected === "manual") {

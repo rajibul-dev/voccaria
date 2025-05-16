@@ -1,9 +1,7 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 import validator from "validator";
 import bcrypt from "bcryptjs";
-
-export const defaultAvatar =
-  "https://upload.wikimedia.org/wikipedia/commons/7/7e/Circle-icons-profile.svg";
+import { DEFAULT_AVATAR } from "../constants/assets.js";
 
 export interface IUser extends Document {
   name: string;
@@ -108,7 +106,7 @@ const UserSchema: Schema<IUser> = new Schema(
     avatars: {
       manual: {
         type: String,
-        default: defaultAvatar,
+        default: DEFAULT_AVATAR,
       },
       google: String,
       discord: String,
@@ -120,7 +118,7 @@ const UserSchema: Schema<IUser> = new Schema(
     },
     avatar: {
       type: String,
-      default: defaultAvatar,
+      default: DEFAULT_AVATAR,
     },
 
     provider: {
