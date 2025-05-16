@@ -62,7 +62,7 @@ Mia will be able to:
   - /schedule/all-students-availability GET
   - Be able to block off hours: /schedule/students-availability/block-hours POST
     -> { startTime, endTime, repeatEveryday: boolean, day: null (if everyday) | Array (if multiple days) | string or number (whichever is better for working with weekdays) }
-  - /schedule/student-availability/:userId GET and POST for Mia to set students availability herself
+  - /schedule/students-availability/:userId GET and POST for Mia to set students availability herself
   
 ## Mia setting her schedule (the main scheduler for booking)
 [] think of route path structure
