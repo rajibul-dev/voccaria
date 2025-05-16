@@ -1,0 +1,80 @@
+I'm hiding the todo.txt but this its exact content, but that todo.txt is where I do many of my thinking so it updates very frequently. I'll update this showcase-version-todo.txt once in a while, that means it's not going to be that up-to-date to-do tracking for anyone checking this.
+
+### Blog
+[x] add colors
+[x] create the color variables
+[x] place the links
+[x] design in two ways conditionally, for '/' scaling is 62.5%
+[x] create the sanity backend
+[x] create the queries!
+[x] get running with the blog index page
+[x] implement dark mode, much necessary
+[x] fetch and render from sanity
+[x] get running with the post page
+[x] get running with the Search feature
+[x] for the search feature, make the right keys in fuze.js, and different propertynames since same array has two types of objects
+[x] complete all the functinal logic for the Search feature
+[x] display the matching headings and paragraphs when searching
+[x] search bar on the navbar for blog post page
+[x] make the sidebar (discord みたい)
+[x] load blog pages faster (feel faster, route faster)
+[x] make the LoadMoreButton and Blog card reusable
+[x] render category sorted posts on index page
+[x] graceful error handling for all the stuff
+[x] implement perfect SEO
+[x] create footer
+nice to add:
+[] scroll to the searched word
+[] routing progress line on the top
+[] post page can go to next and prev post with at the button
+
+
+### Authentication
+deploy major updates whiile hiding blog
+[x] "before-blog-visible" branch name for the launch. It will need time for Mia to prepare the blog contents.
+[x] Get local mongodb GUI
+[x] Connect to the database
+[x] Create user models, including OAuth users
+[x] User controllers, auth controllers
+[x] finalizing auth with passport, sessions, database session store
+[x] integration tests with postman
+[x] Password forgetting, reseting, and changing feature
+[x] bug fix of the above
+[x] google OAuth implementation
+[x] user CRUDs
+[x] discord connect implementation
+[x] Avatar implementation, cloud storage setup
+[] Authentication UI design
+[] Research auth based UIs
+[] Profile page design
+[] handle navigation bar situation
+
+
+### Scheduler
+## Students setting their availability
+[] think of route path structure
+  - /schedule/availability GET, POST, PATCH routes
+[] think of data model structure
+  - StudentAvailability model: { userId, day, startTime, endTime, timezone }
+[] implement its CRUD
+Mia will be able to:
+[] The features, explaining with route paths
+  - /schedule/all-students-availability GET
+  - Be able to block off hours: /schedule/students-availability/block-hours POST
+    -> { startTime, endTime, repeatEveryday: boolean, day: null (if everyday) | Array (if multiple days) | string or number (whichever is better for working with weekdays) }
+  - /schedule/students-availability/:userId GET and POST for Mia to set students availability herself
+  
+## Mia setting her schedule (the main scheduler for booking)
+[] think of route path structure
+[] think of data model
+[] implement its CRUD
+
+## Students booking lessons
+[] think of route path structure
+[] think of data model structure
+after payment routes are handled:
+[] make it interact with payment system logic for the payment status, and lesson booking flow basically
+
+
+
+### Video/Voice call feature for Voccaria!
