@@ -1,4 +1,5 @@
 I'm hiding the todo.txt but this its exact content, but that todo.txt is where I do many of my thinking so it updates very frequently. I'll update this showcase-version-todo.txt once in a while, that means it's not going to be that up-to-date to-do tracking for anyone checking this.
+-------------------------------
 
 ### Blog
 [x] add colors
@@ -51,30 +52,88 @@ deploy major updates whiile hiding blog
 
 
 ### Scheduler
-## Students setting their availability
-[] think of route path structure
-  - /schedule/availability GET, POST, PATCH routes
-[] think of data model structure
-  - StudentAvailability model: { userId, day, startTime, endTime, timezone, repeatWeekly: Boolean }
-[] implement its CRUD
-Mia will be able to:
-[] The features, explaining with route paths
-  - /schedule/all-students-availability GET
-  - Be able to block off hours: /schedule/students-availability/block-hours POST
-    -> { startTime, endTime, repeatEveryday: boolean, day: null (if everyday) | Array (if multiple days) | string or number (whichever is better for working with weekdays) }
-  - /schedule/students-availability/:userId GET and POST for Mia to set students availability herself
-  
-## Mia setting her schedule (the main scheduler for booking)
-[] think of route path structure
-[] think of data model
-[] implement its CRUD
 
-## Students booking lessons
-[] think of route path structure
-[] think of data model structure
-after payment routes are handled:
-[] make it interact with payment system logic for the payment status, and lesson booking flow basically
+## Students Setting Their Availability
 
+- [] Think of route path structure:
+  - `GET /schedule/availability`
+  - `POST /schedule/availability`
+  - `PATCH /schedule/availability`
+  - `DELETE /schedule/availability` (optional)
+
+- [] Think of data model structure:
+  - `StudentAvailability`:
+    - `userId: ObjectId`
+    - `day: String` – e.g., "Monday"
+    - `startTime: String` – "13:00"
+    - `endTime: String` – "14:00"
+    - `timezone: String`
+    - `repeatWeekly: Boolean`
+
+- [] Implement its Controllers
+
+- [] Mia with students' availability (admin):
+  - `GET /schedule/admin/students-availability`
+  - `POST /schedule/admin/students-availability/block`:
+  - `GET /schedule/admin/students-availability/:id`
+  - `POST /schedule/admin/students-availability/:id` – overwrite availability
+    - `startTime: "14:00"`
+    - `endTime: "16:00"`
+    - `repeatEveryday: true`
+    - `days: null | ["Monday", "Wednesday"] | "Sunday"`
+    - `reason: String` (optional)
+    
+
+## Mia Setting Her Schedule (Booking Availability)
+
+- [] Think about route path structure:
+  - `GET /schedule/mia/slots`
+  - `POST /schedule/mia/slots`
+  - `PATCH /schedule/mia/slots/:slotId`
+  - `DELETE /schedule/mia/slots/:slotId`
+  - `POST /schedule/mia/slot` -> realtime syncing
+  - `PATCH /schedule/mia/slot` -> realtime syncing
+  - `DELETE /schedule/mia/slot` -> single slot remove
+
+- [] Data model:
+  - `MiaScheduleSlot`:
+    - `day: String`
+    - `startTime: String`
+    - `endTime: String`
+    - `timezone: String`
+    - `available: Boolean`
+    - `repeatWeekly: Boolean`
+
+- [] Implement its Controllers
+
+
+## Students Booking Lessons
+
+- [] Think about route path structure:
+  - View available times to book `GET /schedule/mia/slots`
+  - `POST /schedule/booking`
+  - `GET /schedule/booking/:bookingId` - check booking details
+  - `PATCH /schedule/booking/:bookingId`
+
+- [] Data model:
+  - `LessonBooking`:
+    - `studentId: ObjectId`
+    - `miaSlotId: ObjectId`
+    - `scheduledTime: Date`
+    - `paymentStatus: "paid" | "pending"`
+    - `bookingStatus: "booked" | "cancelled" | "completed"`
+    - `createdAt`, `updatedAt`
+
+- [] Integrate with payment system for booking confirmation
+- [] implement its controllers
+
+## Mia with the bookings
+
+- [] Route path structure:
+  - `GET /schedule/mia/bookings` — list of all bookings
+  - `GET /schedule/mia/bookings/:bookingId` — details of a specific booking
+  - `PATCH /schedule/mia/bookings/:bookingId` — update status, notes, etc.
+  - `DELETE /schedule/mia/bookings/:bookingId` — cancel booking (admin-level)
 
 
 ### Video/Voice call feature for Voccaria!
