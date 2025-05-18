@@ -2,12 +2,13 @@ import mongoose, { Schema, Document, Model } from "mongoose";
 import validator from "validator";
 import bcrypt from "bcryptjs";
 import { DEFAULT_AVATAR } from "../constants/assets.js";
+import { ALL_ROLES } from "../constants/roles.js";
 
 export interface IUser extends Document {
   name: string;
   email: string;
   hashedPassword: string;
-  role: "user" | "staff" | "raji" | "mia";
+  roles: ["user" | "staff" | "raji" | "mia"];
   isVerified: boolean;
   verified?: Date;
   verificationToken?: string;
@@ -70,10 +71,11 @@ const UserSchema: Schema<IUser> = new Schema(
     hashedPassword: {
       type: String,
     },
-    role: {
-      type: String,
-      enum: ["user", "staff", "raji", "mia"],
-      default: "user",
+
+    roles: {
+      type: [String],
+      enum: ALL_ROLES,
+      default: ["user"],
     },
 
     discord: {
