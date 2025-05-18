@@ -1,9 +1,15 @@
 import { StatusCodes } from "http-status-codes";
 import { StaffRole } from "../constants/roles.js";
 
-export function requireRole(...roles: StaffRole[]) {
+export function requireRole(...requiredRoles: StaffRole[]) {
   return function (request: any, response: any, next: any) {
-    if (request.user && roles.includes(request.user.role)) {
+    const userRoles = request.user?.roles || [];
+
+    const hasPermission = requiredRoles.some((role) =>
+      userRoles.includes(role)
+    );
+
+    if (hasPermission) {
       return next();
     } else {
       return response.status(StatusCodes.FORBIDDEN).json({
