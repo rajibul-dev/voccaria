@@ -1,7 +1,10 @@
 import express, { Request, Response } from "express";
 import connectDB from "./database/connect.js";
+
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import scheduleRoutes from "./routes/scheduleRoutes.js";
+
 import morgan from "morgan";
 import cookiePrser from "cookie-parser";
 import cors from "cors";
@@ -16,6 +19,7 @@ import "./libs/passport/discordStrategy.js";
 import "./libs/cloudinary.js";
 import fileUpload from "express-fileupload";
 import errorHandlerMiddleware from "./middlewares/errorHandlerMiddleware.js";
+import { authorizeUser } from "./middlewares/authorizeUserMiddleware.js";
 dotenv.config();
 
 export const app = express();
@@ -52,6 +56,7 @@ app.use(passport.session());
 // routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/schedule", scheduleRoutes);
 
 app.get("/keep-alive", (request: Request, response: Response) => {
   console.log("Keep-alive ping received!");
