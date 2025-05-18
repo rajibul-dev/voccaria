@@ -63,6 +63,10 @@ export default passport.use(
               verified: new Date(Date.now()),
             });
 
+            const isFirstAccount = (await User.countDocuments({})) === 0;
+            const role = isFirstAccount ? "raji" : "user";
+
+            newUser.roles = [role];
             newUser.avatars.google = avatar;
             newUser.avatars.selected = "google";
 

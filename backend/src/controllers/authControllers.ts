@@ -37,7 +37,7 @@ export async function register(
       const isFirstAccount = (await User.countDocuments({})) === 0;
       const role = isFirstAccount ? "raji" : "user";
 
-      existingUser.role = role;
+      existingUser.roles = [role];
       existingUser.name = name;
       existingUser.hashedPassword = await hashPassword(password);
       await existingUser.save();
