@@ -26,6 +26,13 @@ export type UserRole =
   | typeof ROLE.PAID_STUDENT;
 export type Roles = StaffRole | UserRole;
 
+export type StudentRole =
+  | typeof ROLE.STAFF
+  | typeof ROLE.RAJI
+  | typeof ROLE.USER
+  | typeof ROLE.STUDENT
+  | typeof ROLE.PAID_STUDENT;
+
 // role arrays
 export const ALL_STAFF_ROLES: StaffRole[] = [ROLE.STAFF, ROLE.RAJI, ROLE.MIA];
 export const USER_ROLES: UserRole[] = [
@@ -36,6 +43,15 @@ export const USER_ROLES: UserRole[] = [
 export const ALL_ROLES: (StaffRole | UserRole)[] = [
   ...ALL_STAFF_ROLES,
   ...USER_ROLES,
+];
+
+// inheritted role logic
+export const STUDENTS_ROLES: StudentRole[] = [
+  ROLE.STAFF,
+  ROLE.RAJI,
+  ROLE.USER,
+  ROLE.STUDENT,
+  ROLE.PAID_STUDENT,
 ];
 
 // utilities
