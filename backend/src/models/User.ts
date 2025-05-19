@@ -2,13 +2,13 @@ import mongoose, { Schema, Document, Model } from "mongoose";
 import validator from "validator";
 import bcrypt from "bcryptjs";
 import { DEFAULT_AVATAR } from "../constants/assets.js";
-import { ALL_ROLES } from "../constants/roles.js";
+import { ALL_ROLES, Roles } from "../constants/roles.js";
 
 export interface IUser extends Document {
   name: string;
   email: string;
   hashedPassword: string;
-  roles: ["user" | "staff" | "raji" | "mia"];
+  roles: [Roles];
   isVerified: boolean;
   verified?: Date;
   verificationToken?: string;
