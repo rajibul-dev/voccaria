@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
-import { StaffRole } from "../constants/roles.js";
+import { Roles } from "../constants/roles.js";
 
-export function requireRole(...requiredRoles: StaffRole[]) {
+export function requireRole(...requiredRoles: Roles[]) {
   return function (request: any, response: any, next: any) {
     const userRoles = request.user?.roles || [];
 
