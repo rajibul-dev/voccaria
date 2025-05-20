@@ -30,6 +30,6 @@ router.use(
   bookingRoutes
 );
 
-router.use("mia/bookings", authorizeUser, requireRole(MIA, RAJI));
+router.use("mia-on-bookings", authorizeUser, requireRole(MIA, RAJI));
 
 export default router;
