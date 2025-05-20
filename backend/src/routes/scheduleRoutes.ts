@@ -7,9 +7,10 @@ import miaSlotRoutes from "./schedule/miaSlotRoutes.js";
 import bookingRoutes from "./schedule/bookingRoutes.js";
 
 import { requireRole } from "../middlewares/requireRole.js";
-import { ALL_STAFF_ROLES, STUDENTS_ROLES } from "../constants/roles.js";
+import { ALL_STAFF_ROLES, ROLE, STUDENTS_ROLES } from "../constants/roles.js";
 
 const router = Router();
+const { MIA, RAJI } = ROLE;
 
 router.use("/availability", authorizeUser, studentAvailabilityRoutes);
 
@@ -20,7 +21,7 @@ router.use(
   adminStudentAvailabilityRoutes
 );
 
-router.use("/mia", authorizeUser, requireRole("mia", "raji"), miaSlotRoutes);
+router.use("/mia", authorizeUser, requireRole(MIA, RAJI), miaSlotRoutes);
 
 router.use(
   "/booking",
@@ -28,5 +29,7 @@ router.use(
   requireRole(...STUDENTS_ROLES),
   bookingRoutes
 );
+
+router.use("mia/bookings", authorizeUser, requireRole(MIA, RAJI));
 
 export default router;
