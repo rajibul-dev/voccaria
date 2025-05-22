@@ -6,10 +6,10 @@ import styles from "./pricing-card-item.module.css";
 import dynamic from "next/dynamic";
 
 // components
-import Button from "@/app/_old-components/button";
+import OldButton from "@/app/_old-components/button";
 
 const ClientCheckoutModalWindow = dynamic(
-  () => import("./checkout/client-checkout-modal-window")
+  () => import("./checkout/client-checkout-modal-window"),
 );
 
 interface PricingCardItemProps {

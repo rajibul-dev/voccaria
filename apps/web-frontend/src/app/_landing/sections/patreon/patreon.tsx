@@ -7,7 +7,7 @@ import styles from "./patreon.module.css";
 import PatreonAvatar from "/public/images/mia-patron.png";
 
 // components
-import Button from "@/app/_old-components/button";
+import OldButton from "@/app/_old-components/button";
 import HeadingPair from "@/app/_old-components/headingPair";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
@@ -52,7 +52,7 @@ export default function Patreon() {
 
           <ul
             role="list"
-            className={`font-medium flex flex-col gap-3.5 ${styles.ul}`}
+            className={`flex flex-col gap-3.5 font-medium ${styles.ul}`}
           >
             {patreonFeatures.map((item) => (
               <li className="flex gap-4" key={item}>
@@ -65,12 +65,12 @@ export default function Patreon() {
             ))}
           </ul>
 
-          <Button
+          <OldButton
             className={styles.btn}
             href="https://www.patreon.com/MiaVoiceTeacher"
           >
             To Patreon
-          </Button>
+          </OldButton>
         </div>
       </div>
     </section>

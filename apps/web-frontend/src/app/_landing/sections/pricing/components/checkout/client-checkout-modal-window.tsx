@@ -3,7 +3,7 @@
 import { useCallback, useState } from "react";
 import dynamic from "next/dynamic";
 import Modal from "@/app/_old-components/modal";
-import Button from "@/app/_old-components/button";
+import OldButton from "@/app/_old-components/button";
 
 import styles from "./client-checkout-modal-window.module.css";
 
@@ -34,9 +34,14 @@ export default function ClientCheckoutModalWindow({
   return (
     <Modal>
       <Modal.Open opens="payment-checkout">
-        <Button isBlock={true} type="primary" size="big" className={styles.btn}>
+        <OldButton
+          isBlock={true}
+          type="primary"
+          size="big"
+          className={styles.btn}
+        >
           Buy now
-        </Button>
+        </OldButton>
       </Modal.Open>
       <Modal.Window name="payment-checkout" heading={modalHeading}>
         <ItemDetails

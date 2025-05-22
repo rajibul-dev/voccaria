@@ -5,7 +5,7 @@ import { useState } from "react";
 // styles
 import Input from "@/app/_old-components/input";
 import styles from "./contact-form.module.css";
-import Button from "@/app/_old-components/button";
+import OldButton from "@/app/_old-components/button";
 import { sendEmail } from "@/lib/sendEmailAPICall";
 import toast from "react-hot-toast";
 
@@ -75,7 +75,7 @@ export default function ContactForm() {
       // method="POST"
     >
       {error && (
-        <span className="text-red-600 font-semibold inline-block !mb-5">
+        <span className="!mb-5 inline-block font-semibold text-red-600">
           {error}
         </span>
       )}
@@ -124,13 +124,13 @@ export default function ContactForm() {
         isTextarea={true}
       />
 
-      <Button
+      <OldButton
         size="small"
         className={`${styles.btn} ${isLoading ? "cursor-not-allowed" : ""}`}
         disabled={isLoading}
       >
         {isLoading ? "Submitting..." : "Submit"}
-      </Button>
+      </OldButton>
     </form>
   );
 }

@@ -16,7 +16,7 @@ interface ButtonProps {
   disabled?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({
+const OldButton: React.FC<ButtonProps> = ({
   children,
   href,
   type = "primary",
@@ -64,4 +64,4 @@ const Button: React.FC<ButtonProps> = ({
   }
 };
 
-export default Button;
+export default OldButton;

@@ -14,7 +14,7 @@ import {
   faCircleCheck,
   faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import Button from "@/app/_old-components/button";
+import OldButton from "@/app/_old-components/button";
 import dynamic from "next/dynamic";
 
 const checkIcon = (
@@ -58,7 +58,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
     (bool: boolean) => {
       setShowCloseIcon(bool);
     },
-    [setShowCloseIcon]
+    [setShowCloseIcon],
   );
 
   // Modal heading change
@@ -71,7 +71,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
             <>
               {checkIcon}
               <span>Payment Successful!</span>
-            </>
+            </>,
           );
           break;
 
@@ -81,7 +81,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
             <>
               {xmarkIcon}
               <span>Transaction Failed</span>
-            </>
+            </>,
           );
           break;
 
@@ -90,7 +90,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
           break;
       }
     },
-    [paymentDetails, onChangeModalHeading, handleShowCrossIcon]
+    [paymentDetails, onChangeModalHeading, handleShowCrossIcon],
   );
 
   return (
@@ -165,9 +165,9 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
           onPaymentDetails={handleAddDetails}
         />
       ) : (
-        <Button type="secondary" isBlock onClick={onCloseModal}>
+        <OldButton type="secondary" isBlock onClick={onCloseModal}>
           Close
-        </Button>
+        </OldButton>
       )}
     </div>
   );
