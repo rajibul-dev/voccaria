@@ -28,7 +28,7 @@ export default function NotFound() {
           </p>
           <Link
             href="/"
-            className="bg-my-pink-600 hover:bg-my-pink-800 focus:ring-my-pink-300 dark:focus:ring-my-pink-900 my-4 inline-flex rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white focus:ring-4 focus:outline-none"
+            className="bg-my-pink-600 hover:bg-my-pink-800 focus:ring-my-pink-300 dark:focus:ring-my-pink-900 my-4 inline-flex rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white transition-colors focus:ring-4 focus:outline-none"
           >
             Back to Homepage
           </Link>
