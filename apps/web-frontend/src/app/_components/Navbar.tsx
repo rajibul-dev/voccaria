@@ -17,6 +17,7 @@ import DarkModeToggler from "./DarkModeToggler";
 import Logo from "./Logo";
 import OldPageSectionTracking from "./OldPageSectionTracking";
 import BlogSidebarData from "./BlogSidebarData";
+import { FaArrowRight } from "react-icons/fa6";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -129,6 +130,25 @@ export default function Navbar() {
                 <OldPageSectionTracking />
               </li>
             )}
+
+            <Link
+              href="/auth/login"
+              className={clsx(
+                `bg-old-btn-pink hover:bg-old-btn-pink-hover flex cursor-pointer items-center gap-1.5 rounded-full px-7.5 py-2.5 text-base font-bold text-white transition-colors [text-shadow:0px_1px_0px_rgb(0_0_0_/_0.15)]`,
+                {
+                  "gap-[0.6rem] px-[3rem] py-[1rem] text-[1.6rem]": isRoot,
+                },
+              )}
+            >
+              <span>Login | Register</span>
+              <FaArrowRight
+                strokeWidth={1}
+                className={clsx(
+                  "[filter:drop-shadow(0px_1px_0px_rgb(0_0_0_/_0.15))]",
+                  { "mt-[0px] text-[2rem]": isRoot },
+                )}
+              />
+            </Link>
           </ul>
         </nav>
       </div>
