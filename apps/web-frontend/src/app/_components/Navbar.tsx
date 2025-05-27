@@ -28,11 +28,16 @@ export default function Navbar() {
   const pathname = usePathname();
   const isRoot = pathname === "/";
   const isPostPage = pathname.startsWith(`/blog/`);
+  const shouldHideNavbar = pathname.startsWith("/auth");
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
+
+  if (shouldHideNavbar) {
+    return null; // Don't render the navbar on auth pages
+  }
 
   return (
     <header
