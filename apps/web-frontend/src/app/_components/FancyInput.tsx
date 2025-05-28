@@ -24,7 +24,7 @@ export default function FancyInput({
         type="text"
         id={name}
         className={clsx(
-          "peer focus:border-my-pink-600 dark:focus:border-my-pink-500 block w-full appearance-none rounded-full border-1 border-gray-100 bg-gray-100 px-6 pt-4 pb-2.5 text-base text-gray-900 [filter:drop-shadow(0px_1px_1px_rgb(0_0_0_/_0.25))] focus:ring-0 focus:outline-none dark:border-gray-600 dark:text-white",
+          "peer focus:border-my-pink-600 dark:focus:border-my-pink-500 block w-full appearance-none rounded-full border-1 border-gray-100 bg-gray-100 px-6 pt-4 pb-2.5 text-base text-gray-900 drop-shadow-[0px_1px_1px_rgb(0_0_0_/_0.25)] focus:ring-0 focus:outline-none dark:border-gray-600 dark:text-white",
           inputClassName,
         )}
         placeholder=" "
