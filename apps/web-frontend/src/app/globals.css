@@ -84,6 +84,35 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@layer components {
+  .manual-auth-btn {
+    background-color: var(--color-old-btn-pink);
+    border-radius: 9999px;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #fff;
+    cursor: pointer;
+    transition-property:
+      color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-duration: 150ms;
+    transition-timing-function: ease;
+    box-shadow: 0px 1px 1px rgb(0 0 0 / 0.25);
+  }
+  .manual-auth-btn:hover {
+    background-color: var(--color-old-btn-pink-hover);
+  }
+
+  .attractive-drop-shadow-sm {
+    box-shadow: 0px 1px 1px rgb(0 0 0 / 0.25);
+  }
+
+  .attractive-text-shadow {
+    text-shadow: 0px 1px 0px rgb(0 0 0 / 0.15);
+  }
+}
+
 .header-margin {
   margin-top: 11rem;
 }

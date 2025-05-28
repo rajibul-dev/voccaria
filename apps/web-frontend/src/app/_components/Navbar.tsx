@@ -139,7 +139,7 @@ export default function Navbar() {
             <Link
               href="/auth/login"
               className={clsx(
-                `bg-old-btn-pink hover:bg-old-btn-pink-hover flex cursor-pointer items-center gap-1.5 rounded-full px-7.5 py-2.5 text-base font-bold text-white transition-colors [text-shadow:0px_1px_0px_rgb(0_0_0_/_0.15)]`,
+                `bg-old-btn-pink hover:bg-old-btn-pink-hover attractive-text-shadow flex cursor-pointer items-center gap-1.5 rounded-full px-7.5 py-2.5 text-base font-bold text-white transition-colors`,
                 {
                   "gap-[0.6rem] px-[3rem] py-[1rem] text-[1.6rem]": isRoot,
                 },
