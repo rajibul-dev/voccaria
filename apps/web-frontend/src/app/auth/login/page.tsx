@@ -16,9 +16,7 @@ export default function Page() {
       </h1>
       <section>
         <GoogleOAuthButton />
-
         <OrDivider />
-
         <LoginFormEmailPassword />
       </section>
     </div>
