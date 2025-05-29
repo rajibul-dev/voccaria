@@ -74,6 +74,7 @@ type PopoverContextType = {
   triggerType?: "boolean" | "hover" | "click" | "both";
   noBox?: boolean;
   placement?: Placement;
+  fixed?: boolean;
 };
 const PopoverContext = createContext<PopoverContextType | undefined>(undefined);
 
@@ -84,6 +85,7 @@ type PopoverProps = {
   placementY?: "top" | "bottom" | "left" | "right";
   triggerType?: "boolean" | "hover" | "click" | "both";
   noBox?: boolean;
+  fixed?: boolean;
 };
 const getPlacement = (
   placementY: PopoverProps["placementY"],
@@ -100,7 +102,7 @@ const getPlacement = (
 const Popover: React.FC<PopoverProps> & {
   Trigger: typeof Trigger;
   Content: typeof Content;
-} = ({ children, placementX, placementY, triggerType, noBox }) => {
+} = ({ children, placementX, placementY, triggerType, noBox, fixed }) => {
   const { openId, close, open } = usePopoverManager();
   const [selected, setSelected] = useState(false);
 
@@ -108,6 +110,7 @@ const Popover: React.FC<PopoverProps> & {
 
   const { refs, floatingStyles, placement } = useFloating({
     placement: getPlacement(placementY, placementX),
+    strategy: fixed ? "fixed" : "absolute",
     middleware: [
       offset(10),
       flip(),
@@ -131,6 +134,7 @@ const Popover: React.FC<PopoverProps> & {
         triggerType,
         noBox,
         placement,
+        fixed,
       }}
     >
       {children}
@@ -239,6 +243,7 @@ function Content({ children, id, isTopOfHeader }: ContentProps) {
     setSelected,
     triggerType,
     noBox,
+    fixed,
   } = ctx;
 
   function outsideClickHandler() {
@@ -264,13 +269,13 @@ function Content({ children, id, isTopOfHeader }: ContentProps) {
           ref={setFloating}
           style={{
             ...floatingStyles,
-            position: "absolute",
+            position: fixed ? "fixed" : "absolute",
             display: "inline-block",
             backgroundColor: noBox ? undefined : "var(--color-grey-100)",
             padding: noBox ? undefined : "2rem",
             border: noBox ? undefined : "var(--usual-layout-border)",
             boxShadow: "var(--box-shadow-lg)",
-            zIndex: 1000, // todo: z-index,
+            zIndex: 1000,
           }}
         >
           {children}
@@ -298,15 +303,16 @@ export default Popover;
 Usage:
 
 <Popover placementX="center" placementY="top" triggerType="hover">
-	<Popover.Trigger id="example">
-		<Button>Open</Button>
-	</Popover.Trigger>
-	<Popover.Content id="example">
-		This is right in the middle
-	</Popover.Content>
+  <Popover.Trigger id="example">
+    <Button>Open</Button>
+  </Popover.Trigger>
+  <Popover.Content id="example">
+    This is right in the middle
+  </Popover.Content>
 </Popover>
 
 // triggerType can be 'boolean', 'hover', 'click', 'both'
 // placementX can be 'center', 'start', 'end'
 // placementY can be 'top', 'bottom', 'left', 'right'
+// fixed can be passed to use 'position: fixed' instead of 'absolute'
 */
