@@ -1,4 +1,3 @@
-import FancyInput from "@/app/_components/FancyInput";
 import GoogleOAuthButton from "@/app/_components/GoogleOAuthButton";
 import LoginFormEmailPassword from "@/app/_components/LoginFormEmailPassword";
 import OrDivider from "@/app/_components/OrDivider";
