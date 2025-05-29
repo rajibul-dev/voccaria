@@ -5,6 +5,8 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Login",
+  description: "Access your Voccaria account to continue exploring.",
+  keywords: ["login", "sign in", "access account", "existing user"],
 };
 
 export default function Page() {
