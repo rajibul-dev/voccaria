@@ -20,13 +20,13 @@
   /* color: var(--gray-800); */
 }
 
-@media (max-width: 32em) {
+/* 670px */
+@media (max-width: 41.875em) {
   .menuContainer {
     padding-inline: 0;
   }
   .menuIcon {
-    width: 3.6rem;
-    margin-left: 2rem;
+    width: 3rem;
   }
   .menuLabel {
     display: none;

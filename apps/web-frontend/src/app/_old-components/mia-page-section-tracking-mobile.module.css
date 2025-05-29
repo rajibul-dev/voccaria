@@ -8,11 +8,11 @@
   transition: all 0.2s ease;
   overflow-y: scroll;
 
-  /* Go to the right side */
+  /* Go to the left side */
   position: fixed;
   top: 0;
-  right: 0;
-  transform: translateX(100%);
+  left: 0;
+  transform: translateX(-100%);
 }
 .come {
   transform: translateX(0);
