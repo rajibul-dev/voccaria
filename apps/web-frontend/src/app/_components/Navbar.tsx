@@ -11,17 +11,20 @@ import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { IoMenu } from "react-icons/io5";
+import { FaArrowRight } from "react-icons/fa6";
+import { IoHome, IoMenu } from "react-icons/io5";
 import BlogSearchBarOnNav from "./BlogSearchBarOnNav";
+import BlogSidebarData from "./BlogSidebarData";
 import DarkModeToggler from "./DarkModeToggler";
 import Logo from "./Logo";
 import OldPageSectionTracking from "./OldPageSectionTracking";
-import BlogSidebarData from "./BlogSidebarData";
-import { FaArrowRight } from "react-icons/fa6";
+import Popover from "./Popover";
+import { PiDotsNineBold } from "react-icons/pi";
+import { MdArticle } from "react-icons/md";
 
 const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "Blog", href: "/blog" },
+  { label: "Home", href: "/", icon: <IoHome /> },
+  { label: "Blog", href: "/blog", icon: <MdArticle /> },
 ];
 
 export default function Navbar() {
@@ -82,7 +85,16 @@ export default function Navbar() {
             </SwipeableDrawer>
           </>
         )}
-        {isRoot ? <OldLogo /> : <Logo pathname={pathname} />}
+        {isRoot ? (
+          <div className="flex items-center gap-6">
+            <div className="min-[670px]:hidden">
+              <OldPageSectionTracking />
+            </div>
+            <OldLogo />
+          </div>
+        ) : (
+          <Logo pathname={pathname} />
+        )}
 
         <nav className="h-full" aria-label="Main navigation">
           <ul
@@ -99,12 +111,25 @@ export default function Navbar() {
               </li>
             )}
 
+            {isRoot && (
+              <li className="max-[670px]:hidden">
+                <OldPageSectionTracking />
+              </li>
+            )}
+
             {navLinks.map(({ href, label }) => {
               const isActive =
                 pathname === href || pathname.startsWith(`${href}/`);
 
               return (
-                <li className={clsx("h-full", isRoot && styles.li)} key={href}>
+                <li
+                  className={clsx(
+                    "h-full",
+                    isRoot && styles.li,
+                    "max-[670px]:hidden",
+                  )}
+                  key={href}
+                >
                   <Link
                     className={clsx(
                       "hover:text-my-pink-600 flex h-full items-center font-medium transition-colors duration-100",
@@ -130,12 +155,6 @@ export default function Navbar() {
               </li>
             )}
 
-            {isRoot && (
-              <li>
-                <OldPageSectionTracking />
-              </li>
-            )}
-
             <Link
               href="/auth/login"
               className={clsx(
@@ -145,7 +164,9 @@ export default function Navbar() {
                 },
               )}
             >
-              <span>Login | Register</span>
+              <span>
+                Login<span className="max-[670px]:hidden"> | Register</span>
+              </span>
               <FaArrowRight
                 strokeWidth={1}
                 className={clsx(
@@ -154,6 +175,46 @@ export default function Navbar() {
                 )}
               />
             </Link>
+
+            <div className="h-fit min-[670px]:hidden">
+              <Popover
+                triggerType="click"
+                placementX="end"
+                placementY="bottom"
+                noBox
+                fixed
+              >
+                <Popover.Trigger id="navbar-links">
+                  <PiDotsNineBold
+                    strokeWidth={10}
+                    className={clsx("text-old-btn-pink cursor-pointer", {
+                      "ml-[-10px] text-[4rem]": isRoot,
+                    })}
+                  />
+                </Popover.Trigger>
+
+                <Popover.Content id="navbar-links">
+                  <div className="flex flex-col gap-2 border-gray-400 bg-gray-100 p-4 shadow-sm">
+                    {navLinks.map(({ href, label, icon }) => {
+                      const isActive =
+                        pathname === href || pathname.startsWith(`${href}/`);
+                      return (
+                        <li className="list-none" key={href}>
+                          <Link
+                            href={href}
+                            className={clsx()}
+                            aria-label={label}
+                          >
+                            {}
+                            <span>{label}</span>
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </div>
+                </Popover.Content>
+              </Popover>
+            </div>
           </ul>
         </nav>
       </div>
