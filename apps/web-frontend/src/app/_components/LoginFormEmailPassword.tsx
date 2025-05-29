@@ -32,7 +32,7 @@ export default function LoginFormEmailPassword() {
         Forgot password?
       </Link>
 
-      <div className="mt-6">
+      <div className="mt-6 text-center">
         <span>Don't have an account?</span>{" "}
         <Link
           className="text-my-pink-600 font-medium underline-offset-4 hover:underline"
