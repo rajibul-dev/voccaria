@@ -26,16 +26,18 @@ export default function LoginFormEmailPassword() {
       <button className="manual-auth-btn attractive-text-shadow">Login</button>
 
       <Link
-        className="text-center text-sm text-gray-500 underline-offset-4 hover:underline"
+        className="text-center text-sm text-gray-500 underline-offset-4 hover:underline dark:text-gray-300"
         href={"/auth/forgot-password"}
       >
         Forgot password?
       </Link>
 
       <div className="mt-6 text-center">
-        <span>Don't have an account?</span>{" "}
+        <span className="text-gray-800 dark:text-gray-100">
+          Don't have an account?
+        </span>{" "}
         <Link
-          className="text-my-pink-600 font-medium underline-offset-4 hover:underline"
+          className="text-my-pink-600 dark:text-my-pink-400 font-medium underline-offset-4 hover:underline"
           href={"/auth/register"}
         >
           Create an account

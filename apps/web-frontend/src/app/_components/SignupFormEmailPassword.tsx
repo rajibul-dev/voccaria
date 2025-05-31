@@ -48,9 +48,9 @@ export default function SignupFormEmailPassword() {
       </button>
 
       <div className="mt-6 text-center">
-        <span>Already have an account?</span>{" "}
+        <span className="dark:text-gray-100">Already have an account?</span>{" "}
         <Link
-          className="text-my-pink-600 font-medium underline-offset-4 hover:underline"
+          className="text-my-pink-600 dark:text-my-pink-400 font-medium underline-offset-4 hover:underline"
           href={"/auth/login"}
         >
           Login

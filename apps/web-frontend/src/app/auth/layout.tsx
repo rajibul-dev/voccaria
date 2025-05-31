@@ -9,7 +9,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 pt-10 pb-14 max-[640px]:pt-15 dark:bg-gray-900">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 pt-10 pb-14 max-[640px]:pt-15 dark:bg-gray-800">
       <div className="absolute top-4 right-4 z-50 flex items-center gap-2">
         <DarkModeToggler />
       </div>
