@@ -190,56 +190,58 @@ export default function Navbar() {
               />
             </Link>
 
-            <div className="h-fit min-[670px]:hidden">
-              <Popover
-                triggerType="click"
-                placementX="end"
-                placementY="bottom"
-                noBox
-                fixed
-              >
-                <Popover.Trigger id="navbar-links">
-                  <PiDotsNineBold
-                    strokeWidth={10}
-                    className={clsx(
-                      "text-old-btn-pink -ml-2.5 cursor-pointer text-[2.5rem]",
-                      {
-                        "ml-[-10px] text-[4rem]": isRoot,
-                        "max-[500px]:-ml-3 max-[500px]:text-[2rem]": !isRoot,
-                      },
-                    )}
-                  />
-                </Popover.Trigger>
+            {!isPostPage && (
+              <div className="h-fit min-[670px]:hidden">
+                <Popover
+                  triggerType="click"
+                  placementX="end"
+                  placementY="bottom"
+                  noBox
+                  fixed
+                >
+                  <Popover.Trigger id="navbar-links">
+                    <PiDotsNineBold
+                      strokeWidth={10}
+                      className={clsx(
+                        "text-old-btn-pink -ml-2.5 cursor-pointer text-[2.5rem]",
+                        {
+                          "ml-[-10px] text-[4rem]": isRoot,
+                          "max-[500px]:-ml-3 max-[500px]:text-[2rem]": !isRoot,
+                        },
+                      )}
+                    />
+                  </Popover.Trigger>
 
-                <Popover.Content id="navbar-links">
-                  <div
-                    className={clsx(
-                      "flex flex-col gap-2.5 border border-gray-300 bg-gray-50 p-4 shadow-sm",
-                      {
-                        "gap-[1rem] p-[1.6rem]": isRoot,
-                        "dark:border-gray-600 dark:bg-gray-700": !isRoot,
-                      },
-                    )}
-                  >
-                    {navLinks.map(({ href, label, icon }) => {
-                      const isActive =
-                        pathname === href || pathname.startsWith(`${href}/`);
+                  <Popover.Content id="navbar-links">
+                    <div
+                      className={clsx(
+                        "flex flex-col gap-2.5 border border-gray-300 bg-gray-50 p-4 shadow-sm",
+                        {
+                          "gap-[1rem] p-[1.6rem]": isRoot,
+                          "dark:border-gray-600 dark:bg-gray-700": !isRoot,
+                        },
+                      )}
+                    >
+                      {navLinks.map(({ href, label, icon }) => {
+                        const isActive =
+                          pathname === href || pathname.startsWith(`${href}/`);
 
-                      return (
-                        <RestMenu
-                          key={href}
-                          isActive={isActive}
-                          href={href}
-                          icon={icon}
-                          label={label}
-                          isRoot={isRoot}
-                        />
-                      );
-                    })}
-                  </div>
-                </Popover.Content>
-              </Popover>
-            </div>
+                        return (
+                          <RestMenu
+                            key={href}
+                            isActive={isActive}
+                            href={href}
+                            icon={icon}
+                            label={label}
+                            isRoot={isRoot}
+                          />
+                        );
+                      })}
+                    </div>
+                  </Popover.Content>
+                </Popover>
+              </div>
+            )}
           </ul>
         </nav>
       </div>
