@@ -21,10 +21,19 @@ import OldPageSectionTracking from "./OldPageSectionTracking";
 import Popover from "./Popover";
 import { PiDotsNineBold } from "react-icons/pi";
 import { MdArticle } from "react-icons/md";
+import RestMenu from "./RestMenu";
 
 const navLinks = [
-  { label: "Home", href: "/", icon: <IoHome /> },
-  { label: "Blog", href: "/blog", icon: <MdArticle /> },
+  {
+    label: "Home",
+    href: "/",
+    icon: <IoHome />,
+  },
+  {
+    label: "Blog",
+    href: "/blog",
+    icon: <MdArticle />,
+  },
 ];
 
 export default function Navbar() {
@@ -161,6 +170,8 @@ export default function Navbar() {
                 `bg-old-btn-pink hover:bg-old-btn-pink-hover attractive-text-shadow flex cursor-pointer items-center gap-1.5 rounded-full px-7.5 py-2.5 text-base font-bold text-white transition-colors`,
                 {
                   "gap-[0.6rem] px-[3rem] py-[1rem] text-[1.6rem]": isRoot,
+                  "max-[500px]:px-6 max-[500px]:py-2 max-[500px]:text-[.8rem]":
+                    !isRoot,
                 },
               )}
             >
@@ -170,8 +181,11 @@ export default function Navbar() {
               <FaArrowRight
                 strokeWidth={1}
                 className={clsx(
-                  "[filter:drop-shadow(0px_1px_0px_rgb(0_0_0_/_0.15))]",
-                  { "mt-[0px] text-[2rem]": isRoot },
+                  "text-xl [filter:drop-shadow(0px_1px_0px_rgb(0_0_0_/_0.15))]",
+                  {
+                    "mt-[0px] text-[2rem]": isRoot,
+                    "max-[500px]:text-base": !isRoot,
+                  },
                 )}
               />
             </Link>
@@ -187,28 +201,39 @@ export default function Navbar() {
                 <Popover.Trigger id="navbar-links">
                   <PiDotsNineBold
                     strokeWidth={10}
-                    className={clsx("text-old-btn-pink cursor-pointer", {
-                      "ml-[-10px] text-[4rem]": isRoot,
-                    })}
+                    className={clsx(
+                      "text-old-btn-pink -ml-2.5 cursor-pointer text-[2.5rem]",
+                      {
+                        "ml-[-10px] text-[4rem]": isRoot,
+                        "max-[500px]:-ml-3 max-[500px]:text-[2rem]": !isRoot,
+                      },
+                    )}
                   />
                 </Popover.Trigger>
 
                 <Popover.Content id="navbar-links">
-                  <div className="flex flex-col gap-2 border-gray-400 bg-gray-100 p-4 shadow-sm">
+                  <div
+                    className={clsx(
+                      "flex flex-col gap-2.5 border border-gray-300 bg-gray-50 p-4 shadow-sm",
+                      {
+                        "gap-[1rem] p-[1.6rem]": isRoot,
+                        "dark:border-gray-600 dark:bg-gray-700": !isRoot,
+                      },
+                    )}
+                  >
                     {navLinks.map(({ href, label, icon }) => {
                       const isActive =
                         pathname === href || pathname.startsWith(`${href}/`);
+
                       return (
-                        <li className="list-none" key={href}>
-                          <Link
-                            href={href}
-                            className={clsx()}
-                            aria-label={label}
-                          >
-                            {}
-                            <span>{label}</span>
-                          </Link>
-                        </li>
+                        <RestMenu
+                          key={href}
+                          isActive={isActive}
+                          href={href}
+                          icon={icon}
+                          label={label}
+                          isRoot={isRoot}
+                        />
                       );
                     })}
                   </div>
