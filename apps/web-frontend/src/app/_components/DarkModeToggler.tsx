@@ -1,10 +1,11 @@
+import clsx from "clsx";
 import { useLayoutEffect, useState } from "react";
 import { IoMoon } from "react-icons/io5";
 import { MdLightMode } from "react-icons/md";
 
 type Theme = "dark" | "light" | null;
 
-export default function DarkModeToggler() {
+export default function DarkModeToggler({ className }: { className?: string }) {
   const [theme, setTheme] = useState<Theme>(null);
 
   useLayoutEffect(() => {
@@ -32,7 +33,10 @@ export default function DarkModeToggler() {
   return (
     <button
       onClick={toggleDarkMode}
-      className="cursor-pointer rounded-sm px-2 py-1.5 transition-colors *:h-7 *:w-7 *:fill-slate-600 *:transition-colors hover:bg-slate-100 *:dark:fill-slate-200 hover:dark:bg-slate-700"
+      className={clsx(
+        "cursor-pointer rounded-sm px-2 py-1.5 transition-colors *:h-7 *:w-7 *:fill-slate-600 *:transition-colors hover:bg-slate-100 *:dark:fill-slate-200 hover:dark:bg-slate-700",
+        className,
+      )}
     >
       {theme === "light" ? <IoMoon /> : <MdLightMode />}
     </button>
