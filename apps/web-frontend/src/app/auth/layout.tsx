@@ -13,7 +13,7 @@ export default function AuthLayout({
       <div className="absolute top-4 right-4 z-50 flex items-center gap-2">
         <DarkModeToggler />
       </div>
-      <main className="flex flex-col items-center justify-center">
+      <main className="flex w-full !max-w-85 flex-col items-center justify-center">
         <Logo className="mb-7 w-60 max-sm:w-60" />
         {children}
       </main>

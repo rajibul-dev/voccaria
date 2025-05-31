@@ -13,10 +13,10 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <div className="w-full">
-      <h1 className="mb-8 text-center text-3xl font-bold text-slate-800 dark:text-slate-200">
+      <h1 className="mb-8 text-center text-3xl font-bold text-slate-800 max-sm:text-2xl dark:text-slate-200">
         Create your account
       </h1>
-      <section>
+      <section className="w-full">
         <GoogleOAuthButton />
         <OrDivider />
         <SignupFormEmailPassword />
