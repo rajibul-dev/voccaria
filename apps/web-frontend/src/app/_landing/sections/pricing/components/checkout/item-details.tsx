@@ -58,7 +58,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
     (bool: boolean) => {
       setShowCloseIcon(bool);
     },
-    [setShowCloseIcon]
+    [setShowCloseIcon],
   );
 
   // Modal heading change
@@ -71,7 +71,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
             <>
               {checkIcon}
               <span>Payment Successful!</span>
-            </>
+            </>,
           );
           break;
 
@@ -81,7 +81,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
             <>
               {xmarkIcon}
               <span>Transaction Failed</span>
-            </>
+            </>,
           );
           break;
 
@@ -90,7 +90,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
           break;
       }
     },
-    [paymentDetails, onChangeModalHeading, handleShowCrossIcon]
+    [paymentDetails, onChangeModalHeading, handleShowCrossIcon],
   );
 
   return (
@@ -118,7 +118,8 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
       )}
       {isPaymentSuccessful && (
         <p className={`goto-paragraph ${styles.message}`}>
-          Your payment for <b>{name}</b> was successful! Thank you!
+          Your payment for <b>{name}</b> was successful! Thank you! Please share
+          your PayPal name or email so I can confirm your transaction.
           {moreDescription && (
             <>
               <br /> You can submit the recording and the description of your
