@@ -13,14 +13,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 
 const patreonFeatures = [
-  "I will hear YOUR recordings and react to them live",
   "Early access to Youtube videos",
+  "Gaming streams and watch parties (with and without super secret guest)",
   ,
-  "Gaming streams",
-  ,
-  "Super special watch-parties (secret guest!)",
-  ,
-  "Karaoke OR just me singing",
+  "Karaoke OR Miaoke - you get to see my recording/practice process",
 ];
 
 // component
@@ -43,7 +39,7 @@ export default function Patreon() {
               <>
                 Support me on Patreon!
                 <br />
-                Get exclusive perks!
+                Get exclusive perks and access to a closed, smaller community!
               </>
             }
             className={styles.heading}
@@ -60,7 +56,7 @@ export default function Patreon() {
                   icon={faCircle}
                   className="w-3 translate-y-[5px]"
                 />
-                <p>{item}</p>
+                <p className="max-w-[44ch] leading-[1.7]">{item}</p>
               </li>
             ))}
           </ul>

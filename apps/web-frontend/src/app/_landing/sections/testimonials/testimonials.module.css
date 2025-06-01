@@ -1,8 +1,6 @@
 .section {
   padding: 8rem 0;
-
-  /* if last section */
-  padding-bottom: 10rem;
+  padding-bottom: 12rem;
 }
 .container {
   max-width: 145rem;
@@ -10,6 +8,6 @@
 
 @media (max-width: 53em) {
   .section {
-    padding-bottom: 16rem;
+    padding-bottom: 12rem;
   }
 }
