@@ -118,7 +118,8 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
       )}
       {isPaymentSuccessful && (
         <p className={`goto-paragraph ${styles.message}`}>
-          Your payment for <b>{name}</b> was successful! Thank you!
+          Your payment for <b>{name}</b> was successful! Thank you! Please share
+          your PayPal name or email so I can confirm your transaction.
           {moreDescription && (
             <>
               <br /> You can submit the recording and the description of your
