@@ -119,7 +119,25 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
       {isPaymentSuccessful && (
         <p className={`goto-paragraph ${styles.message}`}>
           Your payment for <b>{name}</b> was successful! Thank you! Please share
-          your PayPal name or email so I can confirm your transaction.
+          your PayPal name or email with me either privately through{" "}
+          <a
+            href="https://discord.com/users/140513822069882881"
+            className="inline-a"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Discord
+          </a>{" "}
+          or{" "}
+          <a
+            href="mailto:voccaria@gmail.com"
+            className="inline-a"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            email
+          </a>{" "}
+          so I can confirm your transaction.
           {moreDescription && (
             <>
               <br /> You can submit the recording and the description of your
