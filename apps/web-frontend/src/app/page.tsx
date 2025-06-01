@@ -15,11 +15,10 @@ import OldFooter from "./_old-components/old-footer";
 export default function Page() {
   return (
     <>
-      <main className="bg-white pb-4">
+      <main className="bg-white min-[450px]:pb-[12rem]">
         <SeoPurposeH1 />
         <About />
         <Socials />
-        <Patreon />
         <Mission />
         <PaidObjective />
         <LessonOptions />
@@ -27,6 +26,7 @@ export default function Page() {
         <Scheduling />
         <Contact />
         <Testimonials />
+        <Patreon />
       </main>
       <OldFooter />
       {/* <BackToTop /> */}

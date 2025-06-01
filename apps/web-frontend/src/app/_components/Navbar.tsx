@@ -27,10 +27,6 @@ const navData = [
     selector: "about",
   },
   {
-    name: "Patreon",
-    selector: "patreon",
-  },
-  {
     name: "How we teach",
     selector: "mission",
   },
@@ -57,6 +53,10 @@ const navData = [
   {
     name: "Testimonials",
     selector: "testimonials",
+  },
+  {
+    name: "Patreon",
+    selector: "patreon",
   },
 ];
 

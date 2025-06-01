@@ -80,7 +80,7 @@
   }
 }
 @media screen and (max-width: 450px) {
-  .section {
+  /* .section {
     border-top: none;
-  }
+  } */
 }
