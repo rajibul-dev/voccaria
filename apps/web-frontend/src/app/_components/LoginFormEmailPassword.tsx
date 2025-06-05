@@ -3,14 +3,54 @@
 import { useState } from "react";
 import FancyInput from "./FancyInput";
 import Link from "next/link";
+import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
 
 export default function LoginFormEmailPassword() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  async function handleLogin() {
+    try {
+      const res = await fetch(`${expressBackendBaseRESTOrigin}/auth/login`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      const data = await res.json();
+      console.log(data);
+
+      if (!res.ok) {
+        console.error("Login failed:", data.message);
+        return;
+      }
+    } catch (error) {
+      console.error("Something went wrong:", error);
+    }
+  }
+
   return (
-    <form className="flex flex-col gap-4">
-      <FancyInput type="email" name="email" value={email} onChange={setEmail}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleLogin();
+      }}
+      className="flex flex-col gap-4"
+    >
+      <FancyInput
+        type="email"
+        name="email"
+        value={email}
+        onChange={setEmail}
+        required
+        autoComplete="email"
+      >
         Email
       </FancyInput>
 
@@ -19,6 +59,8 @@ export default function LoginFormEmailPassword() {
         name="password"
         value={password}
         onChange={setPassword}
+        required
+        autoComplete="current-password"
       >
         Password
       </FancyInput>
