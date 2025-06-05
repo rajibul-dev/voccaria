@@ -6,11 +6,15 @@ export default passport.use(
   new Strategy({ usernameField: "email" }, async (email, password, done) => {
     try {
       const user = await User.findOne({ email });
-      if (!user) throw new Error("User not found");
+      if (!user) {
+        return done(null, false, { message: "User not found" });
+      }
+
       const isPasswordCorrect = await user.comparePassword(password);
       if (!isPasswordCorrect) {
-        throw new Error("Invalid password");
+        return done(null, false, { message: "Invalid password" });
       }
+
       done(null, user);
     } catch (error) {
       done(error, null);
