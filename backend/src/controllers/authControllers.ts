@@ -191,11 +191,11 @@ export async function googleRedirect(
   request: Request,
   response: Response
 ): Promise<any> {
-  return response.status(StatusCodes.OK).json({
-    success: true,
-    message: "User logged with google successfully",
-    data: request.user,
-  });
+  const redirectUrl = `${process.env.FRONTEND_URL}/dashboard`;
+  const user = request.user as IUser;
+  const userId = user?._id?.toString() ?? "";
+
+  return response.redirect(redirectUrl + `?userId=${userId}`);
 }
 
 export async function getPasswordResetLink(
