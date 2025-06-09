@@ -22,7 +22,10 @@ router.post("/request-new-verification-email", requestNewVerificationEmail);
 router.post("/login", passport.authenticate("local"), login);
 router.get(
   "/google",
-  passport.authenticate("google", { scope: ["email", "profile"] })
+  passport.authenticate("google", {
+    scope: ["email", "profile"],
+    prompt: "select_account",
+  })
 );
 router.get("/google/redirect", passport.authenticate("google"), googleRedirect);
 router.post("/logout", logout);
