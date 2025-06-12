@@ -30,7 +30,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     async function checkAuth() {
       try {
-        const res = await fetch(`${expressBackendBaseRESTOrigin}/auth/me`, {
+        const res = await fetch(`${expressBackendBaseRESTOrigin}/users/me`, {
           credentials: "include",
         });
         const data = await res.json();
