@@ -142,10 +142,12 @@ export default async function RootLayout({
         />
       </head>
       <body className={`${montserrat.className} antialiased dark:bg-gray-900`}>
-        <Providers>
-          <Navbar />
-          <div>{children}</div>
-        </Providers>
+        <SearchContextProviderWrapper>
+          <Providers>
+            <Navbar />
+            <div>{children}</div>
+          </Providers>
+        </SearchContextProviderWrapper>
         <SpeedInsights />
         <Analytics />
       </body>
