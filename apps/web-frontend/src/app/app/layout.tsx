@@ -1,6 +1,18 @@
+import { getUserFromSession } from "@/_libs/getUserFromSession";
 import clsx from "clsx";
+import { redirect } from "next/navigation";
 
-export default function AppLayout({ children }: { children: React.ReactNode }) {
+export default async function AppLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const user = await getUserFromSession();
+
+  if (!user) {
+    redirect("/auth");
+  }
+
   return (
     <div
       className={`grid h-screen grid-cols-[260px_1fr] grid-rows-[auto_1fr] overflow-hidden border-gray-300 [grid-template-areas:'header_header'_'sidebar_content'] dark:border-gray-800`}
