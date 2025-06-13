@@ -6,13 +6,13 @@ import clsx from "clsx";
 import styles from "./navbar.module.css";
 
 // components
+import { navLinks } from "@/_constants/navLinks";
 import OldLogo from "@/app/_components/OldLogo";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { IoHome, IoMenu } from "react-icons/io5";
-import { MdArticle } from "react-icons/md";
+import { IoMenu } from "react-icons/io5";
 import { PiDotsNineBold } from "react-icons/pi";
 import { useAuth } from "../_context/AuthContext";
 import BlogSearchBarOnNav from "./BlogSearchBarOnNav";
@@ -23,19 +23,6 @@ import NavbarLoginButton from "./NavbarLoginButton";
 import OldPageSectionTracking from "./OldPageSectionTracking";
 import Popover from "./Popover";
 import RestMenu from "./RestMenu";
-
-const navLinks = [
-  {
-    label: "Home",
-    href: "/",
-    icon: <IoHome />,
-  },
-  {
-    label: "Blog",
-    href: "/blog",
-    icon: <MdArticle />,
-  },
-];
 
 export default function Navbar() {
   const pathname = usePathname();
