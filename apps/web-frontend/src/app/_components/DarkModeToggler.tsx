@@ -1,3 +1,5 @@
+"use client";
+
 import clsx from "clsx";
 import { useLayoutEffect, useState } from "react";
 import { IoMoon } from "react-icons/io5";
