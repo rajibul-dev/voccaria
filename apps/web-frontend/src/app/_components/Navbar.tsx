@@ -28,7 +28,8 @@ export default function Navbar() {
   const pathname = usePathname();
   const isRoot = pathname === "/";
   const isPostPage = pathname.startsWith(`/blog/`);
-  const shouldHideNavbar = pathname.startsWith("/auth");
+  const shouldHideNavbar =
+    pathname.startsWith("/auth") || pathname.startsWith("/app");
   const [open, setOpen] = useState(false);
   const { user, isAuthenticated, loading: authLoading } = useAuth();
 
@@ -37,7 +38,7 @@ export default function Navbar() {
   };
 
   if (shouldHideNavbar) {
-    return null; // Don't render the navbar on auth pages
+    return null;
   }
 
   return (
