@@ -43,7 +43,7 @@ interface OpenProps {
 }
 
 interface WindowProps {
-  children: React.ReactElement;
+  children: React.ReactElement<any>;
   name: string;
   heading: any;
 }
@@ -71,7 +71,9 @@ const Modal: React.FC<ModalProps> & {
 const Open: React.FC<OpenProps> = ({ children, opens: windowOpenName }) => {
   const { open } = useContext(ModalContext);
 
-  return cloneElement(children, { onClick: () => open(windowOpenName) });
+  return cloneElement(children as React.ReactElement<any>, {
+    onClick: () => open(windowOpenName),
+  });
 };
 
 const Window: React.FC<WindowProps> = ({ children, name, heading }) => {
@@ -92,7 +94,7 @@ const Window: React.FC<WindowProps> = ({ children, name, heading }) => {
         document?.removeEventListener("keydown", escapeKeyPress, true);
       };
     },
-    [close]
+    [close],
   );
 
   // disable body scroll when modal open
@@ -124,7 +126,7 @@ const Window: React.FC<WindowProps> = ({ children, name, heading }) => {
         </main>
       </div>
     </Overlay>,
-    document?.body
+    document?.body,
   );
 };
 
