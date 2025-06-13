@@ -33,9 +33,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const res = await fetch(`${expressBackendBaseRESTOrigin}/users/me`, {
           credentials: "include",
         });
-        const data = await res.json();
-        if (data.success && data.user) {
-          setUser(data.user);
+        const jsonResponse = await res.json();
+        if (jsonResponse.success && jsonResponse.data) {
+          setUser(jsonResponse.data);
         }
       } catch (err) {
         console.error("Auth check failed", err);

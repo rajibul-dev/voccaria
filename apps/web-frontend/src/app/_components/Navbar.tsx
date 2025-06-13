@@ -11,16 +11,17 @@ import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { FaArrowRight } from "react-icons/fa6";
 import { IoHome, IoMenu } from "react-icons/io5";
+import { MdArticle } from "react-icons/md";
+import { PiDotsNineBold } from "react-icons/pi";
+import { useAuth } from "../_context/AuthContext";
 import BlogSearchBarOnNav from "./BlogSearchBarOnNav";
 import BlogSidebarData from "./BlogSidebarData";
 import DarkModeToggler from "./DarkModeToggler";
 import Logo from "./Logo";
+import NavbarLoginButton from "./NavbarLoginButton";
 import OldPageSectionTracking from "./OldPageSectionTracking";
 import Popover from "./Popover";
-import { PiDotsNineBold } from "react-icons/pi";
-import { MdArticle } from "react-icons/md";
 import RestMenu from "./RestMenu";
 
 const navLinks = [
@@ -42,6 +43,7 @@ export default function Navbar() {
   const isPostPage = pathname.startsWith(`/blog/`);
   const shouldHideNavbar = pathname.startsWith("/auth");
   const [open, setOpen] = useState(false);
+  const { user, isAuthenticated, loading: authLoading } = useAuth();
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -164,31 +166,11 @@ export default function Navbar() {
               </li>
             )}
 
-            <Link
-              href="/auth/login"
-              className={clsx(
-                `bg-old-btn-pink hover:bg-old-btn-pink-hover attractive-text-shadow flex cursor-pointer items-center gap-1.5 rounded-full px-7.5 py-2.5 text-base font-bold text-white transition-colors`,
-                {
-                  "gap-[0.6rem] px-[3rem] py-[1rem] text-[1.6rem]": isRoot,
-                  "max-[500px]:px-6 max-[500px]:py-2 max-[500px]:text-[.8rem]":
-                    !isRoot,
-                },
-              )}
-            >
-              <span>
-                Login<span className="max-[670px]:hidden"> | Register</span>
-              </span>
-              <FaArrowRight
-                strokeWidth={1}
-                className={clsx(
-                  "text-xl [filter:drop-shadow(0px_1px_0px_rgb(0_0_0_/_0.15))]",
-                  {
-                    "mt-[0px] text-[2rem]": isRoot,
-                    "max-[500px]:text-base": !isRoot,
-                  },
-                )}
-              />
-            </Link>
+            <NavbarLoginButton
+              isRoot={isRoot}
+              isAuthenticated={isAuthenticated}
+              authLoading={authLoading}
+            />
 
             {!isPostPage && (
               <div className="h-fit min-[670px]:hidden">
