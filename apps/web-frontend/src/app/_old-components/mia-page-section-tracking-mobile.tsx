@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import clsx from "clsx";
 import dynamic from "next/dynamic";
-import MenuIcon from "/public/menu.svg";
+import MenuIcon from "@/_assets/icons/menu.svg";
 import { createPortal } from "react-dom";
 import useOutsideClick from "@/app/_hooks/useOutsideClick";
 
