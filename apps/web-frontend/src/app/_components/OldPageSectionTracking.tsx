@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import MiaPageSectionTrackingMobile from "../_old-components/mia-page-section-tracking-mobile";
-import MenuIcon from "/public/menu.svg";
+import MenuIcon from "@/_assets/icons/menu.svg";
 
 import styles from "./old-page-section-tracker.module.css";
 

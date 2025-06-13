@@ -14,7 +14,7 @@ import useOutsideClick from "../_hooks/useOutsideClick";
 import styles from "./modal.module.css";
 
 // icons
-import CrossIcon from "/public/close.svg";
+import CrossIcon from "@/_assets/icons/close.svg";
 
 // components
 import Overlay from "./overlay";
