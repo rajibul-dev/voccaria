@@ -21,6 +21,7 @@ import Navbar from "./_components/Navbar";
 import { Providers } from "./providers";
 import { headers } from "next/headers";
 import SearchContextProviderWrapper from "./_components/SearchContextProviderWrapper";
+import { getUserFromSession } from "@/_libs/getUserFromSession";
 
 config.autoAddCss = false; /* eslint-disable import/first */
 
@@ -93,6 +94,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const headerList = await headers();
+  const user = await getUserFromSession();
+
   const pathname = headerList.get("x-current-path") || "";
   const isRoot = pathname === "/";
 
@@ -143,7 +146,7 @@ export default async function RootLayout({
       </head>
       <body className={`${montserrat.className} antialiased dark:bg-gray-900`}>
         <SearchContextProviderWrapper>
-          <Providers>
+          <Providers initialUser={user}>
             <Navbar />
             <div>{children}</div>
           </Providers>

@@ -6,11 +6,18 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { SidebarProvider } from "./_context/SidebarContext";
 import { PopoverManagerProvider } from "./_components/Popover";
 import { AuthProvider } from "./_context/AuthContext";
+import { User } from "@/_types/user";
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({
+  children,
+  initialUser = null,
+}: {
+  children: React.ReactNode;
+  initialUser?: User | null;
+}) {
   return (
     <AppRouterCacheProvider>
-      <AuthProvider>
+      <AuthProvider initialUser={initialUser}>
         <PopoverManagerProvider>
           <SidebarProvider>
             <IsOldPageProvider>
