@@ -1,6 +1,10 @@
 import { getUserFromSession } from "@/_libs/getUserFromSession";
 import clsx from "clsx";
 import { redirect } from "next/navigation";
+import AppHeader from "../_components/AppHeader";
+import AppSidebar from "../_components/AppSidebar";
+import AppFooter from "../_components/AppFooter";
+import AppBottomBar from "../_components/AppBottomBar";
 
 export default async function AppLayout({
   children,
@@ -17,32 +21,13 @@ export default async function AppLayout({
     <div
       className={`grid h-screen grid-cols-[260px_1fr] grid-rows-[auto_1fr] overflow-hidden border-gray-300 [grid-template-areas:'header_header'_'sidebar_content'] max-sm:[grid-template-areas:'header_header'_'content_content'_'bottom-bar_bottom-bar'] dark:border-gray-800`}
     >
-      <header
-        className={`h-18 border-b border-inherit bg-white [grid-area:header] max-xl:h-16.5 max-sm:h-14.5 dark:bg-gray-800`}
-      >
-        Header
-      </header>
-      <aside
-        className={`border-r border-inherit bg-white [grid-area:sidebar] max-sm:hidden dark:bg-gray-800`}
-      >
-        Sidebar
-      </aside>
-
+      <AppHeader />
+      <AppSidebar /> {/* hidden below 640px width */}
       <div className={`overflow-y-auto [grid-area:content]`}>
         <main className={clsx(``, "h-400")}>{children}</main>
-        <footer className="border-t border-gray-300 dark:border-gray-800">
-          Footer
-        </footer>
+        <AppFooter />
       </div>
-
-      <nav
-        className={clsx(
-          "border-t border-inherit [grid-area:bottom-bar] sm:hidden",
-          "h-5",
-        )}
-      >
-        Bottom Bar
-      </nav>
+      <AppBottomBar /> {/* hidden above 640px width */}
     </div>
   );
 }
