@@ -191,7 +191,7 @@ export async function googleRedirect(
   request: Request,
   response: Response
 ): Promise<any> {
-  const redirectUrl = `${process.env.FRONTEND_URL}`;
+  const redirectUrl = `${process.env.FRONTEND_URL}/app/dashboard`;
   const user = request.user as IUser;
   const userId = user?._id?.toString() ?? "";
 
