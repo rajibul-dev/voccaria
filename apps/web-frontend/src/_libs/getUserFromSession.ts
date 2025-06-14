@@ -1,4 +1,5 @@
 import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
+import { User } from "@/_types/user";
 import { cookies } from "next/headers";
 
 export async function getUserFromSession() {
@@ -17,5 +18,5 @@ export async function getUserFromSession() {
 
   const data = await res.json();
 
-  return data?.success ? data.data : null;
+  return data?.success ? (data.data as User) : null;
 }
