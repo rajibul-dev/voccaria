@@ -196,7 +196,7 @@ function Trigger({ children, id, state, ...props }: TriggerProps) {
     }
   }, [state, triggerType, id, open, close]);
 
-  const clonedChild = React.cloneElement(children, {
+  const clonedChild = React.cloneElement(children as React.ReactElement<any>, {
     onClick:
       triggerType === "click" || triggerType === "both"
         ? handleClick
