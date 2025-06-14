@@ -19,7 +19,7 @@ export default async function AppLayout({
 
   return (
     <div
-      className={`grid h-screen grid-cols-[260px_1fr] grid-rows-[auto_1fr] overflow-hidden border-gray-300 [grid-template-areas:'header_header'_'sidebar_content'] max-sm:[grid-template-areas:'header_header'_'content_content'_'bottom-bar_bottom-bar'] dark:border-gray-800`}
+      className={`grid h-screen grid-cols-[260px_1fr] grid-rows-[auto_1fr] overflow-hidden border-gray-300 transition-colors [grid-template-areas:'header_header'_'sidebar_content'] max-sm:[grid-template-areas:'header_header'_'content_content'_'bottom-bar_bottom-bar'] dark:border-gray-600`}
     >
       <AppHeader />
       <AppSidebar /> {/* hidden below 640px width */}
