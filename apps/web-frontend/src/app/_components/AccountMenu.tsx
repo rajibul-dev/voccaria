@@ -1,14 +1,37 @@
 "use client";
 
-import { getUserFromSession } from "@/_libs/getUserFromSession";
 import { Avatar } from "@mui/material";
-import { IoMdArrowDropdown } from "react-icons/io";
-import Popover from "./Popover";
-import { useAuth } from "../_context/AuthContext";
 import Link from "next/link";
+import { IoMdArrowDropdown } from "react-icons/io";
+import { useAuth } from "../_context/AuthContext";
+import Popover from "./Popover";
+import { useRouter } from "next/navigation";
+import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
 
 export default function AccountMenu() {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
+  const route = useRouter();
+
+  async function logout() {
+    try {
+      const res = await fetch(`${expressBackendBaseRESTOrigin}/auth/logout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      if (res.ok) {
+        setUser(null);
+        route.replace("/auth/login");
+      } else {
+        console.error("Logout failed");
+      }
+    } catch (err) {
+      console.error("Logout error", err);
+    }
+  }
 
   return (
     <div className="">
@@ -21,7 +44,7 @@ export default function AccountMenu() {
               alt={user?.name}
               sx={{ width: 42, height: 42 }}
             />
-            <span className="block text-lg font-extrabold text-gray-500 ![word-spacing:-.4pt] dark:text-gray-300">
+            <span className="block text-lg font-extrabold text-gray-500 ![word-spacing:-.4pt] max-sm:hidden dark:text-gray-300">
               {user?.name}
             </span>
             <IoMdArrowDropdown
@@ -67,7 +90,10 @@ export default function AccountMenu() {
               </Link>
             </div>
             <div>
-              <button className="text-dark flex w-full cursor-pointer items-center justify-between px-4 py-2.5 text-sm font-medium text-red-700 hover:bg-gray-50 dark:text-red-300 dark:hover:bg-white/5">
+              <button
+                onClick={logout}
+                className="text-dark flex w-full cursor-pointer items-center justify-between px-4 py-2.5 text-sm font-medium text-red-700 hover:bg-gray-50 dark:text-red-300 dark:hover:bg-white/5"
+              >
                 Log out
               </button>
             </div>
