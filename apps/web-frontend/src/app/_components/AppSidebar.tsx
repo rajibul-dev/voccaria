@@ -48,14 +48,17 @@ function ListItem({ label, href, Icon, isActive }: ListItemProps) {
         href={href}
         className={clsx(
           "group flex items-center gap-3 px-6 py-3 font-medium text-gray-600 transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700",
-          { "bg-gray-100 dark:bg-gray-700": isActive },
+          {
+            "border-l-6 border-pink-600 bg-gray-100 dark:border-pink-400 dark:bg-gray-700":
+              isActive,
+          },
         )}
       >
         <Icon
           className={clsx(
             "text-xl group-hover:text-pink-600 group-hover:dark:text-pink-400",
             {
-              "text-pink-600 dark:text-pink-400": isActive,
+              "ml-[-6px] text-pink-600 dark:text-pink-400": isActive,
             },
           )}
         />
@@ -63,7 +66,7 @@ function ListItem({ label, href, Icon, isActive }: ListItemProps) {
           className={clsx(
             "text-base group-hover:text-gray-900 group-hover:dark:text-gray-50",
             {
-              "text-gray-900 dark:text-gray-50": isActive,
+              "ml-[-6px] text-gray-900 dark:text-gray-50": isActive,
             },
           )}
         >
