@@ -67,7 +67,7 @@ export default function AccountMenu() {
                 />
               </div>
               <div>
-                <p className="text-sm font-semibold dark:text-gray-100">
+                <p className="text-base font-semibold dark:text-gray-100">
                   {user?.name}
                 </p>
                 <p className="text-sm text-gray-600 dark:text-gray-300">
@@ -78,13 +78,13 @@ export default function AccountMenu() {
             <div>
               <Link
                 href="/app/profile"
-                className="text-dark flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-white/5"
+                className="text-dark flex w-full items-center justify-between px-4 py-2.5 text-base font-medium hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-white/5"
               >
                 View profile
               </Link>
               <Link
                 href="/app/settings"
-                className="text-dark flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-white/5"
+                className="text-dark flex w-full items-center justify-between px-4 py-2.5 text-base font-medium hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-white/5"
               >
                 Settings
               </Link>
@@ -92,7 +92,7 @@ export default function AccountMenu() {
             <div>
               <button
                 onClick={logout}
-                className="text-dark flex w-full cursor-pointer items-center justify-between px-4 py-2.5 text-sm font-medium text-red-700 hover:bg-gray-50 dark:text-red-300 dark:hover:bg-white/5"
+                className="text-dark flex w-full cursor-pointer items-center justify-between px-4 py-2.5 text-base font-medium text-red-700 hover:bg-gray-50 dark:text-red-300 dark:hover:bg-white/5"
               >
                 Log out
               </button>
