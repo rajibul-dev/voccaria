@@ -88,9 +88,7 @@ export default function AppBottomBar() {
 
               return (
                 <Link
-                  className={clsx(sharedLinkStyles, {
-                    "bg-gray-100 dark:bg-gray-700": isActive,
-                  })}
+                  className={clsx(sharedLinkStyles)}
                   onClick={() => close()}
                   key={href}
                   href={href}
