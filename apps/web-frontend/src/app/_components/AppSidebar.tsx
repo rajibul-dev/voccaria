@@ -66,7 +66,7 @@ function ListItem({ label, href, Icon, isActive }: ListItemProps) {
           className={clsx(
             "text-base group-hover:text-gray-900 group-hover:dark:text-gray-50",
             {
-              "ml-[-6px] text-gray-900 dark:text-gray-50": isActive,
+              "text-gray-900 dark:text-gray-50": isActive,
             },
           )}
         >
