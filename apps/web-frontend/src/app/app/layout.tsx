@@ -24,7 +24,9 @@ export default async function AppLayout({
       <AppHeader />
       <AppSidebar /> {/* hidden below 640px width */}
       <div className={`overflow-y-auto [grid-area:content]`}>
-        <main className={clsx(``, "h-400")}>{children}</main>
+        <main className={clsx(`bg-gray-50 dark:bg-gray-900`, "h-400")}>
+          {children}
+        </main>
         <AppFooter />
       </div>
       <AppBottomBar /> {/* hidden above 640px width */}
