@@ -1,3 +1,3 @@
 export default function page() {
-  return <>Dashboard</>;
+  return <div className="dark:text-gray-50">Dashboard</div>;
 }
