@@ -215,7 +215,7 @@ export async function getPasswordResetLink(
 
   if (user) {
     const passwordToken = crypto.randomBytes(70).toString("hex");
-    const passwordLink = `${process.env.FRONTEND_URL}/reset-password?token=${passwordToken}&email=${email}`;
+    const passwordLink = `${process.env.FRONTEND_URL}/auth/reset-password?token=${passwordToken}&email=${email}`;
     const tenMinutes = 1000 * 60 * 10;
     user.passwordResetToken = createHash(passwordToken);
     user.passwordResetTokenExpires = new Date(Date.now() + tenMinutes);
