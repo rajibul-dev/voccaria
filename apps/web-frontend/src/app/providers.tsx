@@ -7,6 +7,8 @@ import { SidebarProvider } from "./_context/SidebarContext";
 import { PopoverManagerProvider } from "./_components/Popover";
 import { AuthProvider } from "./_context/AuthContext";
 import { User } from "@/_types/user";
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
 
 export function Providers({
   children,
@@ -15,6 +17,10 @@ export function Providers({
   children: React.ReactNode;
   initialUser?: User | null;
 }) {
+  const pathname = usePathname();
+  const isRoot = pathname === "/";
+  const isInApp = pathname.startsWith("/app");
+
   return (
     <AppRouterCacheProvider>
       <AuthProvider initialUser={initialUser}>
@@ -22,12 +28,20 @@ export function Providers({
           <SidebarProvider>
             <IsOldPageProvider>
               <Toaster
-                position="bottom-center"
+                position={!isInApp ? "bottom-center" : "top-right"}
                 gutter={12}
                 containerStyle={{
                   margin: "8px",
                 }}
                 toastOptions={{
+                  className: clsx(
+                    "!bg-gray-100 !text-gray-800 !font-medium leading-[1.3] !border !border-gray-300 [&>div]:!my-0",
+                    {
+                      "dark:!bg-gray-700 dark:!text-gray-200 !text-base dark:!border-gray-600":
+                        !isRoot,
+                      "": isRoot,
+                    },
+                  ),
                   success: {
                     duration: 4000,
                   },
@@ -37,9 +51,7 @@ export function Providers({
                   style: {
                     fontSize: "16px",
                     maxWidth: "500px",
-                    padding: "16px 24px",
-                    backgroundColor: "var(--white-primary)",
-                    color: "var(--gray-800)",
+                    padding: "13px 16px",
                     zIndex: 3,
                   },
                 }}
