@@ -211,7 +211,7 @@ export async function getPasswordResetLink(
     });
   }
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email, isVerified: true });
 
   if (user) {
     const passwordToken = crypto.randomBytes(70).toString("hex");
@@ -223,7 +223,7 @@ export async function getPasswordResetLink(
 
     await sendPasswordResetLink({
       email: user.email,
-      passwordLink: passwordLink,
+      passwordLink,
       name: user.name,
     });
 
@@ -265,6 +265,9 @@ export async function resetPassword(
       message: "User not found",
     });
   }
+
+  console.log("Stored:", user.passwordResetToken);
+  console.log("Incoming Hashed:", createHash(token));
 
   if (user.passwordResetToken !== createHash(token)) {
     return response.status(StatusCodes.BAD_REQUEST).json({
