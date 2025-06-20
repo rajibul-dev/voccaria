@@ -7,9 +7,12 @@ import toast from "react-hot-toast";
 
 export default function page() {
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
+
+    setIsLoading(true);
 
     const res = await fetch(
       `${expressBackendBaseRESTOrigin}/auth/forgot-password`,
@@ -21,6 +24,8 @@ export default function page() {
         body: JSON.stringify({ email }),
       },
     );
+
+    setIsLoading(false);
 
     const jsonResponse = await res.json();
     if (res.ok) {
@@ -55,6 +60,7 @@ export default function page() {
           <button
             type="submit"
             className="manual-auth-btn attractive-text-shadow w-full"
+            disabled={isLoading}
           >
             Send Reset Link
           </button>
