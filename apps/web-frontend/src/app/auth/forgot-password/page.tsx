@@ -42,7 +42,14 @@ export default function page() {
           Please enter your email address to receive a password reset link.
         </p>
         <form className="mx-auto max-w-md" onSubmit={handleSubmit}>
-          <FancyInput value={email} onChange={setEmail} inputClassName="mb-6">
+          <FancyInput
+            type="email"
+            name="email"
+            value={email}
+            onChange={setEmail}
+            inputClassName="mb-6"
+            required
+          >
             Email
           </FancyInput>
           <button
