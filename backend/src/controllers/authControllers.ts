@@ -6,6 +6,7 @@ import { hashPassword } from "../helpers/hashPassword.js";
 import { sendAccountVerificationEmail } from "../helpers/sendAccountVerificationEmail.js";
 import { sendPasswordResetLink } from "../helpers/sendPasswordResetLink.js";
 import createHash from "../helpers/createHash.js";
+import { sanitizeUser } from "../helpers/sanitizeUser.js";
 
 export async function register(
   request: Request,
@@ -187,13 +188,7 @@ export async function login(
     success: true,
     message: "User logged in successfully",
     data: {
-      user: {
-        _id: user._id,
-        email: user.email,
-        name: user.name,
-        roles: user.roles,
-        avatar: user.avatar,
-      },
+      user: sanitizeUser(user),
     },
   });
 }
