@@ -67,11 +67,11 @@ export default function LoginFormEmailPassword() {
       </FancyInput>
 
       <FancyInput
-        type="password"
         name="password"
         value={password}
         onChange={setPassword}
         required
+        isPassword
         autoComplete="current-password"
       >
         Password

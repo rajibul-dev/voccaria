@@ -122,7 +122,7 @@ export default function SignupFormEmailPassword() {
           </FancyInput>
 
           <FancyInput
-            type="password"
+            isPassword
             name="password"
             value={password}
             onChange={setPassword}
@@ -132,7 +132,7 @@ export default function SignupFormEmailPassword() {
           </FancyInput>
 
           <FancyInput
-            type="password"
+            isPassword
             name="confirm-password"
             value={confirmPassword}
             onChange={setConfirmPassword}
