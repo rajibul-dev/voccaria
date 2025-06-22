@@ -4,10 +4,15 @@ import { useState } from "react";
 import FancyInput from "./FancyInput";
 import Link from "next/link";
 import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { useAuth } from "../_context/AuthContext";
 
 export default function LoginFormEmailPassword() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
+  const { setUser } = useAuth();
 
   async function handleLogin() {
     try {
@@ -23,13 +28,16 @@ export default function LoginFormEmailPassword() {
         }),
       });
 
-      const data = await res.json();
-      console.log(data);
+      const jsonResponse = await res.json();
 
       if (!res.ok) {
-        console.error("Login failed:", data.message);
+        console.error("Login failed:", jsonResponse.message);
         return;
       }
+
+      setUser(jsonResponse.data.user);
+      toast.success("Login successful!");
+      router.push("/app");
     } catch (error) {
       console.error("Something went wrong:", error);
     }

@@ -19,7 +19,7 @@ export function Providers({
 }) {
   const pathname = usePathname();
   const isRoot = pathname === "/";
-  const isInApp = pathname.startsWith("/app");
+  // const isInApp = pathname.startsWith("/app");
 
   return (
     <AppRouterCacheProvider>
@@ -28,7 +28,7 @@ export function Providers({
           <SidebarProvider>
             <IsOldPageProvider>
               <Toaster
-                position={!isInApp ? "bottom-center" : "top-right"}
+                position="bottom-center"
                 gutter={12}
                 containerStyle={{
                   margin: "8px",

@@ -181,9 +181,20 @@ export async function login(
   request: Request,
   response: Response
 ): Promise<any> {
+  const user = request.user as IUser;
+
   response.status(StatusCodes.OK).json({
     success: true,
     message: "User logged in successfully",
+    data: {
+      user: {
+        _id: user._id,
+        email: user.email,
+        name: user.name,
+        roles: user.roles,
+        avatar: user.avatar,
+      },
+    },
   });
 }
 
