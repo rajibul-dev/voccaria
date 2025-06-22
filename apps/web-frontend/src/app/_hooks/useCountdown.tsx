@@ -27,7 +27,7 @@ export const useCountdown = (targetDate: Date) => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [targetDate]);
+  }, [targetDate, isComplete]);
 
   return { timeLeft, isComplete };
 };
