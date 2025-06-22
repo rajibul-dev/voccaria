@@ -11,10 +11,12 @@ import { useAuth } from "../_context/AuthContext";
 export default function LoginFormEmailPassword() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { setUser } = useAuth();
 
   async function handleLogin() {
+    setIsLoading(true);
     try {
       const res = await fetch(`${expressBackendBaseRESTOrigin}/auth/login`, {
         method: "POST",
@@ -40,6 +42,8 @@ export default function LoginFormEmailPassword() {
       router.push("/app");
     } catch (error) {
       console.error("Something went wrong:", error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -73,8 +77,12 @@ export default function LoginFormEmailPassword() {
         Password
       </FancyInput>
 
-      <button type="submit" className="manual-auth-btn attractive-text-shadow">
-        Login
+      <button
+        type="submit"
+        className="manual-auth-btn attractive-text-shadow disabled:cursor-not-allowed disabled:opacity-50"
+        disabled={isLoading}
+      >
+        {isLoading ? "Logging in..." : "Login"}
       </button>
 
       <Link
