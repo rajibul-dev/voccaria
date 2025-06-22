@@ -1,7 +1,6 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 import validator from "validator";
 import bcrypt from "bcryptjs";
-import { DEFAULT_AVATAR } from "../constants/assets.js";
 import { ALL_ROLES, Roles } from "../constants/roles.js";
 
 export interface IUser extends Document {
@@ -108,7 +107,7 @@ const UserSchema: Schema<IUser> = new Schema(
     avatars: {
       manual: {
         type: String,
-        default: DEFAULT_AVATAR,
+        default: null,
       },
       google: String,
       discord: String,
@@ -120,7 +119,7 @@ const UserSchema: Schema<IUser> = new Schema(
     },
     avatar: {
       type: String,
-      default: DEFAULT_AVATAR,
+      default: null,
     },
 
     provider: {

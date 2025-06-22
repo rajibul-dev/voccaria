@@ -51,7 +51,7 @@ export async function register(
   const isFirstAccount = (await User.countDocuments({})) === 0;
   const role = isFirstAccount ? "raji" : "user";
   const verificationToken = crypto.randomBytes(40).toString("hex");
-  const verificationLink = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}&email=${email}`;
+  const verificationLink = `${process.env.FRONTEND_URL}/auth/verify-email?token=${verificationToken}&email=${email}`;
   const hashedPassword = await hashPassword(password);
 
   let user: IUser;
@@ -160,7 +160,7 @@ export async function requestNewVerificationEmail(
   }
 
   const verificationToken = crypto.randomBytes(40).toString("hex");
-  const verificationLink = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}&email=${email}`;
+  const verificationLink = `${process.env.FRONTEND_URL}/auth/verify-email?token=${verificationToken}&email=${email}`;
 
   user.verificationToken = verificationToken;
   await user.save();
