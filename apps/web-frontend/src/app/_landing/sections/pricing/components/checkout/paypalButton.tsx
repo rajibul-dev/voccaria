@@ -15,7 +15,7 @@ const PaypalButton: React.FC<PaypalButtonProps> = ({
   name,
   onPaymentDetails,
 }) => {
-  const paypal = useRef<any>();
+  const paypal = useRef<any>(null);
 
   useEffect(
     function () {
@@ -59,7 +59,7 @@ const PaypalButton: React.FC<PaypalButtonProps> = ({
         })
         .render(paypal.current);
     },
-    [amount, currencyCode, name, onPaymentDetails]
+    [amount, currencyCode, name, onPaymentDetails],
   );
 
   return <div style={{ marginBottom: "-10px" }} ref={paypal}></div>;
