@@ -6,6 +6,7 @@ export async function getUserFromSession() {
   const cookieStore = await cookies();
 
   const res = await fetch(`${expressBackendBaseRESTOrigin}/users/me`, {
+    method: "GET",
     headers: {
       Cookie: cookieStore
         .getAll()

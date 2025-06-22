@@ -37,6 +37,7 @@ export function AuthProvider({
     async function checkAuth() {
       try {
         const res = await fetch(`${expressBackendBaseRESTOrigin}/users/me`, {
+          method: "GET",
           credentials: "include",
         });
         const jsonResponse = await res.json();
