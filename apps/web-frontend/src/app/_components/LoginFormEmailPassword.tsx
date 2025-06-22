@@ -73,7 +73,9 @@ export default function LoginFormEmailPassword() {
         Password
       </FancyInput>
 
-      <button className="manual-auth-btn attractive-text-shadow">Login</button>
+      <button type="submit" className="manual-auth-btn attractive-text-shadow">
+        Login
+      </button>
 
       <Link
         className="text-center text-sm text-gray-500 underline-offset-4 hover:underline dark:text-gray-300"
