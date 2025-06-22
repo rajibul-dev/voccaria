@@ -46,6 +46,9 @@ export async function showMe(
   request: Request,
   response: Response
 ): Promise<any> {
+  console.log("Session data:", request.session);
+  console.log("User:", request.user);
+
   return response.status(200).json({
     success: true,
     message: "User found successfully",

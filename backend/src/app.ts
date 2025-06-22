@@ -6,7 +6,7 @@ import userRoutes from "./routes/userRoutes.js";
 import scheduleRoutes from "./routes/scheduleRoutes.js";
 
 import morgan from "morgan";
-import cookiePrser from "cookie-parser";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import session from "express-session";
 import MongoStore from "connect-mongo";
@@ -22,15 +22,23 @@ import errorHandlerMiddleware from "./middlewares/errorHandlerMiddleware.js";
 import { authorizeUser } from "./middlewares/authorizeUserMiddleware.js";
 dotenv.config();
 
+console.log("Node Environment:", process.env.NODE_ENV);
+
 export const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://voccaria.com",
+  "https://voccaria-git-dev-deploy-rajidevteams-projects.vercel.app",
+];
+
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 
 app.use(express.json());
 app.use(fileUpload({ useTempFiles: true }));
 app.use(morgan("dev"));
-app.use(cookiePrser(process.env.JWT_SECRET));
+app.use(cookieParser(process.env.JWT_SECRET));
 app.use(
   session({
     secret: process.env.COOKIE_SECRET
