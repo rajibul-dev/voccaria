@@ -8,7 +8,7 @@ const GOOGLE_CLIENT_SECRET = process.env.PASSPORT_GOOGLE_CLIENT_SECRET || "";
 const isProduction = process.env.NODE_ENV === "production";
 
 const GOOGLE_CALLBACK_URL = isProduction
-  ? "https://voccaria.com/api/v1/auth/google/redirect"
+  ? "https://api.voccaria.com/api/v1/auth/google/redirect"
   : "http://localhost:5000/api/v1/auth/google/redirect";
 
 export default passport.use(
