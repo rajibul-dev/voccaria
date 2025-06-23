@@ -7,6 +7,7 @@ import { sendAccountVerificationEmail } from "../helpers/sendAccountVerification
 import { sendPasswordResetLink } from "../helpers/sendPasswordResetLink.js";
 import createHash from "../helpers/createHash.js";
 import { sanitizeUser } from "../helpers/sanitizeUser.js";
+import passport from "passport";
 
 export async function register(
   request: Request,
@@ -193,24 +194,32 @@ export async function login(
   });
 }
 
-export async function googleRedirect(
-  request: Request,
-  response: Response
-): Promise<any> {
-  request.login(request.user, (err) => {
-    if (err) {
-      return response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        success: false,
-        message: "Error logging in with Google",
+export async function googleRedirect(request: Request, response: Response) {
+  passport.authenticate(
+    "google",
+    { failureRedirect: "/login-failure" },
+    (err, user, info) => {
+      if (err || !user) {
+        return response
+          .status(StatusCodes.UNAUTHORIZED)
+          .json({ success: false, message: "Google login failed" });
+      }
+
+      request.login(user, (err) => {
+        if (err) {
+          return response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            success: false,
+            message: "Login failed after Google auth",
+          });
+        }
+
+        const userId = user._id?.toString() ?? "";
+        const redirectUrl = `${process.env.FRONTEND_URL}/app/dashboard?userId=${userId}`;
+
+        return response.redirect(redirectUrl);
       });
     }
-
-    const redirectUrl = `${process.env.FRONTEND_URL}/app/dashboard`;
-    const user = request.user as IUser;
-    const userId = user?._id?.toString() ?? "";
-
-    return response.redirect(redirectUrl + `?userId=${userId}`);
-  });
+  )(request, response);
 }
 
 export async function getPasswordResetLink(
