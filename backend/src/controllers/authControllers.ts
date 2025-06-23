@@ -197,11 +197,20 @@ export async function googleRedirect(
   request: Request,
   response: Response
 ): Promise<any> {
-  const redirectUrl = `${process.env.FRONTEND_URL}/app/dashboard`;
-  const user = request.user as IUser;
-  const userId = user?._id?.toString() ?? "";
+  request.login(request.user, (err) => {
+    if (err) {
+      return response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        success: false,
+        message: "Error logging in with Google",
+      });
+    }
 
-  return response.redirect(redirectUrl + `?userId=${userId}`);
+    const redirectUrl = `${process.env.FRONTEND_URL}/app/dashboard`;
+    const user = request.user as IUser;
+    const userId = user?._id?.toString() ?? "";
+
+    return response.redirect(redirectUrl + `?userId=${userId}`);
+  });
 }
 
 export async function getPasswordResetLink(
