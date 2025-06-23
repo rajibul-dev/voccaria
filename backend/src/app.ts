@@ -50,6 +50,7 @@ app.use(
     optionsSuccessStatus: 200,
   })
 );
+app.options("*", cors()); // Pre-flight requests for all routes
 
 app.use(express.json());
 app.use(fileUpload({ useTempFiles: true }));
