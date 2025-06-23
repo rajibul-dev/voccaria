@@ -31,6 +31,8 @@ const allowedOrigins = [
   "http://localhost:3000",
   "https://voccaria.com",
   "https://voccaria-git-dev-deploy-rajidevteams-projects.vercel.app",
+  "https://voccaria-dev.vercel.app",
+  undefined, // Allow requests with no origin (like mobile apps or curl requests)
 ];
 
 app.use(
