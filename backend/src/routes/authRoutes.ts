@@ -27,7 +27,7 @@ router.get(
     prompt: "select_account",
   })
 );
-router.get("/google/redirect", googleRedirect);
+router.get("/google/redirect", passport.authenticate("google"), googleRedirect);
 router.post("/logout", logout);
 router.post("/forgot-password", getPasswordResetLink);
 router.post("/reset-password", resetPassword);
