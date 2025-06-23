@@ -33,24 +33,24 @@ const allowedOrigins = [
   undefined, // Allow requests with no origin (like mobile apps or curl requests)
 ];
 
+const corsOptions: cors.CorsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg =
+        "The CORS policy for this site does not allow access from the specified Origin.";
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true,
+  optionsSuccessStatus: 200,
+};
+
 app.set("trust proxy", 1);
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg =
-          "The CORS policy for this site does not allow access from the specified Origin.";
-        return callback(new Error(msg), false);
-      }
-      return callback(null, true);
-    },
-    credentials: true,
-    optionsSuccessStatus: 200,
-  })
-);
-app.options("*", cors()); // Pre-flight requests for all routes
+app.use(cors(corsOptions));
+app.options("/", cors(corsOptions)); // Enable pre-flight requests for all routes
 
 app.use(express.json());
 app.use(fileUpload({ useTempFiles: true }));
