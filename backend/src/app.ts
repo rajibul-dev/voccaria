@@ -22,8 +22,6 @@ import errorHandlerMiddleware from "./middlewares/errorHandlerMiddleware.js";
 import { authorizeUser } from "./middlewares/authorizeUserMiddleware.js";
 dotenv.config();
 
-console.log("Node Environment:", process.env.NODE_ENV);
-
 export const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -93,7 +91,7 @@ app.use(errorHandlerMiddleware);
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URL || "mongodb://localhost:27017");
-    app.listen(PORT, () => {
+    app.listen(PORT as number, "0.0.0.0", () => {
       console.log(`✅ Server is running on http://localhost:${PORT}`);
     });
   } catch (error) {
