@@ -50,7 +50,13 @@ const corsOptions: cors.CorsOptions = {
 
 app.set("trust proxy", 1);
 app.use(cors(corsOptions));
-app.options("/", cors(corsOptions)); // Enable pre-flight requests for all routes
+app.use((req, res, next) => {
+  if (req.method === "OPTIONS") {
+    res.sendStatus(204); // No Content
+  } else {
+    next();
+  }
+});
 
 app.use(express.json());
 app.use(fileUpload({ useTempFiles: true }));
