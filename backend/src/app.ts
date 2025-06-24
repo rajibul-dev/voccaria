@@ -40,6 +40,7 @@ const corsOptions: cors.CorsOptions = {
     if (allowedOrigins.indexOf(origin) === -1) {
       const msg =
         "The CORS policy for this site does not allow access from the specified Origin.";
+      console.error(msg, origin);
       return callback(new Error(msg), false);
     }
     return callback(null, true);
