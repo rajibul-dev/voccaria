@@ -72,7 +72,7 @@ app.use(
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       secure: process.env.NODE_ENV === "production",
       ...(process.env.NODE_ENV === "production" && {
-        domain: ".voccaria.com",
+        domain: "voccaria.com",
       }),
     },
     store: MongoStore.create({
