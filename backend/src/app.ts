@@ -28,8 +28,7 @@ const PORT = process.env.PORT || 5000;
 const allowedOrigins = [
   "http://localhost:3000",
   "https://voccaria.com",
-  "https://voccaria-git-dev-deploy-rajidevteams-projects.vercel.app",
-  "https://voccaria-dev.vercel.app",
+  "https://dev.voccaria.com",
   undefined, // Allow requests with no origin (like mobile apps or curl requests)
 ];
 
