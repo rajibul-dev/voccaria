@@ -7,12 +7,22 @@ import { useAuth } from "../_context/AuthContext";
 import Popover from "./Popover";
 import { useRouter } from "next/navigation";
 import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
+import toast from "react-hot-toast";
 
 export default function AccountMenu() {
   const { user, setUser } = useAuth();
   const route = useRouter();
 
   async function logout() {
+    // Optimistically clear UI
+    setUser(null);
+    toast.success("Logging out...", { icon: "👋" });
+
+    // Immediately route to login (or delay 300ms)
+    setTimeout(() => {
+      route.replace("/auth/login");
+    }, 300);
+
     try {
       const res = await fetch(`${expressBackendBaseRESTOrigin}/auth/logout`, {
         method: "POST",
@@ -22,14 +32,13 @@ export default function AccountMenu() {
         credentials: "include",
       });
 
-      if (res.ok) {
-        setUser(null);
-        route.replace("/auth/login");
-      } else {
-        console.error("Logout failed");
+      if (!res.ok) {
+        console.error("Logout failed on server.");
+        toast.error("Server logout failed.");
       }
     } catch (err) {
       console.error("Logout error", err);
+      toast.error("Network error during logout.");
     }
   }
 
