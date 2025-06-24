@@ -50,18 +50,16 @@ const corsOptions: cors.CorsOptions = {
 
 app.set("trust proxy", 1);
 app.use(cors(corsOptions));
-app.use((req, res, next) => {
-  if (req.method === "OPTIONS") {
-    res.sendStatus(204); // No Content
-  } else {
-    next();
-  }
-});
 
 app.use(express.json());
 app.use(fileUpload({ useTempFiles: true }));
 app.use(morgan("dev"));
 app.use(cookieParser(process.env.JWT_SECRET));
+
+console.log("Cookie Settings:", {
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  secure: process.env.NODE_ENV === "production",
+});
 app.use(
   session({
     secret: process.env.COOKIE_SECRET
@@ -73,6 +71,9 @@ app.use(
       maxAge: 1000 * 60 * 60 * 24, // 1 day
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       secure: process.env.NODE_ENV === "production",
+      ...(process.env.NODE_ENV === "production" && {
+        domain: ".voccaria.com",
+      }),
     },
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URL || "mongodb://localhost:27017",
