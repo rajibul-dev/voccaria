@@ -198,10 +198,7 @@ export async function googleRedirect(
   response: Response
 ): Promise<any> {
   const redirectUrl = `${process.env.FRONTEND_URL}/app/dashboard`;
-  const user = request.user as IUser;
-  const userId = user?._id?.toString() ?? "";
-
-  return response.redirect(redirectUrl + `?userId=${userId}`);
+  return response.redirect(redirectUrl + `?googleLogin=success`);
 }
 
 export async function getPasswordResetLink(
