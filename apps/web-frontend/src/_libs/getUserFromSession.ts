@@ -1,21 +1,23 @@
-import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
+import { FrontendURL } from "@/_constants/frontendOrigins";
 import { User } from "@/_types/user";
 import { cookies } from "next/headers";
 
-export async function getUserFromSession() {
+export async function getUserFromSession(): Promise<User | null> {
   const cookieStore = await cookies();
 
-  const res = await fetch(`${expressBackendBaseRESTOrigin}/users/me`, {
+  const res = await fetch(`${FrontendURL}/api/proxy`, {
     method: "GET",
+    cache: "no-store",
+    credentials: "include",
     headers: {
-      Cookie: cookieStore
+      cookie: cookieStore
         .getAll()
         .map(({ name, value }) => `${name}=${value}`)
         .join("; "),
     },
-    cache: "no-store",
-    credentials: "include",
   });
+
+  if (!res.ok) return null;
 
   const data = await res.json();
 
