@@ -33,15 +33,17 @@ export default function LoginFormEmailPassword() {
       const jsonResponse = await res.json();
 
       if (!res.ok) {
-        console.error("Login failed:", jsonResponse.message);
+        toast.error(jsonResponse.message || "Failed to login");
         return;
       }
 
       setUser(jsonResponse.data.user);
-      toast.success("Login successful!");
+      toast.success(
+        `Login successful! Welcome ${jsonResponse.data.user.name || "User"}!`,
+      );
       router.push("/app");
     } catch (error) {
-      console.error("Something went wrong:", error);
+      toast.error("Something went wrong");
     } finally {
       setIsLoading(false);
     }
