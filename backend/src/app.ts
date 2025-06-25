@@ -55,10 +55,6 @@ app.use(fileUpload({ useTempFiles: true }));
 app.use(morgan("dev"));
 app.use(cookieParser(process.env.JWT_SECRET));
 
-console.log("Cookie Settings:", {
-  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-  secure: process.env.NODE_ENV === "production",
-});
 app.use(
   session({
     secret: process.env.COOKIE_SECRET
