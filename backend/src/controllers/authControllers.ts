@@ -178,20 +178,20 @@ export async function requestNewVerificationEmail(
   });
 }
 
-export async function login(
-  request: Request,
-  response: Response
-): Promise<any> {
-  const user = request.user as IUser;
+// export async function login(
+//   request: Request,
+//   response: Response
+// ): Promise<any> {
+//   const user = request.user as IUser;
 
-  response.status(StatusCodes.OK).json({
-    success: true,
-    message: "User logged in successfully",
-    data: {
-      user: sanitizeUser(user),
-    },
-  });
-}
+//   response.status(StatusCodes.OK).json({
+//     success: true,
+//     message: "User logged in successfully",
+//     data: {
+//       user: sanitizeUser(user),
+//     },
+//   });
+// }
 
 export async function googleRedirect(
   request: Request,

@@ -10,6 +10,12 @@ export default passport.use(
         return done(null, false, { message: "User not found" });
       }
 
+      if (user.provider !== "local") {
+        return done(null, false, {
+          message: `User registered with a different provider: ${user.provider}`,
+        });
+      }
+
       const isPasswordCorrect = await user.comparePassword(password);
       if (!isPasswordCorrect) {
         return done(null, false, { message: "Invalid password" });
