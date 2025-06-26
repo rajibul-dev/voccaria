@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import FancyInput from "./FancyInput";
 import Link from "next/link";
 import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
@@ -14,6 +14,10 @@ export default function LoginFormEmailPassword() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { setUser } = useAuth();
+
+  useEffect(() => {
+    router.prefetch("/app");
+  }, []);
 
   async function handleLogin() {
     setIsLoading(true);
@@ -36,12 +40,20 @@ export default function LoginFormEmailPassword() {
         toast.error(jsonResponse.message || "Failed to login");
         return;
       }
+      // Schedule user state update without blocking UI
+      startTransition(() => {
+        setUser(jsonResponse.data.user);
+      });
 
-      setUser(jsonResponse.data.user);
-      toast.success(
-        `Login successful! Welcome ${jsonResponse.data.user.name || "User"}!`,
-      );
-      router.push("/app");
+      // Move to /app right away
+      router.replace("/app");
+
+      // Toast after short delay (for hydration + nice UX)
+      setTimeout(() => {
+        toast.success(
+          `Login successful! Welcome ${jsonResponse.data.user.name || "User"}!`,
+        );
+      }, 300);
     } catch (error) {
       toast.error("Something went wrong");
     } finally {

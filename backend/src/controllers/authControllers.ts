@@ -44,6 +44,10 @@ export async function register(
       await existingUser.save();
 
       await sendAccountVerificationEmail({ email, verificationLink, name });
+      return response.status(StatusCodes.OK).json({
+        success: true,
+        message: "Success! Please check your email to verify account.",
+      });
     }
   }
 
