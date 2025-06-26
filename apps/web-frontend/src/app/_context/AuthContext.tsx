@@ -36,7 +36,7 @@ export function AuthProvider({
   useEffect(() => {
     async function checkAuth() {
       try {
-        const res = await fetch("/api/proxy", {
+        const res = await fetch("/api/users/me", {
           credentials: "include",
         });
         const jsonResponse = await res.json();
