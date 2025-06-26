@@ -51,7 +51,7 @@ export default function SignupFormEmailPassword() {
 
       setIsSuccess(true);
       setCountdown(30);
-      toast.success("Check your email to verify your account.");
+      toast.success("Please check your email to verify your account");
     } catch (error) {
       toast.error("Something went wrong during registration");
       console.error(error);
@@ -141,7 +141,7 @@ export default function SignupFormEmailPassword() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="manual-auth-btn attractive-text-shadow"
+            className="manual-auth-btn attractive-text-shadow disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isSubmitting ? "Creating Account..." : "Create Account"}
           </button>
