@@ -5,10 +5,7 @@ import FancyInput from "./FancyInput";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
-
-function isGmail(email: string): boolean {
-  return email.toLowerCase().endsWith("@gmail.com");
-}
+import { isGmail } from "@/_helpers/isGmail";
 
 export default function SignupFormEmailPassword() {
   const [displayName, setDisplayName] = useState("");

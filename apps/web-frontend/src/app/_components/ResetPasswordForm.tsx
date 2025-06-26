@@ -10,6 +10,7 @@ export default function ResetPasswordForm() {
   const [email, setEmail] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   function handleSubmit(event: React.FormEvent) {
@@ -39,7 +40,7 @@ export default function ResetPasswordForm() {
       return;
     }
 
-    console.log(token);
+    setIsLoading(true);
 
     fetch(`${expressBackendBaseRESTOrigin}/auth/reset-password`, {
       method: "POST",
@@ -62,6 +63,8 @@ export default function ResetPasswordForm() {
         );
         console.error(error);
       });
+
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -117,9 +120,10 @@ export default function ResetPasswordForm() {
 
       <button
         type="submit"
-        className="manual-auth-btn attractive-text-shadow w-full"
+        className="manual-auth-btn attractive-text-shadow w-full disabled:cursor-not-allowed disabled:opacity-50"
+        disabled={isLoading}
       >
-        Reset Password
+        {isLoading ? "Resetting..." : "Reset Password"}
       </button>
     </form>
   );
