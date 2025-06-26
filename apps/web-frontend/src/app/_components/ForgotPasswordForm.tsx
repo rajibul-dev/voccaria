@@ -14,6 +14,7 @@ export default function ForgotPasswordForm() {
     event.preventDefault();
 
     setIsLoading(true);
+    setIsSuccess(false);
 
     try {
       const res = await fetch(
@@ -32,6 +33,10 @@ export default function ForgotPasswordForm() {
         setIsSuccess(true);
         toast.success("Password reset link sent! Please check your email.");
       } else {
+        toast.error(
+          jsonResponse.message || "Failed to send password reset link.",
+        );
+        setIsSuccess(false);
         console.error("Error sending password reset link:", jsonResponse);
       }
     } catch (error) {
