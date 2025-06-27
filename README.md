@@ -33,4 +33,4 @@ Crafted by [Rajibul Islam](https://www.linkedin.com/in/rajibul-dev), this projec
 
 - [LinkedIn](https://www.linkedin.com/in/rajibul-dev)
 - [Telegram](https://t.me/rajiraji201)
-- [GitHub](https://github.com/rajibul-de)
+- [GitHub](https://github.com/rajibul-dev)
