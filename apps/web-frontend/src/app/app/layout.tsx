@@ -24,8 +24,10 @@ export default async function AppLayout({
     >
       <AppHeader />
       <AppSidebar /> {/* hidden below 640px width */}
-      <div className={`overflow-y-auto [grid-area:content]`}>
-        <main className={clsx(`bg-gray-50 dark:bg-gray-900`, "h-400")}>
+      <div
+        className={`flex flex-col overflow-y-auto bg-gray-50 [grid-area:content] dark:bg-gray-900`}
+      >
+        <main className={clsx(`mx-auto my-8 max-w-250 flex-1`)}>
           {children}
         </main>
         <AppFooter />
