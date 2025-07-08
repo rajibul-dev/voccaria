@@ -58,23 +58,25 @@ export async function updateMe(
   response: Response
 ): Promise<any> {
   const { _id } = request.user as IUser;
-  const { name } = request.body;
+  const { name, bio } = request.body;
 
-  if (!name) {
+  if (!name && !bio) {
     return response.status(StatusCodes.BAD_REQUEST).json({
       success: false,
-      message: "Name is required",
+      message: "Nothing was provided for updating",
     });
   }
 
-  const user = await User.findOne({ _id });
-  user.name = name;
-  await user.save();
+  const updatedUser = await User.findByIdAndUpdate(
+    _id,
+    { ...(name && { name }), ...(bio && { bio }) },
+    { new: true, runValidators: true }
+  );
 
   return response.status(StatusCodes.OK).json({
     success: true,
     message: "User updated successfully",
-    data: user,
+    data: updatedUser,
   });
 }
 

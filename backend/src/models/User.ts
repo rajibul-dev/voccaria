@@ -42,6 +42,8 @@ export interface IUser extends Document {
     selected?: "manual" | "google" | "discord";
   };
 
+  bio?: string;
+
   createdAt: Date;
   updatedAt: Date;
 
@@ -130,6 +132,11 @@ const UserSchema: Schema<IUser> = new Schema(
     providerId: {
       type: String,
       default: null,
+    },
+
+    bio: {
+      type: String,
+      maxlength: [4000, "Bio should be under 4000 letters"],
     },
   },
   { timestamps: true }
