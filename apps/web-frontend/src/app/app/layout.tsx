@@ -27,7 +27,11 @@ export default async function AppLayout({
       <div
         className={`flex flex-col overflow-y-auto bg-gray-50 [grid-area:content] dark:bg-gray-900`}
       >
-        <main className={clsx(`mx-auto my-10 w-full max-w-260 flex-1 px-5`)}>
+        <main
+          className={clsx(
+            `mx-auto my-10 w-full max-w-260 flex-1 px-8 max-sm:px-6`,
+          )}
+        >
           {children}
         </main>
         <AppFooter />
