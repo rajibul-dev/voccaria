@@ -60,7 +60,7 @@ export async function updateMe(
   const { _id } = request.user as IUser;
   const { name, bio } = request.body;
 
-  if (!name && !bio) {
+  if (!name && bio === undefined) {
     return response.status(StatusCodes.BAD_REQUEST).json({
       success: false,
       message: "Nothing was provided for updating",
@@ -69,7 +69,7 @@ export async function updateMe(
 
   const updatedUser = await User.findByIdAndUpdate(
     _id,
-    { ...(name && { name }), ...(bio && { bio }) },
+    { ...(name && { name }), ...(bio !== undefined && { bio }) },
     { new: true, runValidators: true }
   );
 
