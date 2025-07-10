@@ -32,6 +32,7 @@ export interface User {
     display_name?: string;
     avatar?: string;
   };
+  bio?: string;
   createdAt: string;
   updatedAt: string;
 }

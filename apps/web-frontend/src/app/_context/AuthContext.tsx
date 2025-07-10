@@ -1,12 +1,12 @@
+import { CACHED_USER_KEY } from "@/_constants/stringKeys";
+import { User } from "@/_types/user";
 import {
   createContext,
+  ReactNode,
   useContext,
   useEffect,
   useState,
-  ReactNode,
 } from "react";
-import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
-import { User } from "@/_types/user";
 
 type AuthContextType = {
   user: User | null;
@@ -34,6 +34,13 @@ export function AuthProvider({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const cachedUser = sessionStorage.getItem(CACHED_USER_KEY);
+    if (cachedUser) {
+      setUser(JSON.parse(cachedUser));
+      setLoading(false);
+      return;
+    }
+
     async function checkAuth() {
       try {
         const res = await fetch("/api/users/me", {
@@ -42,6 +49,10 @@ export function AuthProvider({
         const jsonResponse = await res.json();
         if (jsonResponse.success && jsonResponse.data) {
           setUser(jsonResponse.data);
+          sessionStorage.setItem(
+            CACHED_USER_KEY,
+            JSON.stringify(jsonResponse.data),
+          );
         }
       } catch (err) {
         console.error("Auth check failed", err);
@@ -52,6 +63,14 @@ export function AuthProvider({
 
     checkAuth();
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      sessionStorage.setItem(CACHED_USER_KEY, JSON.stringify(user));
+    } else {
+      sessionStorage.removeItem(CACHED_USER_KEY);
+    }
+  }, [user]);
 
   return (
     <AuthContext.Provider
