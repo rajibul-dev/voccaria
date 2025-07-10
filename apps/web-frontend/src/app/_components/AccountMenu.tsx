@@ -8,6 +8,7 @@ import Popover from "./Popover";
 import { useRouter } from "next/navigation";
 import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
 import toast from "react-hot-toast";
+import { CACHED_USER_KEY } from "@/_constants/stringKeys";
 
 export default function AccountMenu() {
   const { user, setUser } = useAuth();
@@ -16,6 +17,7 @@ export default function AccountMenu() {
   async function logout() {
     // Optimistically clear UI
     setUser(null);
+    sessionStorage.removeItem(CACHED_USER_KEY);
     toast.success("Logging out...", { icon: "👋" });
 
     // Immediately route to login (or delay 300ms)
