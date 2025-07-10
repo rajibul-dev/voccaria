@@ -69,6 +69,7 @@ export default function EditProfileForm({
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Enter your name"
+          required
         />
 
         <Input
