@@ -28,7 +28,7 @@ export default function MyProfile() {
       )}
 
       {!isEditing && user?.bio && (
-        <p className="max-w-[60ch] text-base text-gray-800 dark:text-gray-200">
+        <p className="max-w-[65ch] text-base text-gray-800 dark:text-gray-200">
           {user.bio}
         </p>
       )}
