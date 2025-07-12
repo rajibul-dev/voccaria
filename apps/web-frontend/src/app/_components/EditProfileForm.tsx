@@ -2,14 +2,14 @@
 
 import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
 import { User } from "@/_types/user";
-import { Avatar, dividerClasses, Modal } from "@mui/material";
+import { Avatar, Modal } from "@mui/material";
+import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
 import { DropEvent, FileRejection, useDropzone } from "react-dropzone";
 import toast from "react-hot-toast";
 import { FaImage } from "react-icons/fa6";
 import Button from "./Button";
 import Input from "./Input";
-import clsx from "clsx";
 
 export default function EditProfileForm({
   user,
@@ -27,6 +27,7 @@ export default function EditProfileForm({
   const handleOpen = () => setModalOpen(true);
   const handleClose = () => setModalOpen(false);
   const [isSettingAvatar, setIsSettingAvatar] = useState(false);
+  const [isDeletingAvatar, setIsDeletingAvatar] = useState(false);
 
   const [image, setFiles] = useState<(File & { preview: string })[]>([]);
   const [rejected, setRejected] = useState<File[]>([]);
@@ -99,18 +100,49 @@ export default function EditProfileForm({
       const json = await res.json();
 
       if (!res.ok) {
-        toast.error(json.message || "Failed to upload avatar.");
+        toast.error(json.message || "Failed to upload avatar");
         return;
       }
 
       removeSelection();
-      setModalOpen(false);
-      toast.success("Avatar uploaded successfully!");
+      handleClose();
+      toast.success(json.message || "Avatar uploaded successfully!");
       setUser((prev) => (prev ? { ...prev, avatar: json.data.url } : prev));
     } catch (error) {
-      toast.error("Something went wrong. Please try again.");
+      toast.error("Something went wrong while uploading avatar");
+      console.error(error);
     } finally {
       setIsSettingAvatar(false);
+    }
+  }
+
+  async function handleDeleteAvatar() {
+    setIsDeletingAvatar(true);
+
+    try {
+      const res = await fetch(
+        `${expressBackendBaseRESTOrigin}/users/me/avatar`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        },
+      );
+
+      const json = await res.json();
+
+      if (!res.ok) {
+        toast.error(json.message || "Failed to delete avatar");
+        return;
+      }
+
+      toast.success(json.message || "Deleted avatar successfully");
+      setUser(json.data.user);
+      handleClose();
+    } catch (error) {
+      toast.error("Something went wrong while deleting avatar");
+      console.error(error);
+    } finally {
+      setIsDeletingAvatar(false);
     }
   }
 
@@ -143,16 +175,29 @@ export default function EditProfileForm({
     }
   }
 
+  const sizeInMB = (image[0]?.size ?? 0) / (1024 * 1024);
+
+  // check for over 2MB
+  const isLargeFile = sizeInMB > 2;
+
   return (
     <form
       className="flex w-full flex-col items-start gap-6"
       onSubmit={handleSubmit}
     >
       <div onClick={handleOpen} className="relative">
-        <Avatar src={user?.avatar} sx={{ width: 170, height: 170 }} />
+        <Avatar
+          style={
+            user?.avatar === null ? { background: "#222", color: "#222" } : {}
+          }
+          src={user?.avatar}
+          sx={{ width: 170, height: 170 }}
+        />
         <div className="absolute top-0 left-0 flex h-full w-full cursor-pointer flex-col items-center justify-center gap-1 rounded-full bg-black/40">
           <FaImage className="text-5xl text-gray-100" />
-          <p className="text-sm font-semibold text-gray-100">Change Avatar</p>
+          <p className="text-sm font-semibold text-gray-100">
+            {user?.avatar !== null ? "Change avatar" : "Add avatar"}
+          </p>
         </div>
       </div>
 
@@ -239,12 +284,32 @@ export default function EditProfileForm({
                     {!isSettingAvatar ? "Upload" : "Uploading..."}
                   </Button>
                 </div>
+                {isLargeFile && (
+                  <p className="text-sm text-orange-500 dark:text-orange-400">
+                    This file is over 2MB and may upload slowly, especially on
+                    slow connections.
+                  </p>
+                )}
               </div>
             )}
 
             {rejected.length > 0 && (
               <div className="mt-4 text-center text-sm font-medium text-red-700 select-none dark:text-red-500">
                 Invalid file(s). Please use PNG, JPG, or JPEG under 10MB.
+              </div>
+            )}
+
+            {/* avatar removing button */}
+            {user?.avatar !== null && image.length === 0 && (
+              <div className="mt-6 flex justify-center gap-4">
+                <Button
+                  type="button"
+                  variant="dangerOutline"
+                  onClick={handleDeleteAvatar}
+                  disabled={isDeletingAvatar}
+                >
+                  {!isDeletingAvatar ? "Delete Avatar" : "Deleting..."}
+                </Button>
               </div>
             )}
           </div>
