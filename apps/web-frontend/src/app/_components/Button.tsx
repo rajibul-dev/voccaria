@@ -4,7 +4,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import { useMemo } from "react";
 
-type Variant = "solid" | "outline" | "subtle";
+type Variant = "solid" | "outline" | "subtle" | "dangerOutline";
 type Size = "sm" | "md" | "lg";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -39,7 +39,9 @@ export default function Button({
       solid:
         "bg-my-pink-500 hover:bg-my-pink-600 text-white dark:bg-my-pink-600 dark:hover:bg-my-pink-700",
       outline:
-        "border border-my-pink-500 text-my-pink-600 hover:bg-my-pink-50 dark:border-my-pink-400 dark:text-my-pink-400 dark:hover:bg-my-pink-800",
+        "border border-my-pink-500 text-my-pink-600 hover:bg-my-pink-100 dark:border-my-pink-400 dark:text-my-pink-400 dark:hover:bg-my-pink-900",
+      dangerOutline:
+        "border border-red-500 text-red-500 hover:bg-red-100 dark:border-red-400 dark:text-red-400 hover:dark:bg-red-950",
       subtle:
         "text-my-pink-600 hover:bg-my-pink-100 dark:text-my-pink-300 dark:hover:bg-my-pink-800",
     }[variant];
