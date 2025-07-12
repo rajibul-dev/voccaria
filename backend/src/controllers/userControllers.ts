@@ -83,13 +83,9 @@ export async function addAvatar(
   request: Request,
   response: Response
 ): Promise<any> {
-  const reqUser: IUser = request.user as IUser;
-  const user = await User.findById(reqUser._id);
-  const file = request.files?.avatar;
-  const folderPath = `voccaria/avatars/${user._id}`;
-  const previousAvatar = user.avatars[user.avatars.selected] || null;
-  const wasDefaultAvatarPlaceholder = previousAvatar === null;
+  const reqUser = request.user as IUser;
 
+  const file = request.files?.avatar;
   if (!file) {
     return response.status(StatusCodes.BAD_REQUEST).json({
       success: false,
@@ -97,19 +93,27 @@ export async function addAvatar(
     });
   }
 
-  // Destroy previous manual avatar if it was not the default one
-  if (!wasDefaultAvatarPlaceholder && user.avatars.selected === "manual") {
-    await deleteAvatarFromCloudinary(user.avatars.manual);
+  // Async delete old avatar (non-blocking)
+  if (reqUser.avatars?.selected === "manual" && reqUser.avatars.manual) {
+    deleteAvatarFromCloudinary(reqUser.avatars.manual).catch(console.error);
   }
 
+  const folderPath = `voccaria/avatars/${reqUser._id}`;
+
+  // Upload new avatar (wait for completion)
   const result = await cloudinary.uploader.upload((file as any).tempFilePath, {
     folder: folderPath,
     resource_type: "auto",
+    use_filename: true,
+    unique_filename: false,
+    overwrite: true,
   });
 
-  user.avatars.manual = result.secure_url;
-  user.avatars.selected = "manual";
-  await user.save();
+  // Update user avatars in DB
+  await User.findByIdAndUpdate(reqUser._id, {
+    "avatars.manual": result.secure_url,
+    "avatars.selected": "manual",
+  });
 
   return response.status(StatusCodes.CREATED).json({
     success: true,
@@ -211,7 +215,7 @@ export async function removeAvatar(
   return response.status(StatusCodes.OK).json({
     success: true,
     message: `Avatar removed successfully`,
-    data: { url: user.avatar },
+    data: { user },
   });
 }
 
