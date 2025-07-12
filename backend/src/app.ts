@@ -1,26 +1,26 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express, { Request, Response } from "express";
 import connectDB from "./database/connect.js";
 
 import authRoutes from "./routes/authRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
 import scheduleRoutes from "./routes/scheduleRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
-import morgan from "morgan";
+import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import session from "express-session";
-import MongoStore from "connect-mongo";
+import morgan from "morgan";
 
-import dotenv from "dotenv";
-import passport from "passport";
-import "./libs/passport/localStrategy.js";
-import "./libs/passport/googleStrategy.js";
-import "./libs/passport/discordStrategy.js";
-import "./libs/cloudinary.js";
 import fileUpload from "express-fileupload";
+import passport from "passport";
+import "./libs/cloudinary.js";
+import "./libs/passport/discordStrategy.js";
+import "./libs/passport/googleStrategy.js";
+import "./libs/passport/localStrategy.js";
 import errorHandlerMiddleware from "./middlewares/errorHandlerMiddleware.js";
-import { authorizeUser } from "./middlewares/authorizeUserMiddleware.js";
-dotenv.config();
 
 export const app = express();
 const PORT = process.env.PORT || 5000;

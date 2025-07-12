@@ -104,7 +104,6 @@ export async function addAvatar(
 
   const result = await cloudinary.uploader.upload((file as any).tempFilePath, {
     folder: folderPath,
-    public_id: (file as any).name.split(".")[0],
     resource_type: "auto",
   });
 

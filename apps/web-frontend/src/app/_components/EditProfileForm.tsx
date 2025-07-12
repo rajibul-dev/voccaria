@@ -26,6 +26,7 @@ export default function EditProfileForm({
   const [modalOpen, setModalOpen] = useState(false);
   const handleOpen = () => setModalOpen(true);
   const handleClose = () => setModalOpen(false);
+  const [isSettingAvatar, setIsSettingAvatar] = useState(false);
 
   const [image, setFiles] = useState<(File & { preview: string })[]>([]);
   const [rejected, setRejected] = useState<File[]>([]);
@@ -80,6 +81,8 @@ export default function EditProfileForm({
       return;
     }
 
+    setIsSettingAvatar(true);
+
     const formData = new FormData();
     formData.append("avatar", file);
 
@@ -100,12 +103,14 @@ export default function EditProfileForm({
         return;
       }
 
+      removeSelection();
+      setModalOpen(false);
       toast.success("Avatar uploaded successfully!");
-      // Update user avatar state or refetch user data here
       setUser((prev) => (prev ? { ...prev, avatar: json.data.url } : prev));
-      setIsEditing(false);
     } catch (error) {
       toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsSettingAvatar(false);
     }
   }
 
@@ -229,8 +234,9 @@ export default function EditProfileForm({
                   <Button
                     type="button"
                     onClick={() => handleAvatarSubmit(image[0])}
+                    disabled={isSettingAvatar}
                   >
-                    Done
+                    {!isSettingAvatar ? "Upload" : "Uploading..."}
                   </Button>
                 </div>
               </div>
