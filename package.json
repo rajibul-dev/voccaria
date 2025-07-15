@@ -1,0 +1,26 @@
+{
+  "name": "voccaria",
+  "version": "1.0.0",
+  "description": "**Voccaria** is the official website for _One Voice_ — a mission-driven community dedicated to helping anyone learn to sing **freely and safely**. This site serves as a **landing and connection point** for learners to explore the free resources, get free singing lessons, and/or buy paid lessons.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm:dev-frontend\" \"npm:dev-backend\"",
+    "dev-frontend": "npm --prefix apps/web-frontend run dev",
+    "dev-backend": "npm --prefix backend run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rajidevteam/voccaria.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/rajidevteam/voccaria/issues"
+  },
+  "homepage": "https://github.com/rajidevteam/voccaria#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.0"
+  }
+}
