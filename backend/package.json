@@ -4,7 +4,7 @@
   "description": "Backend for Voccaria",
   "main": "app.ts",
   "scripts": {
-    "dev": "tsx watch src/app.ts",
+    "dev": "tsx watch --clear-screen=false src/app.ts",
     "build": "tsc",
     "start": "node dist/app.js",
     "tsc": "tsc --watch"
