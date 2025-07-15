@@ -18,7 +18,7 @@ export default function Logo({
         <Image
           src={logoImg}
           className={clsx(
-            "w-38 -translate-y-0.5 max-sm:w-30 dark:brightness-105",
+            "w-38 -translate-y-0.5 max-sm:w-30 max-sm:translate-y-0 dark:brightness-105",
             className,
           )}
           alt="Voccaria logo"
