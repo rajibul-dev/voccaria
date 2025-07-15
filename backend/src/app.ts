@@ -91,6 +91,13 @@ app.get("/keep-alive", (request: Request, response: Response) => {
   response.status(200).send("I'm awake!");
 });
 
+app.post("/log", (request: Request, response: Response) => {
+  const { message, data } = request.body;
+  console.log(message);
+  console.log(data);
+  response.status(200);
+});
+
 app.use(errorHandlerMiddleware);
 
 const start = async () => {
