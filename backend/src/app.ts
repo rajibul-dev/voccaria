@@ -27,6 +27,7 @@ const PORT = process.env.PORT || 5000;
 
 const allowedOrigins = [
   "http://localhost:3000",
+  "http://192.168.1.183:3000", // my local ip
   "https://voccaria.com",
   "https://dev.voccaria.com",
   undefined, // Allow requests with no origin (like mobile apps or curl requests)
