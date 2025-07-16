@@ -6,10 +6,11 @@ import styles from "./pricing-card-item.module.css";
 import dynamic from "next/dynamic";
 
 // components
-import Button from "@/app/_old-components/button";
+import OldButton from "@/app/_old-components/button";
+import Button from "@/app/_components/Button";
 
 const ClientCheckoutModalWindow = dynamic(
-  () => import("./checkout/client-checkout-modal-window")
+  () => import("./checkout/client-checkout-modal-window"),
 );
 
 interface PricingCardItemProps {
@@ -22,6 +23,10 @@ interface PricingCardItemProps {
   className?: string;
   moreDescription?: string;
   recommendedRow?: boolean;
+  importantInfo?: {
+    label?: string;
+    description: string | React.ReactNode;
+  };
 }
 
 const PricingCardItem: React.FC<PricingCardItemProps> = ({
@@ -34,6 +39,7 @@ const PricingCardItem: React.FC<PricingCardItemProps> = ({
   className = "",
   moreDescription,
   recommendedRow,
+  importantInfo,
 }) => {
   const nameSlittedArray = name.split(" ");
   const sliceFirstPart = nameSlittedArray.slice(0, -2).join(" ");
@@ -70,7 +76,28 @@ const PricingCardItem: React.FC<PricingCardItemProps> = ({
         >
           {cookedName}
         </h3>
-        {description && <p className={styles.description}>{description}</p>}
+        {description && (
+          <p className={styles.description}>
+            {description}{" "}
+            {importantInfo && (
+              <Modal>
+                <Modal.Open opens="info">
+                  <Button
+                    className="dark:text-my-pink-600 hover:dark:bg-my-pink-100 inline px-[2px] py-[0px] ![font-size:inherit]"
+                    variant="subtle"
+                  >
+                    {importantInfo.label}
+                  </Button>
+                </Modal.Open>
+                <Modal.Window heading={importantInfo.label} name="info">
+                  <p className="text-[1.8rem] leading-[1.6] text-gray-900 max-md:text-[2.1rem]">
+                    {importantInfo.description}
+                  </p>
+                </Modal.Window>
+              </Modal>
+            )}
+          </p>
+        )}
 
         <ClientCheckoutModalWindow
           amount={amount}
