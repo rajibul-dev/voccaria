@@ -103,7 +103,7 @@ export default function OldFooter() {
               )}
               target="_blank"
               rel="noopener noreferrer"
-              href="https://www.notion.so/Portfolio-1cc7bdc1208c80bfa968c49fbf67118f?pvs=4"
+              href="https://cloud-gold-6b4.notion.site/Portfolio-Rajibul-Islam-2327bdc1208c80009642f71a54f616ee?source=copy_link"
             >
               Rajibul Islam
             </a>
