@@ -43,7 +43,7 @@ export function Providers({
                     },
                   ),
                   success: {
-                    duration: 4000,
+                    duration: 3000,
                   },
                   error: {
                     duration: 10000,
