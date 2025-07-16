@@ -90,9 +90,9 @@ const PricingCardItem: React.FC<PricingCardItemProps> = ({
                   </Button>
                 </Modal.Open>
                 <Modal.Window heading={importantInfo.label} name="info">
-                  <p className="text-[1.8rem] leading-[1.6] text-gray-900 max-md:text-[2.1rem]">
+                  <div className="text-[1.8rem] leading-[1.6] text-gray-900 max-md:text-[2.1rem]">
                     {importantInfo.description}
-                  </p>
+                  </div>
                 </Modal.Window>
               </Modal>
             )}
