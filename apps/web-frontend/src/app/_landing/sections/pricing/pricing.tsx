@@ -73,6 +73,23 @@ const newPricingDetails = [
     className: "recordingReviewCard",
     moreDescription:
       "Send your recordings and a detailed description of the sound and style you're aiming for to begin your customized vocal journey!",
+    importantInfo: {
+      label: "Offline vs Live – What’s better?",
+      description: (
+        <>
+          The assessment option is{" "}
+          <strong>designed for students who cannot attend live lessons</strong>.
+          It provides a personalized review, detailed feedback, and a custom
+          roadmap to support your goals. However,{" "}
+          <strong>
+            if you are able to attend live sessions, I highly recommend them
+            instead
+          </strong>
+          , as they include all of the above along with real-time guidance,
+          direct interaction, and faster progress.
+        </>
+      ),
+    },
   },
   {
     currency: "eur",

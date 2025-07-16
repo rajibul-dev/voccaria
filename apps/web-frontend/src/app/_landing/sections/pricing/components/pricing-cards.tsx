@@ -16,6 +16,10 @@ interface PricingDetails {
   className?: string;
   moreDescription?: string;
   recommendedRow?: boolean;
+  importantInfo?: {
+    label?: string;
+    description: string | React.ReactNode;
+  };
 }
 
 interface PricingCardsProps {
@@ -37,6 +41,7 @@ const PricingCards: React.FC<PricingCardsProps> = ({ pricingDetails }) => {
           className={item?.className}
           moreDescription={item?.moreDescription}
           recommendedRow={item?.recommendedRow}
+          importantInfo={item?.importantInfo}
         />
       ))}
     </ul>
