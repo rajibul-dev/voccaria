@@ -69,7 +69,7 @@ export async function updateMe(
   const user = await User.findOne(_id);
 
   if (name) user.name = name;
-  if (bio) user.bio = bio;
+  if (bio || bio === "") user.bio = bio;
   await user.save();
 
   return response.status(StatusCodes.OK).json({
