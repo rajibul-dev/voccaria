@@ -137,6 +137,7 @@ const UserSchema: Schema<IUser> = new Schema(
     bio: {
       type: String,
       maxlength: [1200, "Bio should be under 1200 letters"],
+      default: "",
     },
   },
   { timestamps: true }
