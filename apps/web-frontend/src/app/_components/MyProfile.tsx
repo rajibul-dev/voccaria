@@ -20,9 +20,11 @@ export default function MyProfile() {
             <h1 className="text-4xl font-extrabold text-gray-800 dark:text-gray-100">
               {user?.name}
             </h1>
-            <p className="text-lg font-extrabold text-slate-500 uppercase dark:text-slate-400">
-              Member since {formatDate(user?.createdAt || "", "MMMM dd, yyyy")}
-            </p>
+            {user?.createdAt ? (
+              <p className="text-lg font-extrabold text-slate-500 uppercase dark:text-slate-400">
+                Member since {formatDate(user?.createdAt, "MMMM dd, yyyy")}
+              </p>
+            ) : null}
           </div>
         </div>
       )}

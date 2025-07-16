@@ -4,7 +4,7 @@ import { Avatar } from "@mui/material";
 import Link from "next/link";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useAuth } from "../_context/AuthContext";
-import Popover from "./Popover";
+import Popover, { usePopoverManager } from "./Popover";
 import { useRouter } from "next/navigation";
 import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
 import toast from "react-hot-toast";
@@ -13,8 +13,11 @@ import { CACHED_USER_KEY } from "@/_constants/stringKeys";
 export default function AccountMenu() {
   const { user, setUser } = useAuth();
   const route = useRouter();
+  const { close } = usePopoverManager();
 
   async function logout() {
+    close();
+
     // Optimistically clear UI
     setUser(null);
     sessionStorage.removeItem(CACHED_USER_KEY);
@@ -88,12 +91,14 @@ export default function AccountMenu() {
             <div>
               <Link
                 href="/app/profile"
+                onClick={close}
                 className="text-dark flex w-full items-center justify-between px-4 py-2.5 text-base font-medium hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-white/5"
               >
                 View profile
               </Link>
               <Link
                 href="/app/settings"
+                onClick={close}
                 className="text-dark flex w-full items-center justify-between px-4 py-2.5 text-base font-medium hover:bg-gray-50 dark:text-gray-100 dark:hover:bg-white/5"
               >
                 Settings
