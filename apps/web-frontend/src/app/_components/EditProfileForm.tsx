@@ -152,6 +152,13 @@ export default function EditProfileForm({
       toast.error("Name cannot be empty");
       return;
     }
+
+    // if no fields have been changed
+    if (user?.name.trim() === name && user?.bio?.trim() === bio) {
+      setIsEditing(false);
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       const res = await fetch(`${expressBackendBaseRESTOrigin}/users/me`, {
@@ -166,7 +173,7 @@ export default function EditProfileForm({
         return;
       }
       toast.success("Profile updated successfully");
-      setUser(jsonResponse.data);
+      setUser(jsonResponse.data.user);
       setIsEditing(false);
     } catch {
       toast.error("Something went wrong. Please try again.");

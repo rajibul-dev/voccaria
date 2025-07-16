@@ -66,16 +66,16 @@ export async function updateMe(
     });
   }
 
-  const updatedUser = await User.findByIdAndUpdate(
-    _id,
-    { ...(name && { name }), ...(bio !== undefined && { bio }) },
-    { new: true, runValidators: true }
-  );
+  const user = await User.findOne(_id);
+
+  if (name) user.name = name;
+  if (bio) user.bio = bio;
+  await user.save();
 
   return response.status(StatusCodes.OK).json({
     success: true,
     message: "User updated successfully",
-    data: updatedUser,
+    data: { user },
   });
 }
 
