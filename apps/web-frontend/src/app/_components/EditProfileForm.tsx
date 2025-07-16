@@ -182,7 +182,7 @@ export default function EditProfileForm({
 
   return (
     <form
-      className="flex w-full flex-col items-start gap-6"
+      className="mb-16 flex w-full flex-col items-start gap-6"
       onSubmit={handleSubmit}
     >
       <div onClick={handleOpen} className="relative">

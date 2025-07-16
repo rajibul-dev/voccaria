@@ -14,7 +14,7 @@ export default function MyProfile() {
   return (
     <>
       {!isEditing && (
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-8 max-[820px]:flex-col max-[820px]:items-start max-[560px]:!flex-col max-[560px]:!items-start max-sm:flex-row max-sm:items-center">
           <Avatar src={user?.avatar} sx={{ width: 170, height: 170 }} />
           <div className="flex flex-col gap-1.5">
             <h1 className="text-4xl font-extrabold text-gray-800 dark:text-gray-100">
