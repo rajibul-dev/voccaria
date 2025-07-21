@@ -2,14 +2,23 @@
 
 import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
 import { User } from "@/_types/user";
-import { Avatar, Modal } from "@mui/material";
+import {
+  Avatar,
+  InputLabel,
+  MenuItem,
+  Modal,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 import clsx from "clsx";
-import { useCallback, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { DropEvent, FileRejection, useDropzone } from "react-dropzone";
 import toast from "react-hot-toast";
 import { FaImage } from "react-icons/fa6";
 import Button from "./Button";
 import Input from "./Input";
+import Popover from "./Popover";
+import { IoMdArrowDropdown } from "react-icons/io";
 
 export default function EditProfileForm({
   user,
@@ -28,9 +37,59 @@ export default function EditProfileForm({
   const handleClose = () => setModalOpen(false);
   const [isSettingAvatar, setIsSettingAvatar] = useState(false);
   const [isDeletingAvatar, setIsDeletingAvatar] = useState(false);
+  const [providers, setProviders] = useState<string[]>([]);
 
   const [image, setFiles] = useState<(File & { preview: string })[]>([]);
   const [rejected, setRejected] = useState<File[]>([]);
+
+  const [providerSelector, setProviderSelector] = useState(
+    user?.avatars.selected,
+  );
+
+  const handleProviderSelectorChange = async (event: SelectChangeEvent) => {
+    const selectedProvider = event.target.value;
+    setProviderSelector(selectedProvider as any);
+
+    try {
+      const res = await fetch(
+        `${expressBackendBaseRESTOrigin}/users/me/avatar`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ provider: selectedProvider }),
+          credentials: "include",
+        },
+      );
+
+      const jsonResponse = await res.json();
+
+      if (!res.ok) {
+        console.error(
+          jsonResponse.message || "Failed to update avatar provider",
+        );
+        toast.error(jsonResponse.message || "Failed to update avatar provider");
+      }
+
+      console.log("Avatar updated:", jsonResponse.data?.url);
+      toast.success(
+        jsonResponse.message || `Selected ${selectedProvider} avatar!`,
+      );
+
+      const apiUser = jsonResponse.data.user as User;
+      setUser(apiUser);
+    } catch (error) {
+      console.error("Avatar update error:", error);
+      toast.error("API error: failed to update avatar provider");
+    }
+  };
+
+  const modalRef = useRef<HTMLDivElement | null>(null);
+
+  const shouldButtonGroupDivExist =
+    (user?.avatar !== null && image.length === 0) ||
+    (!!providers.length && image.length === 0);
 
   const onDrop = useCallback(
     (
@@ -75,6 +134,31 @@ export default function EditProfileForm({
     // Revoke the data uris to avoid memory leaks
     return () => image.forEach((file) => URL.revokeObjectURL(file.preview));
   }, [image]);
+
+  useEffect(() => {
+    async function getProviders() {
+      const res = await fetch(
+        `${expressBackendBaseRESTOrigin}/users/me/providers`,
+        { method: "GET", credentials: "include" },
+      );
+
+      const jsonResponse = await res.json();
+
+      if (!res.ok) {
+        console.error("Could not fetch the providers");
+        return;
+      }
+
+      const apiProviders: [] = jsonResponse.data;
+
+      if (apiProviders.length) {
+        const updatedProviders = [...apiProviders, "manual"];
+        setProviders(updatedProviders);
+      }
+    }
+
+    getProviders();
+  }, []);
 
   async function handleAvatarSubmit(file: File) {
     if (!file) {
@@ -208,12 +292,73 @@ export default function EditProfileForm({
         </div>
       </div>
 
-      <Modal open={modalOpen} onClose={handleClose}>
+      {/* select avatar from different provider button */}
+      {/* {!!providers.length && (
+        <Popover placementY="bottom" placementX="end" noBox>
+          <Popover.Trigger id="provider-select">
+            <Button
+              className="flex items-center gap-0.5"
+              variant="outline"
+              type="button"
+            >
+              <span>Avatar providers</span>
+              <IoMdArrowDropdown className="text-xl" />
+            </Button>
+          </Popover.Trigger>
+          <Popover.Content id="provider-select">
+            <div className="flex flex-col divide-y divide-gray-300 rounded-lg border border-gray-300 bg-gray-100 dark:divide-gray-600 dark:border-gray-600 dark:bg-gray-800">
+              {providers.map((provider) => (
+                <div key={provider}>Use {provider}'s pfp</div>
+              ))}
+            </div>
+          </Popover.Content>
+        </Popover>
+      )} */}
+
+      {/* select avatar from different provider button */}
+      {!!providers.length && (
+        <div className="flex items-center gap-4">
+          <InputLabel
+            style={{ font: "inherit" }}
+            id="provider-select-label"
+            className=""
+          >
+            <span className="text-base text-gray-900 dark:text-gray-100">
+              Avatar provider:
+            </span>
+          </InputLabel>
+          <Select
+            labelId="provider-select-label"
+            id="provider-select"
+            value={providerSelector}
+            label="Avatar provider"
+            onChange={handleProviderSelectorChange}
+            variant="standard"
+            className="!fill-gray-900 !stroke-gray-900 !text-gray-900 dark:!fill-gray-100 dark:!stroke-gray-100 dark:!text-gray-100 [&>svg]:!fill-gray-900 [&>svg]:dark:!fill-gray-100"
+            sx={{
+              fontFamily: "inherit",
+            }}
+          >
+            {providers.map((item) => (
+              <MenuItem key={item} value={item}>
+                {item}
+              </MenuItem>
+            ))}
+          </Select>
+        </div>
+      )}
+
+      <Modal
+        open={modalOpen}
+        onClose={handleClose}
+        container={modalRef.current}
+      >
         <div
           className="fixed inset-0 z-[1300] flex items-center justify-center px-5"
           onClick={handleClose}
         >
           <div
+            ref={modalRef}
             className="animate-fade-in-up relative w-full max-w-2xl rounded-2xl bg-white p-8 shadow-2xl transition-all duration-300 ease-out dark:bg-gray-900"
             onClick={(e) => e.stopPropagation()}
           >
@@ -306,17 +451,19 @@ export default function EditProfileForm({
               </div>
             )}
 
-            {/* avatar removing button */}
-            {user?.avatar !== null && image.length === 0 && (
+            {shouldButtonGroupDivExist && (
               <div className="mt-6 flex justify-center gap-4">
-                <Button
-                  type="button"
-                  variant="dangerOutline"
-                  onClick={handleDeleteAvatar}
-                  disabled={isDeletingAvatar}
-                >
-                  {!isDeletingAvatar ? "Delete Avatar" : "Deleting..."}
-                </Button>
+                {/* avatar removing button */}
+                {user?.avatar !== null && image.length === 0 && (
+                  <Button
+                    type="button"
+                    variant="dangerOutline"
+                    onClick={handleDeleteAvatar}
+                    disabled={isDeletingAvatar}
+                  >
+                    {!isDeletingAvatar ? "Delete avatar" : "Deleting..."}
+                  </Button>
+                )}
               </div>
             )}
           </div>

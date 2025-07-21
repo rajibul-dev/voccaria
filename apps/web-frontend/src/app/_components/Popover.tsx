@@ -14,7 +14,10 @@ import { createContext, useContext, useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 
 // --- Portal implementation for Next.js (client-side only) ---
-const Portal: React.FC<{ children: ReactNode }> = ({ children }) => {
+const Portal: React.FC<{
+  children: ReactNode;
+  container?: HTMLElement | null;
+}> = ({ children, container }) => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -23,7 +26,10 @@ const Portal: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   if (!mounted) return null;
   return typeof window !== "undefined"
-    ? (ReactDOM.createPortal(children, document.body) as React.ReactPortal)
+    ? (ReactDOM.createPortal(
+        children,
+        container || document.body,
+      ) as React.ReactPortal)
     : null;
 };
 
@@ -75,6 +81,7 @@ type PopoverContextType = {
   noBox?: boolean;
   placement?: Placement;
   fixed?: boolean;
+  container?: HTMLElement | null;
 };
 const PopoverContext = createContext<PopoverContextType | undefined>(undefined);
 
@@ -86,7 +93,9 @@ type PopoverProps = {
   triggerType?: "boolean" | "hover" | "click" | "both";
   noBox?: boolean;
   fixed?: boolean;
+  disablePortal?: boolean;
 };
+
 const getPlacement = (
   placementY: PopoverProps["placementY"],
   placementX: PopoverProps["placementX"],
@@ -227,9 +236,16 @@ type ContentProps = {
   children: ReactNode;
   id: string;
   isTopOfHeader?: boolean;
+  container?: HTMLElement | null;
 };
 
-function Content({ children, id, isTopOfHeader }: ContentProps) {
+function Content({
+  children,
+  id,
+  isTopOfHeader,
+  disablePortal,
+  container,
+}: ContentProps & { disablePortal?: boolean }) {
   const ctx = useContext(PopoverContext);
   if (!ctx) throw new Error("Popover.Content must be used within Popover");
 
@@ -255,42 +271,46 @@ function Content({ children, id, isTopOfHeader }: ContentProps) {
 
   if (openId !== id) return null;
 
-  return (
-    <Portal>
+  const popoverContent = (
+    <div
+      ref={(node) => {
+        if (triggerType === "hover") return;
+        if (triggerType === "both" && !selected) return;
+        (outsideClickRef as MutableRefObject<HTMLElement | null>).current =
+          node;
+      }}
+    >
       <div
-        ref={(node) => {
-          if (triggerType === "hover") return;
-          if (triggerType === "both" && !selected) return;
-          (outsideClickRef as MutableRefObject<HTMLElement | null>).current =
-            node;
+        ref={setFloating}
+        style={{
+          ...floatingStyles,
+          position: fixed ? "fixed" : "absolute",
+          display: "inline-block",
+          backgroundColor: noBox ? undefined : "var(--color-grey-100)",
+          padding: noBox ? undefined : "2rem",
+          border: noBox ? undefined : "var(--usual-layout-border)",
+          boxShadow: "var(--box-shadow-lg)",
+          zIndex: 1000,
         }}
       >
+        {children}
         <div
-          ref={setFloating}
+          ref={arrowRef}
           style={{
-            ...floatingStyles,
-            position: fixed ? "fixed" : "absolute",
-            display: "inline-block",
-            backgroundColor: noBox ? undefined : "var(--color-grey-100)",
-            padding: noBox ? undefined : "2rem",
-            border: noBox ? undefined : "var(--usual-layout-border)",
-            boxShadow: "var(--box-shadow-lg)",
-            zIndex: 1000,
+            position: "absolute",
+            width: 8,
+            height: 8,
+            background: "inherit",
           }}
-        >
-          {children}
-          <div
-            ref={arrowRef}
-            style={{
-              position: "absolute",
-              width: 8,
-              height: 8,
-              background: "inherit",
-            }}
-          />
-        </div>
+        />
       </div>
-    </Portal>
+    </div>
+  );
+
+  return disablePortal ? (
+    popoverContent
+  ) : (
+    <Portal container={container}>{popoverContent}</Portal>
   );
 }
 

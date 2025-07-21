@@ -122,6 +122,24 @@ export async function addAvatar(
   });
 }
 
+export async function getAvailableProviders(
+  request: Request,
+  response: Response
+): Promise<any> {
+  const reqUser: IUser = request.user as IUser;
+  const user = await User.findById(reqUser._id);
+
+  const availableProviders = [];
+
+  if (user.google.id) availableProviders.push("google");
+  if (user.discord.id) availableProviders.push("discord");
+
+  return response.status(StatusCodes.OK).json({
+    success: true,
+    data: availableProviders,
+  });
+}
+
 export async function selectAvatarFromProviders(
   request: Request,
   response: Response
@@ -138,8 +156,8 @@ export async function selectAvatarFromProviders(
   }
 
   if (provider === user.avatars.selected) {
-    return response.status(StatusCodes.BAD_REQUEST).json({
-      success: false,
+    return response.status(StatusCodes.OK).json({
+      success: true,
       message: `Already selected ${provider}`,
     });
   }
@@ -169,7 +187,7 @@ export async function selectAvatarFromProviders(
     return response.status(StatusCodes.OK).json({
       success: true,
       message: `Fallback used — '${fallback || "manual"}' selected as '${provider}' was not available.`,
-      data: { url: user.avatar },
+      data: { url: user.avatar, user },
     });
   }
 
@@ -180,7 +198,7 @@ export async function selectAvatarFromProviders(
   return response.status(StatusCodes.OK).json({
     success: true,
     message: `Chosen avatar from '${provider}' successfully.`,
-    data: { url: user.avatar },
+    data: { url: user.avatar, user },
   });
 }
 
