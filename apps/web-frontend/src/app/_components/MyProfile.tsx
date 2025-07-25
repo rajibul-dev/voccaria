@@ -6,6 +6,7 @@ import { Avatar } from "@mui/material";
 import { formatDate } from "date-fns";
 import Button from "./Button";
 import EditProfileForm from "./EditProfileForm";
+import DiscordConnect from "./DiscordConnect";
 
 export default function MyProfile() {
   const [isEditing, setIsEditing] = useState(false);
@@ -42,11 +43,14 @@ export default function MyProfile() {
       )}
 
       {isEditing && (
-        <EditProfileForm
-          user={user}
-          setIsEditing={setIsEditing}
-          setUser={setUser}
-        />
+        <>
+          <EditProfileForm
+            user={user}
+            setIsEditing={setIsEditing}
+            setUser={setUser}
+          />
+          <DiscordConnect />
+        </>
       )}
     </>
   );

@@ -274,7 +274,7 @@ export default function EditProfileForm({
 
   return (
     <form
-      className="mb-16 flex w-full flex-col items-start gap-6"
+      className="flex w-full flex-col items-start gap-6"
       onSubmit={handleSubmit}
     >
       <div onClick={handleOpen} className="relative">
@@ -336,18 +336,9 @@ export default function EditProfileForm({
             onChange={handleProviderSelectorChange}
             variant="standard"
             className="!fill-gray-900 !stroke-gray-900 !text-gray-900 dark:!fill-gray-100 dark:!stroke-gray-100 dark:!text-gray-100 [&>svg]:!fill-gray-900 [&>svg]:dark:!fill-gray-100"
-            sx={{
-              fontFamily: "inherit",
-            }}
           >
             {providers.map((item) => (
-              <MenuItem
-                sx={{
-                  fontFamily: "inherit",
-                }}
-                key={item}
-                value={item}
-              >
+              <MenuItem key={item} value={item}>
                 {capitalize(item)}
               </MenuItem>
             ))}

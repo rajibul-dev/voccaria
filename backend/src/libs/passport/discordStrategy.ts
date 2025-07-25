@@ -8,7 +8,7 @@ const DISCORD_CLIENT_ID = process.env.PASSPORT_DISCORD_CLIENT_ID;
 const DISCORD_CLIENT_SECRET = process.env.PASSPORT_DISCORD_CLIENT_SECRET;
 
 const DISCORD_CALLBACK_URL = isProduction
-  ? "https://voccaria.com/api/v1/users/discord-connect/redirect"
+  ? "https://api.voccaria.com/api/v1/users/discord-connect/redirect"
   : "http://localhost:5000/api/v1/users/discord-connect/redirect";
 
 export default passport.use(
