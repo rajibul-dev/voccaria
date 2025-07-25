@@ -279,9 +279,6 @@ export async function discordRedirect(
   request: Request,
   response: Response
 ): Promise<any> {
-  return response.status(StatusCodes.OK).json({
-    success: true,
-    message: "Connected with discord account successfully",
-    data: request.user,
-  });
+  const redirectUrl = `${process.env.FRONTEND_URL}/app/profile`;
+  return response.redirect(redirectUrl + `?discordConnect=success`);
 }

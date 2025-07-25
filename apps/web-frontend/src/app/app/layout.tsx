@@ -6,6 +6,7 @@ import AppSidebar from "../_components/AppSidebar";
 import AppFooter from "../_components/AppFooter";
 import AppBottomBar from "../_components/AppBottomBar";
 import GoogleLoginToastTrigger from "../_components/GoogleLoginToastTrigger";
+import DiscordConnectToastTrigger from "../_components/DiscordConnectToastTrigger";
 
 export default async function AppLayout({
   children,
@@ -37,7 +38,9 @@ export default async function AppLayout({
         <AppFooter />
       </div>
       <AppBottomBar /> {/* hidden above 640px width */}
-      <GoogleLoginToastTrigger /> {/* there's no UI here, just functionality */}
+      {/* there's no UI here, just functionality */}
+      <GoogleLoginToastTrigger />
+      <DiscordConnectToastTrigger />
     </div>
   );
 }

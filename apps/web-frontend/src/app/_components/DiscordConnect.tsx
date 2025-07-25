@@ -11,6 +11,7 @@ export default function DiscordConnect() {
     console.log("discordConnecthUrl:", discordConnecthUrl);
     window.location.href = discordConnecthUrl;
   }
+
   return (
     <div className="my-8">
       <div className="mb-2 text-2xl font-bold text-gray-900 dark:text-gray-100">
@@ -22,12 +23,6 @@ export default function DiscordConnect() {
         Discord, this adds an extra layer of verification and helps prevent
         impersonation
       </p>
-
-      {/* <OAuthButton
-        className="items-center justify-center !border-gray-800 !bg-[#4e59d2] px-4 dark:!border-gray-200"
-        icon={<FaDiscord className="text-2xl" />}
-        label="Connect Discord"
-      /> */}
 
       <Button
         variant="contained"

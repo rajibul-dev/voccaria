@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useAuth } from "../_context/AuthContext";
-import { Avatar, Button } from "@mui/material";
+import { Avatar, Button, Chip } from "@mui/material";
 import { formatDate } from "date-fns";
 import MyButton from "./Button";
 import EditProfileForm from "./EditProfileForm";
@@ -27,6 +27,8 @@ export default function MyProfile() {
                 Member since {formatDate(user?.createdAt, "MMMM dd, yyyy")}
               </p>
             ) : null}
+            {/* Discord connected chip */}
+            {user?.discord?.id && <Chip label={user?.discord?.name} />}
           </div>
         </div>
       )}

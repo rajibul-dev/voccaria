@@ -45,8 +45,6 @@ export function Providers({
 
   const muiTheme = muiMode === "dark" ? darkTheme : lightTheme;
 
-  console.log("muiMode", muiMode);
-
   return (
     <AppRouterCacheProvider>
       <ThemeProvider theme={muiTheme}>
