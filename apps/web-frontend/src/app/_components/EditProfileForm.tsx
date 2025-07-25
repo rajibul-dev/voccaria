@@ -4,6 +4,7 @@ import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
 import { User } from "@/_types/user";
 import {
   Avatar,
+  capitalize,
   InputLabel,
   MenuItem,
   Modal,
@@ -340,8 +341,14 @@ export default function EditProfileForm({
             }}
           >
             {providers.map((item) => (
-              <MenuItem key={item} value={item}>
-                {item}
+              <MenuItem
+                sx={{
+                  fontFamily: "inherit",
+                }}
+                key={item}
+                value={item}
+              >
+                {capitalize(item)}
               </MenuItem>
             ))}
           </Select>
