@@ -9,6 +9,7 @@ import {
   selectAvatarFromProviders,
   updateMe,
   getAvailableProviders,
+  getAvatarProxy,
 } from "../controllers/userControllers.js";
 import { authorizeUser } from "../middlewares/authorizeUserMiddleware.js";
 import passport from "passport";
@@ -26,6 +27,8 @@ router
   .post(authorizeUser, addAvatar)
   .patch(authorizeUser, selectAvatarFromProviders)
   .delete(authorizeUser, removeAvatar);
+
+router.route("/me/avatar/proxy").get(getAvatarProxy);
 
 router
   .route("/discord-connect")

@@ -202,6 +202,43 @@ export async function selectAvatarFromProviders(
   });
 }
 
+export async function getAvatarProxy(
+  request: Request,
+  response: Response
+): Promise<any> {
+  const { url } = request.query;
+
+  if (typeof url !== "string") {
+    return response.status(400).json({
+      success: false,
+      message: "Missing or invalid 'url' query parameter",
+    });
+  }
+
+  try {
+    const avatarUrl = decodeURIComponent(url);
+    const fetchResponse = await fetch(avatarUrl);
+
+    if (!fetchResponse.ok) {
+      return response
+        .status(fetchResponse.status)
+        .send("Failed to fetch image");
+    }
+
+    const contentType =
+      fetchResponse.headers.get("content-type") || "image/jpeg";
+    const buffer = await fetchResponse.arrayBuffer();
+
+    response.setHeader("Content-Type", contentType);
+    return response.send(Buffer.from(buffer));
+  } catch (error) {
+    console.error("Avatar proxy error:", error);
+    return response
+      .status(404)
+      .send("Avatar not found or could not be fetched");
+  }
+}
+
 export async function removeAvatar(
   request: Request,
   response: Response

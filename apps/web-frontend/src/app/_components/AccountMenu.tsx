@@ -53,7 +53,7 @@ export default function AccountMenu() {
         <Popover.Trigger id="account-menu">
           <div className="flex cursor-pointer items-center gap-2 rounded-sm p-1 transition-colors hover:bg-gray-200 dark:hover:bg-gray-700">
             <Avatar
-              src={user?.avatar}
+              src={`${expressBackendBaseRESTOrigin}/users/me/avatar/proxy?url=${encodeURIComponent(user?.avatar ?? "")}`}
               alt={user?.name}
               sx={{ width: 42, height: 42 }}
             />
