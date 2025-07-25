@@ -33,7 +33,7 @@ export const lightTheme = createTheme({
     secondary: {
       light: oklchToHex(colors.slate[200]),
       main: oklchToHex(colors.slate[600]),
-      dark: oklchToHex(colors.slate[800]),
+      dark: oklchToHex(colors.slate[900]),
     },
     grey: {
       "50": oklchToHex(colors.gray[50]),
@@ -67,8 +67,8 @@ export const darkTheme = createTheme({
     },
     secondary: {
       light: oklchToHex(colors.slate[200]),
-      main: oklchToHex(colors.slate[600]),
-      dark: oklchToHex(colors.slate[800]),
+      main: oklchToHex(colors.slate[300]),
+      dark: oklchToHex(colors.slate[600]),
     },
     grey: {
       "50": oklchToHex(colors.gray[50]),

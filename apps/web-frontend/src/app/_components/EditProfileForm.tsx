@@ -4,6 +4,7 @@ import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
 import { User } from "@/_types/user";
 import {
   Avatar,
+  Button,
   capitalize,
   InputLabel,
   MenuItem,
@@ -16,10 +17,11 @@ import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { DropEvent, FileRejection, useDropzone } from "react-dropzone";
 import toast from "react-hot-toast";
 import { FaImage } from "react-icons/fa6";
-import Button from "./Button";
+import MyButton from "./Button";
 import Input from "./Input";
 import Popover from "./Popover";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { MdCloudUpload, MdDelete } from "react-icons/md";
 
 export default function EditProfileForm({
   user,
@@ -414,20 +416,39 @@ export default function EditProfileForm({
                   }}
                   className="border-4 border-gray-300 shadow-md transition-all duration-300 dark:border-gray-700"
                 />
-                <div className="flex gap-4">
-                  <Button
+                <div className="flex items-center gap-4">
+                  {/* <MyButton
                     type="button"
                     variant="outline"
                     onClick={removeSelection}
                   >
                     Remove
-                  </Button>
+                  </MyButton> */}
                   <Button
+                    type="button"
+                    variant="outlined"
+                    onClick={removeSelection}
+                    color="secondary"
+                  >
+                    Remove
+                  </Button>
+                  {/* <MyButton
                     type="button"
                     onClick={() => handleAvatarSubmit(image[0])}
                     disabled={isSettingAvatar}
                   >
                     {!isSettingAvatar ? "Upload" : "Uploading..."}
+                  </MyButton> */}
+                  <Button
+                    type="button"
+                    onClick={() => handleAvatarSubmit(image[0])}
+                    loading={isSettingAvatar}
+                    loadingIndicator={"Uploading..."}
+                    className="!shadow-none"
+                    variant="contained"
+                    startIcon={<MdCloudUpload />}
+                  >
+                    Upload
                   </Button>
                 </div>
                 {isLargeFile && (
@@ -451,11 +472,15 @@ export default function EditProfileForm({
                 {user?.avatar !== null && image.length === 0 && (
                   <Button
                     type="button"
-                    variant="dangerOutline"
+                    variant="outlined"
+                    color="error"
                     onClick={handleDeleteAvatar}
-                    disabled={isDeletingAvatar}
+                    loading={isDeletingAvatar}
+                    loadingIndicator={"Deleting..."}
+                    className="!normal-case"
+                    startIcon={<MdDelete />}
                   >
-                    {!isDeletingAvatar ? "Delete avatar" : "Deleting..."}
+                    Delete avatar
                   </Button>
                 )}
               </div>
@@ -484,9 +509,16 @@ export default function EditProfileForm({
           maxLength={1200}
         />
       </div>
-      <div className="flex gap-5">
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Saving..." : "Save changes"}
+      <div className="flex gap-3">
+        <Button
+          type="submit"
+          loading={isSubmitting}
+          className="!normal-case !shadow-none"
+          loadingIndicator={"Saving..."}
+          variant="contained"
+          size="large"
+        >
+          Save changes
         </Button>
         <Button
           type="reset"
@@ -494,8 +526,10 @@ export default function EditProfileForm({
             e.preventDefault();
             setIsEditing(false);
           }}
-          variant="outline"
+          variant="outlined"
+          color="secondary"
           disabled={isSubmitting}
+          size="large"
         >
           Cancel
         </Button>

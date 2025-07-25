@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { useAuth } from "../_context/AuthContext";
-import { Avatar } from "@mui/material";
+import { Avatar, Button } from "@mui/material";
 import { formatDate } from "date-fns";
-import Button from "./Button";
+import MyButton from "./Button";
 import EditProfileForm from "./EditProfileForm";
 import DiscordConnect from "./DiscordConnect";
+import { MdEdit } from "react-icons/md";
 
 export default function MyProfile() {
   const [isEditing, setIsEditing] = useState(false);
@@ -37,7 +38,16 @@ export default function MyProfile() {
       )}
 
       {!isEditing && (
-        <Button onClick={() => setIsEditing(true)} className="px-10">
+        // <MyButton onClick={() => setIsEditing(true)} className="px-10">
+        //   Edit profile
+        // </MyButton>
+        <Button
+          variant="contained"
+          onClick={() => setIsEditing(true)}
+          className="!shadow-none"
+          size="large"
+          startIcon={<MdEdit />}
+        >
           Edit profile
         </Button>
       )}
