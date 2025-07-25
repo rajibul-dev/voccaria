@@ -348,11 +348,7 @@ export default function EditProfileForm({
         </div>
       )}
 
-      <Modal
-        open={modalOpen}
-        onClose={handleClose}
-        container={modalRef.current}
-      >
+      <Modal open={modalOpen} onClose={handleClose}>
         <div
           className="fixed inset-0 z-[1300] flex items-center justify-center px-5"
           onClick={handleClose}
