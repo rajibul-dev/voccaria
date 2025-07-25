@@ -129,7 +129,7 @@ export async function getAvailableProviders(
   const reqUser: IUser = request.user as IUser;
   const user = await User.findById(reqUser._id);
 
-  const availableProviders = [];
+  const availableProviders = ["manual"];
 
   if (user.google.id) availableProviders.push("google");
   if (user.discord.id) availableProviders.push("discord");
@@ -162,10 +162,11 @@ export async function selectAvatarFromProviders(
     });
   }
 
-  const hasSelectedAvatar = !!user.avatars[provider];
+  const providerAvatar = user.avatars[provider];
+  const hasSelectedAvatar = !!providerAvatar;
 
   // If the selected provider is not available
-  if (!hasSelectedAvatar) {
+  if (!hasSelectedAvatar && provider !== "manual") {
     const fallback =
       provider === "discord" && user.avatars.google
         ? "google"

@@ -155,13 +155,13 @@ export default function EditProfileForm({
       const apiProviders: [] = jsonResponse.data;
 
       if (apiProviders.length) {
-        const updatedProviders = [...apiProviders, "manual"];
+        const updatedProviders = [...apiProviders];
         setProviders(updatedProviders);
       }
     }
 
     getProviders();
-  }, []);
+  }, [user]);
 
   async function handleAvatarSubmit(file: File) {
     if (!file) {
@@ -191,6 +191,7 @@ export default function EditProfileForm({
         return;
       }
 
+      setProviderSelector("manual");
       removeSelection();
       handleClose();
       toast.success(json.message || "Avatar uploaded successfully!");
