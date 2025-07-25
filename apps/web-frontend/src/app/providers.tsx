@@ -10,15 +10,8 @@ import { User } from "@/_types/user";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import { createTheme, ThemeProvider } from "@mui/material";
-
-const muiTheme = createTheme({
-  typography: {
-    fontFamily: "Montserrat, sans-serif",
-    button: {
-      textTransform: "capitalize",
-    },
-  },
-});
+import { darkTheme, lightTheme } from "./_theme/muiTheme";
+import { useEffect, useLayoutEffect, useState } from "react";
 
 export function Providers({
   children,
@@ -30,6 +23,29 @@ export function Providers({
   const pathname = usePathname();
   const isRoot = pathname === "/";
   // const isInApp = pathname.startsWith("/app");
+  const [muiMode, setMuiMode] = useState<"light" | "dark">("light");
+
+  useLayoutEffect(() => {
+    const stored = localStorage.getItem("theme");
+    if (stored === "dark") setMuiMode("dark");
+    else setMuiMode("light");
+
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains("dark");
+      setMuiMode(isDark ? "dark" : "light");
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const muiTheme = muiMode === "dark" ? darkTheme : lightTheme;
+
+  console.log("muiMode", muiMode);
 
   return (
     <AppRouterCacheProvider>
