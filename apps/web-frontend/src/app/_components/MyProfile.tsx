@@ -4,11 +4,11 @@ import { useState } from "react";
 import { useAuth } from "../_context/AuthContext";
 import { Avatar, Button, Chip } from "@mui/material";
 import { formatDate } from "date-fns";
-import MyButton from "./Button";
 import EditProfileForm from "./EditProfileForm";
 import DiscordConnect from "./DiscordConnect";
 import { MdEdit } from "react-icons/md";
 import { FaDiscord } from "react-icons/fa";
+import DiscordConnectedCardEdit from "./DiscordConnectedCardEdit";
 
 export default function MyProfile() {
   const [isEditing, setIsEditing] = useState(false);
@@ -76,7 +76,14 @@ export default function MyProfile() {
             setIsEditing={setIsEditing}
             setUser={setUser}
           />
-          <DiscordConnect />
+          {!user?.discord?.id ? (
+            <DiscordConnect />
+          ) : (
+            <DiscordConnectedCardEdit
+              discord={user?.discord}
+              onDisconnect={() => {}}
+            />
+          )}
         </>
       )}
     </>
