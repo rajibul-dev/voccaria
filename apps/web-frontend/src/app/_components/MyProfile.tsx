@@ -8,6 +8,7 @@ import MyButton from "./Button";
 import EditProfileForm from "./EditProfileForm";
 import DiscordConnect from "./DiscordConnect";
 import { MdEdit } from "react-icons/md";
+import { FaDiscord } from "react-icons/fa";
 
 export default function MyProfile() {
   const [isEditing, setIsEditing] = useState(false);
@@ -28,7 +29,21 @@ export default function MyProfile() {
               </p>
             ) : null}
             {/* Discord connected chip */}
-            {user?.discord?.id && <Chip label={user?.discord?.name} />}
+            {user?.discord?.id && (
+              <a
+                href={`https://discord.com/users/${user.discord.id}`}
+                target="_blank"
+              >
+                <Chip
+                  className="mt-1 w-fit !cursor-pointer !bg-gray-200 !pl-1 font-semibold !text-gray-800 dark:!bg-gray-700 dark:!text-gray-200"
+                  label={user.discord.display_name}
+                  icon={
+                    <FaDiscord className="fill-[#4e59d2] text-xl dark:fill-[#9299e4]" />
+                  }
+                  size="medium"
+                />
+              </a>
+            )}
           </div>
         </div>
       )}
