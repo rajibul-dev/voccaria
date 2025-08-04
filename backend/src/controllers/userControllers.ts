@@ -282,3 +282,26 @@ export async function discordRedirect(
   const redirectUrl = `${process.env.FRONTEND_URL}/app/profile`;
   return response.redirect(redirectUrl + `?discordConnect=success`);
 }
+
+export async function discordDisconnect(
+  request: Request,
+  response: Response
+): Promise<any> {
+  const reqUser: IUser = request.user as IUser;
+  const user = await User.findById(reqUser._id);
+
+  if (!user.discord?.id) {
+    return response.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: "Discord profile is not connected to begin with",
+    });
+  }
+
+  user.discord = null;
+  await user.save();
+
+  return response.status(StatusCodes.OK).json({
+    success: true,
+    message: "Disconnected discord profile successfully",
+  });
+}

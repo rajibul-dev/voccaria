@@ -10,6 +10,7 @@ import {
   updateMe,
   getAvailableProviders,
   getAvatarProxy,
+  discordDisconnect,
 } from "../controllers/userControllers.js";
 import { authorizeUser } from "../middlewares/authorizeUserMiddleware.js";
 import passport from "passport";
@@ -33,6 +34,8 @@ router.route("/me/avatar/proxy").get(getAvatarProxy);
 router
   .route("/discord-connect")
   .get(authorizeUser, passport.authenticate("discord"));
+
+router.route("/discord-disconnect").delete(authorizeUser, discordDisconnect);
 
 router
   .route("/discord-connect/redirect")
