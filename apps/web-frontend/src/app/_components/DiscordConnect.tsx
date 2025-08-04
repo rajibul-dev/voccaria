@@ -21,7 +21,7 @@ export default function DiscordConnect() {
         Connecting your Discord account makes it easier for us to verify your
         identity. Since Voccaria’s entire mission has been operating through
         Discord, this adds an extra layer of verification and helps prevent
-        impersonation
+        impersonation.
       </p>
 
       <Button
