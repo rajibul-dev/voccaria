@@ -44,7 +44,11 @@ export default function DiscordConnectedCardEdit({
         toast.success(
           jsonResponse.message || "Successfully disconnected Discord profile",
         );
-        setUser({ ...user, discord: undefined } as User);
+        setUser({
+          ...user,
+          discord: undefined,
+          avatars: { ...user?.avatars, discord: "" },
+        } as User);
       }
     } catch (error) {
       console.error(error);
