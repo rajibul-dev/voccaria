@@ -1,17 +1,20 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { FaDiscord } from "react-icons/fa";
 import { Button, Avatar } from "@mui/material";
 import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
+import toast from "react-hot-toast";
+import { User } from "@/_types/user";
+import { useAuth } from "../_context/AuthContext";
 
-interface DiscordConnectedCardEditProps {
-  discord: any;
-  onDisconnect: () => void;
-}
-
-const DiscordConnectedCardEdit: React.FC<DiscordConnectedCardEditProps> = ({
+export default function DiscordConnectedCardEdit({
   discord,
-  onDisconnect,
-}) => {
+}: {
+  discord: User["discord"];
+}) {
+  const [disconnecting, setDisconnecting] = useState(false);
+  const { setUser, user } = useAuth();
+
   function handleChangeDiscord() {
     console.log("Discord connect initiated");
     const discordConnecthUrl = `${expressBackendBaseRESTOrigin}/users/discord-connect`;
@@ -19,22 +22,54 @@ const DiscordConnectedCardEdit: React.FC<DiscordConnectedCardEditProps> = ({
     window.location.href = discordConnecthUrl;
   }
 
+  async function handleDisconnect() {
+    setDisconnecting(true);
+
+    try {
+      const res = await fetch(
+        `${expressBackendBaseRESTOrigin}/users/discord-disconnect`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        },
+      );
+
+      const jsonResponse = await res.json();
+
+      if (!res.ok || !jsonResponse.success) {
+        toast.error(
+          jsonResponse.message || "Could not disconnect Discord profile",
+        );
+      } else {
+        toast.success(
+          jsonResponse.message || "Successfully disconnected Discord profile",
+        );
+        setUser({ ...user, discord: undefined } as User);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong while disconnecting Discord profile");
+    } finally {
+      setDisconnecting(false);
+    }
+  }
+
   return (
     <div className="mt-10 w-fit rounded-xl border border-gray-300 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
       <div className="flex flex-col items-start gap-6">
         <div className="flex items-center gap-3">
           <Avatar
-            src={discord.avatar}
-            alt={discord.display_name}
+            src={discord?.avatar}
+            alt={discord?.display_name}
             sx={{ width: 96, height: 96 }}
           />
           <div>
             <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
-              {discord.display_name}
+              {discord?.display_name}
             </h3>
-            {discord.username && (
+            {discord?.username && (
               <span className="text-sm text-gray-500 dark:text-gray-400">
-                @{discord.username}
+                @{discord?.username}
               </span>
             )}
           </div>
@@ -46,6 +81,7 @@ const DiscordConnectedCardEdit: React.FC<DiscordConnectedCardEditProps> = ({
             startIcon={<FaDiscord />}
             className="!bg-[#4e59d2] !shadow-none hover:!bg-[#5865f2]"
             onClick={handleChangeDiscord}
+            disabled={disconnecting}
           >
             Change Discord
           </Button>
@@ -53,7 +89,9 @@ const DiscordConnectedCardEdit: React.FC<DiscordConnectedCardEditProps> = ({
             variant="outlined"
             color="secondary"
             size="medium"
-            onClick={onDisconnect}
+            onClick={handleDisconnect}
+            loading={disconnecting}
+            loadingIndicator={"Disconnecting..."}
           >
             Disconnect
           </Button>
@@ -61,6 +99,4 @@ const DiscordConnectedCardEdit: React.FC<DiscordConnectedCardEditProps> = ({
       </div>
     </div>
   );
-};
-
-export default DiscordConnectedCardEdit;
+}
