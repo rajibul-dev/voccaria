@@ -470,7 +470,7 @@ export default function EditProfileForm({
             {shouldButtonGroupDivExist && (
               <div className="mt-6 flex justify-center gap-4">
                 {/* avatar removing button */}
-                {user?.avatar !== null && image.length === 0 && (
+                {user?.avatars.manual && image.length === 0 && (
                   <Button
                     type="button"
                     variant="outlined"
