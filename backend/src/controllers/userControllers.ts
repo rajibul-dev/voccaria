@@ -298,7 +298,7 @@ export async function discordDisconnect(
   }
 
   user.discord = null;
-  user.avatars.discord = null;
+  user.avatars.discord = "";
   await user.save();
 
   return response.status(StatusCodes.OK).json({
