@@ -1,7 +1,7 @@
 import {
   getAllCategories,
   getPostsInCategoryByIndex,
-} from "@/lib/sanityFetchers";
+} from "@/_libs/sanityFetchers";
 import { CategorizedPostsClient } from "./CategorizedPostsClient";
 
 export default async function CategorizedPostsProvider({

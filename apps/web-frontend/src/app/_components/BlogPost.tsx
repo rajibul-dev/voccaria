@@ -1,5 +1,5 @@
-import { formatDateTime } from "@/lib/dateFns";
-import { getPost } from "@/lib/sanityFetchers";
+import { formatDateTime } from "@/_libs/dateFns";
+import { getPost } from "@/_libs/sanityFetchers";
 import clsx from "clsx";
 import { PortableText } from "next-sanity";
 import { notFound } from "next/navigation";
