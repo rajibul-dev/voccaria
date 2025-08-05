@@ -1,17 +1,26 @@
 "use client";
 
-import { Toaster } from "react-hot-toast";
-import IsOldPageProvider from "./_context/IsOldPage";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
-import { SidebarProvider } from "./_context/SidebarContext";
+import { Toaster } from "react-hot-toast";
 import { PopoverManagerProvider } from "./_components/Popover";
-import { AuthProvider } from "./_context/AuthContext";
+import IsOldPageProvider from "./_context/IsOldPage";
+import { SidebarProvider } from "./_context/SidebarContext";
+
 import { User } from "@/_types/user";
-import { usePathname } from "next/navigation";
+import { ThemeProvider } from "@mui/material";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import clsx from "clsx";
-import { createTheme, ThemeProvider } from "@mui/material";
+import { usePathname } from "next/navigation";
+import { useLayoutEffect, useState } from "react";
 import { darkTheme, lightTheme } from "./_theme/muiTheme";
-import { useEffect, useLayoutEffect, useState } from "react";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 0,
+    },
+  },
+});
 
 export function Providers({
   children,
@@ -48,7 +57,7 @@ export function Providers({
   return (
     <AppRouterCacheProvider>
       <ThemeProvider theme={muiTheme}>
-        <AuthProvider initialUser={initialUser}>
+        <QueryClientProvider client={queryClient}>
           <PopoverManagerProvider>
             <SidebarProvider>
               <IsOldPageProvider>
@@ -85,7 +94,7 @@ export function Providers({
               </IsOldPageProvider>
             </SidebarProvider>
           </PopoverManagerProvider>
-        </AuthProvider>
+        </QueryClientProvider>
       </ThemeProvider>
     </AppRouterCacheProvider>
   );

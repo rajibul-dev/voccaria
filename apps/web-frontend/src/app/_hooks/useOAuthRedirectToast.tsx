@@ -2,10 +2,10 @@
 
 import { useEffect } from "react";
 import toast from "react-hot-toast";
-import { useAuth } from "../_context/AuthContext";
+import { useUser } from "./useUser";
 
 export default function useOAuthRedirectToast() {
-  const { user } = useAuth();
+  const { data: user } = useUser();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);

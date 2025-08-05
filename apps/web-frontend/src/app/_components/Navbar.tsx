@@ -14,7 +14,6 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { IoMenu } from "react-icons/io5";
 import { PiDotsNineBold } from "react-icons/pi";
-import { useAuth } from "../_context/AuthContext";
 import BlogSearchBarOnNav from "./BlogSearchBarOnNav";
 import BlogSidebarData from "./BlogSidebarData";
 import DarkModeToggler from "./DarkModeToggler";
@@ -23,6 +22,7 @@ import NavbarLoginButton from "./NavbarLoginButton";
 import OldPageSectionTracking from "./OldPageSectionTracking";
 import Popover from "./Popover";
 import RestMenu from "./RestMenu";
+import { useUser } from "../_hooks/useUser";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -31,7 +31,7 @@ export default function Navbar() {
   const shouldHideNavbar =
     pathname.startsWith("/auth") || pathname.startsWith("/app");
   const [open, setOpen] = useState(false);
-  const { user, isAuthenticated, loading: authLoading } = useAuth();
+  const { data: user, isLoading: authLoading } = useUser();
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -154,11 +154,7 @@ export default function Navbar() {
               </li>
             )}
 
-            <NavbarLoginButton
-              isRoot={isRoot}
-              isAuthenticated={isAuthenticated}
-              authLoading={authLoading}
-            />
+            <NavbarLoginButton isRoot={isRoot} authLoading={authLoading} />
 
             {!isPostPage && (
               <div className="h-fit min-[670px]:hidden">

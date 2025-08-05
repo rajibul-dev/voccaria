@@ -13,24 +13,19 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import clsx from "clsx";
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { DropEvent, FileRejection, useDropzone } from "react-dropzone";
 import toast from "react-hot-toast";
 import { FaImage } from "react-icons/fa6";
-import MyButton from "./Button";
-import Input from "./Input";
-import Popover from "./Popover";
-import { IoMdArrowDropdown } from "react-icons/io";
 import { MdCloudUpload, MdDelete } from "react-icons/md";
+import Input from "./Input";
 
 export default function EditProfileForm({
   user,
   setIsEditing,
-  setUser,
 }: {
   user: User | null;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
 }) {
   const [name, setName] = useState(user?.name || "");
   const [bio, setBio] = useState(user?.bio || "");
@@ -81,7 +76,6 @@ export default function EditProfileForm({
       );
 
       const apiUser = jsonResponse.data.user as User;
-      setUser(apiUser);
     } catch (error) {
       console.error("Avatar update error:", error);
       toast.error("API error: failed to update avatar provider");
@@ -195,7 +189,6 @@ export default function EditProfileForm({
       removeSelection();
       handleClose();
       toast.success(json.message || "Avatar uploaded successfully!");
-      setUser((prev) => (prev ? { ...prev, avatar: json.data.url } : prev));
     } catch (error) {
       toast.error("Something went wrong while uploading avatar");
       console.error(error);
@@ -224,7 +217,6 @@ export default function EditProfileForm({
       }
 
       toast.success(json.message || "Deleted avatar successfully");
-      setUser(json.data.user);
       handleClose();
     } catch (error) {
       toast.error("Something went wrong while deleting avatar");
@@ -261,7 +253,6 @@ export default function EditProfileForm({
         return;
       }
       toast.success("Profile updated successfully");
-      setUser(jsonResponse.data.user);
       setIsEditing(false);
     } catch {
       toast.error("Something went wrong. Please try again.");

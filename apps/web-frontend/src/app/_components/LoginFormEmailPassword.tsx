@@ -1,64 +1,45 @@
+// LoginFormEmailPassword.tsx
 "use client";
 
-import { startTransition, useEffect, useState } from "react";
-import FancyInput from "./FancyInput";
 import Link from "next/link";
-import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-import { useAuth } from "../_context/AuthContext";
+import { useEffect, useState } from "react";
+import { useLogin } from "@/app/_hooks/useAuth";
+import FancyInput from "./FancyInput";
 
 export default function LoginFormEmailPassword() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { setUser } = useAuth();
+
+  // Initialize the login mutation hook
+  const loginMutation = useLogin();
 
   useEffect(() => {
+    // Prefetching is still a good practice for performance
     router.prefetch("/app");
-  }, []);
+  }, [router]);
 
   async function handleLogin() {
-    setIsLoading(true);
-    try {
-      const res = await fetch(`${expressBackendBaseRESTOrigin}/auth/login`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
+    // The useLogin hook already handles setting loading state and error toasts.
+    // We just need to call its mutate function with the credentials.
+    loginMutation.mutate(
+      { email, password },
+      {
+        // The onSuccess callback here is for component-specific logic
+        // The global toast.success and router.replace are handled in the useLogin hook itself
+        // You might keep a component-specific toast here if it's different
+        onSuccess: (user) => {
+          // This component's onSuccess is called AFTER the hook's onSuccess.
+          // The router.replace("/app") and initial toast are already handled by the hook.
+          // You could add a more personalized toast here if desired,
+          // or remove the setTimeout as the hook already handles the main success toast.
+          // For now, let's remove the setTimeout as the hook's toast is immediate.
+          // toast.success(`Login successful! Welcome ${user.name || "User"}!`);
         },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
-
-      const jsonResponse = await res.json();
-
-      if (!res.ok) {
-        toast.error(jsonResponse.message || "Failed to login");
-        return;
-      }
-      // Schedule user state update without blocking UI
-      startTransition(() => {
-        setUser(jsonResponse.data.user);
-      });
-
-      // Move to /app right away
-      router.replace("/app");
-
-      // Toast after short delay (for hydration + nice UX)
-      setTimeout(() => {
-        toast.success(
-          `Login successful! Welcome ${jsonResponse.data.user.name || "User"}!`,
-        );
-      }, 300);
-    } catch (error) {
-      toast.error("Something went wrong");
-    } finally {
-      setIsLoading(false);
-    }
+        // The onError callback is handled by the hook, so no need for try/catch here.
+      },
+    );
   }
 
   return (
@@ -94,9 +75,9 @@ export default function LoginFormEmailPassword() {
       <button
         type="submit"
         className="manual-auth-btn attractive-text-shadow disabled:cursor-not-allowed disabled:opacity-50"
-        disabled={isLoading}
+        disabled={loginMutation.isPending} // Use the loading state from the hook
       >
-        {isLoading ? "Logging in..." : "Login"}
+        {loginMutation.isPending ? "Logging in..." : "Login"}
       </button>
 
       <Link

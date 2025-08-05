@@ -3,15 +3,16 @@
 import { Avatar } from "@mui/material";
 import Link from "next/link";
 import { IoMdArrowDropdown } from "react-icons/io";
-import { useAuth } from "../_context/AuthContext";
+
 import Popover, { usePopoverManager } from "./Popover";
 import { useRouter } from "next/navigation";
 import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
 import toast from "react-hot-toast";
 import { CACHED_USER_KEY } from "@/_constants/stringKeys";
+import { useUser } from "../_hooks/useUser";
 
 export default function AccountMenu() {
-  const { user, setUser } = useAuth();
+  const { data: user, isLoading, isError } = useUser();
   const route = useRouter();
   const { close } = usePopoverManager();
 
@@ -19,7 +20,6 @@ export default function AccountMenu() {
     close();
 
     // Optimistically clear UI
-    setUser(null);
     sessionStorage.removeItem(CACHED_USER_KEY);
     toast.success("Logging out...", { icon: "👋" });
 

@@ -5,7 +5,7 @@ import { Button, Avatar } from "@mui/material";
 import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
 import toast from "react-hot-toast";
 import { User } from "@/_types/user";
-import { useAuth } from "../_context/AuthContext";
+import { useUser } from "../_hooks/useUser";
 
 export default function DiscordConnectedCardEdit({
   discord,
@@ -13,7 +13,7 @@ export default function DiscordConnectedCardEdit({
   discord: User["discord"];
 }) {
   const [disconnecting, setDisconnecting] = useState(false);
-  const { setUser, user } = useAuth();
+  const { data: user } = useUser();
 
   function handleChangeDiscord() {
     console.log("Discord connect initiated");
@@ -44,11 +44,6 @@ export default function DiscordConnectedCardEdit({
         toast.success(
           jsonResponse.message || "Successfully disconnected Discord profile",
         );
-        setUser({
-          ...user,
-          discord: undefined,
-          avatars: { ...user?.avatars, discord: "" },
-        } as User);
       }
     } catch (error) {
       console.error(error);

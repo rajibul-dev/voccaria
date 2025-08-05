@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useAuth } from "../_context/AuthContext";
 import { Avatar, Button, Chip } from "@mui/material";
 import { formatDate } from "date-fns";
 import EditProfileForm from "./EditProfileForm";
@@ -9,10 +8,11 @@ import DiscordConnect from "./DiscordConnect";
 import { MdEdit } from "react-icons/md";
 import { FaDiscord } from "react-icons/fa";
 import DiscordConnectedCardEdit from "./DiscordConnectedCardEdit";
+import { useUser } from "../_hooks/useUser";
 
 export default function MyProfile() {
   const [isEditing, setIsEditing] = useState(false);
-  const { user, setUser } = useAuth();
+  const { data: user } = useUser();
 
   return (
     <>
@@ -71,18 +71,11 @@ export default function MyProfile() {
 
       {isEditing && (
         <>
-          <EditProfileForm
-            user={user}
-            setIsEditing={setIsEditing}
-            setUser={setUser}
-          />
+          <EditProfileForm user={user} setIsEditing={setIsEditing} />
           {!user?.discord?.id ? (
             <DiscordConnect />
           ) : (
-            <DiscordConnectedCardEdit
-              discord={user?.discord}
-              onDisconnect={() => {}}
-            />
+            <DiscordConnectedCardEdit discord={user?.discord} />
           )}
         </>
       )}
