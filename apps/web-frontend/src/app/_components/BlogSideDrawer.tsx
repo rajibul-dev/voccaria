@@ -1,6 +1,6 @@
 "use client";
 
-import { BlogPost, Category } from "@/models/blogInterfaces";
+import { BlogPost, Category } from "@/_models/blogInterfaces";
 import clsx from "clsx";
 import Link from "next/link";
 import { useParams } from "next/navigation";

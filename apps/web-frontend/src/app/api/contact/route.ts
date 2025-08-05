@@ -1,4 +1,4 @@
-import { mailOptions, transporter } from "@/config/nodemailer";
+import { mailOptions, transporter } from "@/_config/nodemailer";
 
 function withHTMLLineBreaks(str: string) {
   return str.replace(/(\r\n|\r|\n)/g, "<br>");

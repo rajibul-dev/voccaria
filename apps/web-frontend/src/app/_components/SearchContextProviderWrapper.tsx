@@ -1,4 +1,4 @@
-import { BlogPost, Category } from "@/models/blogInterfaces";
+import { BlogPost, Category } from "@/_models/blogInterfaces";
 import { SearchProvider } from "../_context/SearchContext";
 import {
   getAllBlogPostsForSearch,

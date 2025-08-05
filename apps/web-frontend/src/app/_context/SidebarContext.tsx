@@ -12,7 +12,7 @@ import {
   getAllCategories,
   getPostsInCategoryByIndex,
 } from "@/_libs/sanityFetchers";
-import { BlogPost, Category } from "@/models/blogInterfaces";
+import { BlogPost, Category } from "@/_models/blogInterfaces";
 
 interface SidebarData {
   data: { category: Category; posts: BlogPost[] }[];

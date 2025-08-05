@@ -9,7 +9,7 @@ import {
   useCallback,
 } from "react";
 import Fuse from "fuse.js";
-import { Category } from "@/models/blogInterfaces";
+import { Category } from "@/_models/blogInterfaces";
 import { usePathname } from "next/navigation";
 
 // Define the structure of state

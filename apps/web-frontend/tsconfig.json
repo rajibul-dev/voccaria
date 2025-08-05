@@ -28,7 +28,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/config/chakraui.ts"
+    "src/_config/chakraui.ts"
   ],
   "exclude": ["node_modules", "sanity"]
 }

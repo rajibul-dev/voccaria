@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { getPaginatedBlogPosts } from "@/_libs/sanityFetchers";
-import { BlogPost } from "@/models/blogInterfaces";
+import { BlogPost } from "@/_models/blogInterfaces";
 import Link from "next/link";
 import { formatDateTime } from "@/_libs/dateFns";
 

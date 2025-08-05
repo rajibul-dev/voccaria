@@ -1,6 +1,6 @@
 "use client";
 
-import { BlogPost, Category } from "@/models/blogInterfaces";
+import { BlogPost, Category } from "@/_models/blogInterfaces";
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 import * as Command from "cmdk";
 import { useRouter } from "next/navigation";

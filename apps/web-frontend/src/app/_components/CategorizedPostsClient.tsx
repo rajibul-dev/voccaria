@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext } from "react";
-import { BlogPost, Category } from "@/models/blogInterfaces";
+import { BlogPost, Category } from "@/_models/blogInterfaces";
 
 interface CategorizedPostsData {
   data: { category: Category; posts: BlogPost[] }[];

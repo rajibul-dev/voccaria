@@ -1,4 +1,4 @@
-import { BlogPost, Category } from "@/models/blogInterfaces";
+import { BlogPost, Category } from "@/_models/blogInterfaces";
 import { client } from "./sanityClient";
 import * as queries from "./sanityQueries";
 import { cache } from "react";
