@@ -36,3 +36,8 @@ export interface User {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface AllUsersResponse {
+  users: User[];
+  length: number;
+}

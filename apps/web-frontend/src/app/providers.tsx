@@ -6,32 +6,39 @@ import { PopoverManagerProvider } from "./_components/Popover";
 import IsOldPageProvider from "./_context/IsOldPage";
 import { SidebarProvider } from "./_context/SidebarContext";
 
-import { User } from "@/_types/user";
+// import { User } from "@/_types/user"; // No longer needed directly here
 import { ThemeProvider } from "@mui/material";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+// Import HydrationBoundary from TanStack Query
+import {
+  QueryClient,
+  QueryClientProvider,
+  HydrationBoundary,
+} from "@tanstack/react-query";
+import type { DehydratedState } from "@tanstack/react-query"; // Import DehydratedState type
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import { useLayoutEffect, useState } from "react";
 import { darkTheme, lightTheme } from "./_theme/muiTheme";
 
+// Create a singleton QueryClient for the client-side
+// This ensures the same client is used across the client-side application
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 0,
+      staleTime: 0, // You might want to adjust this based on your caching strategy
     },
   },
 });
 
 export function Providers({
   children,
-  initialUser = null,
+  dehydratedState, // Now accepting dehydratedState from SSR
 }: {
   children: React.ReactNode;
-  initialUser?: User | null;
+  dehydratedState: DehydratedState; // Type for dehydrated state
 }) {
   const pathname = usePathname();
   const isRoot = pathname === "/";
-  // const isInApp = pathname.startsWith("/app");
   const [muiMode, setMuiMode] = useState<"light" | "dark">("light");
 
   useLayoutEffect(() => {
@@ -58,42 +65,45 @@ export function Providers({
     <AppRouterCacheProvider>
       <ThemeProvider theme={muiTheme}>
         <QueryClientProvider client={queryClient}>
-          <PopoverManagerProvider>
-            <SidebarProvider>
-              <IsOldPageProvider>
-                <Toaster
-                  position="bottom-center"
-                  gutter={12}
-                  containerStyle={{
-                    margin: "8px",
-                  }}
-                  toastOptions={{
-                    className: clsx(
-                      "!bg-gray-100 !text-gray-800 !font-medium leading-[1.3] !border !border-gray-300 [&>div]:!my-0",
-                      {
-                        "dark:!bg-gray-700 dark:!text-gray-200 !text-base dark:!border-gray-600":
-                          !isRoot,
-                        "": isRoot,
+          {/* Hydrate the client-side cache with server-fetched data */}
+          <HydrationBoundary state={dehydratedState}>
+            <PopoverManagerProvider>
+              <SidebarProvider>
+                <IsOldPageProvider>
+                  <Toaster
+                    position="bottom-center"
+                    gutter={12}
+                    containerStyle={{
+                      margin: "8px",
+                    }}
+                    toastOptions={{
+                      className: clsx(
+                        "!bg-gray-100 !text-gray-800 !font-medium leading-[1.3] !border !border-gray-300 [&>div]:!my-0",
+                        {
+                          "dark:!bg-gray-700 dark:!text-gray-200 !text-base dark:!border-gray-600":
+                            !isRoot,
+                          "": isRoot,
+                        },
+                      ),
+                      success: {
+                        duration: 3000,
                       },
-                    ),
-                    success: {
-                      duration: 3000,
-                    },
-                    error: {
-                      duration: 10000,
-                    },
-                    style: {
-                      fontSize: "16px",
-                      maxWidth: "500px",
-                      padding: "13px 16px",
-                      zIndex: 3,
-                    },
-                  }}
-                />
-                {children}
-              </IsOldPageProvider>
-            </SidebarProvider>
-          </PopoverManagerProvider>
+                      error: {
+                        duration: 10000,
+                      },
+                      style: {
+                        fontSize: "16px",
+                        maxWidth: "500px",
+                        padding: "13px 16px",
+                        zIndex: 3,
+                      },
+                    }}
+                  />
+                  {children}
+                </IsOldPageProvider>
+              </SidebarProvider>
+            </PopoverManagerProvider>
+          </HydrationBoundary>
         </QueryClientProvider>
       </ThemeProvider>
     </AppRouterCacheProvider>

@@ -1,6 +1,7 @@
-import { getUserFromSession } from "@/_libs/getUserFromSession";
 import clsx from "clsx";
 import { redirect } from "next/navigation";
+import { headers } from "next/headers"; // Import headers
+
 import AppHeader from "../_components/AppHeader";
 import AppSidebar from "../_components/AppSidebar";
 import AppFooter from "../_components/AppFooter";
@@ -8,16 +9,33 @@ import AppBottomBar from "../_components/AppBottomBar";
 import GoogleLoginToastTrigger from "../_components/GoogleLoginToastTrigger";
 import DiscordConnectToastTrigger from "../_components/DiscordConnectToastTrigger";
 
+import { QueryClient, dehydrate } from "@tanstack/react-query";
+import { fetchCurrentUser } from "@/app/_hooks/useAuth";
+import { Providers } from "../providers";
+import { User } from "@/_types/user";
+
 export default async function AppLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const user = await getUserFromSession();
+  const headerList = headers(); // Get headers from the incoming request
+  const cookieHeader = (await headerList).get("cookie") || undefined; // Corrected: No extra await needed
+
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ["user"],
+    queryFn: () => fetchCurrentUser(cookieHeader),
+  });
+
+  const user = queryClient.getQueryData<User | null>(["user"]);
 
   if (!user) {
     redirect("/auth");
   }
+
+  const dehydratedState = dehydrate(queryClient);
 
   return (
     <div
@@ -33,12 +51,11 @@ export default async function AppLayout({
             `mx-auto my-10 w-full max-w-260 flex-1 px-8 max-sm:px-6`,
           )}
         >
-          {children}
+          <Providers dehydratedState={dehydratedState}>{children}</Providers>
         </main>
         <AppFooter />
       </div>
       <AppBottomBar /> {/* hidden above 640px width */}
-      {/* there's no UI here, just functionality */}
       <GoogleLoginToastTrigger />
       <DiscordConnectToastTrigger />
     </div>

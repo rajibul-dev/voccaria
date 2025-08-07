@@ -1,8 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-config.autoAddCss = false;
-
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Viewport } from "next";
@@ -11,17 +9,16 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 
-// The following import prevents a Font Awesome icon server-side rendering bug,
-// where the icons flash from a very large icon down to a properly sized one:
 import "@fortawesome/fontawesome-svg-core/styles.css";
-// Prevent fontawesome from adding its CSS since we did it manually above:
 import { config } from "@fortawesome/fontawesome-svg-core";
 
 import Navbar from "./_components/Navbar";
 import { Providers } from "./providers";
-import { headers } from "next/headers";
+import { headers } from "next/headers"; // Import headers
 import SearchContextProviderWrapper from "./_components/SearchContextProviderWrapper";
-import { getUserFromSession } from "@/_libs/getUserFromSession";
+
+import { QueryClient, dehydrate } from "@tanstack/react-query";
+import { fetchCurrentUser } from "@/app/_hooks/useAuth"; // Import the fetchCurrentUser function
 
 config.autoAddCss = false; /* eslint-disable import/first */
 
@@ -93,10 +90,20 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const headerList = await headers();
-  const user = await getUserFromSession();
+  const headerList = headers(); // Get headers from the incoming request
+  const cookieHeader = (await headerList).get("cookie") || undefined; // Extract the Cookie header
 
-  const pathname = headerList.get("x-current-path") || "";
+  const queryClient = new QueryClient();
+
+  // Pass the cookieHeader to fetchCurrentUser when prefetching on the server
+  await queryClient.prefetchQuery({
+    queryKey: ["user"],
+    queryFn: () => fetchCurrentUser(cookieHeader),
+  });
+
+  const dehydratedState = dehydrate(queryClient);
+
+  const pathname = (await headerList).get("x-current-path") || "";
   const isRoot = pathname === "/";
 
   return (
@@ -146,7 +153,7 @@ export default async function RootLayout({
       </head>
       <body className={`${montserrat.className} antialiased dark:bg-gray-900`}>
         <SearchContextProviderWrapper>
-          <Providers initialUser={user}>
+          <Providers dehydratedState={dehydratedState}>
             <Navbar />
             <div>{children}</div>
           </Providers>

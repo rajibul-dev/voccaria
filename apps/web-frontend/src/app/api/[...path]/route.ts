@@ -1,62 +1,113 @@
-import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
+// app/api/[...path]/route.ts
+// This file acts as a proxy for all /api/* requests to your Express backend.
+
 import { NextRequest, NextResponse } from "next/server";
 
-// This helper function handles the core logic of forwarding the request, regardless of method
-async function handleProxyRequest(req: NextRequest) {
-  const { pathname, searchParams } = new URL(req.url);
+// Ensure your environment variable points to the base of your Express API
+// e.g., EXPRESS_BACKEND_URL=http://localhost:5000/api/v1
+const EXPRESS_BACKEND_URL = process.env.EXPRESS_BACKEND_ORIGIN;
 
-  // Get all headers from the incoming request
-  const headers = new Headers(req.headers);
-  // Optional: remove any headers you don't want to forward
-  headers.delete("host");
-
-  // The path to the Express backend is everything after '/api'
-  const backendPath = pathname.replace("/api", "");
-  const backendUrl = `${expressBackendBaseRESTOrigin}${backendPath}?${searchParams.toString()}`;
-
-  // Get the request body if it exists. Note: req.text() can only be called once.
-  let body = null;
-  if (req.method !== "GET" && req.method !== "HEAD") {
-    try {
-      body = await req.text();
-    } catch (e) {
-      console.error("Could not parse request body:", e);
-    }
+// Helper to construct the target URL and headers
+function createProxyRequest(request: NextRequest, method: string, body?: any) {
+  if (!EXPRESS_BACKEND_URL) {
+    throw new Error("EXPRESS_BACKEND_URL environment variable is not set.");
   }
 
-  // Perform the server-to-server fetch request
-  const backendResponse = await fetch(backendUrl, {
-    method: req.method,
-    headers: headers,
-    body: body, // Pass the body for non-GET requests
-    credentials: "include", // Ensure cookies are handled
+  const url = new URL(request.url);
+  // Remove the /api prefix from the Next.js URL path
+  // Example: /api/users/me becomes /users/me
+  const path = url.pathname.replace("/api", "");
+
+  // Construct the target URL for the Express backend
+  // Example: http://localhost:5000/api/v1 + /users/me + ?query=params
+  const targetUrl = `${EXPRESS_BACKEND_URL}${path}${url.search}`;
+
+  const headersToForward = new Headers(request.headers);
+  // Important: Set the Host header to the backend's host, not the Next.js app's host
+  headersToForward.set("Host", new URL(EXPRESS_BACKEND_URL).host);
+
+  const options: RequestInit = {
+    method: method,
+    headers: headersToForward,
+    // For POST/PUT/PATCH, include the body
+    body: body,
+    // Ensure cookies are forwarded from the client request to the backend
+    // This is handled by forwarding the 'Cookie' header directly.
+    // `credentials: 'include'` is for browser fetches, not server-to-server.
+  };
+
+  return { targetUrl, options };
+}
+
+export async function GET(request: NextRequest) {
+  try {
+    const { targetUrl, options } = createProxyRequest(request, "GET");
+    const response = await fetch(targetUrl, options);
+    return createProxyResponse(response);
+  } catch (error) {
+    console.error(`Proxy GET request failed:`, error);
+    return new NextResponse("Internal Server Error", { status: 500 });
+  }
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const { targetUrl, options } = createProxyRequest(
+      request,
+      "POST",
+      request.body,
+    );
+    const response = await fetch(targetUrl, options);
+    return createProxyResponse(response);
+  } catch (error) {
+    console.error(`Proxy POST request failed:`, error);
+    return new NextResponse("Internal Server Error", { status: 500 });
+  }
+}
+
+export async function PATCH(request: NextRequest) {
+  try {
+    const { targetUrl, options } = createProxyRequest(
+      request,
+      "PATCH",
+      request.body,
+    );
+    const response = await fetch(targetUrl, options);
+    return createProxyResponse(response);
+  } catch (error) {
+    console.error(`Proxy PATCH request failed:`, error);
+    return new NextResponse("Internal Server Error", { status: 500 });
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const { targetUrl, options } = createProxyRequest(request, "DELETE");
+    const response = await fetch(targetUrl, options);
+    return createProxyResponse(response);
+  } catch (error) {
+    console.error(`Proxy DELETE request failed:`, error);
+    return new NextResponse("Internal Server Error", { status: 500 });
+  }
+}
+
+// Helper to create the response sent back to the client
+async function createProxyResponse(response: Response) {
+  const responseHeaders = new Headers(response.headers);
+  // Remove any potentially problematic headers (like Content-Encoding if Next.js handles it)
+  // or headers that might cause issues with proxying.
+  responseHeaders.delete("content-encoding");
+  responseHeaders.delete("transfer-encoding"); // Often added by Node.js, can cause issues
+
+  // If your Express backend sets Set-Cookie, ensure it's handled correctly.
+  // Next.js Route Handlers generally handle Set-Cookie headers automatically,
+  // but if you encounter issues, you might need to inspect/re-set them.
+
+  return new NextResponse(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers: responseHeaders,
   });
-
-  // Return the response from the backend to the client
-  return new NextResponse(backendResponse.body, {
-    status: backendResponse.status,
-    statusText: backendResponse.statusText,
-    headers: backendResponse.headers,
-  });
 }
 
-// Next.js will call the appropriate function based on the request method
-export async function GET(req: NextRequest) {
-  return handleProxyRequest(req);
-}
-
-export async function POST(req: NextRequest) {
-  return handleProxyRequest(req);
-}
-
-export async function PUT(req: NextRequest) {
-  return handleProxyRequest(req);
-}
-
-export async function PATCH(req: NextRequest) {
-  return handleProxyRequest(req);
-}
-
-export async function DELETE(req: NextRequest) {
-  return handleProxyRequest(req);
-}
+// Add other HTTP methods (PUT, OPTIONS, HEAD) as needed, following the same pattern.

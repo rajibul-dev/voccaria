@@ -1,56 +1,33 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { FaDiscord } from "react-icons/fa";
 import { Button, Avatar } from "@mui/material";
 import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
-import toast from "react-hot-toast";
 import { User } from "@/_types/user";
-import { useUser } from "../_hooks/useUser";
+import { useDiscordDisconnect } from "@/app/_hooks/useAuth";
 
 export default function DiscordConnectedCardEdit({
   discord,
 }: {
   discord: User["discord"];
 }) {
-  const [disconnecting, setDisconnecting] = useState(false);
-  const { data: user } = useUser();
+  // Initialize the mutation hook
+  const disconnectMutation = useDiscordDisconnect();
 
   function handleChangeDiscord() {
     console.log("Discord connect initiated");
-    const discordConnecthUrl = `${expressBackendBaseRESTOrigin}/users/discord-connect`;
-    console.log("discordConnecthUrl:", discordConnecthUrl);
-    window.location.href = discordConnecthUrl;
+    const discordConnectUrl = `${expressBackendBaseRESTOrigin}/users/discord-connect`;
+    console.log("discordConnectUrl:", discordConnectUrl);
+    window.location.href = discordConnectUrl;
   }
 
   async function handleDisconnect() {
-    setDisconnecting(true);
-
-    try {
-      const res = await fetch(
-        `${expressBackendBaseRESTOrigin}/users/discord-disconnect`,
-        {
-          method: "DELETE",
-          credentials: "include",
-        },
-      );
-
-      const jsonResponse = await res.json();
-
-      if (!res.ok || !jsonResponse.success) {
-        toast.error(
-          jsonResponse.message || "Could not disconnect Discord profile",
-        );
-      } else {
-        toast.success(
-          jsonResponse.message || "Successfully disconnected Discord profile",
-        );
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error("Something went wrong while disconnecting Discord profile");
-    } finally {
-      setDisconnecting(false);
-    }
+    // Trigger the disconnect mutation.
+    // The useDiscordDisconnect hook handles:
+    // - Setting loading state (isPending)
+    // - Showing success/error toasts
+    // - Invalidating the user query (which will update the UI elsewhere)
+    disconnectMutation.mutate();
   }
 
   return (
@@ -58,8 +35,8 @@ export default function DiscordConnectedCardEdit({
       <div className="flex flex-col items-start gap-6">
         <div className="flex items-center gap-3">
           <Avatar
-            src={discord?.avatar}
-            alt={discord?.display_name}
+            src={discord?.avatar || undefined}
+            alt={discord?.display_name || "Discord User"}
             sx={{ width: 96, height: 96 }}
           />
           <div>
@@ -68,7 +45,7 @@ export default function DiscordConnectedCardEdit({
             </h3>
             {discord?.username && (
               <span className="text-sm text-gray-500 dark:text-gray-400">
-                @{discord?.username}
+                @{discord.username}
               </span>
             )}
           </div>
@@ -80,7 +57,7 @@ export default function DiscordConnectedCardEdit({
             startIcon={<FaDiscord />}
             className="!bg-[#4e59d2] !shadow-none hover:!bg-[#5865f2]"
             onClick={handleChangeDiscord}
-            disabled={disconnecting}
+            disabled={disconnectMutation.isPending}
           >
             Change Discord
           </Button>
@@ -89,7 +66,7 @@ export default function DiscordConnectedCardEdit({
             color="secondary"
             size="medium"
             onClick={handleDisconnect}
-            loading={disconnecting}
+            loading={disconnectMutation.isPending}
             loadingIndicator={"Disconnecting..."}
           >
             Disconnect

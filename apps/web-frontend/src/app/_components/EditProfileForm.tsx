@@ -1,7 +1,13 @@
 "use client";
 
-import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
 import { User } from "@/_types/user";
+import {
+  useAvatarProviders,
+  useDeleteAvatar,
+  useUpdateAvatarProvider,
+  useUpdateProfile,
+  useUploadAvatar,
+} from "@/app/_hooks/useAuth"; // Import all necessary hooks
 import {
   Avatar,
   Button,
@@ -21,7 +27,7 @@ import { MdCloudUpload, MdDelete } from "react-icons/md";
 import Input from "./Input";
 
 export default function EditProfileForm({
-  user,
+  user, // This prop should be the current user data from useUser in the parent component
   setIsEditing,
 }: {
   user: User | null;
@@ -29,65 +35,57 @@ export default function EditProfileForm({
 }) {
   const [name, setName] = useState(user?.name || "");
   const [bio, setBio] = useState(user?.bio || "");
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const handleOpen = () => setModalOpen(true);
   const handleClose = () => setModalOpen(false);
-  const [isSettingAvatar, setIsSettingAvatar] = useState(false);
-  const [isDeletingAvatar, setIsDeletingAvatar] = useState(false);
-  const [providers, setProviders] = useState<string[]>([]);
 
+  // Local state for file upload preview (not directly managed by TanStack Query)
   const [image, setFiles] = useState<(File & { preview: string })[]>([]);
   const [rejected, setRejected] = useState<File[]>([]);
 
+  // Initialize TanStack Query hooks
+  const updateProfileMutation = useUpdateProfile();
+  const { data: providers = [], isLoading: isLoadingProviders } =
+    useAvatarProviders();
+  const updateAvatarProviderMutation = useUpdateAvatarProvider();
+  const uploadAvatarMutation = useUploadAvatar();
+  const deleteAvatarMutation = useDeleteAvatar();
+
+  // State for the avatar provider selector, initialized with user's current selected provider
   const [providerSelector, setProviderSelector] = useState(
-    user?.avatars.selected,
+    user?.avatars?.selected || "",
   );
 
-  const handleProviderSelectorChange = async (event: SelectChangeEvent) => {
-    const selectedProvider = event.target.value;
-    setProviderSelector(selectedProvider as any);
-
-    try {
-      const res = await fetch(
-        `${expressBackendBaseRESTOrigin}/users/me/avatar`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ provider: selectedProvider }),
-          credentials: "include",
-        },
-      );
-
-      const jsonResponse = await res.json();
-
-      if (!res.ok) {
-        console.error(
-          jsonResponse.message || "Failed to update avatar provider",
-        );
-        toast.error(jsonResponse.message || "Failed to update avatar provider");
-      }
-
-      console.log("Avatar updated:", jsonResponse.data?.url);
-      toast.success(
-        jsonResponse.message || `Selected ${selectedProvider} avatar!`,
-      );
-
-      const apiUser = jsonResponse.data.user as User;
-    } catch (error) {
-      console.error("Avatar update error:", error);
-      toast.error("API error: failed to update avatar provider");
+  // Update providerSelector when user prop changes (e.g., after a successful avatar change)
+  useEffect(() => {
+    if (user?.avatars?.selected) {
+      setProviderSelector(user.avatars.selected);
     }
+  }, [user?.avatars?.selected]);
+
+  // Handler for changing avatar provider
+  const handleProviderSelectorChange = (event: SelectChangeEvent) => {
+    const selectedProvider = event.target.value;
+    setProviderSelector(selectedProvider as any); // Update local state immediately
+
+    // Trigger the mutation to update avatar provider
+    updateAvatarProviderMutation.mutate(
+      { provider: selectedProvider as string },
+      {
+        // onSuccess and onError callbacks are handled in the hook itself (toast, invalidateQueries)
+        // No need for additional logic here unless specific UI updates are required
+      },
+    );
   };
 
   const modalRef = useRef<HTMLDivElement | null>(null);
 
+  // Determine if avatar action buttons should be shown in the modal
   const shouldButtonGroupDivExist =
     (user?.avatar !== null && image.length === 0) ||
     (!!providers.length && image.length === 0);
 
+  // Dropzone callbacks for handling file selection
   const onDrop = useCallback(
     (
       acceptedFiles: File[],
@@ -95,188 +93,120 @@ export default function EditProfileForm({
       event: DropEvent,
     ) => {
       if (acceptedFiles?.length) {
-        setRejected([]);
-        setFiles((previousFiles) => [
-          ...previousFiles,
-          ...acceptedFiles.map((file) =>
+        setRejected([]); // Clear previous rejections
+        setFiles(
+          acceptedFiles.map((file) =>
             Object.assign(file, { preview: URL.createObjectURL(file) }),
           ),
-        ]);
+        );
       }
 
       if (fileRejections?.length) {
-        setRejected((previousFiles) => [
-          ...previousFiles,
-          ...fileRejections.map((rej) => rej.file),
-        ]);
+        setRejected(fileRejections.map((rej) => rej.file));
       }
     },
     [],
   );
 
+  // Function to clear selected image for upload
   const removeSelection = () => {
     setFiles([]);
     setRejected([]);
   };
 
+  // Initialize react-dropzone
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      image: [".png", ".jpg", "jpeg"],
+      "image/*": [".png", ".jpg", ".jpeg"], // More generic image accept
     },
     maxSize: 1024 * 1024 * 10, // 10 MB
   });
 
+  // Effect to revoke object URLs for image previews to prevent memory leaks
   useEffect(() => {
-    // Revoke the data uris to avoid memory leaks
     return () => image.forEach((file) => URL.revokeObjectURL(file.preview));
   }, [image]);
 
-  useEffect(() => {
-    async function getProviders() {
-      const res = await fetch(
-        `${expressBackendBaseRESTOrigin}/users/me/providers`,
-        { method: "GET", credentials: "include" },
-      );
-
-      const jsonResponse = await res.json();
-
-      if (!res.ok) {
-        console.error("Could not fetch the providers");
-        return;
-      }
-
-      const apiProviders: [] = jsonResponse.data;
-
-      if (apiProviders.length) {
-        const updatedProviders = [...apiProviders];
-        setProviders(updatedProviders);
-      }
-    }
-
-    getProviders();
-  }, [user]);
-
+  // Handler for submitting a new avatar file
   async function handleAvatarSubmit(file: File) {
     if (!file) {
       toast.error("No file selected.");
       return;
     }
 
-    setIsSettingAvatar(true);
-
-    const formData = new FormData();
-    formData.append("avatar", file);
-
-    try {
-      const res = await fetch(
-        `${expressBackendBaseRESTOrigin}/users/me/avatar`,
-        {
-          method: "POST",
-          body: formData,
-          credentials: "include", // include cookies/auth
-        },
-      );
-
-      const json = await res.json();
-
-      if (!res.ok) {
-        toast.error(json.message || "Failed to upload avatar");
-        return;
-      }
-
-      setProviderSelector("manual");
-      removeSelection();
-      handleClose();
-      toast.success(json.message || "Avatar uploaded successfully!");
-    } catch (error) {
-      toast.error("Something went wrong while uploading avatar");
-      console.error(error);
-    } finally {
-      setIsSettingAvatar(false);
-    }
+    // Trigger the upload mutation
+    uploadAvatarMutation.mutate(file, {
+      onSuccess: () => {
+        removeSelection(); // Clear local file selection
+        handleClose(); // Close modal
+        // Toast and user data invalidation are handled in the hook
+      },
+      onError: () => {
+        // Error toast is handled in the hook
+      },
+    });
   }
 
+  // Handler for deleting the current avatar
   async function handleDeleteAvatar() {
-    setIsDeletingAvatar(true);
-
-    try {
-      const res = await fetch(
-        `${expressBackendBaseRESTOrigin}/users/me/avatar`,
-        {
-          method: "DELETE",
-          credentials: "include",
-        },
-      );
-
-      const json = await res.json();
-
-      if (!res.ok) {
-        toast.error(json.message || "Failed to delete avatar");
-        return;
-      }
-
-      toast.success(json.message || "Deleted avatar successfully");
-      handleClose();
-    } catch (error) {
-      toast.error("Something went wrong while deleting avatar");
-      console.error(error);
-    } finally {
-      setIsDeletingAvatar(false);
-    }
+    // Trigger the delete mutation
+    deleteAvatarMutation.mutate(undefined, {
+      onSuccess: () => {
+        handleClose(); // Close modal
+        // Toast and user data invalidation are handled in the hook
+      },
+      onError: () => {
+        // Error toast is handled in the hook
+      },
+    });
   }
 
-  async function handleSubmit(e?: React.FormEvent) {
-    if (e) e.preventDefault();
+  // Main handler for submitting profile changes (name and bio)
+  async function handleProfileUpdate(e?: React.FormEvent) {
+    if (e) e.preventDefault(); // Prevent default form submission if event exists
     if (!name.trim()) {
       toast.error("Name cannot be empty");
       return;
     }
 
-    // if no fields have been changed
-    if (user?.name.trim() === name && user?.bio?.trim() === bio) {
+    // If no fields have been changed, just exit editing mode
+    if (user?.name?.trim() === name && user?.bio?.trim() === bio) {
       setIsEditing(false);
       return;
     }
 
-    setIsSubmitting(true);
-    try {
-      const res = await fetch(`${expressBackendBaseRESTOrigin}/users/me`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, bio }),
-        credentials: "include",
-      });
-      const jsonResponse = await res.json();
-      if (!res.ok) {
-        toast.error(jsonResponse.message || "Failed to update profile");
-        return;
-      }
-      toast.success("Profile updated successfully");
-      setIsEditing(false);
-    } catch {
-      toast.error("Something went wrong. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    // Trigger the profile update mutation
+    updateProfileMutation.mutate(
+      { name, bio },
+      {
+        onSuccess: () => {
+          // Toast and user data invalidation are handled in the hook
+          setIsEditing(false); // Close editing mode
+        },
+        onError: () => {
+          // Error toast is handled in the hook
+        },
+      },
+    );
   }
 
+  // Calculate file size for display/warning
   const sizeInMB = (image[0]?.size ?? 0) / (1024 * 1024);
-
-  // check for over 2MB
   const isLargeFile = sizeInMB > 2;
 
   return (
     <form
       className="flex w-full flex-col items-start gap-6"
-      onSubmit={handleSubmit}
+      onSubmit={handleProfileUpdate} // Use the new handler for profile updates
     >
+      {/* Avatar display and modal trigger */}
       <div onClick={handleOpen} className="relative">
         <Avatar
           style={
             user?.avatar === null ? { background: "#222", color: "#222" } : {}
           }
-          src={user?.avatar}
+          src={user?.avatar || undefined} // Pass undefined if null for default MUI behavior
           sx={{ width: 170, height: 170 }}
         />
         <div className="absolute top-0 left-0 flex h-full w-full cursor-pointer flex-col items-center justify-center gap-1 rounded-full bg-black/40">
@@ -287,30 +217,7 @@ export default function EditProfileForm({
         </div>
       </div>
 
-      {/* select avatar from different provider button */}
-      {/* {!!providers.length && (
-        <Popover placementY="bottom" placementX="end" noBox>
-          <Popover.Trigger id="provider-select">
-            <Button
-              className="flex items-center gap-0.5"
-              variant="outline"
-              type="button"
-            >
-              <span>Avatar providers</span>
-              <IoMdArrowDropdown className="text-xl" />
-            </Button>
-          </Popover.Trigger>
-          <Popover.Content id="provider-select">
-            <div className="flex flex-col divide-y divide-gray-300 rounded-lg border border-gray-300 bg-gray-100 dark:divide-gray-600 dark:border-gray-600 dark:bg-gray-800">
-              {providers.map((provider) => (
-                <div key={provider}>Use {provider}'s pfp</div>
-              ))}
-            </div>
-          </Popover.Content>
-        </Popover>
-      )} */}
-
-      {/* select avatar from different provider button */}
+      {/* Avatar provider selection dropdown */}
       {!!providers.length && (
         <div className="flex items-center gap-4">
           <InputLabel
@@ -330,6 +237,9 @@ export default function EditProfileForm({
             onChange={handleProviderSelectorChange}
             variant="standard"
             className="!fill-gray-900 !stroke-gray-900 !text-gray-900 dark:!fill-gray-100 dark:!stroke-gray-100 dark:!text-gray-100 [&>svg]:!fill-gray-900 [&>svg]:dark:!fill-gray-100"
+            disabled={
+              isLoadingProviders || updateAvatarProviderMutation.isPending
+            } // Disable while loading providers or updating
           >
             {providers.map((item) => (
               <MenuItem key={item} value={item}>
@@ -340,6 +250,7 @@ export default function EditProfileForm({
         </div>
       )}
 
+      {/* Avatar update modal */}
       <Modal open={modalOpen} onClose={handleClose}>
         <div
           className="fixed inset-0 z-[1300] flex items-center justify-center px-5"
@@ -409,13 +320,6 @@ export default function EditProfileForm({
                   className="border-4 border-gray-300 shadow-md transition-all duration-300 dark:border-gray-700"
                 />
                 <div className="flex items-center gap-4">
-                  {/* <MyButton
-                    type="button"
-                    variant="outline"
-                    onClick={removeSelection}
-                  >
-                    Remove
-                  </MyButton> */}
                   <Button
                     type="button"
                     variant="outlined"
@@ -424,17 +328,10 @@ export default function EditProfileForm({
                   >
                     Remove
                   </Button>
-                  {/* <MyButton
-                    type="button"
-                    onClick={() => handleAvatarSubmit(image[0])}
-                    disabled={isSettingAvatar}
-                  >
-                    {!isSettingAvatar ? "Upload" : "Uploading..."}
-                  </MyButton> */}
                   <Button
                     type="button"
                     onClick={() => handleAvatarSubmit(image[0])}
-                    loading={isSettingAvatar}
+                    loading={uploadAvatarMutation.isPending} // Use hook's loading state
                     loadingIndicator={"Uploading..."}
                     className="!shadow-none"
                     variant="contained"
@@ -460,14 +357,14 @@ export default function EditProfileForm({
 
             {shouldButtonGroupDivExist && (
               <div className="mt-6 flex justify-center gap-4">
-                {/* avatar removing button */}
-                {user?.avatars.manual && image.length === 0 && (
+                {/* Avatar removing button */}
+                {user?.avatars?.manual && image.length === 0 && (
                   <Button
                     type="button"
                     variant="outlined"
                     color="error"
                     onClick={handleDeleteAvatar}
-                    loading={isDeletingAvatar}
+                    loading={deleteAvatarMutation.isPending} // Use hook's loading state
                     loadingIndicator={"Deleting..."}
                     className="!normal-case"
                     startIcon={<MdDelete />}
@@ -481,6 +378,7 @@ export default function EditProfileForm({
         </div>
       </Modal>
 
+      {/* Name and Bio input fields */}
       <div className="flex w-full max-w-100 flex-col gap-5">
         <Input
           label="Name"
@@ -501,10 +399,11 @@ export default function EditProfileForm({
           maxLength={1200}
         />
       </div>
+      {/* Action buttons for saving/canceling profile changes */}
       <div className="flex gap-3">
         <Button
           type="submit"
-          loading={isSubmitting}
+          loading={updateProfileMutation.isPending} // Use hook's loading state for profile update
           className="!normal-case !shadow-none"
           loadingIndicator={"Saving..."}
           variant="contained"
@@ -520,7 +419,7 @@ export default function EditProfileForm({
           }}
           variant="outlined"
           color="secondary"
-          disabled={isSubmitting}
+          disabled={updateProfileMutation.isPending} // Disable if profile update is pending
           size="large"
         >
           Cancel

@@ -1,4 +1,3 @@
-// LoginFormEmailPassword.tsx
 "use client";
 
 import Link from "next/link";
@@ -12,34 +11,14 @@ export default function LoginFormEmailPassword() {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  // Initialize the login mutation hook
   const loginMutation = useLogin();
 
   useEffect(() => {
-    // Prefetching is still a good practice for performance
     router.prefetch("/app");
   }, [router]);
 
   async function handleLogin() {
-    // The useLogin hook already handles setting loading state and error toasts.
-    // We just need to call its mutate function with the credentials.
-    loginMutation.mutate(
-      { email, password },
-      {
-        // The onSuccess callback here is for component-specific logic
-        // The global toast.success and router.replace are handled in the useLogin hook itself
-        // You might keep a component-specific toast here if it's different
-        onSuccess: (user) => {
-          // This component's onSuccess is called AFTER the hook's onSuccess.
-          // The router.replace("/app") and initial toast are already handled by the hook.
-          // You could add a more personalized toast here if desired,
-          // or remove the setTimeout as the hook already handles the main success toast.
-          // For now, let's remove the setTimeout as the hook's toast is immediate.
-          // toast.success(`Login successful! Welcome ${user.name || "User"}!`);
-        },
-        // The onError callback is handled by the hook, so no need for try/catch here.
-      },
-    );
+    loginMutation.mutate({ email, password });
   }
 
   return (

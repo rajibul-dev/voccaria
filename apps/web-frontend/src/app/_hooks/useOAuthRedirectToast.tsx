@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import toast from "react-hot-toast";
-import { useUser } from "./useUser";
+import { useUser } from "@/app/_hooks/useAuth";
 
 export default function useOAuthRedirectToast() {
   const { data: user } = useUser();
