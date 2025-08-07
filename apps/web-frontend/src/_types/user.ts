@@ -36,3 +36,9 @@ export interface User {
   createdAt: string;
   updatedAt: string;
 }
+
+// For the getAllUsers response
+export interface AllUsersResponse {
+  users: User[];
+  length: number;
+}
