@@ -273,9 +273,6 @@ export async function resetPassword(
     });
   }
 
-  console.log("Stored:", user.passwordResetToken);
-  console.log("Incoming Hashed:", createHash(token));
-
   if (user.passwordResetToken !== createHash(token)) {
     return response.status(StatusCodes.BAD_REQUEST).json({
       success: false,
@@ -316,7 +313,6 @@ export async function changePassword(
     });
   }
 
-  console.log("request.user", request.user);
   // @ts-ignore
   const user = await User.findById(request.user._id);
 

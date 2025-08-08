@@ -47,23 +47,7 @@ export async function showMe(
   request: Request,
   response: Response
 ): Promise<any> {
-  console.log("🔍 SHOWME: Function called");
-  console.log("🔍 SHOWME: Request method:", request.method);
-  console.log("🔍 SHOWME: Request URL:", request.url);
-  console.log(
-    "🔍 SHOWME: Request headers:",
-    JSON.stringify(request.headers, null, 2)
-  );
-
-  // Check if user exists on request
-  console.log("🔍 SHOWME: request.user exists:", !!request.user);
-  console.log(
-    "🔍 SHOWME: request.isAuthenticated():",
-    request.isAuthenticated?.()
-  );
-
   if (!request.user) {
-    console.error("❌ SHOWME: No user found on request object");
     return response.status(401).json({
       success: false,
       message: "User not authenticated",
@@ -71,45 +55,16 @@ export async function showMe(
   }
 
   try {
-    console.log("🔍 SHOWME: Raw request.user type:", typeof request.user);
-    console.log(
-      "🔍 SHOWME: Raw request.user constructor:",
-      request.user.constructor.name
-    );
-    console.log("🔍 SHOWME: Raw request.user keys:", Object.keys(request.user));
-
     const user = request.user as IUser;
-    console.log("🔍 SHOWME: User ID:", user._id);
-    console.log("🔍 SHOWME: User email:", user.email);
-    console.log("🔍 SHOWME: User name:", user.name);
-    console.log("🔍 SHOWME: User provider:", user.provider);
-    console.log("🔍 SHOWME: User isVerified:", user.isVerified);
-
-    console.log("🔍 SHOWME: About to call sanitizeUser...");
     const sanitizedUser = sanitizeUser(user);
-    console.log("🔍 SHOWME: Sanitized user created successfully");
-    console.log("🔍 SHOWME: Sanitized user keys:", Object.keys(sanitizedUser));
-    console.log(
-      "🔍 SHOWME: Sanitized user:",
-      JSON.stringify(sanitizedUser, null, 2)
-    );
 
-    console.log("🔍 SHOWME: About to send response...");
-    const responseData = {
+    return response.status(200).json({
       success: true,
       message: "User found successfully",
       data: sanitizedUser,
-    };
-
-    console.log(
-      "🔍 SHOWME: Response data prepared:",
-      JSON.stringify(responseData, null, 2)
-    );
-
-    return response.status(200).json(responseData);
+    });
   } catch (error) {
     console.error("❌ SHOWME: Error in showMe function:", error);
-    console.error("❌ SHOWME: Error stack:", error.stack);
     return response.status(500).json({
       success: false,
       message: "Internal server error while fetching user",
@@ -184,16 +139,6 @@ export async function addAvatar(
   // Fetch the updated user without sensitive fields
   const updatedUser = await User.findById(reqUser._id).select(
     "-hashedPassword -__v"
-  );
-
-  console.log("🔍 AVATAR UPLOAD DEBUG:");
-  console.log("- Cloudinary URL:", result.secure_url);
-  console.log("- Updated user avatar field:", updatedUser.avatar);
-  console.log("- Updated user avatars.manual:", updatedUser.avatars.manual);
-  console.log("- Updated user avatars.selected:", updatedUser.avatars.selected);
-  console.log(
-    "- Full avatars object:",
-    JSON.stringify(updatedUser.avatars, null, 2)
   );
 
   return response.status(StatusCodes.CREATED).json({

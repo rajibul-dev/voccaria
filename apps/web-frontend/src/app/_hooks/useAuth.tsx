@@ -17,7 +17,6 @@ const apiCall = async (
   options: RequestInit = {},
 ): Promise<any> => {
   const url = `/api${endpoint}`;
-  console.log("apiCall - Making request to:", url, "with options:", options);
 
   const response = await fetch(url, {
     credentials: "include",
@@ -28,12 +27,6 @@ const apiCall = async (
     ...options,
   });
 
-  console.log(
-    "apiCall - Response status:",
-    response.status,
-    response.statusText,
-  );
-
   if (!response.ok) {
     let errorText;
     try {
@@ -41,8 +34,6 @@ const apiCall = async (
     } catch {
       errorText = "";
     }
-
-    console.error("apiCall - Error response:", errorText);
 
     // Try to parse JSON error response
     let errorData;
@@ -100,7 +91,6 @@ const apiCall = async (
   let data;
   try {
     const responseText = await response.text();
-    console.log("apiCall - Response text:", responseText);
 
     if (!responseText) {
       data = {};
@@ -112,7 +102,6 @@ const apiCall = async (
     throw new Error("Invalid response from server. Please try again.");
   }
 
-  console.log("apiCall - Response data:", data);
   return data;
 };
 
@@ -131,28 +120,12 @@ export const fetchCurrentUser = async (
         process.env.EXPRESS_BACKEND_ORIGIN ||
         process.env.NEXT_PUBLIC_EXPRESS_BACKEND_ORIGIN;
       url = `${backendOrigin}/api/v1/users/me`;
-      console.log(
-        "fetchCurrentUser (SSR) - Using direct backend URL:",
-        url,
-        "backendOrigin:",
-        backendOrigin,
-        "with cookie:",
-        cookieHeader?.substring(0, 100) + "...",
-      );
     } else {
       // Client-side call - use proxy route
       url = "/api/users/me";
-      console.log("fetchCurrentUser (CSR) - Using proxy route:", url);
     }
 
     // Make the request with fetch instead of axios to avoid baseURL issues
-    console.log("🔍 FETCH_USER: Making request with options:", {
-      url,
-      method: "GET",
-      headers: { "Content-Type": "application/json", ...headers },
-      credentials: "include",
-    });
-
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -162,18 +135,8 @@ export const fetchCurrentUser = async (
       credentials: cookieHeader ? "include" : "include", // Always include credentials
     });
 
-    console.log("🔍 FETCH_USER: Response received");
-    console.log("🔍 FETCH_USER: Response status:", response.status);
-    console.log("🔍 FETCH_USER: Response statusText:", response.statusText);
-    console.log(
-      "🔍 FETCH_USER: Response headers:",
-      JSON.stringify(Object.fromEntries(response.headers.entries()), null, 2),
-    );
-
     if (!response.ok) {
-      console.error("❌ FETCH_USER: Response not ok");
       if (response.status === 401 || response.status === 403) {
-        console.log("fetchCurrentUser - Authentication error, returning null");
         return null;
       }
 
@@ -181,12 +144,8 @@ export const fetchCurrentUser = async (
       let errorText = "";
       try {
         errorText = await response.text();
-        console.error("❌ FETCH_USER: Error response text:", errorText);
       } catch (textError) {
-        console.error(
-          "❌ FETCH_USER: Could not read error response text:",
-          textError,
-        );
+        // Ignore text reading errors
       }
 
       throw new Error(
@@ -194,37 +153,23 @@ export const fetchCurrentUser = async (
       );
     }
 
-    console.log("🔍 FETCH_USER: Reading response as JSON...");
     let data;
     try {
       const responseText = await response.text();
-      console.log("🔍 FETCH_USER: Response text length:", responseText.length);
-      console.log(
-        "🔍 FETCH_USER: Response text preview:",
-        responseText.substring(0, 500),
-      );
-
       data = JSON.parse(responseText);
-      console.log("🔍 FETCH_USER: JSON parsed successfully");
     } catch (parseError) {
       console.error("❌ FETCH_USER: JSON parse error:", parseError);
-      console.error("❌ FETCH_USER: Failed to parse response as JSON");
       const errorMessage =
         parseError instanceof Error ? parseError.message : String(parseError);
       throw new Error(`Failed to parse response as JSON: ${errorMessage}`);
     }
 
-    console.log("fetchCurrentUser - Response from /users/me:", data);
-
     if (data.success && data.data) {
-      console.log("fetchCurrentUser - Returning user:", data.data);
       return data.data;
     }
-    console.log("fetchCurrentUser - No user found, returning null");
     return null;
   } catch (error: any) {
     if (error.message?.includes("401") || error.message?.includes("403")) {
-      console.log("fetchCurrentUser - Authentication error, returning null");
       return null;
     }
     console.error("Error fetching current user:", error);
@@ -627,8 +572,6 @@ const uploadAvatar = async (file: File): Promise<User> => {
   const formData = new FormData();
   formData.append("avatar", file);
 
-  console.log("🔍 FRONTEND: Starting avatar upload...");
-
   // Use fetch for file upload - don't set Content-Type header, let fetch handle it
   const response = await fetch("/api/users/me/avatar", {
     method: "POST",
@@ -638,19 +581,16 @@ const uploadAvatar = async (file: File): Promise<User> => {
 
   if (!response.ok) {
     const errorText = await response.text();
-    console.error("🔍 FRONTEND: Upload failed:", errorText);
+    console.error("Upload failed:", errorText);
     throw new Error(`Upload failed: ${response.statusText}`);
   }
 
   const data = await response.json();
-  console.log("🔍 FRONTEND: Upload response data:", data);
 
   if (data.success && data.data) {
     if (data.data.user) {
-      console.log("🔍 FRONTEND: Got user data:", data.data.user);
       return data.data.user;
     } else {
-      console.log("🔍 FRONTEND: No user in response, will trigger refetch");
       // If no user data is returned, we'll rely on query invalidation
       return {} as User; // Return empty user, invalidation will handle the rest
     }

@@ -90,34 +90,18 @@ export default passport.use(
 );
 
 passport.serializeUser((user: IUser, done) => {
-  console.log("🔍 GOOGLE_SERIALIZE: Serializing user");
-  console.log("🔍 GOOGLE_SERIALIZE: User ID:", user._id);
-  console.log("🔍 GOOGLE_SERIALIZE: User email:", user.email);
   done(null, user._id);
 });
 
 passport.deserializeUser(async (id, done) => {
-  console.log("🔍 GOOGLE_DESERIALIZE: Deserializing user with ID:", id);
   try {
     const user = await User.findById(id);
-    console.log("🔍 GOOGLE_DESERIALIZE: User found:", !!user);
-    if (user) {
-      console.log("🔍 GOOGLE_DESERIALIZE: User email:", user.email);
-      console.log("🔍 GOOGLE_DESERIALIZE: User type:", typeof user);
-      console.log(
-        "🔍 GOOGLE_DESERIALIZE: User constructor:",
-        user.constructor.name
-      );
-      console.log("🔍 GOOGLE_DESERIALIZE: User keys:", Object.keys(user));
-    }
     if (!user) {
-      console.error("❌ GOOGLE_DESERIALIZE: User not found in database");
       throw new Error("User not found");
     }
-    console.log("✅ GOOGLE_DESERIALIZE: User deserialized successfully");
     done(null, user);
   } catch (err) {
-    console.error("❌ GOOGLE_DESERIALIZE: Error deserializing user:", err);
+    console.error("Error deserializing user:", err);
     done(err, null);
   }
 });

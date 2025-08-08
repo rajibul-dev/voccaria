@@ -50,67 +50,9 @@ function createProxyRequest(request: NextRequest, method: string, body?: any) {
 }
 
 export async function GET(request: NextRequest) {
-  console.log("🔍 PROXY_GET: Starting proxy request");
-  console.log("🔍 PROXY_GET: Original URL:", request.url);
-  console.log(
-    "🔍 PROXY_GET: Headers:",
-    JSON.stringify(Object.fromEntries(request.headers.entries()), null, 2),
-  );
-
   try {
     const { targetUrl, options } = createProxyRequest(request, "GET");
-    console.log("🔍 PROXY_GET: Target URL:", targetUrl);
-    console.log(
-      "🔍 PROXY_GET: Request options:",
-      JSON.stringify(
-        {
-          method: options.method,
-          headers:
-            options.headers instanceof Headers
-              ? Object.fromEntries(options.headers.entries())
-              : options.headers,
-        },
-        null,
-        2,
-      ),
-    );
-
-    console.log("🔍 PROXY_GET: Making fetch request...");
     const response = await fetch(targetUrl, options);
-    console.log("🔍 PROXY_GET: Response status:", response.status);
-    console.log("🔍 PROXY_GET: Response ok:", response.ok);
-    console.log("🔍 PROXY_GET: Response type:", response.type);
-    console.log("🔍 PROXY_GET: Response url:", response.url);
-    console.log(
-      "🔍 PROXY_GET: Response headers:",
-      JSON.stringify(Object.fromEntries(response.headers.entries()), null, 2),
-    );
-
-    // Clone response multiple times to test different approaches
-    const responseClone1 = response.clone();
-    const responseClone2 = response.clone();
-
-    // Test 1: Read as text
-    const responseText = await responseClone1.text();
-    console.log("🔍 PROXY_GET: Response text length:", responseText.length);
-    console.log(
-      "🔍 PROXY_GET: Response text preview:",
-      responseText.substring(0, 500),
-    );
-
-    // Test 2: Read as arrayBuffer
-    const responseBuffer = await responseClone2.arrayBuffer();
-    console.log(
-      "🔍 PROXY_GET: Response buffer length:",
-      responseBuffer.byteLength,
-    );
-
-    // Check if text is truncated
-    if (responseText.length < 800) {
-      console.error("❌ PROXY_GET: Response appears truncated!");
-      console.log("🔍 PROXY_GET: Full response text:", responseText);
-    }
-
     return createProxyResponse(response);
   } catch (error) {
     console.error("❌ PROXY_GET: Request failed:", error);
@@ -164,27 +106,9 @@ export async function DELETE(request: NextRequest) {
 
 // Helper to create the response sent back to the client
 async function createProxyResponse(response: Response) {
-  console.log("🔍 PROXY_RESPONSE: Creating proxy response");
-  console.log("🔍 PROXY_RESPONSE: Original status:", response.status);
-  console.log("🔍 PROXY_RESPONSE: Original statusText:", response.statusText);
-  console.log(
-    "🔍 PROXY_RESPONSE: Original headers:",
-    JSON.stringify(Object.fromEntries(response.headers.entries()), null, 2),
-  );
-
-  // AGGRESSIVE FIX: Read response as arrayBuffer to handle binary data properly
+  // CRITICAL FIX: Read response as arrayBuffer to handle binary data properly
   const responseBuffer = await response.arrayBuffer();
   const responseText = new TextDecoder().decode(responseBuffer);
-
-  console.log(
-    "🔍 PROXY_RESPONSE: Response buffer length:",
-    responseBuffer.byteLength,
-  );
-  console.log("🔍 PROXY_RESPONSE: Response text length:", responseText.length);
-  console.log(
-    "🔍 PROXY_RESPONSE: Response body preview:",
-    responseText.substring(0, 200),
-  );
 
   // Create completely new headers to avoid any inheritance issues
   const responseHeaders = new Headers();
@@ -210,18 +134,12 @@ async function createProxyResponse(response: Response) {
     );
   }
 
-  console.log(
-    "🔍 PROXY_RESPONSE: New headers:",
-    JSON.stringify(Object.fromEntries(responseHeaders.entries()), null, 2),
-  );
-
   const finalResponse = new NextResponse(responseText, {
     status: response.status,
     statusText: response.statusText,
     headers: responseHeaders,
   });
 
-  console.log("🔍 PROXY_RESPONSE: Final response created successfully");
   return finalResponse;
 }
 
