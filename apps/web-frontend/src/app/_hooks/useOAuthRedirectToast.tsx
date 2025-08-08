@@ -5,9 +5,12 @@ import toast from "react-hot-toast";
 import { useUser } from "@/app/_hooks/useAuth";
 
 export default function useOAuthRedirectToast() {
-  const { data: user } = useUser();
+  const { data: user, isLoading } = useUser();
 
   useEffect(() => {
+    // Don't run the effect if user data is still loading
+    if (isLoading) return;
+
     const urlParams = new URLSearchParams(window.location.search);
     const googleLogin = urlParams.get("googleLogin");
 
@@ -20,5 +23,5 @@ export default function useOAuthRedirectToast() {
       const newUrl = window.location.pathname;
       window.history.replaceState({}, "", newUrl);
     }
-  }, []);
+  }, [user?.name, isLoading]); // Include dependencies to wait for user data
 }

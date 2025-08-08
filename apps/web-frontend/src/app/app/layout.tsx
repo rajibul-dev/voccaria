@@ -8,6 +8,7 @@ import AppFooter from "../_components/AppFooter";
 import AppBottomBar from "../_components/AppBottomBar";
 import GoogleLoginToastTrigger from "../_components/GoogleLoginToastTrigger";
 import DiscordConnectToastTrigger from "../_components/DiscordConnectToastTrigger";
+import ClientAuthGuard from "../_components/ClientAuthGuard";
 
 import { QueryClient, dehydrate } from "@tanstack/react-query";
 import { fetchCurrentUser } from "@/app/_hooks/useAuth";
@@ -19,21 +20,28 @@ export default async function AppLayout({
 }: {
   children: React.ReactNode;
 }) {
+  console.log("=== APP LAYOUT SSR STARTING ===");
   const headerList = headers(); // Get headers from the incoming request
-  const cookieHeader = (await headerList).get("cookie") || undefined; // Corrected: No extra await needed
+  const cookieHeader = (await headerList).get("cookie") || undefined;
+
+  console.log("=== APP LAYOUT - Cookie header:", cookieHeader?.substring(0, 100) + "...");
 
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery({
-    queryKey: ["user"],
-    queryFn: () => fetchCurrentUser(cookieHeader),
-  });
-
-  const user = queryClient.getQueryData<User | null>(["user"]);
-
-  if (!user) {
-    redirect("/auth");
+  // Always try to prefetch user data if cookies are available
+  if (cookieHeader) {
+    console.log("=== APP LAYOUT - About to prefetch user (cookies available) ===");
+    await queryClient.prefetchQuery({
+      queryKey: ["user"],
+      queryFn: () => fetchCurrentUser(cookieHeader),
+    });
+    console.log("=== APP LAYOUT - Prefetch complete ===");
+  } else {
+    console.log("=== APP LAYOUT - No cookies available, skipping SSR prefetch ===");
   }
+
+  // Let client-side handle all authentication logic
+  console.log("=== APP LAYOUT - Deferring auth to client-side ===");
 
   const dehydratedState = dehydrate(queryClient);
 
@@ -51,7 +59,11 @@ export default async function AppLayout({
             `mx-auto my-10 w-full max-w-260 flex-1 px-8 max-sm:px-6`,
           )}
         >
-          <Providers dehydratedState={dehydratedState}>{children}</Providers>
+          <Providers dehydratedState={dehydratedState}>
+            <ClientAuthGuard>
+              {children}
+            </ClientAuthGuard>
+          </Providers>
         </main>
         <AppFooter />
       </div>

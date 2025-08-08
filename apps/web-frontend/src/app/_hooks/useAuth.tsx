@@ -3,7 +3,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import api from "@/_libs/axios"; // configured axios instance
 import { User, AllUsersResponse } from "@/_types/user"; // Your User interface
 
 // --- Query Key Constants ---
@@ -12,40 +11,101 @@ const ALL_USERS_QUERY_KEY = "allUsers"; // New key for all users
 const SPECIFIC_USER_QUERY_KEY = "specificUser"; // New key for specific user
 const PROVIDERS_QUERY_KEY = "avatarProviders"; // Already defined
 
+// Helper function for consistent API calls
+const apiCall = async (
+  endpoint: string,
+  options: RequestInit = {},
+): Promise<any> => {
+  const url = `/api${endpoint}`;
+  console.log("apiCall - Making request to:", url, "with options:", options);
+
+  const response = await fetch(url, {
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+    ...options,
+  });
+
+  console.log(
+    "apiCall - Response status:",
+    response.status,
+    response.statusText,
+  );
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error("apiCall - Error response:", errorText);
+    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  console.log("apiCall - Response data:", data);
+  return data;
+};
+
 export const fetchCurrentUser = async (
   cookieHeader?: string,
 ): Promise<User | null> => {
   try {
     const headers: Record<string, string> = {};
+    let url: string;
+
     if (cookieHeader) {
-      headers["Cookie"] = cookieHeader; // Forward the incoming Cookie header
+      // Server-side call - use direct backend URL to avoid proxy issues
+      headers["Cookie"] = cookieHeader;
+      const backendOrigin = process.env.NEXT_PUBLIC_EXPRESS_BACKEND_ORIGIN;
+      url = `${backendOrigin}/api/v1/users/me`;
+      console.log(
+        "fetchCurrentUser (SSR) - Using direct backend URL:",
+        url,
+        "backendOrigin:",
+        backendOrigin,
+        "with cookie:",
+        cookieHeader?.substring(0, 100) + "...",
+      );
+    } else {
+      // Client-side call - use proxy route
+      url = "/api/users/me";
+      console.log("fetchCurrentUser (CSR) - Using proxy route:", url);
     }
 
-    // --- NEW LOG HERE ---
-    console.log(
-      "*** fetchCurrentUser (Next.js Server-Side) - Attempting to fetch: /users/me",
-    );
-    console.log(
-      "*** fetchCurrentUser (Next.js Server-Side) - Headers being sent:",
-      headers,
-    );
-    // --- END NEW LOG ---
+    // Make the request with fetch instead of axios to avoid baseURL issues
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        ...headers,
+      },
+      credentials: cookieHeader ? "include" : "include", // Always include credentials
+    });
 
-    // Pass the headers to the axios request
-    const { data } = await api.get("/users/me", { headers }); // Calls /api/users/me (proxied to Express)
+    if (!response.ok) {
+      if (response.status === 401 || response.status === 403) {
+        console.log("fetchCurrentUser - Authentication error, returning null");
+        return null;
+      }
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+
+    console.log("fetchCurrentUser - Response from /users/me:", data);
 
     if (data.success && data.data) {
+      console.log("fetchCurrentUser - Returning user:", data.data);
       return data.data;
     }
+    console.log("fetchCurrentUser - No user found, returning null");
     return null;
   } catch (error: any) {
-    if (error.response?.status === 401 || error.response?.status === 403) {
+    if (error.message?.includes("401") || error.message?.includes("403")) {
+      console.log("fetchCurrentUser - Authentication error, returning null");
       return null;
     }
     console.error("Error fetching current user:", error);
-    throw new Error(
-      error.response?.data?.message || "Failed to fetch user data.",
-    );
+    throw new Error(error.message || "Failed to fetch user data.");
   }
 };
 
@@ -65,7 +125,10 @@ interface LoginCredentials {
 }
 
 const loginUser = async (credentials: LoginCredentials): Promise<User> => {
-  const { data } = await api.post("/auth/login", credentials);
+  const data = await apiCall("/auth/login", {
+    method: "POST",
+    body: JSON.stringify(credentials),
+  });
   if (data.success && data.data?.user) {
     return data.data.user;
   }
@@ -85,8 +148,7 @@ export const useLogin = () => {
     },
     onError: (error: any) => {
       const errorMessage =
-        error.response?.data?.message ||
-        "Login failed. Please check your credentials.";
+        error.message || "Login failed. Please check your credentials.";
       toast.error(errorMessage);
     },
   });
@@ -100,7 +162,10 @@ interface RegisterCredentials {
 }
 
 const registerUser = async (credentials: RegisterCredentials) => {
-  const { data } = await api.post("/auth/register", credentials);
+  const data = await apiCall("/auth/register", {
+    method: "POST",
+    body: JSON.stringify(credentials),
+  });
   if (data.success) {
     return data;
   }
@@ -118,8 +183,7 @@ export const useRegister = () => {
     },
     onError: (error: any) => {
       const errorMessage =
-        error.response?.data?.message ||
-        "Registration failed. Please try again.";
+        error.message || "Registration failed. Please try again.";
       toast.error(errorMessage);
     },
   });
@@ -132,7 +196,10 @@ interface VerifyEmailPayload {
 }
 
 const verifyUserEmail = async (payload: VerifyEmailPayload) => {
-  const { data } = await api.post("/auth/verify-email", payload);
+  const data = await apiCall("/auth/verify-email", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
   if (data.success) {
     return data;
   }
@@ -152,8 +219,7 @@ export const useVerifyEmail = () => {
     },
     onError: (error: any) => {
       const errorMessage =
-        error.response?.data?.message ||
-        "Email verification failed. Please try again.";
+        error.message || "Email verification failed. Please try again.";
       toast.error(errorMessage);
     },
   });
@@ -165,10 +231,10 @@ interface ResendEmailPayload {
 }
 
 const requestNewVerificationEmail = async (payload: ResendEmailPayload) => {
-  const { data } = await api.post(
-    "/auth/request-new-verification-email",
-    payload,
-  );
+  const data = await apiCall("/auth/request-new-verification-email", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
   if (data.success) {
     return data;
   }
@@ -182,8 +248,7 @@ export const useResendVerificationEmail = () => {
       toast.success("Verification link resent!");
     },
     onError: (error: any) => {
-      const errorMessage =
-        error.response?.data?.message || "Could not resend link.";
+      const errorMessage = error.message || "Could not resend link.";
       toast.error(errorMessage);
     },
   });
@@ -195,7 +260,10 @@ interface ForgotPasswordPayload {
 }
 
 const requestPasswordResetLink = async (payload: ForgotPasswordPayload) => {
-  const { data } = await api.post("/auth/forgot-password", payload);
+  const data = await apiCall("/auth/forgot-password", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
   if (data.success) {
     return data;
   }
@@ -210,8 +278,7 @@ export const useForgotPassword = () => {
     },
     onError: (error: any) => {
       const errorMessage =
-        error.response?.data?.message ||
-        "Failed to request password reset link.";
+        error.message || "Failed to request password reset link.";
       toast.error(errorMessage);
     },
   });
@@ -225,7 +292,10 @@ interface ResetPasswordPayload {
 }
 
 const resetUserPassword = async (payload: ResetPasswordPayload) => {
-  const { data } = await api.post("/auth/reset-password", payload);
+  const data = await apiCall("/auth/reset-password", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
   if (data.success) {
     return data;
   }
@@ -247,8 +317,7 @@ export const useResetPassword = () => {
     },
     onError: (error: any) => {
       const errorMessage =
-        error.response?.data?.message ||
-        "Failed to reset password. Please try again.";
+        error.message || "Failed to reset password. Please try again.";
       toast.error(errorMessage);
     },
   });
@@ -261,7 +330,10 @@ interface ChangePasswordPayload {
 }
 
 const changeUserPassword = async (payload: ChangePasswordPayload) => {
-  const { data } = await api.post("/auth/change-password", payload);
+  const data = await apiCall("/auth/change-password", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
   if (data.success) {
     return data;
   }
@@ -279,8 +351,7 @@ export const useChangePassword = () => {
     },
     onError: (error: any) => {
       const errorMessage =
-        error.response?.data?.message ||
-        "Failed to change password. Please try again.";
+        error.message || "Failed to change password. Please try again.";
       toast.error(errorMessage);
     },
   });
@@ -288,7 +359,9 @@ export const useChangePassword = () => {
 
 // --- 9. Logout Mutation (useLogout) ---
 const logoutUser = async () => {
-  const { data } = await api.post("/auth/logout");
+  const data = await apiCall("/auth/logout", {
+    method: "POST",
+  });
   if (data.success) {
     return data;
   }
@@ -310,7 +383,7 @@ export const useLogout = () => {
       }, 300);
     },
     onError: (error: any) => {
-      const errorMessage = error.response?.data?.message || "Logout failed.";
+      const errorMessage = error.message || "Logout failed.";
       toast.error(errorMessage);
     },
   });
@@ -325,7 +398,10 @@ interface UpdateProfilePayload {
 }
 
 const updateProfile = async (payload: UpdateProfilePayload): Promise<User> => {
-  const { data } = await api.patch("/users/me", payload);
+  const data = await apiCall("/users/me", {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  });
   if (data.success && data.data) {
     return data.data.user;
   }
@@ -343,8 +419,7 @@ export const useUpdateProfile = () => {
     },
     onError: (error: any) => {
       const errorMessage =
-        error.response?.data?.message ||
-        "Failed to update profile. Please try again.";
+        error.message || "Failed to update profile. Please try again.";
       toast.error(errorMessage);
     },
   });
@@ -353,7 +428,9 @@ export const useUpdateProfile = () => {
 // --- 11. Fetch Avatar Providers Query (useAvatarProviders) ---
 const fetchAvatarProviders = async (): Promise<string[]> => {
   try {
-    const { data } = await api.get("/users/me/providers");
+    const data = await apiCall("/users/me/providers", {
+      method: "GET",
+    });
     if (data.success && Array.isArray(data.data)) {
       return data.data;
     }
@@ -382,7 +459,10 @@ interface UpdateAvatarProviderPayload {
 const updateAvatarProvider = async (
   payload: UpdateAvatarProviderPayload,
 ): Promise<User> => {
-  const { data } = await api.patch("/users/me/avatar", payload);
+  const data = await apiCall("/users/me/avatar", {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  });
   if (data.success && data.data) {
     return data.data.user;
   }
@@ -401,8 +481,7 @@ export const useUpdateAvatarProvider = () => {
       );
     },
     onError: (error: any) => {
-      const errorMessage =
-        error.response?.data?.message || "Failed to update avatar provider.";
+      const errorMessage = error.message || "Failed to update avatar provider.";
       toast.error(errorMessage);
     },
   });
@@ -413,12 +492,19 @@ const uploadAvatar = async (file: File): Promise<User> => {
   const formData = new FormData();
   formData.append("avatar", file);
 
-  const { data } = await api.post("/users/me/avatar", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data", // axios handles this automatically with FormData, but explicit is fine
-    },
+  // Use fetch for file upload - don't set Content-Type header, let fetch handle it
+  const response = await fetch("/api/users/me/avatar", {
+    method: "POST",
+    body: formData,
+    credentials: "include",
   });
 
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Upload failed: ${response.statusText}`);
+  }
+
+  const data = await response.json();
   if (data.success && data.data) {
     return data.data.user;
   }
@@ -435,8 +521,7 @@ export const useUploadAvatar = () => {
       toast.success("Avatar uploaded successfully!");
     },
     onError: (error: any) => {
-      const errorMessage =
-        error.response?.data?.message || "Failed to upload avatar.";
+      const errorMessage = error.message || "Failed to upload avatar.";
       toast.error(errorMessage);
     },
   });
@@ -444,7 +529,9 @@ export const useUploadAvatar = () => {
 
 // --- 14. Delete Avatar Mutation (useDeleteAvatar) ---
 const deleteAvatar = async (): Promise<any> => {
-  const { data } = await api.delete("/users/me/avatar");
+  const data = await apiCall("/users/me/avatar", {
+    method: "DELETE",
+  });
   if (data.success) {
     return data;
   }
@@ -461,8 +548,7 @@ export const useDeleteAvatar = () => {
       toast.success("Avatar deleted successfully!");
     },
     onError: (error: any) => {
-      const errorMessage =
-        error.response?.data?.message || "Failed to delete avatar.";
+      const errorMessage = error.message || "Failed to delete avatar.";
       toast.error(errorMessage);
     },
   });
@@ -470,7 +556,9 @@ export const useDeleteAvatar = () => {
 
 // --- 15. Get All Users Query (useAllUsers) ---
 const fetchAllUsers = async (): Promise<AllUsersResponse> => {
-  const { data } = await api.get("/users");
+  const data = await apiCall("/users", {
+    method: "GET",
+  });
   if (data.success && data.data) {
     return data.data;
   }
@@ -487,7 +575,9 @@ export const useAllUsers = () => {
 
 // --- 16. Get Specific User Query (useSpecificUser) ---
 const fetchSpecificUser = async (userId: string): Promise<User> => {
-  const { data } = await api.get(`/users/${userId}`);
+  const data = await apiCall(`/users/${userId}`, {
+    method: "GET",
+  });
   if (data.success && data.data) {
     return data.data;
   }
@@ -505,7 +595,9 @@ export const useSpecificUser = (userId: string) => {
 
 // --- 17. Discord Disconnect Mutation (useDiscordDisconnect) ---
 const disconnectDiscord = async (): Promise<any> => {
-  const { data } = await api.delete("/discord-disconnect");
+  const data = await apiCall("/discord-disconnect", {
+    method: "DELETE",
+  });
   if (data.success) {
     return data;
   }
@@ -522,8 +614,7 @@ export const useDiscordDisconnect = () => {
       toast.success("Discord profile disconnected successfully!");
     },
     onError: (error: any) => {
-      const errorMessage =
-        error.response?.data?.message || "Failed to disconnect Discord.";
+      const errorMessage = error.message || "Failed to disconnect Discord.";
       toast.error(errorMessage);
     },
   });

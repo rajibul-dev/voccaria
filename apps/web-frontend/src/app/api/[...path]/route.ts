@@ -1,16 +1,16 @@
 // app/api/[...path]/route.ts
 // This file acts as a proxy for all /api/* requests to your Express backend.
 
+import {
+  expressBackendBaseRESTOrigin,
+  expressBackendOrigin,
+} from "@/_constants/backendOrigins";
 import { NextRequest, NextResponse } from "next/server";
-
-// Ensure your environment variable points to the base of your Express API
-// e.g., EXPRESS_BACKEND_URL=http://localhost:5000/api/v1
-const EXPRESS_BACKEND_URL = process.env.EXPRESS_BACKEND_ORIGIN;
 
 // Helper to construct the target URL and headers
 function createProxyRequest(request: NextRequest, method: string, body?: any) {
-  if (!EXPRESS_BACKEND_URL) {
-    throw new Error("EXPRESS_BACKEND_URL environment variable is not set.");
+  if (!expressBackendOrigin) {
+    throw new Error("EXPRESS_BACKEND_ORIGIN environment variable is not set.");
   }
 
   const url = new URL(request.url);
@@ -20,21 +20,31 @@ function createProxyRequest(request: NextRequest, method: string, body?: any) {
 
   // Construct the target URL for the Express backend
   // Example: http://localhost:5000/api/v1 + /users/me + ?query=params
-  const targetUrl = `${EXPRESS_BACKEND_URL}${path}${url.search}`;
+  const targetUrl = `${expressBackendBaseRESTOrigin}${path}${url.search}`;
+
+  console.log("Proxy request:", {
+    originalUrl: request.url,
+    path,
+    targetUrl,
+    expressBackendBaseRESTOrigin,
+    expressBackendOrigin,
+  });
 
   const headersToForward = new Headers(request.headers);
   // Important: Set the Host header to the backend's host, not the Next.js app's host
-  headersToForward.set("Host", new URL(EXPRESS_BACKEND_URL).host);
+  headersToForward.set("Host", new URL(expressBackendOrigin).host);
 
   const options: RequestInit = {
     method: method,
     headers: headersToForward,
     // For POST/PUT/PATCH, include the body
     body: body,
+    // Required for requests with body in Node.js fetch
+    duplex: body ? "half" : undefined,
     // Ensure cookies are forwarded from the client request to the backend
     // This is handled by forwarding the 'Cookie' header directly.
     // `credentials: 'include'` is for browser fetches, not server-to-server.
-  };
+  } as RequestInit;
 
   return { targetUrl, options };
 }

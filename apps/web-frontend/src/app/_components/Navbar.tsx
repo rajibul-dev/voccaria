@@ -22,7 +22,7 @@ import NavbarLoginButton from "./NavbarLoginButton";
 import OldPageSectionTracking from "./OldPageSectionTracking";
 import Popover from "./Popover";
 import RestMenu from "./RestMenu";
-import { useUser } from "../_hooks/useUser";
+import { useUser } from "@/app/_hooks/useAuth";
 
 export default function Navbar() {
   const pathname = usePathname();

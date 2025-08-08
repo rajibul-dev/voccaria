@@ -25,7 +25,9 @@ import { darkTheme, lightTheme } from "./_theme/muiTheme";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 0, // You might want to adjust this based on your caching strategy
+      staleTime: 5 * 60 * 1000, // 5 minutes to match individual query settings
+      retry: 1, // Retry once on failure
+      refetchOnWindowFocus: false, // Prevent automatic refetch on window focus
     },
   },
 });
