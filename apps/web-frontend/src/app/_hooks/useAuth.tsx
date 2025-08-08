@@ -146,6 +146,13 @@ export const fetchCurrentUser = async (
     }
 
     // Make the request with fetch instead of axios to avoid baseURL issues
+    console.log("🔍 FETCH_USER: Making request with options:", {
+      url,
+      method: "GET",
+      headers: { "Content-Type": "application/json", ...headers },
+      credentials: "include",
+    });
+
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -155,15 +162,57 @@ export const fetchCurrentUser = async (
       credentials: cookieHeader ? "include" : "include", // Always include credentials
     });
 
+    console.log("🔍 FETCH_USER: Response received");
+    console.log("🔍 FETCH_USER: Response status:", response.status);
+    console.log("🔍 FETCH_USER: Response statusText:", response.statusText);
+    console.log(
+      "🔍 FETCH_USER: Response headers:",
+      JSON.stringify(Object.fromEntries(response.headers.entries()), null, 2),
+    );
+
     if (!response.ok) {
+      console.error("❌ FETCH_USER: Response not ok");
       if (response.status === 401 || response.status === 403) {
         console.log("fetchCurrentUser - Authentication error, returning null");
         return null;
       }
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+
+      // Try to read the error response
+      let errorText = "";
+      try {
+        errorText = await response.text();
+        console.error("❌ FETCH_USER: Error response text:", errorText);
+      } catch (textError) {
+        console.error(
+          "❌ FETCH_USER: Could not read error response text:",
+          textError,
+        );
+      }
+
+      throw new Error(
+        `HTTP ${response.status}: ${response.statusText} - ${errorText}`,
+      );
     }
 
-    const data = await response.json();
+    console.log("🔍 FETCH_USER: Reading response as JSON...");
+    let data;
+    try {
+      const responseText = await response.text();
+      console.log("🔍 FETCH_USER: Response text length:", responseText.length);
+      console.log(
+        "🔍 FETCH_USER: Response text preview:",
+        responseText.substring(0, 500),
+      );
+
+      data = JSON.parse(responseText);
+      console.log("🔍 FETCH_USER: JSON parsed successfully");
+    } catch (parseError) {
+      console.error("❌ FETCH_USER: JSON parse error:", parseError);
+      console.error("❌ FETCH_USER: Failed to parse response as JSON");
+      const errorMessage =
+        parseError instanceof Error ? parseError.message : String(parseError);
+      throw new Error(`Failed to parse response as JSON: ${errorMessage}`);
+    }
 
     console.log("fetchCurrentUser - Response from /users/me:", data);
 

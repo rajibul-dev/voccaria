@@ -29,15 +29,34 @@ export default passport.use(
 );
 
 passport.serializeUser((user: IUser, done) => {
+  console.log("🔍 PASSPORT_SERIALIZE: Serializing user");
+  console.log("🔍 PASSPORT_SERIALIZE: User ID:", user._id);
+  console.log("🔍 PASSPORT_SERIALIZE: User email:", user.email);
   done(null, user._id);
 });
 
 passport.deserializeUser(async (id, done) => {
+  console.log("🔍 PASSPORT_DESERIALIZE: Deserializing user with ID:", id);
   try {
     const user = await User.findById(id);
-    if (!user) throw new Error("User not found");
+    console.log("🔍 PASSPORT_DESERIALIZE: User found:", !!user);
+    if (user) {
+      console.log("🔍 PASSPORT_DESERIALIZE: User email:", user.email);
+      console.log("🔍 PASSPORT_DESERIALIZE: User type:", typeof user);
+      console.log(
+        "🔍 PASSPORT_DESERIALIZE: User constructor:",
+        user.constructor.name
+      );
+      console.log("🔍 PASSPORT_DESERIALIZE: User keys:", Object.keys(user));
+    }
+    if (!user) {
+      console.error("❌ PASSPORT_DESERIALIZE: User not found in database");
+      throw new Error("User not found");
+    }
+    console.log("✅ PASSPORT_DESERIALIZE: User deserialized successfully");
     done(null, user);
   } catch (err) {
+    console.error("❌ PASSPORT_DESERIALIZE: Error deserializing user:", err);
     done(err, null);
   }
 });
