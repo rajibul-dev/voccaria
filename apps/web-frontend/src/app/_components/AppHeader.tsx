@@ -1,6 +1,8 @@
 import AccountMenu from "./AccountMenu";
 import DarkModeToggler from "./DarkModeToggler";
 import Logo from "./Logo";
+import ErrorBoundary from "./ErrorBoundary";
+import SimpleAccountMenu from "./SimpleAccountMenu";
 
 export default function AppHeader() {
   return (
@@ -10,7 +12,9 @@ export default function AppHeader() {
       <div className="mx-auto flex h-full max-w-9/10 items-center justify-between gap-5">
         <Logo />
         <DarkModeToggler />
-        <AccountMenu />
+        <ErrorBoundary fallback={<SimpleAccountMenu />}>
+          <AccountMenu />
+        </ErrorBoundary>
       </div>
     </header>
   );

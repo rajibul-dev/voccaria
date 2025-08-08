@@ -11,7 +11,7 @@ const ALL_USERS_QUERY_KEY = "allUsers"; // New key for all users
 const SPECIFIC_USER_QUERY_KEY = "specificUser"; // New key for specific user
 const PROVIDERS_QUERY_KEY = "avatarProviders"; // Already defined
 
-// Helper function for consistent API calls
+// Helper function for consistent API calls with better error handling
 const apiCall = async (
   endpoint: string,
   options: RequestInit = {},
@@ -37,7 +37,53 @@ const apiCall = async (
   if (!response.ok) {
     const errorText = await response.text();
     console.error("apiCall - Error response:", errorText);
-    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+
+    // Try to parse JSON error response
+    let errorData;
+    try {
+      errorData = JSON.parse(errorText);
+    } catch {
+      errorData = { message: response.statusText };
+    }
+
+    // Create user-friendly error messages based on status codes
+    let userFriendlyMessage;
+    switch (response.status) {
+      case 400:
+        userFriendlyMessage =
+          errorData.message || "Invalid request. Please check your input.";
+        break;
+      case 401:
+        userFriendlyMessage = errorData.message || "Invalid email or password.";
+        break;
+      case 403:
+        userFriendlyMessage =
+          errorData.message || "Access denied. Please check your permissions.";
+        break;
+      case 404:
+        userFriendlyMessage = errorData.message || "Resource not found.";
+        break;
+      case 409:
+        userFriendlyMessage =
+          errorData.message || "This resource already exists.";
+        break;
+      case 422:
+        userFriendlyMessage =
+          errorData.message || "Please check your input and try again.";
+        break;
+      case 429:
+        userFriendlyMessage =
+          errorData.message || "Too many requests. Please wait a moment.";
+        break;
+      case 500:
+        userFriendlyMessage = "Server error. Please try again later.";
+        break;
+      default:
+        userFriendlyMessage =
+          errorData.message || `Something went wrong (${response.status}).`;
+    }
+
+    throw new Error(userFriendlyMessage);
   }
 
   const data = await response.json();
@@ -385,12 +431,13 @@ export const useLogout = () => {
   return useMutation<any, Error, void>({
     mutationFn: logoutUser,
     onSuccess: () => {
+      // Immediately clear user data for instant UI update
       queryClient.setQueryData([USER_QUERY_KEY], null);
       queryClient.invalidateQueries();
-      toast.success("Logging out...", { icon: "👋" });
-      setTimeout(() => {
-        router.replace("/auth/login");
-      }, 300);
+
+      // Show toast and redirect immediately
+      toast.success("Logged out successfully", { icon: "👋" });
+      router.replace("/auth/login");
     },
     onError: (error: any) => {
       const errorMessage =

@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/app/_hooks/useAuth";
+import LoadingScreen from "./LoadingScreen";
 
 export default function ReverseAuthGuard({
   children,
@@ -16,7 +17,7 @@ export default function ReverseAuthGuard({
     // Don't redirect if we're still loading
     if (isLoading) return;
 
-    // If user is authenticated, redirect to app
+    // If user is authenticated, redirect to app immediately
     if (user) {
       console.log(
         "ReverseAuthGuard - User authenticated, redirecting to /app/dashboard",
@@ -27,14 +28,7 @@ export default function ReverseAuthGuard({
 
   // Show loading state while checking auth
   if (isLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <div className="border-my-pink-600 mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-b-2"></div>
-          <p className="text-gray-600 dark:text-gray-300">Loading...</p>
-        </div>
-      </div>
-    );
+    return <LoadingScreen message="Checking authentication..." />;
   }
 
   // Only render children if user is not authenticated
@@ -42,6 +36,6 @@ export default function ReverseAuthGuard({
     return <>{children}</>;
   }
 
-  // Don't render anything while redirecting
-  return null;
+  // Don't render anything while redirecting - show minimal loading
+  return <LoadingScreen message="Redirecting to dashboard..." />;
 }

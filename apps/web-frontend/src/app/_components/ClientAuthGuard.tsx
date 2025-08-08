@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useUser } from "@/app/_hooks/useAuth";
+import LoadingScreen from "./LoadingScreen";
 
 export default function ClientAuthGuard({
   children,
@@ -18,7 +19,7 @@ export default function ClientAuthGuard({
     // Don't redirect if we're still loading or if this is an OAuth redirect
     if (isLoading || isOAuthRedirect) return;
 
-    // If we're not loading and there's no user, redirect to auth
+    // If we're not loading and there's no user, redirect to auth immediately
     if (!user && !isError) {
       console.log("ClientAuthGuard - No user found, redirecting to /auth");
       router.replace("/auth");
@@ -27,14 +28,7 @@ export default function ClientAuthGuard({
 
   // Show loading state while checking auth
   if (isLoading && !isOAuthRedirect) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <div className="border-my-pink-600 mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-b-2"></div>
-          <p className="text-gray-600 dark:text-gray-300">Loading...</p>
-        </div>
-      </div>
-    );
+    return <LoadingScreen message="Checking authentication..." />;
   }
 
   // For OAuth redirects, always render children immediately (let toast handle feedback)
@@ -47,6 +41,7 @@ export default function ClientAuthGuard({
     return <>{children}</>;
   }
 
-  // Don't render anything while redirecting
+  // Don't render anything while redirecting - show minimal loading
+  return <LoadingScreen message="Redirecting..." />;
   return null;
 }

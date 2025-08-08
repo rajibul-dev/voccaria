@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState, useEffect } from "react";
 import { IoMoon } from "react-icons/io5";
 import { MdLightMode } from "react-icons/md";
 
@@ -9,27 +9,59 @@ type Theme = "dark" | "light" | null;
 
 export default function DarkModeToggler({ className }: { className?: string }) {
   const [theme, setTheme] = useState<Theme>(null);
+  const [mounted, setMounted] = useState(false);
 
+  // Initialize theme from localStorage and system preference
   useLayoutEffect(() => {
-    if (localStorage.getItem("theme") === "dark") {
-      setTheme("dark");
-    } else if (localStorage.getItem("theme") === "light") {
-      setTheme("light");
+    const storedTheme = localStorage.getItem("theme") as Theme;
+    const systemPrefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
+
+    let initialTheme: Theme;
+    if (storedTheme === "dark" || storedTheme === "light") {
+      initialTheme = storedTheme;
     } else {
-      setTheme("light");
+      initialTheme = systemPrefersDark ? "dark" : "light";
     }
+
+    setTheme(initialTheme);
+    applyTheme(initialTheme);
   }, []);
 
-  function toggleDarkMode() {
-    if (theme === "light") {
-      setTheme("dark");
-      localStorage.setItem("theme", "dark");
+  // Set mounted state after hydration
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Apply theme to document
+  function applyTheme(newTheme: Theme) {
+    if (newTheme === "dark") {
       document.documentElement.classList.add("dark");
-    } else if (theme === "dark") {
-      setTheme("light");
-      localStorage.setItem("theme", "light");
+    } else {
       document.documentElement.classList.remove("dark");
     }
+  }
+
+  function toggleDarkMode() {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    applyTheme(newTheme);
+  }
+
+  // Don't render until mounted to avoid hydration mismatch
+  if (!mounted) {
+    return (
+      <div
+        className={clsx(
+          "cursor-pointer rounded-sm px-2 py-1.5 transition-colors *:h-7 *:w-7",
+          className,
+        )}
+      >
+        <div className="h-7 w-7" /> {/* Placeholder */}
+      </div>
+    );
   }
 
   return (

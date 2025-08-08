@@ -4,16 +4,55 @@
 import { Avatar } from "@mui/material";
 import Link from "next/link";
 import { IoMdArrowDropdown } from "react-icons/io";
-import Popover, { usePopoverManager } from "./Popover";
 import { useUser, useLogout } from "@/app/_hooks/useAuth";
+import { useEffect, useState } from "react";
+import SimpleAccountMenu from "./SimpleAccountMenu";
+
+// Dynamic import with fallback
+let Popover: any = null;
+let usePopoverManager: any = null;
+let importError = false;
+
+try {
+  const PopoverModule = require("./Popover");
+  Popover = PopoverModule.default;
+  usePopoverManager = PopoverModule.usePopoverManager;
+} catch (error) {
+  console.warn("Popover import failed, using fallback:", error);
+  importError = true;
+}
 
 export default function AccountMenu() {
   const { data: user, isLoading, isError } = useUser();
-  const { close } = usePopoverManager();
   const logoutMutation = useLogout();
+  const [mounted, setMounted] = useState(false);
+  const [usesFallback, setUsesFallback] = useState(importError);
+
+  let popoverManager: { close: () => void } | null = null;
+
+  // Try to get the popover manager with error handling
+  if (!usesFallback && usePopoverManager) {
+    try {
+      popoverManager = usePopoverManager();
+    } catch (error) {
+      console.warn("Popover manager error, switching to fallback:", error);
+      setUsesFallback(true);
+    }
+  }
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Use fallback component if there are any issues
+  if (!mounted || usesFallback) {
+    return <SimpleAccountMenu />;
+  }
 
   function handleLogout() {
-    close();
+    if (popoverManager) {
+      popoverManager.close();
+    }
     logoutMutation.mutate();
   }
 
@@ -30,9 +69,6 @@ export default function AccountMenu() {
   }
 
   if (isError || !user) {
-    // If there's an error fetching user or no user data,
-    // assume not logged in or an issue occurred.
-    // You might want to show a "Login" button or similar here.
     return (
       <Link
         href="/auth/login"

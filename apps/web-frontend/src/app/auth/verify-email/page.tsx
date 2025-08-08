@@ -4,6 +4,8 @@ import { useVerifyEmail } from "@/app/_hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
+import LoadingScreen from "@/app/_components/LoadingScreen";
+import { Box, Typography } from "@mui/material";
 
 export default function VerifyEmailPage() {
   const router = useRouter();
@@ -28,18 +30,49 @@ export default function VerifyEmailPage() {
     verifyEmailMutation.mutate({ verificationToken: token, email });
   }, [router]); // Remove verifyEmailMutation from dependencies
 
+  if (verifyEmailMutation.isPending) {
+    return <LoadingScreen message="Verifying your email..." />;
+  }
+
   return (
-    <div className="flex h-[60vh] flex-col items-center justify-center text-center">
-      <h1 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
-        {verifyEmailMutation.isPending
-          ? "Verifying your email..."
-          : verifyEmailMutation.isSuccess
-            ? "Email Verified!"
-            : "Verification Failed"}
-      </h1>
-      {verifyEmailMutation.isPending && (
-        <p className="mt-4 text-gray-500 dark:text-gray-400">Please wait.</p>
-      )}
-    </div>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "60vh",
+        textAlign: "center",
+        gap: 2,
+      }}
+    >
+      {verifyEmailMutation.isSuccess ? (
+        <>
+          <div className="text-6xl text-green-500">✓</div>
+          <Typography
+            variant="h4"
+            sx={{ color: "text.primary", fontWeight: 600 }}
+          >
+            Email Verified!
+          </Typography>
+          <Typography variant="body1" sx={{ color: "text.secondary" }}>
+            Your email has been successfully verified. You can now log in.
+          </Typography>
+        </>
+      ) : verifyEmailMutation.isError ? (
+        <>
+          <div className="text-6xl text-red-500">✗</div>
+          <Typography
+            variant="h4"
+            sx={{ color: "text.primary", fontWeight: 600 }}
+          >
+            Verification Failed
+          </Typography>
+          <Typography variant="body1" sx={{ color: "text.secondary" }}>
+            Please try again or request a new verification link.
+          </Typography>
+        </>
+      ) : null}
+    </Box>
   );
 }
