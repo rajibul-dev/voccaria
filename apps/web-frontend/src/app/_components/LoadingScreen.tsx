@@ -30,11 +30,7 @@ export default function LoadingScreen({
       />
       <Typography
         variant="body1"
-        sx={{
-          color: "text.secondary",
-          fontSize: "1rem",
-          fontWeight: 500,
-        }}
+        className="text-base font-medium text-gray-600 dark:text-gray-300"
       >
         {message}
       </Typography>
