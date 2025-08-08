@@ -78,21 +78,39 @@ export async function GET(request: NextRequest) {
     console.log("🔍 PROXY_GET: Making fetch request...");
     const response = await fetch(targetUrl, options);
     console.log("🔍 PROXY_GET: Response status:", response.status);
+    console.log("🔍 PROXY_GET: Response ok:", response.ok);
+    console.log("🔍 PROXY_GET: Response type:", response.type);
+    console.log("🔍 PROXY_GET: Response url:", response.url);
     console.log(
       "🔍 PROXY_GET: Response headers:",
       JSON.stringify(Object.fromEntries(response.headers.entries()), null, 2),
     );
 
-    // FIXED: Clone response before reading text to avoid consuming the stream
-    const responseClone = response.clone();
-    const responseText = await responseClone.text();
+    // Clone response multiple times to test different approaches
+    const responseClone1 = response.clone();
+    const responseClone2 = response.clone();
+
+    // Test 1: Read as text
+    const responseText = await responseClone1.text();
     console.log("🔍 PROXY_GET: Response text length:", responseText.length);
     console.log(
       "🔍 PROXY_GET: Response text preview:",
       responseText.substring(0, 500),
     );
 
-    // FIXED: Use original response, not a recreated one
+    // Test 2: Read as arrayBuffer
+    const responseBuffer = await responseClone2.arrayBuffer();
+    console.log(
+      "🔍 PROXY_GET: Response buffer length:",
+      responseBuffer.byteLength,
+    );
+
+    // Check if text is truncated
+    if (responseText.length < 800) {
+      console.error("❌ PROXY_GET: Response appears truncated!");
+      console.log("🔍 PROXY_GET: Full response text:", responseText);
+    }
+
     return createProxyResponse(response);
   } catch (error) {
     console.error("❌ PROXY_GET: Request failed:", error);
@@ -154,24 +172,46 @@ async function createProxyResponse(response: Response) {
     JSON.stringify(Object.fromEntries(response.headers.entries()), null, 2),
   );
 
-  // FIXED: Read the response body as text to ensure complete transmission
-  const responseText = await response.text();
-  console.log("🔍 PROXY_RESPONSE: Response body length:", responseText.length);
+  // AGGRESSIVE FIX: Read response as arrayBuffer to handle binary data properly
+  const responseBuffer = await response.arrayBuffer();
+  const responseText = new TextDecoder().decode(responseBuffer);
+
+  console.log(
+    "🔍 PROXY_RESPONSE: Response buffer length:",
+    responseBuffer.byteLength,
+  );
+  console.log("🔍 PROXY_RESPONSE: Response text length:", responseText.length);
   console.log(
     "🔍 PROXY_RESPONSE: Response body preview:",
     responseText.substring(0, 200),
   );
 
-  const responseHeaders = new Headers(response.headers);
-  // Remove any potentially problematic headers
-  responseHeaders.delete("content-encoding");
-  responseHeaders.delete("transfer-encoding");
+  // Create completely new headers to avoid any inheritance issues
+  const responseHeaders = new Headers();
 
-  // CRITICAL FIX: Set the correct content-length for the text we're sending
+  // Copy essential headers manually
+  responseHeaders.set(
+    "content-type",
+    response.headers.get("content-type") || "application/json",
+  );
   responseHeaders.set("content-length", responseText.length.toString());
 
+  // Copy CORS headers if present
+  if (response.headers.get("access-control-allow-credentials")) {
+    responseHeaders.set(
+      "access-control-allow-credentials",
+      response.headers.get("access-control-allow-credentials")!,
+    );
+  }
+  if (response.headers.get("access-control-allow-origin")) {
+    responseHeaders.set(
+      "access-control-allow-origin",
+      response.headers.get("access-control-allow-origin")!,
+    );
+  }
+
   console.log(
-    "🔍 PROXY_RESPONSE: Modified headers:",
+    "🔍 PROXY_RESPONSE: New headers:",
     JSON.stringify(Object.fromEntries(responseHeaders.entries()), null, 2),
   );
 
