@@ -595,7 +595,7 @@ export const useSpecificUser = (userId: string) => {
 
 // --- 17. Discord Disconnect Mutation (useDiscordDisconnect) ---
 const disconnectDiscord = async (): Promise<any> => {
-  const data = await apiCall("/discord-disconnect", {
+  const data = await apiCall("/users/discord-disconnect", {
     method: "DELETE",
   });
   if (data.success) {
