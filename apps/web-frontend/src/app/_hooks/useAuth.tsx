@@ -142,13 +142,16 @@ export const useLogin = () => {
   return useMutation<User, Error, LoginCredentials>({
     mutationFn: loginUser,
     onSuccess: (user) => {
+      // Login affects all user-related queries - comprehensive invalidation
       queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY] });
-      toast.success(`Login successful! Welcome ${user.name || "User"}!`);
+      queryClient.invalidateQueries({ queryKey: [PROVIDERS_QUERY_KEY] });
+      queryClient.invalidateQueries({ queryKey: [ALL_USERS_QUERY_KEY] });
+      toast.success(`Welcome back, ${user.name || "User"}!`);
       router.replace("/app");
     },
     onError: (error: any) => {
       const errorMessage =
-        error.message || "Login failed. Please check your credentials.";
+        error.message || "Invalid email or password. Please try again.";
       toast.error(errorMessage);
     },
   });
@@ -183,7 +186,8 @@ export const useRegister = () => {
     },
     onError: (error: any) => {
       const errorMessage =
-        error.message || "Registration failed. Please try again.";
+        error.message ||
+        "Unable to create account. Please check your information and try again.";
       toast.error(errorMessage);
     },
   });
@@ -278,7 +282,8 @@ export const useForgotPassword = () => {
     },
     onError: (error: any) => {
       const errorMessage =
-        error.message || "Failed to request password reset link.";
+        error.message ||
+        "Unable to send password reset email. Please check your email address.";
       toast.error(errorMessage);
     },
   });
@@ -317,7 +322,8 @@ export const useResetPassword = () => {
     },
     onError: (error: any) => {
       const errorMessage =
-        error.message || "Failed to reset password. Please try again.";
+        error.message ||
+        "Unable to reset password. Please check your reset link or try again.";
       toast.error(errorMessage);
     },
   });
@@ -351,7 +357,8 @@ export const useChangePassword = () => {
     },
     onError: (error: any) => {
       const errorMessage =
-        error.message || "Failed to change password. Please try again.";
+        error.message ||
+        "Unable to change password. Please check your current password.";
       toast.error(errorMessage);
     },
   });
@@ -383,7 +390,8 @@ export const useLogout = () => {
       }, 300);
     },
     onError: (error: any) => {
-      const errorMessage = error.message || "Logout failed.";
+      const errorMessage =
+        error.message || "Unable to log out. Please try again.";
       toast.error(errorMessage);
     },
   });
@@ -475,13 +483,16 @@ export const useUpdateAvatarProvider = () => {
   return useMutation<User, Error, UpdateAvatarProviderPayload>({
     mutationFn: updateAvatarProvider,
     onSuccess: (updatedUser) => {
-      queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY] }); // Invalidate user data to refetch
+      // Avatar provider changes affect both user profile and available providers
+      queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY] });
+      queryClient.invalidateQueries({ queryKey: [PROVIDERS_QUERY_KEY] });
       toast.success(
-        `Selected ${updatedUser.avatars?.selected || "default"} avatar!`,
+        `Avatar updated to ${updatedUser.avatars?.selected || "default"}!`,
       );
     },
     onError: (error: any) => {
-      const errorMessage = error.message || "Failed to update avatar provider.";
+      const errorMessage =
+        error.message || "Unable to update avatar. Please try again.";
       toast.error(errorMessage);
     },
   });
@@ -517,11 +528,15 @@ export const useUploadAvatar = () => {
   return useMutation<User, Error, File>({
     mutationFn: uploadAvatar,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY] }); // Invalidate user data to refetch
+      // Avatar uploads add new provider and update user profile
+      queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY] });
+      queryClient.invalidateQueries({ queryKey: [PROVIDERS_QUERY_KEY] });
       toast.success("Avatar uploaded successfully!");
     },
     onError: (error: any) => {
-      const errorMessage = error.message || "Failed to upload avatar.";
+      const errorMessage =
+        error.message ||
+        "Unable to upload avatar. Please check file size and format.";
       toast.error(errorMessage);
     },
   });
@@ -544,11 +559,14 @@ export const useDeleteAvatar = () => {
   return useMutation<any, Error, void>({
     mutationFn: deleteAvatar,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY] }); // Invalidate user data to refetch
+      // Avatar deletion affects user profile and available providers
+      queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY] });
+      queryClient.invalidateQueries({ queryKey: [PROVIDERS_QUERY_KEY] });
       toast.success("Avatar deleted successfully!");
     },
     onError: (error: any) => {
-      const errorMessage = error.message || "Failed to delete avatar.";
+      const errorMessage =
+        error.message || "Unable to delete avatar. Please try again.";
       toast.error(errorMessage);
     },
   });
@@ -610,11 +628,14 @@ export const useDiscordDisconnect = () => {
   return useMutation<any, Error, void>({
     mutationFn: disconnectDiscord,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY] }); // Invalidate current user to reflect change
-      toast.success("Discord profile disconnected successfully!");
+      // Comprehensive invalidation - Discord disconnect affects user profile AND avatar providers
+      queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY] });
+      queryClient.invalidateQueries({ queryKey: [PROVIDERS_QUERY_KEY] });
+      toast.success("Discord disconnected successfully!");
     },
     onError: (error: any) => {
-      const errorMessage = error.message || "Failed to disconnect Discord.";
+      const errorMessage =
+        error.message || "Unable to disconnect Discord. Please try again.";
       toast.error(errorMessage);
     },
   });
