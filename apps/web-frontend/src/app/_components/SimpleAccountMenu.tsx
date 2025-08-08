@@ -5,6 +5,7 @@ import { Avatar } from "@mui/material";
 import Link from "next/link";
 import { useUser, useLogout } from "@/app/_hooks/useAuth";
 import { useState } from "react";
+import { IoMdArrowDropdown } from "react-icons/io";
 
 export default function SimpleAccountMenu() {
   const { data: user, isLoading, isError } = useUser();
@@ -56,17 +57,10 @@ export default function SimpleAccountMenu() {
         <span className="block text-lg font-extrabold text-gray-500 ![word-spacing:-.4pt] max-sm:hidden dark:text-gray-300">
           {user.name}
         </span>
-        <svg
-          className={`ml-1 h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
-          fill="currentColor"
-          viewBox="0 0 20 20"
-        >
-          <path
-            fillRule="evenodd"
-            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-            clipRule="evenodd"
-          />
-        </svg>
+        <IoMdArrowDropdown
+          size={36}
+          className="mb-[-3px] ml-[-10px] text-gray-500 dark:text-gray-300"
+        />
       </button>
 
       {isOpen && (

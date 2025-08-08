@@ -28,7 +28,7 @@ export default function VerifyEmailPage() {
 
     hasVerified.current = true;
     verifyEmailMutation.mutate({ verificationToken: token, email });
-  }, [router]); // Remove verifyEmailMutation from dependencies
+  }, [router, verifyEmailMutation]);
 
   if (verifyEmailMutation.isPending) {
     return <LoadingScreen message="Verifying your email..." />;

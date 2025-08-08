@@ -63,7 +63,7 @@ export default function ResetPasswordForm() {
 
     setToken(tokenFromUrl);
     setEmail(emailFromUrl);
-  }, []);
+  }, [router]);
 
   return (
     <form
