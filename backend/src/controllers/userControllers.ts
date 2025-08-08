@@ -3,6 +3,7 @@ import User, { IUser } from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
 import { v2 as cloudinary } from "cloudinary";
 import { deleteAvatarFromCloudinary } from "../helpers/cloudinaryHelpers.js";
+import { sanitizeUser } from "../helpers/sanitizeUser.js";
 
 export async function getUser(
   request: Request,
@@ -24,7 +25,7 @@ export async function getUser(
     return response.status(StatusCodes.OK).json({
       success: true,
       message: "User fetched successfully",
-      data: user,
+      data: sanitizeUser(user),
     });
   }
 }
@@ -34,10 +35,11 @@ export async function getAllUsers(
   response: Response
 ): Promise<any> {
   const users = await User.find().select("-hashedPassword -__v");
+  const sanitizedUsers = users.map((user) => sanitizeUser(user));
   return response.status(StatusCodes.OK).json({
     success: true,
     message: "Users fetched successfully",
-    data: { users, length: users.length },
+    data: { users: sanitizedUsers, length: sanitizedUsers.length },
   });
 }
 
@@ -48,7 +50,7 @@ export async function showMe(
   return response.status(200).json({
     success: true,
     message: "User found successfully",
-    data: request.user,
+    data: sanitizeUser(request.user as IUser),
   });
 }
 
@@ -75,7 +77,7 @@ export async function updateMe(
   return response.status(StatusCodes.OK).json({
     success: true,
     message: "User updated successfully",
-    data: { user },
+    data: { user: sanitizeUser(user) },
   });
 }
 
@@ -133,7 +135,7 @@ export async function addAvatar(
   return response.status(StatusCodes.CREATED).json({
     success: true,
     message: "Uploaded avatar successfully",
-    data: { url: result.secure_url, user: updatedUser },
+    data: { url: result.secure_url, user: sanitizeUser(updatedUser) },
   });
 }
 
@@ -203,7 +205,7 @@ export async function selectAvatarFromProviders(
     return response.status(StatusCodes.OK).json({
       success: true,
       message: `Fallback used — '${fallback || "manual"}' selected as '${provider}' was not available.`,
-      data: { url: user.avatar, user },
+      data: { url: user.avatar, user: sanitizeUser(user) },
     });
   }
 
@@ -214,7 +216,7 @@ export async function selectAvatarFromProviders(
   return response.status(StatusCodes.OK).json({
     success: true,
     message: `Chosen avatar from '${provider}' successfully.`,
-    data: { url: user.avatar, user },
+    data: { url: user.avatar, user: sanitizeUser(user) },
   });
 }
 
@@ -286,7 +288,7 @@ export async function removeAvatar(
   return response.status(StatusCodes.OK).json({
     success: true,
     message: `Avatar removed successfully`,
-    data: { user },
+    data: { user: sanitizeUser(user) },
   });
 }
 
