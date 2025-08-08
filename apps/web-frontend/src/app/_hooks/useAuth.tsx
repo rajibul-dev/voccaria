@@ -35,15 +35,25 @@ const apiCall = async (
   );
 
   if (!response.ok) {
-    const errorText = await response.text();
+    let errorText;
+    try {
+      errorText = await response.text();
+    } catch {
+      errorText = "";
+    }
+
     console.error("apiCall - Error response:", errorText);
 
     // Try to parse JSON error response
     let errorData;
     try {
-      errorData = JSON.parse(errorText);
+      if (errorText) {
+        errorData = JSON.parse(errorText);
+      } else {
+        errorData = { message: response.statusText };
+      }
     } catch {
-      errorData = { message: response.statusText };
+      errorData = { message: response.statusText || "Unknown error" };
     }
 
     // Create user-friendly error messages based on status codes
@@ -86,7 +96,22 @@ const apiCall = async (
     throw new Error(userFriendlyMessage);
   }
 
-  const data = await response.json();
+  // Handle JSON parsing with better error handling
+  let data;
+  try {
+    const responseText = await response.text();
+    console.log("apiCall - Response text:", responseText);
+
+    if (!responseText) {
+      data = {};
+    } else {
+      data = JSON.parse(responseText);
+    }
+  } catch (parseError) {
+    console.error("apiCall - JSON parse error:", parseError);
+    throw new Error("Invalid response from server. Please try again.");
+  }
+
   console.log("apiCall - Response data:", data);
   return data;
 };
