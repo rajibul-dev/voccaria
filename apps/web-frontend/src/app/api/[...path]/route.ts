@@ -83,22 +83,17 @@ export async function GET(request: NextRequest) {
       JSON.stringify(Object.fromEntries(response.headers.entries()), null, 2),
     );
 
-    // Read response text for logging before creating proxy response
-    const responseText = await response.text();
+    // FIXED: Clone response before reading text to avoid consuming the stream
+    const responseClone = response.clone();
+    const responseText = await responseClone.text();
     console.log("🔍 PROXY_GET: Response text length:", responseText.length);
     console.log(
       "🔍 PROXY_GET: Response text preview:",
       responseText.substring(0, 500),
     );
 
-    // Create a new response with the same text
-    const newResponse = new Response(responseText, {
-      status: response.status,
-      statusText: response.statusText,
-      headers: response.headers,
-    });
-
-    return createProxyResponse(newResponse);
+    // FIXED: Use original response, not a recreated one
+    return createProxyResponse(response);
   } catch (error) {
     console.error("❌ PROXY_GET: Request failed:", error);
     if (error instanceof Error) {
@@ -159,22 +154,28 @@ async function createProxyResponse(response: Response) {
     JSON.stringify(Object.fromEntries(response.headers.entries()), null, 2),
   );
 
+  // FIXED: Read the response body as text to ensure complete transmission
+  const responseText = await response.text();
+  console.log("🔍 PROXY_RESPONSE: Response body length:", responseText.length);
+  console.log(
+    "🔍 PROXY_RESPONSE: Response body preview:",
+    responseText.substring(0, 200),
+  );
+
   const responseHeaders = new Headers(response.headers);
-  // Remove any potentially problematic headers (like Content-Encoding if Next.js handles it)
-  // or headers that might cause issues with proxying.
+  // Remove any potentially problematic headers
   responseHeaders.delete("content-encoding");
-  responseHeaders.delete("transfer-encoding"); // Often added by Node.js, can cause issues
+  responseHeaders.delete("transfer-encoding");
+
+  // CRITICAL FIX: Set the correct content-length for the text we're sending
+  responseHeaders.set("content-length", responseText.length.toString());
 
   console.log(
     "🔍 PROXY_RESPONSE: Modified headers:",
     JSON.stringify(Object.fromEntries(responseHeaders.entries()), null, 2),
   );
 
-  // If your Express backend sets Set-Cookie, ensure it's handled correctly.
-  // Next.js Route Handlers generally handle Set-Cookie headers automatically,
-  // but if you encounter issues, you might need to inspect/re-set them.
-
-  const finalResponse = new NextResponse(response.body, {
+  const finalResponse = new NextResponse(responseText, {
     status: response.status,
     statusText: response.statusText,
     headers: responseHeaders,
