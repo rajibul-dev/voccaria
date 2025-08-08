@@ -2,14 +2,18 @@
 
 import { useVerifyEmail } from "@/app/_hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 
 export default function VerifyEmailPage() {
   const router = useRouter();
   const verifyEmailMutation = useVerifyEmail();
+  const hasVerified = useRef(false); // Prevent multiple verification attempts
 
   useEffect(() => {
+    // Prevent running multiple times
+    if (hasVerified.current) return;
+
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get("token");
     const email = urlParams.get("email");
@@ -20,8 +24,9 @@ export default function VerifyEmailPage() {
       return;
     }
 
+    hasVerified.current = true;
     verifyEmailMutation.mutate({ verificationToken: token, email });
-  }, [router, verifyEmailMutation]);
+  }, [router]); // Remove verifyEmailMutation from dependencies
 
   return (
     <div className="flex h-[60vh] flex-col items-center justify-center text-center">
