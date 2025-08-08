@@ -1,35 +1,33 @@
 "use client";
-import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
-import { useRouter } from "next/navigation";
+
+import { useResetPassword } from "@/app/_hooks/useAuth";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import FancyInput from "./FancyInput";
+import { useRouter } from "next/navigation";
 
 export default function ResetPasswordForm() {
   const [token, setToken] = useState<string | null>(null);
   const [email, setEmail] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
+  // Initialize the mutation hook
+  const resetPasswordMutation = useResetPassword();
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
 
-    if (!email && !token) {
-      toast.error("No email or token provided");
-      console.error("No email or token provided");
-      return;
-    }
-
+    // Client-side validations before attempting mutation
     if (!email) {
-      toast.error("No email provided");
+      toast.error("Email is missing from the URL.");
       console.error("No email provided");
       return;
     }
 
     if (!token) {
-      toast.error("No token provided");
+      toast.error("Token is missing from the URL.");
       console.error("No token provided");
       return;
     }
@@ -40,31 +38,15 @@ export default function ResetPasswordForm() {
       return;
     }
 
-    setIsLoading(true);
-
-    fetch(`${expressBackendBaseRESTOrigin}/auth/reset-password`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    // Call the mutate function from the hook
+    resetPasswordMutation.mutate(
+      {
+        token,
+        email,
+        password: newPassword,
       },
-      body: JSON.stringify({ token, email, password: newPassword }),
-    })
-      .then((response) => response.json())
-      .then((jsonResponse) => {
-        console.log(jsonResponse.data);
-        toast.success(
-          jsonResponse?.data?.message || "Password changed successfully!",
-        );
-        router.push("/auth/login");
-      })
-      .catch((error) => {
-        toast.error(
-          error.message || "An error occurred while resetting the password",
-        );
-        console.error(error);
-      });
-
-    setIsLoading(false);
+      // toast and redirects are handled inside the mutate function
+    );
   }
 
   useEffect(() => {
@@ -72,25 +54,15 @@ export default function ResetPasswordForm() {
     const tokenFromUrl = urlParams.get("token");
     const emailFromUrl = urlParams.get("email");
 
-    if (!tokenFromUrl && !emailFromUrl) {
-      toast.error("No token or email found in the URL");
-      console.error("No token or email found in the URL");
+    if (!tokenFromUrl || !emailFromUrl) {
+      toast.error("Invalid password reset link. Missing token or email.");
+      // redirect if link is invalid
+      router.replace("/auth/login");
       return;
     }
 
-    if (emailFromUrl) {
-      setEmail(emailFromUrl);
-    } else {
-      toast.error("No email found in the URL");
-      console.error("No email found in the URL");
-    }
-
-    if (tokenFromUrl) {
-      setToken(tokenFromUrl);
-    } else {
-      toast.error("No token found in the URL");
-      console.error("No token found in the URL");
-    }
+    setToken(tokenFromUrl);
+    setEmail(emailFromUrl);
   }, []);
 
   return (
@@ -121,9 +93,9 @@ export default function ResetPasswordForm() {
       <button
         type="submit"
         className="manual-auth-btn attractive-text-shadow w-full disabled:cursor-not-allowed disabled:opacity-50"
-        disabled={isLoading}
+        disabled={resetPasswordMutation.isPending}
       >
-        {isLoading ? "Resetting..." : "Reset Password"}
+        {resetPasswordMutation.isPending ? "Resetting..." : "Reset Password"}
       </button>
     </form>
   );

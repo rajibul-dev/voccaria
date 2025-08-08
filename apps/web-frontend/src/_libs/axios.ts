@@ -1,8 +1,7 @@
-import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: expressBackendBaseRESTOrigin,
+  baseURL: "/api",
   withCredentials: true,
 });
 

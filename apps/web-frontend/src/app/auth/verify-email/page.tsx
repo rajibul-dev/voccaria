@@ -1,15 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useVerifyEmail } from "@/app/_hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
+import { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
+import LoadingScreen from "@/app/_components/LoadingScreen";
+import { Box, Typography } from "@mui/material";
 
 export default function VerifyEmailPage() {
-  const [verifying, setVerifying] = useState(true);
   const router = useRouter();
+  const verifyEmailMutation = useVerifyEmail();
+  const hasVerified = useRef(false); // Prevent multiple verification attempts
 
   useEffect(() => {
+    // Prevent running multiple times
+    if (hasVerified.current) return;
+
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get("token");
     const email = urlParams.get("email");
@@ -20,46 +26,53 @@ export default function VerifyEmailPage() {
       return;
     }
 
-    async function verifyEmail() {
-      try {
-        const res = await fetch(
-          `${expressBackendBaseRESTOrigin}/auth/verify-email`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ verificationToken: token, email }),
-          },
-        );
+    hasVerified.current = true;
+    verifyEmailMutation.mutate({ verificationToken: token, email });
+  }, [router]); // Remove verifyEmailMutation from dependencies
 
-        const jsonResponse = await res.json();
-
-        if (res.ok) {
-          toast.success("Email verified successfully!");
-        } else {
-          toast.error(jsonResponse.message || "Verification failed.");
-        }
-      } catch (err) {
-        toast.error("Something went wrong verifying your email.");
-        console.error(err);
-      } finally {
-        setVerifying(false);
-        router.replace("/auth/login");
-      }
-    }
-
-    verifyEmail();
-  }, [router]);
+  if (verifyEmailMutation.isPending) {
+    return <LoadingScreen message="Verifying your email..." />;
+  }
 
   return (
-    <div className="flex h-[60vh] flex-col items-center justify-center text-center">
-      <h1 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
-        Verifying your email...
-      </h1>
-      {verifying && (
-        <p className="mt-4 text-gray-500 dark:text-gray-400">Please wait.</p>
-      )}
-    </div>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "60vh",
+        textAlign: "center",
+        gap: 2,
+      }}
+    >
+      {verifyEmailMutation.isSuccess ? (
+        <>
+          <div className="text-6xl text-green-500">✓</div>
+          <Typography
+            variant="h4"
+            sx={{ color: "text.primary", fontWeight: 600 }}
+          >
+            Email Verified!
+          </Typography>
+          <Typography variant="body1" sx={{ color: "text.secondary" }}>
+            Your email has been successfully verified. You can now log in.
+          </Typography>
+        </>
+      ) : verifyEmailMutation.isError ? (
+        <>
+          <div className="text-6xl text-red-500">✗</div>
+          <Typography
+            variant="h4"
+            sx={{ color: "text.primary", fontWeight: 600 }}
+          >
+            Verification Failed
+          </Typography>
+          <Typography variant="body1" sx={{ color: "text.secondary" }}>
+            Please try again or request a new verification link.
+          </Typography>
+        </>
+      ) : null}
+    </Box>
   );
 }

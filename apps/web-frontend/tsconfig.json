@@ -21,7 +21,10 @@
     ],
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    // Performance optimizations
+    "assumeChangesOnlyAffectDirectDependencies": true,
+    "preserveWatchOutput": true
   },
   "include": [
     "next-env.d.ts",

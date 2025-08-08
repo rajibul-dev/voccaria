@@ -1,32 +1,46 @@
 "use client";
 
-import { User } from "@/_types/user";
-import { ThemeProvider } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "react-hot-toast";
+import { PopoverManagerProvider } from "./_components/Popover";
+import IsOldPageProvider from "./_context/IsOldPage";
+import { SidebarProvider } from "./_context/SidebarContext";
+
+// import { User } from "@/_types/user"; // No longer needed directly here
+import { ThemeProvider } from "@mui/material";
+// Import HydrationBoundary from TanStack Query
+import {
+  QueryClient,
+  QueryClientProvider,
+  HydrationBoundary,
+} from "@tanstack/react-query";
+import type { DehydratedState } from "@tanstack/react-query"; // Import DehydratedState type
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import { useLayoutEffect, useState } from "react";
-import { Toaster } from "react-hot-toast";
-import { PopoverManagerProvider } from "./_components/Popover";
-import { AuthProvider } from "./_context/AuthContext";
-import IsOldPageProvider from "./_context/IsOldPage";
-import { SidebarProvider } from "./_context/SidebarContext";
 import { darkTheme, lightTheme } from "./_theme/muiTheme";
 
-const queryClient = new QueryClient();
+// Create a singleton QueryClient for the client-side
+// This ensures the same client is used across the client-side application
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes to match individual query settings
+      retry: 1, // Retry once on failure
+      refetchOnWindowFocus: false, // Prevent automatic refetch on window focus
+    },
+  },
+});
 
 export function Providers({
   children,
-  initialUser = null,
+  dehydratedState, // Now accepting dehydratedState from SSR
 }: {
   children: React.ReactNode;
-  initialUser?: User | null;
+  dehydratedState: DehydratedState; // Type for dehydrated state
 }) {
   const pathname = usePathname();
   const isRoot = pathname === "/";
-  // const isInApp = pathname.startsWith("/app");
   const [muiMode, setMuiMode] = useState<"light" | "dark">("light");
 
   useLayoutEffect(() => {
@@ -51,10 +65,10 @@ export function Providers({
 
   return (
     <AppRouterCacheProvider>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <ThemeProvider theme={muiTheme}>
-          <AuthProvider initialUser={initialUser}>
+      <ThemeProvider theme={muiTheme}>
+        <QueryClientProvider client={queryClient}>
+          {/* Hydrate the client-side cache with server-fetched data */}
+          <HydrationBoundary state={dehydratedState}>
             <PopoverManagerProvider>
               <SidebarProvider>
                 <IsOldPageProvider>
@@ -91,9 +105,9 @@ export function Providers({
                 </IsOldPageProvider>
               </SidebarProvider>
             </PopoverManagerProvider>
-          </AuthProvider>
-        </ThemeProvider>
-      </QueryClientProvider>
+          </HydrationBoundary>
+        </QueryClientProvider>
+      </ThemeProvider>
     </AppRouterCacheProvider>
   );
 }

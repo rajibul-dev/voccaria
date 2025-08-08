@@ -1,64 +1,24 @@
 "use client";
 
-import { startTransition, useEffect, useState } from "react";
-import FancyInput from "./FancyInput";
 import Link from "next/link";
-import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-import { useAuth } from "../_context/AuthContext";
+import { useEffect, useState } from "react";
+import { useLogin } from "@/app/_hooks/useAuth";
+import FancyInput from "./FancyInput";
 
 export default function LoginFormEmailPassword() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { setUser } = useAuth();
+
+  const loginMutation = useLogin();
 
   useEffect(() => {
     router.prefetch("/app");
-  }, []);
+  }, [router]);
 
   async function handleLogin() {
-    setIsLoading(true);
-    try {
-      const res = await fetch(`${expressBackendBaseRESTOrigin}/auth/login`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
-
-      const jsonResponse = await res.json();
-
-      if (!res.ok) {
-        toast.error(jsonResponse.message || "Failed to login");
-        return;
-      }
-      // Schedule user state update without blocking UI
-      startTransition(() => {
-        setUser(jsonResponse.data.user);
-      });
-
-      // Move to /app right away
-      router.replace("/app");
-
-      // Toast after short delay (for hydration + nice UX)
-      setTimeout(() => {
-        toast.success(
-          `Login successful! Welcome ${jsonResponse.data.user.name || "User"}!`,
-        );
-      }, 300);
-    } catch (error) {
-      toast.error("Something went wrong");
-    } finally {
-      setIsLoading(false);
-    }
+    loginMutation.mutate({ email, password });
   }
 
   return (
@@ -94,9 +54,9 @@ export default function LoginFormEmailPassword() {
       <button
         type="submit"
         className="manual-auth-btn attractive-text-shadow disabled:cursor-not-allowed disabled:opacity-50"
-        disabled={isLoading}
+        disabled={loginMutation.isPending} // Use the loading state from the hook
       >
-        {isLoading ? "Logging in..." : "Login"}
+        {loginMutation.isPending ? "Logging in..." : "Login"}
       </button>
 
       <Link
