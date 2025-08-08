@@ -1,7 +1,3 @@
 {
-  "functions": {
-    "**/*.{js,ts,tsx}": {
-      "runtime": "nodejs22.x"
-    }
-  }
+  "buildCommand": "npm run build"
 }
