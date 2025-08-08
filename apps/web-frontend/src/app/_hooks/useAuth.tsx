@@ -506,6 +506,8 @@ const uploadAvatar = async (file: File): Promise<User> => {
   const formData = new FormData();
   formData.append("avatar", file);
 
+  console.log("🔍 FRONTEND: Starting avatar upload...");
+
   // Use fetch for file upload - don't set Content-Type header, let fetch handle it
   const response = await fetch("/api/users/me/avatar", {
     method: "POST",
@@ -515,12 +517,22 @@ const uploadAvatar = async (file: File): Promise<User> => {
 
   if (!response.ok) {
     const errorText = await response.text();
+    console.error("🔍 FRONTEND: Upload failed:", errorText);
     throw new Error(`Upload failed: ${response.statusText}`);
   }
 
   const data = await response.json();
+  console.log("🔍 FRONTEND: Upload response data:", data);
+
   if (data.success && data.data) {
-    return data.data.user;
+    if (data.data.user) {
+      console.log("🔍 FRONTEND: Got user data:", data.data.user);
+      return data.data.user;
+    } else {
+      console.log("🔍 FRONTEND: No user in response, will trigger refetch");
+      // If no user data is returned, we'll rely on query invalidation
+      return {} as User; // Return empty user, invalidation will handle the rest
+    }
   }
   throw new Error(data.message || "Failed to upload avatar.");
 };

@@ -109,16 +109,31 @@ export async function addAvatar(
     overwrite: true,
   });
 
-  // Update user avatars in DB
-  await User.findByIdAndUpdate(reqUser._id, {
-    "avatars.manual": result.secure_url,
-    "avatars.selected": "manual",
-  });
+  // Update user avatars in DB - IMPORTANT: Use save() to trigger pre-save hooks
+  const user = await User.findById(reqUser._id);
+  user.avatars.manual = result.secure_url;
+  user.avatars.selected = "manual";
+  await user.save(); // This triggers the pre-save hook that sets user.avatar
+
+  // Fetch the updated user without sensitive fields
+  const updatedUser = await User.findById(reqUser._id).select(
+    "-hashedPassword -__v"
+  );
+
+  console.log("🔍 AVATAR UPLOAD DEBUG:");
+  console.log("- Cloudinary URL:", result.secure_url);
+  console.log("- Updated user avatar field:", updatedUser.avatar);
+  console.log("- Updated user avatars.manual:", updatedUser.avatars.manual);
+  console.log("- Updated user avatars.selected:", updatedUser.avatars.selected);
+  console.log(
+    "- Full avatars object:",
+    JSON.stringify(updatedUser.avatars, null, 2)
+  );
 
   return response.status(StatusCodes.CREATED).json({
     success: true,
     message: "Uploaded avatar successfully",
-    data: { url: result.secure_url },
+    data: { url: result.secure_url, user: updatedUser },
   });
 }
 
