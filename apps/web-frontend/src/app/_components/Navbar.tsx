@@ -154,7 +154,11 @@ export default function Navbar() {
               </li>
             )}
 
-            <NavbarLoginButton isRoot={isRoot} authLoading={authLoading} />
+            <NavbarLoginButton
+              isRoot={isRoot}
+              authLoading={authLoading}
+              isAuthenticated={!!user}
+            />
 
             {!isPostPage && (
               <div className="h-fit min-[670px]:hidden">

@@ -55,7 +55,10 @@ export const fetchCurrentUser = async (
     if (cookieHeader) {
       // Server-side call - use direct backend URL to avoid proxy issues
       headers["Cookie"] = cookieHeader;
-      const backendOrigin = process.env.NEXT_PUBLIC_EXPRESS_BACKEND_ORIGIN;
+      // Use server-side env var, fallback to client-side for compatibility
+      const backendOrigin =
+        process.env.EXPRESS_BACKEND_ORIGIN ||
+        process.env.NEXT_PUBLIC_EXPRESS_BACKEND_ORIGIN;
       url = `${backendOrigin}/api/v1/users/me`;
       console.log(
         "fetchCurrentUser (SSR) - Using direct backend URL:",
