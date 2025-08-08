@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently -n FRONTEND,BACKEND -c blue,green \"npm:dev-frontend\" \"npm:dev-backend\"",
+    "dev:fast": "concurrently -n FRONTEND,BACKEND -c blue,green \"npm:dev-frontend-fast\" \"npm:dev-backend\"",
+    "dev:turbo": "concurrently -n FRONTEND,BACKEND -c blue,green \"npm:dev-frontend-turbo\" \"npm:dev-backend\"",
     "dev-frontend": "npm --prefix apps/web-frontend run dev",
+    "dev-frontend-fast": "npm --prefix apps/web-frontend run dev:fast",
+    "dev-frontend-turbo": "npm --prefix apps/web-frontend run dev:turbo",
     "dev-backend": "npm --prefix backend run dev"
   },
   "repository": {

@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:turbo": "next dev --turbo",
+    "dev:fast": "cross-env NEXT_PRIVATE_SKIP_SIZE_LIMIT=1 next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -55,6 +57,7 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^20.14.12",
+    "cross-env": "^10.0.0",
     "prettier": "^3.5.0",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "typescript": "^5.5.4"
