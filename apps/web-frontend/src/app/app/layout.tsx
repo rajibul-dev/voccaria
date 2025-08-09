@@ -20,28 +20,18 @@ export default async function AppLayout({
 }: {
   children: React.ReactNode;
 }) {
-  console.log("=== APP LAYOUT SSR STARTING ===");
-  const headerList = headers(); // Get headers from the incoming request
+  const headerList = headers();
   const cookieHeader = (await headerList).get("cookie") || undefined;
-
-  console.log("=== APP LAYOUT - Cookie header:", cookieHeader?.substring(0, 100) + "...");
 
   const queryClient = new QueryClient();
 
   // Always try to prefetch user data if cookies are available
   if (cookieHeader) {
-    console.log("=== APP LAYOUT - About to prefetch user (cookies available) ===");
     await queryClient.prefetchQuery({
       queryKey: ["user"],
       queryFn: () => fetchCurrentUser(cookieHeader),
     });
-    console.log("=== APP LAYOUT - Prefetch complete ===");
-  } else {
-    console.log("=== APP LAYOUT - No cookies available, skipping SSR prefetch ===");
   }
-
-  // Let client-side handle all authentication logic
-  console.log("=== APP LAYOUT - Deferring auth to client-side ===");
 
   const dehydratedState = dehydrate(queryClient);
 
@@ -60,9 +50,7 @@ export default async function AppLayout({
           )}
         >
           <Providers dehydratedState={dehydratedState}>
-            <ClientAuthGuard>
-              {children}
-            </ClientAuthGuard>
+            <ClientAuthGuard>{children}</ClientAuthGuard>
           </Providers>
         </main>
         <AppFooter />
