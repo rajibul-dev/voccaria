@@ -134,7 +134,14 @@ export async function addAvatar(
   try {
     console.log("🔍 AVATAR_UPLOAD: Starting upload to Cloudinary");
 
-    // Try uploading from buffer instead of temp file (more reliable)
+    // Check if we have file data
+    console.log("🔍 AVATAR_UPLOAD: File data available:", {
+      hasData: !!(file as any).data,
+      dataLength: (file as any).data?.length || 0,
+      hasTempPath: !!(file as any).tempFilePath,
+    });
+
+    // Fallback to temp file path if buffer is empty
     const uploadOptions = {
       folder: folderPath,
       resource_type: "auto" as const,
@@ -143,19 +150,30 @@ export async function addAvatar(
       overwrite: false,
     };
 
-    // Upload using buffer data instead of temp file path
-    const result = await new Promise<any>((resolve, reject) => {
-      cloudinary.uploader
-        .upload_stream(uploadOptions, (error, result) => {
-          if (error) {
-            console.error("🔍 AVATAR_UPLOAD: Cloudinary stream error:", error);
-            reject(error);
-          } else {
-            resolve(result);
-          }
-        })
-        .end((file as any).data); // Use the file buffer directly
-    });
+    let result;
+    
+    // Try buffer first, fallback to temp file
+    if ((file as any).data && (file as any).data.length > 0) {
+      console.log("🔍 AVATAR_UPLOAD: Using buffer upload");
+      result = await new Promise<any>((resolve, reject) => {
+        cloudinary.uploader
+          .upload_stream(uploadOptions, (error, result) => {
+            if (error) {
+              console.error("🔍 AVATAR_UPLOAD: Cloudinary stream error:", error);
+              reject(error);
+            } else {
+              resolve(result);
+            }
+          })
+          .end((file as any).data);
+      });
+    } else {
+      console.log("🔍 AVATAR_UPLOAD: Using temp file upload");
+      result = await cloudinary.uploader.upload(
+        (file as any).tempFilePath,
+        uploadOptions
+      );
+    }
 
     console.log("🔍 AVATAR_UPLOAD: Cloudinary result:", {
       secure_url: result.secure_url,
