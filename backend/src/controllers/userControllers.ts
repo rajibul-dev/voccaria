@@ -141,13 +141,29 @@ export async function addAvatar(
       hasTempPath: !!(file as any).tempFilePath,
     });
 
+    // Extract format from mimetype to help Cloudinary
+    const mimeType = (file as any).mimetype;
+    let format;
+    if (mimeType === "image/jpeg" || mimeType === "image/jpg") {
+      format = "jpg";
+    } else if (mimeType === "image/png") {
+      format = "png";
+    } else if (mimeType === "image/gif") {
+      format = "gif";
+    } else if (mimeType === "image/webp") {
+      format = "webp";
+    }
+
     const uploadOptions = {
       folder: folderPath,
-      resource_type: "auto" as const,
+      resource_type: "image" as const, // Force image type
       use_filename: false,
       unique_filename: true,
       overwrite: false,
+      ...(format && { format }), // Add format hint if detected
     };
+
+    console.log("🔍 AVATAR_UPLOAD: Upload options:", uploadOptions);
 
     let result;
 
@@ -171,6 +187,20 @@ export async function addAvatar(
       });
     } else if ((file as any).tempFilePath) {
       console.log("🔍 AVATAR_UPLOAD: Using temp file upload");
+
+      // Let's also check if the temp file actually exists and is readable
+      try {
+        const fs = await import("fs");
+        const stats = await fs.promises.stat((file as any).tempFilePath);
+        console.log("🔍 AVATAR_UPLOAD: Temp file stats:", {
+          size: stats.size,
+          isFile: stats.isFile(),
+          path: (file as any).tempFilePath,
+        });
+      } catch (fsError) {
+        console.error("🔍 AVATAR_UPLOAD: Temp file access error:", fsError);
+      }
+
       result = await cloudinary.uploader.upload(
         (file as any).tempFilePath,
         uploadOptions
@@ -187,8 +217,40 @@ export async function addAvatar(
       bytes: result.bytes,
     });
 
-    // Fix URL if it contains /raw/upload/ (force it to be an image URL)
+    // NUCLEAR OPTION: If Cloudinary still uploaded as 'raw', manually construct image URL
     let finalUrl = result.secure_url;
+
+    if (result.resource_type === "raw") {
+      console.log(
+        "🚨 AVATAR_UPLOAD: Cloudinary uploaded as RAW despite image resource_type!"
+      );
+
+      // Manually construct the correct image URL from the public_id
+      const baseUrl = "https://res.cloudinary.com/drtmxi7rn/image/upload/";
+      const publicId = result.public_id;
+
+      // Determine extension from original mimetype
+      const mimeType = (file as any).mimetype;
+      let extension = "jpg"; // default fallback
+
+      if (mimeType === "image/jpeg" || mimeType === "image/jpg") {
+        extension = "jpg";
+      } else if (mimeType === "image/png") {
+        extension = "png";
+      } else if (mimeType === "image/gif") {
+        extension = "gif";
+      } else if (mimeType === "image/webp") {
+        extension = "webp";
+      }
+
+      finalUrl = `${baseUrl}${publicId}.${extension}`;
+      console.log(
+        "🔧 AVATAR_UPLOAD: Manually constructed image URL:",
+        finalUrl
+      );
+    }
+
+    // Also handle the /raw/upload/ case for existing logic
     if (finalUrl.includes("/raw/upload/")) {
       finalUrl = finalUrl.replace("/raw/upload/", "/image/upload/");
       console.log(
@@ -224,6 +286,38 @@ export async function addAvatar(
 
       finalUrl = finalUrl + "." + extension;
       console.log("🔧 AVATAR_UPLOAD: Added extension to URL:", finalUrl);
+    }
+
+    // Test if the final URL is actually accessible
+    try {
+      console.log("🔍 AVATAR_UPLOAD: Testing URL accessibility:", finalUrl);
+      const testResponse = await fetch(finalUrl, { method: "HEAD" });
+      console.log("🔍 AVATAR_UPLOAD: URL test result:", {
+        status: testResponse.status,
+        ok: testResponse.ok,
+        statusText: testResponse.statusText,
+      });
+
+      if (!testResponse.ok) {
+        console.error("❌ AVATAR_UPLOAD: Generated URL is not accessible!");
+        // Let's try the original secure_url directly
+        console.log(
+          "🔍 AVATAR_UPLOAD: Testing original URL:",
+          result.secure_url
+        );
+        const originalTest = await fetch(result.secure_url, { method: "HEAD" });
+        console.log("🔍 AVATAR_UPLOAD: Original URL test:", {
+          status: originalTest.status,
+          ok: originalTest.ok,
+        });
+
+        if (originalTest.ok) {
+          console.log("🔧 AVATAR_UPLOAD: Using original URL instead");
+          finalUrl = result.secure_url;
+        }
+      }
+    } catch (urlTestError) {
+      console.error("🔍 AVATAR_UPLOAD: URL test failed:", urlTestError.message);
     }
 
     // Update user avatars in DB - IMPORTANT: Use save() to trigger pre-save hooks
