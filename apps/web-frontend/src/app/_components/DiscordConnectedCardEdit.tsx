@@ -12,7 +12,7 @@ export default function DiscordConnectedCardEdit({
   discord: User["discord"];
 }) {
   // Initialize the mutation hook
-  const disconnectMutation = useDiscordDisconnect();
+  const { disconnectDiscord, isDisconnecting } = useDiscordDisconnect();
 
   function handleChangeDiscord() {
     console.log("Discord connect initiated");
@@ -24,10 +24,10 @@ export default function DiscordConnectedCardEdit({
   async function handleDisconnect() {
     // Trigger the disconnect mutation.
     // The useDiscordDisconnect hook handles:
-    // - Setting loading state (isPending)
+    // - Setting loading state (isDisconnecting)
     // - Showing success/error toasts
     // - Invalidating the user query (which will update the UI elsewhere)
-    disconnectMutation.mutate();
+    disconnectDiscord();
   }
 
   return (
@@ -57,7 +57,7 @@ export default function DiscordConnectedCardEdit({
             startIcon={<FaDiscord />}
             className="!bg-[#4e59d2] !shadow-none hover:!bg-[#5865f2]"
             onClick={handleChangeDiscord}
-            disabled={disconnectMutation.isPending}
+            disabled={isDisconnecting}
           >
             Change Discord
           </Button>
@@ -66,7 +66,7 @@ export default function DiscordConnectedCardEdit({
             color="secondary"
             size="medium"
             onClick={handleDisconnect}
-            loading={disconnectMutation.isPending}
+            loading={isDisconnecting}
             loadingIndicator={"Disconnecting..."}
           >
             Disconnect

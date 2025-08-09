@@ -14,7 +14,7 @@ export default function ResetPasswordForm() {
   const router = useRouter();
 
   // Initialize the mutation hook
-  const resetPasswordMutation = useResetPassword();
+  const { resetPassword, isResetting } = useResetPassword();
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -39,7 +39,7 @@ export default function ResetPasswordForm() {
     }
 
     // Call the mutate function from the hook
-    resetPasswordMutation.mutate(
+    resetPassword(
       {
         token,
         email,
@@ -93,9 +93,9 @@ export default function ResetPasswordForm() {
       <button
         type="submit"
         className="manual-auth-btn attractive-text-shadow w-full disabled:cursor-not-allowed disabled:opacity-50"
-        disabled={resetPasswordMutation.isPending}
+        disabled={isResetting}
       >
-        {resetPasswordMutation.isPending ? "Resetting..." : "Reset Password"}
+        {isResetting ? "Resetting..." : "Reset Password"}
       </button>
     </form>
   );

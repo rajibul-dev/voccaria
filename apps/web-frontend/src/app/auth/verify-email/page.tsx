@@ -2,15 +2,18 @@
 
 import { useVerifyEmail } from "@/app/_hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import LoadingScreen from "@/app/_components/LoadingScreen";
 import { Box, Typography } from "@mui/material";
 
 export default function VerifyEmailPage() {
   const router = useRouter();
-  const verifyEmailMutation = useVerifyEmail();
+  const { verifyEmail, isVerifying, error } = useVerifyEmail();
   const hasVerified = useRef(false); // Prevent multiple verification attempts
+  const [verificationStatus, setVerificationStatus] = useState<
+    "pending" | "success" | "error"
+  >("pending");
 
   useEffect(() => {
     // Prevent running multiple times
@@ -27,10 +30,16 @@ export default function VerifyEmailPage() {
     }
 
     hasVerified.current = true;
-    verifyEmailMutation.mutate({ verificationToken: token, email });
-  }, [router, verifyEmailMutation]);
+    verifyEmail(
+      { verificationToken: token, email },
+      {
+        onSuccess: () => setVerificationStatus("success"),
+        onError: () => setVerificationStatus("error"),
+      },
+    );
+  }, [router, verifyEmail]);
 
-  if (verifyEmailMutation.isPending) {
+  if (isVerifying) {
     return <LoadingScreen message="Verifying your email..." />;
   }
 
@@ -46,7 +55,7 @@ export default function VerifyEmailPage() {
         gap: 2,
       }}
     >
-      {verifyEmailMutation.isSuccess ? (
+      {verificationStatus === "success" ? (
         <>
           <div className="text-6xl text-green-500">✓</div>
           <Typography
@@ -59,7 +68,7 @@ export default function VerifyEmailPage() {
             Your email has been successfully verified. You can now log in.
           </Typography>
         </>
-      ) : verifyEmailMutation.isError ? (
+      ) : verificationStatus === "error" ? (
         <>
           <div className="text-6xl text-red-500">✗</div>
           <Typography

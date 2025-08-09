@@ -10,7 +10,7 @@ export default function ClientAuthGuard({
 }: {
   children: React.ReactNode;
 }) {
-  const { data: user, isLoading, isError } = useUser();
+  const { user, isLoading, error } = useUser();
   const router = useRouter();
   const searchParams = useSearchParams();
   const isOAuthRedirect = searchParams.get("googleLogin") === "success";
@@ -20,11 +20,11 @@ export default function ClientAuthGuard({
     if (isLoading || isOAuthRedirect) return;
 
     // If we're not loading and there's no user, redirect to auth immediately
-    if (!user && !isError) {
+    if (!user && !error) {
       console.log("ClientAuthGuard - No user found, redirecting to /auth");
       router.replace("/auth");
     }
-  }, [user, isLoading, isError, isOAuthRedirect, router]);
+  }, [user, isLoading, error, isOAuthRedirect, router]);
 
   // Show loading state while checking auth
   if (isLoading && !isOAuthRedirect) {

@@ -11,7 +11,7 @@ export default function ForgotPasswordForm() {
   const [isSuccess, setIsSuccess] = useState(false);
 
   // Initialize the mutation hook
-  const forgotPasswordMutation = useForgotPassword();
+  const { forgotPassword, isSending } = useForgotPassword();
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -20,7 +20,7 @@ export default function ForgotPasswordForm() {
     setIsSuccess(false);
 
     // Call the mutate function from the hook
-    forgotPasswordMutation.mutate(
+    forgotPassword(
       { email },
       {
         onSuccess: () => {
@@ -48,13 +48,13 @@ export default function ForgotPasswordForm() {
       <button
         type="submit"
         className="manual-auth-btn attractive-text-shadow w-full disabled:cursor-not-allowed disabled:opacity-50"
-        disabled={forgotPasswordMutation.isPending}
+        disabled={isSending}
       >
-        {forgotPasswordMutation.isPending ? "Sending..." : "Send Reset Link"}
+        {isSending ? "Sending..." : "Send Reset Link"}
       </button>
 
       {/* Display success message and Gmail link only if the mutation was successful */}
-      {forgotPasswordMutation.isSuccess && isSuccess && isGmail(email) && (
+      {isSuccess && isGmail(email) && (
         <p className="mt-4 text-center text-base text-slate-700 dark:text-slate-200">
           Check your email for password reset link:{" "}
           <a

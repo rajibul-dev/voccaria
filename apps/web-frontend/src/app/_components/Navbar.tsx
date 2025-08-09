@@ -31,7 +31,7 @@ export default function Navbar() {
   const shouldHideNavbar =
     pathname.startsWith("/auth") || pathname.startsWith("/app");
   const [open, setOpen] = useState(false);
-  const { data: user, isLoading: authLoading } = useUser();
+  const { user, isLoading: authLoading } = useUser();
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);

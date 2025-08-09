@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { useUser } from "@/app/_hooks/useAuth";
 
 export default function useOAuthRedirectToast() {
-  const { data: user, isLoading } = useUser();
+  const { user, isLoading } = useUser();
 
   useEffect(() => {
     // Don't run the effect if user data is still loading

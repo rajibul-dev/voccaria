@@ -11,14 +11,14 @@ export default function LoginFormEmailPassword() {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  const loginMutation = useLogin();
+  const { login, isLoggingIn, error } = useLogin();
 
   useEffect(() => {
     router.prefetch("/app");
   }, [router]);
 
   async function handleLogin() {
-    loginMutation.mutate({ email, password });
+    login({ email, password });
   }
 
   return (
@@ -54,9 +54,9 @@ export default function LoginFormEmailPassword() {
       <button
         type="submit"
         className="manual-auth-btn attractive-text-shadow disabled:cursor-not-allowed disabled:opacity-50"
-        disabled={loginMutation.isPending} // Use the loading state from the hook
+        disabled={isLoggingIn}
       >
-        {loginMutation.isPending ? "Logging in..." : "Login"}
+        {isLoggingIn ? "Logging in..." : "Login"}
       </button>
 
       <Link

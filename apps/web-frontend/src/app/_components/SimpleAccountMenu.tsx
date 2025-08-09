@@ -8,13 +8,13 @@ import { useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 
 export default function SimpleAccountMenu() {
-  const { data: user, isLoading, isError } = useUser();
-  const logoutMutation = useLogout();
+  const { user, isLoading, error } = useUser();
+  const { logout, isLoggingOut } = useLogout();
   const [isOpen, setIsOpen] = useState(false);
 
   function handleLogout() {
     setIsOpen(false);
-    logoutMutation.mutate();
+    logout();
   }
 
   // Handle loading/error states for user data display
@@ -29,7 +29,7 @@ export default function SimpleAccountMenu() {
     );
   }
 
-  if (isError || !user) {
+  if (error || !user) {
     return (
       <Link
         href="/auth/login"
@@ -110,10 +110,10 @@ export default function SimpleAccountMenu() {
             <div>
               <button
                 onClick={handleLogout}
-                disabled={logoutMutation.isPending}
+                disabled={isLoggingOut}
                 className="text-dark flex w-full cursor-pointer items-center justify-between px-4 py-2.5 text-base font-medium text-red-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-70 dark:text-red-300 dark:hover:bg-white/5"
               >
-                {logoutMutation.isPending ? "Logging out..." : "Log out"}
+                {isLoggingOut ? "Logging out..." : "Log out"}
               </button>
             </div>
           </div>

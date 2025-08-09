@@ -11,7 +11,7 @@ import { useUser } from "@/app/_hooks/useAuth";
 
 export default function MyProfile() {
   const [isEditing, setIsEditing] = useState(false);
-  const { data: user, isLoading, isError } = useUser();
+  const { user, isLoading, error } = useUser();
 
   if (isLoading) {
     return (
@@ -21,7 +21,7 @@ export default function MyProfile() {
     );
   }
 
-  if (isError) {
+  if (error) {
     return (
       <div className="flex h-60 flex-col items-center justify-center text-red-600 dark:text-red-400">
         <p>Error loading profile. Please try again.</p>

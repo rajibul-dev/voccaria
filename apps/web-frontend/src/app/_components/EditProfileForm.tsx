@@ -43,13 +43,12 @@ export default function EditProfileForm({
   const [image, setFiles] = useState<(File & { preview: string })[]>([]);
   const [rejected, setRejected] = useState<File[]>([]);
 
-  // Initialize TanStack Query hooks
-  const updateProfileMutation = useUpdateProfile();
-  const { data: providers = [], isLoading: isLoadingProviders } =
-    useAvatarProviders();
-  const updateAvatarProviderMutation = useUpdateAvatarProvider();
-  const uploadAvatarMutation = useUploadAvatar();
-  const deleteAvatarMutation = useDeleteAvatar();
+  // Initialize TanStack Query hooks with clean destructuring
+  const { updateProfile, isUpdating } = useUpdateProfile();
+  const { providers, isLoading: isLoadingProviders } = useAvatarProviders();
+  const { updateAvatarProvider, isUpdatingAvatar } = useUpdateAvatarProvider();
+  const { uploadAvatar, isUploading } = useUploadAvatar();
+  const { deleteAvatar, isDeleting } = useDeleteAvatar();
 
   // State for the avatar provider selector, initialized with user's current selected provider
   const [providerSelector, setProviderSelector] = useState(
@@ -68,14 +67,8 @@ export default function EditProfileForm({
     const selectedProvider = event.target.value;
     setProviderSelector(selectedProvider as any); // Update local state immediately
 
-    // Trigger the mutation to update avatar provider
-    updateAvatarProviderMutation.mutate(
-      { provider: selectedProvider as string },
-      {
-        // onSuccess and onError callbacks are handled in the hook itself (toast, invalidateQueries)
-        // No need for additional logic here unless specific UI updates are required
-      },
-    );
+    // Clean direct function call
+    updateAvatarProvider({ provider: selectedProvider as string });
   };
 
   const modalRef = useRef<HTMLDivElement | null>(null);
@@ -135,29 +128,21 @@ export default function EditProfileForm({
       return;
     }
 
-    // Trigger the upload mutation
-    uploadAvatarMutation.mutate(file, {
+    // Clean direct function call
+    uploadAvatar(file, {
       onSuccess: () => {
         removeSelection(); // Clear local file selection
         handleClose(); // Close modal
-        // Toast and user data invalidation are handled in the hook
-      },
-      onError: () => {
-        // Error toast is handled in the hook
       },
     });
   }
 
   // Handler for deleting the current avatar
   async function handleDeleteAvatar() {
-    // Trigger the delete mutation
-    deleteAvatarMutation.mutate(undefined, {
+    // Clean direct function call
+    deleteAvatar(undefined, {
       onSuccess: () => {
         handleClose(); // Close modal
-        // Toast and user data invalidation are handled in the hook
-      },
-      onError: () => {
-        // Error toast is handled in the hook
       },
     });
   }
@@ -176,16 +161,12 @@ export default function EditProfileForm({
       return;
     }
 
-    // Trigger the profile update mutation
-    updateProfileMutation.mutate(
+    // Clean direct function call
+    updateProfile(
       { name, bio },
       {
         onSuccess: () => {
-          // Toast and user data invalidation are handled in the hook
           setIsEditing(false); // Close editing mode
-        },
-        onError: () => {
-          // Error toast is handled in the hook
         },
       },
     );
@@ -237,9 +218,7 @@ export default function EditProfileForm({
             onChange={handleProviderSelectorChange}
             variant="standard"
             className="!fill-gray-900 !stroke-gray-900 !text-gray-900 dark:!fill-gray-100 dark:!stroke-gray-100 dark:!text-gray-100 [&>svg]:!fill-gray-900 [&>svg]:dark:!fill-gray-100"
-            disabled={
-              isLoadingProviders || updateAvatarProviderMutation.isPending
-            } // Disable while loading providers or updating
+            disabled={isLoadingProviders || isUpdatingAvatar} // Disable while loading providers or updating
           >
             {providers.map((item) => (
               <MenuItem key={item} value={item}>
@@ -331,7 +310,7 @@ export default function EditProfileForm({
                   <Button
                     type="button"
                     onClick={() => handleAvatarSubmit(image[0])}
-                    loading={uploadAvatarMutation.isPending} // Use hook's loading state
+                    loading={isUploading} // Use hook's loading state
                     loadingIndicator={"Uploading..."}
                     className="!shadow-none"
                     variant="contained"
@@ -364,7 +343,7 @@ export default function EditProfileForm({
                     variant="outlined"
                     color="error"
                     onClick={handleDeleteAvatar}
-                    loading={deleteAvatarMutation.isPending} // Use hook's loading state
+                    loading={isDeleting} // Use hook's loading state
                     loadingIndicator={"Deleting..."}
                     className="!normal-case"
                     startIcon={<MdDelete />}
@@ -403,7 +382,7 @@ export default function EditProfileForm({
       <div className="flex gap-3">
         <Button
           type="submit"
-          loading={updateProfileMutation.isPending} // Use hook's loading state for profile update
+          loading={isUpdating} // Use hook's loading state for profile update
           className="!normal-case !shadow-none"
           loadingIndicator={"Saving..."}
           variant="contained"
@@ -419,7 +398,7 @@ export default function EditProfileForm({
           }}
           variant="outlined"
           color="secondary"
-          disabled={updateProfileMutation.isPending} // Disable if profile update is pending
+          disabled={isUpdating} // Disable if profile update is pending
           size="large"
         >
           Cancel

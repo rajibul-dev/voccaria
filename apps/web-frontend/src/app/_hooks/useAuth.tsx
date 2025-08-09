@@ -71,12 +71,19 @@ export const fetchCurrentUser = async (
 };
 
 export const useUser = () => {
-  return useQuery<User | null, Error>({
+  const { data, isLoading, error } = useQuery<User | null, Error>({
     queryKey: [USER_QUERY_KEY],
     queryFn: () => fetchCurrentUser(),
     staleTime: 5 * 60 * 1000,
     retry: false,
   });
+
+  return {
+    user: data,
+    isLoading,
+    isAuthenticated: Boolean(data) && !isLoading,
+    error,
+  };
 };
 
 type LoginCredentials = {
@@ -88,7 +95,11 @@ export const useLogin = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  return useMutation<User, Error, LoginCredentials>({
+  const {
+    mutate: login,
+    isPending: isLoggingIn,
+    error,
+  } = useMutation<User, Error, LoginCredentials>({
     mutationFn: async (credentials) => {
       const data = await apiCall("/auth/login", {
         method: "POST",
@@ -105,6 +116,8 @@ export const useLogin = () => {
     },
     onError: (error) => toast.error(error.message),
   });
+
+  return { login, isLoggingIn, error };
 };
 
 type RegisterCredentials = {
@@ -114,7 +127,12 @@ type RegisterCredentials = {
 };
 
 export const useRegister = () => {
-  return useMutation<any, Error, RegisterCredentials>({
+  const {
+    mutate: register,
+    isPending: isRegistering,
+    error,
+    isSuccess,
+  } = useMutation<any, Error, RegisterCredentials>({
     mutationFn: async (credentials) => {
       return await apiCall("/auth/register", {
         method: "POST",
@@ -126,6 +144,8 @@ export const useRegister = () => {
     },
     onError: (error) => toast.error(error.message),
   });
+
+  return { register, isRegistering, error, isSuccess };
 };
 
 type VerifyEmailPayload = {
@@ -137,7 +157,11 @@ export const useVerifyEmail = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  return useMutation<any, Error, VerifyEmailPayload>({
+  const {
+    mutate: verifyEmail,
+    isPending: isVerifying,
+    error,
+  } = useMutation<any, Error, VerifyEmailPayload>({
     mutationFn: async (payload) => {
       return await apiCall("/auth/verify-email", {
         method: "POST",
@@ -151,6 +175,8 @@ export const useVerifyEmail = () => {
     },
     onError: (error) => toast.error(error.message),
   });
+
+  return { verifyEmail, isVerifying, error };
 };
 
 type ResendEmailPayload = {
@@ -158,7 +184,11 @@ type ResendEmailPayload = {
 };
 
 export const useResendVerificationEmail = () => {
-  return useMutation<any, Error, ResendEmailPayload>({
+  const {
+    mutate: resendEmail,
+    isPending: isResending,
+    error,
+  } = useMutation<any, Error, ResendEmailPayload>({
     mutationFn: async (payload) => {
       return await apiCall("/auth/request-new-verification-email", {
         method: "POST",
@@ -168,6 +198,8 @@ export const useResendVerificationEmail = () => {
     onSuccess: () => toast.success("Verification link resent!"),
     onError: (error) => toast.error(error.message),
   });
+
+  return { resendEmail, isResending, error };
 };
 
 type ForgotPasswordPayload = {
@@ -175,7 +207,11 @@ type ForgotPasswordPayload = {
 };
 
 export const useForgotPassword = () => {
-  return useMutation<any, Error, ForgotPasswordPayload>({
+  const {
+    mutate: forgotPassword,
+    isPending: isSending,
+    error,
+  } = useMutation<any, Error, ForgotPasswordPayload>({
     mutationFn: async (payload) => {
       return await apiCall("/auth/forgot-password", {
         method: "POST",
@@ -186,6 +222,8 @@ export const useForgotPassword = () => {
       toast.success("A password reset link has been sent to your email."),
     onError: (error) => toast.error(error.message),
   });
+
+  return { forgotPassword, isSending, error };
 };
 
 type ResetPasswordPayload = {
@@ -198,7 +236,11 @@ export const useResetPassword = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  return useMutation<any, Error, ResetPasswordPayload>({
+  const {
+    mutate: resetPassword,
+    isPending: isResetting,
+    error,
+  } = useMutation<any, Error, ResetPasswordPayload>({
     mutationFn: async (payload) => {
       return await apiCall("/auth/reset-password", {
         method: "POST",
@@ -214,6 +256,8 @@ export const useResetPassword = () => {
     },
     onError: (error) => toast.error(error.message),
   });
+
+  return { resetPassword, isResetting, error };
 };
 
 type ChangePasswordPayload = {
@@ -224,7 +268,11 @@ type ChangePasswordPayload = {
 export const useChangePassword = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<any, Error, ChangePasswordPayload>({
+  const {
+    mutate: changePassword,
+    isPending: isChanging,
+    error,
+  } = useMutation<any, Error, ChangePasswordPayload>({
     mutationFn: async (payload) => {
       return await apiCall("/auth/change-password", {
         method: "POST",
@@ -237,13 +285,19 @@ export const useChangePassword = () => {
     },
     onError: (error) => toast.error(error.message),
   });
+
+  return { changePassword, isChanging, error };
 };
 
 export const useLogout = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  return useMutation<any, Error, void>({
+  const {
+    mutate: logout,
+    isPending: isLoggingOut,
+    error,
+  } = useMutation<any, Error, void>({
     mutationFn: async () => {
       return await apiCall("/auth/logout", { method: "POST" });
     },
@@ -255,6 +309,8 @@ export const useLogout = () => {
     },
     onError: (error) => toast.error(error.message),
   });
+
+  return { logout, isLoggingOut, error };
 };
 
 type UpdateProfilePayload = {
@@ -265,7 +321,11 @@ type UpdateProfilePayload = {
 export const useUpdateProfile = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<User, Error, UpdateProfilePayload>({
+  const {
+    mutate: updateProfile,
+    isPending: isUpdating,
+    error,
+  } = useMutation<User, Error, UpdateProfilePayload>({
     mutationFn: async (payload) => {
       const data = await apiCall("/users/me", {
         method: "PATCH",
@@ -279,10 +339,12 @@ export const useUpdateProfile = () => {
     },
     onError: (error) => toast.error(error.message),
   });
+
+  return { updateProfile, isUpdating, error };
 };
 
 export const useAvatarProviders = () => {
-  return useQuery<string[], Error>({
+  const { data, isLoading, error } = useQuery<string[], Error>({
     queryKey: [PROVIDERS_QUERY_KEY],
     queryFn: async () => {
       try {
@@ -295,6 +357,8 @@ export const useAvatarProviders = () => {
     staleTime: 60 * 60 * 1000, // 1 hour
     retry: false,
   });
+
+  return { providers: data || [], isLoading, error };
 };
 
 type UpdateAvatarProviderPayload = {
@@ -304,7 +368,11 @@ type UpdateAvatarProviderPayload = {
 export const useUpdateAvatarProvider = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<User, Error, UpdateAvatarProviderPayload>({
+  const {
+    mutate: updateAvatarProvider,
+    isPending: isUpdatingAvatar,
+    error,
+  } = useMutation<User, Error, UpdateAvatarProviderPayload>({
     mutationFn: async (payload) => {
       const data = await apiCall("/users/me/avatar", {
         method: "PATCH",
@@ -321,12 +389,18 @@ export const useUpdateAvatarProvider = () => {
     },
     onError: (error) => toast.error(error.message),
   });
+
+  return { updateAvatarProvider, isUpdatingAvatar, error };
 };
 
 export const useUploadAvatar = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<User, Error, File>({
+  const {
+    mutate: uploadAvatar,
+    isPending: isUploading,
+    error,
+  } = useMutation<User, Error, File>({
     mutationFn: async (file) => {
       const formData = new FormData();
       formData.append("avatar", file);
@@ -353,12 +427,18 @@ export const useUploadAvatar = () => {
     },
     onError: (error) => toast.error(error.message),
   });
+
+  return { uploadAvatar, isUploading, error };
 };
 
 export const useDeleteAvatar = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<any, Error, void>({
+  const {
+    mutate: deleteAvatar,
+    isPending: isDeleting,
+    error,
+  } = useMutation<any, Error, void>({
     mutationFn: async () => {
       return await apiCall("/users/me/avatar", { method: "DELETE" });
     },
@@ -369,10 +449,12 @@ export const useDeleteAvatar = () => {
     },
     onError: (error) => toast.error(error.message),
   });
+
+  return { deleteAvatar, isDeleting, error };
 };
 
 export const useAllUsers = () => {
-  return useQuery<AllUsersResponse, Error>({
+  const { data, isLoading, error } = useQuery<AllUsersResponse, Error>({
     queryKey: [ALL_USERS_QUERY_KEY],
     queryFn: async () => {
       const data = await apiCall("/users", { method: "GET" });
@@ -380,10 +462,12 @@ export const useAllUsers = () => {
     },
     staleTime: 5 * 60 * 1000,
   });
+
+  return { users: data, isLoading, error };
 };
 
 export const useSpecificUser = (userId: string) => {
-  return useQuery<User, Error>({
+  const { data, isLoading, error } = useQuery<User, Error>({
     queryKey: [SPECIFIC_USER_QUERY_KEY, userId],
     queryFn: async () => {
       const data = await apiCall(`/users/${userId}`, { method: "GET" });
@@ -392,12 +476,18 @@ export const useSpecificUser = (userId: string) => {
     enabled: !!userId,
     staleTime: 5 * 60 * 1000,
   });
+
+  return { user: data, isLoading, error };
 };
 
 export const useDiscordDisconnect = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<any, Error, void>({
+  const {
+    mutate: disconnectDiscord,
+    isPending: isDisconnecting,
+    error,
+  } = useMutation<any, Error, void>({
     mutationFn: async () => {
       return await apiCall("/users/discord-disconnect", { method: "DELETE" });
     },
@@ -408,4 +498,6 @@ export const useDiscordDisconnect = () => {
     },
     onError: (error) => toast.error(error.message),
   });
+
+  return { disconnectDiscord, isDisconnecting, error };
 };

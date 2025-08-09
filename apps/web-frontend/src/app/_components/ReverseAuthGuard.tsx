@@ -10,7 +10,7 @@ export default function ReverseAuthGuard({
 }: {
   children: React.ReactNode;
 }) {
-  const { data: user, isLoading } = useUser();
+  const { user, isLoading } = useUser();
   const router = useRouter();
 
   useEffect(() => {

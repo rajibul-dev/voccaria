@@ -15,9 +15,9 @@ export default function SignupFormEmailPassword() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [countdown, setCountdown] = useState<number | null>(null);
 
-  // Initialize mutations
-  const registerMutation = useRegister();
-  const resendMutation = useResendVerificationEmail();
+  // Initialize mutations with clean destructuring
+  const { register, isRegistering, error: registerError } = useRegister();
+  const { resendEmail, isResending } = useResendVerificationEmail();
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -35,17 +35,14 @@ export default function SignupFormEmailPassword() {
       return;
     }
 
-    // Use the mutate function from the hook
-    registerMutation.mutate(
+    // Use the clean direct function call
+    register(
       { name: displayName, email, password },
       {
         onSuccess: () => {
-          // This onSuccess is specific to this component's needs
           setIsSuccess(true);
           setCountdown(30);
-          // The toast.success for registration is handled in the hook itself
         },
-        // onError is handled in the hook itself
       },
     );
   }
@@ -56,15 +53,13 @@ export default function SignupFormEmailPassword() {
       return;
     }
 
-    // Use the mutate function from the resend hook
-    resendMutation.mutate(
+    // Use the clean direct function call
+    resendEmail(
       { email },
       {
         onSuccess: () => {
-          setCountdown(30); // Start countdown again
-          // The toast.success for resend is handled in the hook itself
+          setCountdown(30);
         },
-        // onError is handled in the hook itself
       },
     );
   }
@@ -121,12 +116,10 @@ export default function SignupFormEmailPassword() {
 
           <button
             type="submit"
-            disabled={registerMutation.isPending} // Use hook's loading state
+            disabled={isRegistering}
             className="manual-auth-btn attractive-text-shadow disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {registerMutation.isPending
-              ? "Creating Account..."
-              : "Create Account"}
+            {isRegistering ? "Creating Account..." : "Create Account"}
           </button>
         </>
       ) : (
@@ -156,13 +149,10 @@ export default function SignupFormEmailPassword() {
             <button
               type="button"
               onClick={handleResendVerificationLink}
-              disabled={
-                (countdown !== null && countdown > 0) ||
-                resendMutation.isPending
-              } // Combine local countdown with hook's loading state
+              disabled={(countdown !== null && countdown > 0) || isResending}
               className="text-my-pink-600 dark:text-my-pink-400 cursor-pointer font-semibold underline-offset-4 hover:underline disabled:opacity-70 disabled:hover:no-underline"
             >
-              {resendMutation.isPending
+              {isResending
                 ? "Sending..."
                 : countdown && countdown > 0
                   ? `Try again in ${countdown}s`
