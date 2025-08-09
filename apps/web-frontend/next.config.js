@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Basic optimizations only
+  // Minimal config for clean logs
   experimental: {
     optimizePackageImports: ["@mui/material", "@mui/icons-material"],
   },
@@ -18,6 +18,10 @@ const nextConfig = {
       // Disable source maps completely to avoid warnings and improve performance
       config.devtool = false;
       config.performance = { hints: false };
+      // Disable webpack filesystem caching
+      config.cache = {
+        type: "memory",
+      };
     }
 
     return config;
@@ -26,6 +30,11 @@ const nextConfig = {
   // Images
   images: {
     unoptimized: process.env.NODE_ENV === "development",
+  },
+
+  // Disable compile-time cache logging
+  env: {
+    NEXT_CACHE_DISABLED: "true",
   },
 };
 
