@@ -34,8 +34,19 @@ async function proxyRequest(request: NextRequest) {
 
   // Handle request body for POST/PUT/PATCH
   if (["POST", "PUT", "PATCH"].includes(request.method)) {
-    const body = await request.text();
-    if (body) options.body = body;
+    // For file uploads (multipart/form-data), preserve binary data
+    const contentType = request.headers.get("content-type");
+    if (contentType && contentType.includes("multipart/form-data")) {
+      // Use arrayBuffer for binary data to avoid UTF-8 corruption
+      const arrayBuffer = await request.arrayBuffer();
+      if (arrayBuffer.byteLength > 0) {
+        options.body = arrayBuffer;
+      }
+    } else {
+      // For JSON and other text-based requests
+      const body = await request.text();
+      if (body) options.body = body;
+    }
   }
 
   try {

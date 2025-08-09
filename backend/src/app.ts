@@ -50,9 +50,21 @@ const corsOptions: cors.CorsOptions = {
 
 app.set("trust proxy", 1);
 app.use(cors(corsOptions));
-
 app.use(express.json());
-app.use(fileUpload({ useTempFiles: true }));
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "./tmp/",
+    preserveExtension: true,
+    safeFileNames: true,
+    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
+    uploadTimeout: 60000, // 60 seconds
+    parseNested: true,
+    debug: false,
+    createParentPath: true,
+  })
+);
+
 app.use(morgan("dev"));
 app.use(cookieParser(process.env.JWT_SECRET));
 
