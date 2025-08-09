@@ -56,7 +56,26 @@ export async function showMe(
 
   try {
     const user = request.user as IUser;
+
+    // Temporary debug logging for Discord issue
+    console.log("🔍 SHOWME_DISCORD: User has Discord data:", !!user.discord);
+    if (user.discord) {
+      console.log(
+        "🔍 SHOWME_DISCORD: Discord data keys:",
+        Object.keys(user.discord)
+      );
+      console.log(
+        "🔍 SHOWME_DISCORD: Discord data size:",
+        JSON.stringify(user.discord).length
+      );
+    }
+
     const sanitizedUser = sanitizeUser(user);
+
+    console.log(
+      "🔍 SHOWME_DISCORD: Sanitized user size:",
+      JSON.stringify(sanitizedUser).length
+    );
 
     return response.status(200).json({
       success: true,

@@ -24,7 +24,7 @@ export default passport.use(
       const { id, username, avatar, email, global_name, verified } = profile;
       const baseAvatarUrl = `https://cdn.discordapp.com/avatars/${id}/${avatar}`;
       const isAnimated = avatar?.startsWith("a_");
-      const avatarUrl = `${baseAvatarUrl}.${isAnimated ? "gif" : "png"}?size=4096`;
+      const avatarUrl = `${baseAvatarUrl}.${isAnimated ? "gif" : "png"}?size=512`; // Reduced from 4096
 
       if (!verified) {
         return done(new Error("Your discord account should be verified"), null);
@@ -45,7 +45,7 @@ export default passport.use(
             avatar: avatarUrl,
           };
 
-          user.avatars.discord = `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png?size=4096`;
+          user.avatars.discord = `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png?size=512`; // Reduced from 4096
           await user.save();
 
           return done(null, user);

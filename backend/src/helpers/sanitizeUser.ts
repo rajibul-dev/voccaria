@@ -26,7 +26,17 @@ export function sanitizeUser(user: IUser) {
 
     // Test JSON serialization
     try {
-      JSON.stringify(sanitized);
+      const jsonString = JSON.stringify(sanitized);
+
+      // Temporary debug logging for Discord issue
+      console.log("🔍 SANITIZE_DISCORD: JSON length:", jsonString.length);
+      if (user.discord) {
+        console.log("🔍 SANITIZE_DISCORD: Discord data present");
+        console.log(
+          "🔍 SANITIZE_DISCORD: Discord JSON length:",
+          JSON.stringify(user.discord).length
+        );
+      }
     } catch (jsonError) {
       console.error("JSON serialization failed:", jsonError);
       throw new Error(`JSON serialization failed: ${jsonError.message}`);

@@ -156,6 +156,21 @@ export const fetchCurrentUser = async (
     let data;
     try {
       const responseText = await response.text();
+
+      // Temporary debug logging for Discord issue
+      console.log(
+        "🔍 FETCH_USER_DISCORD: Response text length:",
+        responseText.length,
+      );
+      console.log(
+        "🔍 FETCH_USER_DISCORD: Response preview:",
+        responseText.substring(0, 200),
+      );
+      console.log(
+        "🔍 FETCH_USER_DISCORD: Response ending:",
+        responseText.substring(responseText.length - 200),
+      );
+
       data = JSON.parse(responseText);
     } catch (parseError) {
       console.error("❌ FETCH_USER: JSON parse error:", parseError);

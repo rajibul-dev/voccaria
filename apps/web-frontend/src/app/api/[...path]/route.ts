@@ -106,41 +106,93 @@ export async function DELETE(request: NextRequest) {
 
 // Helper to create the response sent back to the client
 async function createProxyResponse(response: Response) {
-  // CRITICAL FIX: Read response as arrayBuffer to handle binary data properly
-  const responseBuffer = await response.arrayBuffer();
-  const responseText = new TextDecoder().decode(responseBuffer);
-
-  // Create completely new headers to avoid any inheritance issues
-  const responseHeaders = new Headers();
-
-  // Copy essential headers manually
-  responseHeaders.set(
-    "content-type",
-    response.headers.get("content-type") || "application/json",
-  );
-  responseHeaders.set("content-length", responseText.length.toString());
-
-  // Copy CORS headers if present
-  if (response.headers.get("access-control-allow-credentials")) {
-    responseHeaders.set(
-      "access-control-allow-credentials",
-      response.headers.get("access-control-allow-credentials")!,
+  try {
+    // CRITICAL FIX: Read response as arrayBuffer to handle binary data properly
+    const responseBuffer = await response.arrayBuffer();
+    const responseText = new TextDecoder("utf-8", { fatal: false }).decode(
+      responseBuffer,
     );
-  }
-  if (response.headers.get("access-control-allow-origin")) {
-    responseHeaders.set(
-      "access-control-allow-origin",
-      response.headers.get("access-control-allow-origin")!,
+
+    // Temporary debug logging for Discord issue
+    console.log("🔍 PROXY_RESPONSE: Response length:", responseText.length);
+    console.log(
+      "🔍 PROXY_RESPONSE: Response preview:",
+      responseText.substring(0, 100),
     );
+    console.log(
+      "🔍 PROXY_RESPONSE: Response ending:",
+      responseText.substring(responseText.length - 100),
+    );
+
+    // Validate JSON before proceeding
+    try {
+      JSON.parse(responseText);
+    } catch (jsonError) {
+      console.error("🔍 PROXY_RESPONSE: Invalid JSON detected:", jsonError);
+      console.error("🔍 PROXY_RESPONSE: Full response text:", responseText);
+
+      // Try to find where the JSON is truncated
+      const lastValidChar = responseText.lastIndexOf("}");
+      if (lastValidChar > 0) {
+        const truncatedJson = responseText.substring(0, lastValidChar + 1);
+        console.log(
+          "🔍 PROXY_RESPONSE: Attempting to fix with truncated JSON ending at position:",
+          lastValidChar,
+        );
+        try {
+          JSON.parse(truncatedJson);
+          console.log("🔍 PROXY_RESPONSE: Truncated JSON is valid, using it");
+          return new NextResponse(truncatedJson, {
+            status: response.status,
+            statusText: response.statusText,
+            headers: {
+              "content-type": "application/json",
+              "content-length": truncatedJson.length.toString(),
+            },
+          });
+        } catch {
+          // If truncated JSON also fails, fall through to error
+        }
+      }
+
+      throw jsonError;
+    }
+
+    // Create completely new headers to avoid any inheritance issues
+    const responseHeaders = new Headers();
+
+    // Copy essential headers manually
+    responseHeaders.set(
+      "content-type",
+      response.headers.get("content-type") || "application/json",
+    );
+    responseHeaders.set("content-length", responseText.length.toString());
+
+    // Copy CORS headers if present
+    if (response.headers.get("access-control-allow-credentials")) {
+      responseHeaders.set(
+        "access-control-allow-credentials",
+        response.headers.get("access-control-allow-credentials")!,
+      );
+    }
+    if (response.headers.get("access-control-allow-origin")) {
+      responseHeaders.set(
+        "access-control-allow-origin",
+        response.headers.get("access-control-allow-origin")!,
+      );
+    }
+
+    const finalResponse = new NextResponse(responseText, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: responseHeaders,
+    });
+
+    return finalResponse;
+  } catch (error) {
+    console.error("🔍 PROXY_RESPONSE: Error in createProxyResponse:", error);
+    throw error;
   }
-
-  const finalResponse = new NextResponse(responseText, {
-    status: response.status,
-    statusText: response.statusText,
-    headers: responseHeaders,
-  });
-
-  return finalResponse;
 }
 
 // Add other HTTP methods (PUT, OPTIONS, HEAD) as needed, following the same pattern.
