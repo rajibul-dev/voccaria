@@ -38,15 +38,11 @@ async function proxyRequest(request: NextRequest) {
     if (body) options.body = body;
   }
 
-  console.log(`🔄 PROXY: ${request.method} ${targetUrl}`);
-
   try {
     const response = await fetch(targetUrl, options);
 
     // Use the most reliable method - direct text reading
     const responseText = await response.text();
-
-    console.log(`✅ PROXY: ${response.status} - ${responseText.length} chars`);
 
     // Return clean response with minimal headers
     return new Response(responseText, {
