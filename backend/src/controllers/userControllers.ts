@@ -114,6 +114,13 @@ export async function addAvatar(
     });
   }
 
+  console.log("🔍 AVATAR_UPLOAD: File details:", {
+    name: (file as any).name,
+    mimetype: (file as any).mimetype,
+    size: (file as any).size,
+    tempFilePath: (file as any).tempFilePath,
+  });
+
   // Async delete old avatar (non-blocking)
   if (reqUser.avatars?.selected === "manual" && reqUser.avatars.manual) {
     deleteAvatarFromCloudinary(reqUser.avatars.manual).catch((error) => {
@@ -125,22 +132,57 @@ export async function addAvatar(
   const folderPath = `voccaria/avatars/${reqUser._id}`;
 
   try {
+    // Get file extension from original filename or mimetype
+    const fileObj = file as any;
+    let format = "jpg"; // default
+
+    if (fileObj.name && fileObj.name.includes(".")) {
+      const ext = fileObj.name.split(".").pop().toLowerCase();
+      if (["jpg", "jpeg", "png", "gif", "webp"].includes(ext)) {
+        format = ext === "jpeg" ? "jpg" : ext;
+      }
+    } else if (fileObj.mimetype) {
+      const mimeToFormat = {
+        "image/jpeg": "jpg",
+        "image/jpg": "jpg",
+        "image/png": "png",
+        "image/gif": "gif",
+        "image/webp": "webp",
+      };
+      format = mimeToFormat[fileObj.mimetype] || "jpg";
+    }
+
+    console.log("🔍 AVATAR_UPLOAD: Detected format:", format);
+
     // Upload new avatar (wait for completion)
     const result = await cloudinary.uploader.upload(
       (file as any).tempFilePath,
       {
         folder: folderPath,
-        resource_type: "auto", // Let Cloudinary detect, but we'll fix URLs if needed
-        use_filename: true,
-        unique_filename: false,
-        overwrite: true,
+        resource_type: "image", // Force as image to get proper URLs
+        use_filename: false, // Don't use temp filename - let Cloudinary generate a proper one
+        unique_filename: true,
+        overwrite: false, // Don't overwrite since we're using unique names
+        format: format, // Use detected format
       }
     );
+
+    console.log("🔍 AVATAR_UPLOAD: Cloudinary result:", {
+      secure_url: result.secure_url,
+      public_id: result.public_id,
+      resource_type: result.resource_type,
+      format: result.format,
+      bytes: result.bytes,
+    });
 
     // Fix URL if it contains /raw/upload/ (force it to be an image URL)
     let finalUrl = result.secure_url;
     if (finalUrl.includes("/raw/upload/")) {
       finalUrl = finalUrl.replace("/raw/upload/", "/image/upload/");
+      console.log(
+        "🔧 AVATAR_UPLOAD: Fixed URL from /raw/ to /image/:",
+        finalUrl
+      );
     }
 
     // Update user avatars in DB - IMPORTANT: Use save() to trigger pre-save hooks
