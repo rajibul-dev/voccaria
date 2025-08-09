@@ -171,7 +171,39 @@ export const fetchCurrentUser = async (
         responseText.substring(responseText.length - 200),
       );
 
-      data = JSON.parse(responseText);
+      // Try to parse JSON, if it fails due to truncation, attempt to fix it
+      try {
+        data = JSON.parse(responseText);
+      } catch (parseError) {
+        console.log(
+          "🔍 FETCH_USER_DISCORD: JSON parse failed, attempting to fix truncation...",
+        );
+
+        // Find the last complete JSON object by looking for the last }
+        const lastBraceIndex = responseText.lastIndexOf("}");
+        if (lastBraceIndex > 0) {
+          const fixedJson = responseText.substring(0, lastBraceIndex + 1);
+          console.log(
+            "🔍 FETCH_USER_DISCORD: Attempting to parse fixed JSON of length:",
+            fixedJson.length,
+          );
+
+          try {
+            data = JSON.parse(fixedJson);
+            console.log(
+              "🔍 FETCH_USER_DISCORD: Successfully parsed fixed JSON!",
+            );
+          } catch (fixedParseError) {
+            console.error(
+              "🔍 FETCH_USER_DISCORD: Fixed JSON also failed to parse:",
+              fixedParseError,
+            );
+            throw parseError; // Throw original error
+          }
+        } else {
+          throw parseError; // No } found, throw original error
+        }
+      }
     } catch (parseError) {
       console.error("❌ FETCH_USER: JSON parse error:", parseError);
       const errorMessage =
