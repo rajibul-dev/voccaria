@@ -114,55 +114,58 @@ export async function addAvatar(
     });
   }
 
-  // Validate file type (ensure it's an image)
-  const fileObj = file as any;
-  const allowedMimeTypes = [
-    "image/jpeg",
-    "image/jpg",
-    "image/png",
-    "image/gif",
-    "image/webp",
-  ];
-  if (!allowedMimeTypes.includes(fileObj.mimetype)) {
-    return response.status(StatusCodes.BAD_REQUEST).json({
-      success: false,
-      message:
-        "Invalid file type. Please upload a valid image (JPEG, PNG, GIF, or WebP).",
-    });
-  }
-
   // Async delete old avatar (non-blocking)
   if (reqUser.avatars?.selected === "manual" && reqUser.avatars.manual) {
-    deleteAvatarFromCloudinary(reqUser.avatars.manual).catch(console.error);
+    deleteAvatarFromCloudinary(reqUser.avatars.manual).catch((error) => {
+      console.error("Failed to delete old avatar from Cloudinary:", error);
+      // Don't fail the upload if old avatar deletion fails
+    });
   }
 
   const folderPath = `voccaria/avatars/${reqUser._id}`;
 
-  // Upload new avatar (wait for completion)
-  const result = await cloudinary.uploader.upload((file as any).tempFilePath, {
-    folder: folderPath,
-    resource_type: "image", // Force image type to ensure proper URL format
-    use_filename: true,
-    unique_filename: false,
-    overwrite: true,
-  });
+  try {
+    // Upload new avatar (wait for completion)
+    const result = await cloudinary.uploader.upload(
+      (file as any).tempFilePath,
+      {
+        folder: folderPath,
+        resource_type: "auto", // Let Cloudinary detect, but we'll fix URLs if needed
+        use_filename: true,
+        unique_filename: false,
+        overwrite: true,
+      }
+    );
 
-  // Update user avatars in DB - IMPORTANT: Use save() to trigger pre-save hooks
-  const user = await User.findById(reqUser._id);
-  user.avatars.manual = result.secure_url;
-  user.avatars.selected = "manual";
-  await user.save(); // This triggers the pre-save hook that sets user.avatar
+    // Fix URL if it contains /raw/upload/ (force it to be an image URL)
+    let finalUrl = result.secure_url;
+    if (finalUrl.includes("/raw/upload/")) {
+      finalUrl = finalUrl.replace("/raw/upload/", "/image/upload/");
+    }
 
-  // Fetch the updated user without sensitive fields
-  const updatedUser = await User.findById(reqUser._id).select(
-    "-hashedPassword -__v"
-  );
+    // Update user avatars in DB - IMPORTANT: Use save() to trigger pre-save hooks
+    const user = await User.findById(reqUser._id);
+    user.avatars.manual = finalUrl; // Use the fixed URL
+    user.avatars.selected = "manual";
+    await user.save(); // This triggers the pre-save hook that sets user.avatar
 
-  return response.status(StatusCodes.CREATED).json({
-    success: true,
-    message: "Uploaded avatar successfully",
-    data: { url: result.secure_url, user: sanitizeUser(updatedUser) },
-  });
+    // Fetch the updated user without sensitive fields
+    const updatedUser = await User.findById(reqUser._id).select(
+      "-hashedPassword -__v"
+    );
+
+    return response.status(StatusCodes.CREATED).json({
+      success: true,
+      message: "Uploaded avatar successfully",
+      data: { url: finalUrl, user: sanitizeUser(updatedUser) }, // Use the fixed URL
+    });
+  } catch (error) {
+    console.error("❌ AVATAR_UPLOAD: Upload failed:", error);
+    return response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: "Failed to upload avatar. Please try again.",
+    });
+  }
 }
 
 export async function getAvailableProviders(
@@ -297,7 +300,16 @@ export async function removeAvatar(
     });
   }
 
-  await deleteAvatarFromCloudinary(user.avatars.manual);
+  // Only delete from Cloudinary if there's actually a URL to delete
+  if (user.avatars.manual) {
+    try {
+      await deleteAvatarFromCloudinary(user.avatars.manual);
+    } catch (error) {
+      console.error("Failed to delete avatar from Cloudinary:", error);
+      // Don't fail the whole operation if Cloudinary deletion fails
+    }
+  }
+
   user.avatars.manual = null;
 
   // If manual was selected, switch to Google or Discord, else fallback to default

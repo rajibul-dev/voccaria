@@ -32,12 +32,16 @@ export async function deleteAvatarFromCloudinary(
   const fullPath = decodeURIComponent(segments.join("/"));
   //    e.g. "voccaria/avatars/681485cec1d44c1679ff65f4/Akuma no Ko.jpg"
 
-  // 5. Remove file extension
+  // 5. Remove file extension (if present)
   const lastDot = fullPath.lastIndexOf(".");
+  let publicId;
   if (lastDot === -1) {
-    throw new Error("Could not find file extension in Cloudinary path");
+    // No extension found, use the full path as public ID
+    console.log("No file extension found, using full path as publicId");
+    publicId = fullPath;
+  } else {
+    publicId = fullPath.substring(0, lastDot);
   }
-  const publicId = fullPath.substring(0, lastDot);
   //    e.g. "voccaria/avatars/681485cec1d44c1679ff65f4/Akuma no Ko"
 
   console.log("Deleting Cloudinary publicId:", publicId);
