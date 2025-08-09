@@ -141,7 +141,6 @@ export async function addAvatar(
       hasTempPath: !!(file as any).tempFilePath,
     });
 
-    // Fallback to temp file path if buffer is empty
     const uploadOptions = {
       folder: folderPath,
       resource_type: "auto" as const,
@@ -151,15 +150,18 @@ export async function addAvatar(
     };
 
     let result;
-    
-    // Try buffer first, fallback to temp file
+
+    // Use buffer if available and not empty, otherwise use temp file
     if ((file as any).data && (file as any).data.length > 0) {
       console.log("🔍 AVATAR_UPLOAD: Using buffer upload");
       result = await new Promise<any>((resolve, reject) => {
         cloudinary.uploader
           .upload_stream(uploadOptions, (error, result) => {
             if (error) {
-              console.error("🔍 AVATAR_UPLOAD: Cloudinary stream error:", error);
+              console.error(
+                "🔍 AVATAR_UPLOAD: Cloudinary stream error:",
+                error
+              );
               reject(error);
             } else {
               resolve(result);
@@ -167,12 +169,14 @@ export async function addAvatar(
           })
           .end((file as any).data);
       });
-    } else {
+    } else if ((file as any).tempFilePath) {
       console.log("🔍 AVATAR_UPLOAD: Using temp file upload");
       result = await cloudinary.uploader.upload(
         (file as any).tempFilePath,
         uploadOptions
       );
+    } else {
+      throw new Error("No file data or temp file path available");
     }
 
     console.log("🔍 AVATAR_UPLOAD: Cloudinary result:", {
@@ -193,9 +197,31 @@ export async function addAvatar(
       );
     }
 
-    // If the URL doesn't have an extension, add one based on the detected format
+    // If the URL doesn't have an extension, add one based on the detected format or original mimetype
     if (!finalUrl.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
-      const extension = result.format || "jpg";
+      let extension = result.format;
+
+      // If Cloudinary didn't detect format, use the original file's mimetype
+      if (!extension) {
+        const mimeType = (file as any).mimetype;
+        console.log(
+          "🔧 AVATAR_UPLOAD: Cloudinary format undefined, using mimetype:",
+          mimeType
+        );
+
+        if (mimeType === "image/jpeg" || mimeType === "image/jpg") {
+          extension = "jpg";
+        } else if (mimeType === "image/png") {
+          extension = "png";
+        } else if (mimeType === "image/gif") {
+          extension = "gif";
+        } else if (mimeType === "image/webp") {
+          extension = "webp";
+        } else {
+          extension = "jpg"; // fallback
+        }
+      }
+
       finalUrl = finalUrl + "." + extension;
       console.log("🔧 AVATAR_UPLOAD: Added extension to URL:", finalUrl);
     }

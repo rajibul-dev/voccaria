@@ -78,3 +78,7 @@ export async function DELETE(request: NextRequest) {
 export async function PATCH(request: NextRequest) {
   return proxyRequest(request);
 }
+
+export async function OPTIONS(request: NextRequest) {
+  return proxyRequest(request);
+}
