@@ -114,6 +114,23 @@ export async function addAvatar(
     });
   }
 
+  // Validate file type (ensure it's an image)
+  const fileObj = file as any;
+  const allowedMimeTypes = [
+    "image/jpeg",
+    "image/jpg",
+    "image/png",
+    "image/gif",
+    "image/webp",
+  ];
+  if (!allowedMimeTypes.includes(fileObj.mimetype)) {
+    return response.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message:
+        "Invalid file type. Please upload a valid image (JPEG, PNG, GIF, or WebP).",
+    });
+  }
+
   // Async delete old avatar (non-blocking)
   if (reqUser.avatars?.selected === "manual" && reqUser.avatars.manual) {
     deleteAvatarFromCloudinary(reqUser.avatars.manual).catch(console.error);
@@ -124,7 +141,7 @@ export async function addAvatar(
   // Upload new avatar (wait for completion)
   const result = await cloudinary.uploader.upload((file as any).tempFilePath, {
     folder: folderPath,
-    resource_type: "auto",
+    resource_type: "image", // Force image type to ensure proper URL format
     use_filename: true,
     unique_filename: false,
     overwrite: true,

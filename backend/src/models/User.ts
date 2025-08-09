@@ -145,6 +145,26 @@ const UserSchema: Schema<IUser> = new Schema(
 
 // set the avatar field from the avatars field
 UserSchema.pre("save", function () {
+  // Fix any broken /raw/upload/ URLs to /image/upload/
+  if (this.avatars.manual && this.avatars.manual.includes("/raw/upload/")) {
+    this.avatars.manual = this.avatars.manual.replace(
+      "/raw/upload/",
+      "/image/upload/"
+    );
+  }
+  if (this.avatars.google && this.avatars.google.includes("/raw/upload/")) {
+    this.avatars.google = this.avatars.google.replace(
+      "/raw/upload/",
+      "/image/upload/"
+    );
+  }
+  if (this.avatars.discord && this.avatars.discord.includes("/raw/upload/")) {
+    this.avatars.discord = this.avatars.discord.replace(
+      "/raw/upload/",
+      "/image/upload/"
+    );
+  }
+
   this.avatar = this.avatars[this.avatars.selected];
 });
 
