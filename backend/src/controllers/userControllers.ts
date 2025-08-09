@@ -132,40 +132,30 @@ export async function addAvatar(
   const folderPath = `voccaria/avatars/${reqUser._id}`;
 
   try {
-    // Get file extension from original filename or mimetype
-    const fileObj = file as any;
-    let format = "jpg"; // default
+    console.log("🔍 AVATAR_UPLOAD: Starting upload to Cloudinary");
 
-    if (fileObj.name && fileObj.name.includes(".")) {
-      const ext = fileObj.name.split(".").pop().toLowerCase();
-      if (["jpg", "jpeg", "png", "gif", "webp"].includes(ext)) {
-        format = ext === "jpeg" ? "jpg" : ext;
-      }
-    } else if (fileObj.mimetype) {
-      const mimeToFormat = {
-        "image/jpeg": "jpg",
-        "image/jpg": "jpg",
-        "image/png": "png",
-        "image/gif": "gif",
-        "image/webp": "webp",
-      };
-      format = mimeToFormat[fileObj.mimetype] || "jpg";
-    }
+    // Try uploading from buffer instead of temp file (more reliable)
+    const uploadOptions = {
+      folder: folderPath,
+      resource_type: "auto" as const,
+      use_filename: false,
+      unique_filename: true,
+      overwrite: false,
+    };
 
-    console.log("🔍 AVATAR_UPLOAD: Detected format:", format);
-
-    // Upload new avatar (wait for completion)
-    const result = await cloudinary.uploader.upload(
-      (file as any).tempFilePath,
-      {
-        folder: folderPath,
-        resource_type: "image", // Force as image to get proper URLs
-        use_filename: false, // Don't use temp filename - let Cloudinary generate a proper one
-        unique_filename: true,
-        overwrite: false, // Don't overwrite since we're using unique names
-        format: format, // Use detected format
-      }
-    );
+    // Upload using buffer data instead of temp file path
+    const result = await new Promise<any>((resolve, reject) => {
+      cloudinary.uploader
+        .upload_stream(uploadOptions, (error, result) => {
+          if (error) {
+            console.error("🔍 AVATAR_UPLOAD: Cloudinary stream error:", error);
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        })
+        .end((file as any).data); // Use the file buffer directly
+    });
 
     console.log("🔍 AVATAR_UPLOAD: Cloudinary result:", {
       secure_url: result.secure_url,
@@ -183,6 +173,13 @@ export async function addAvatar(
         "🔧 AVATAR_UPLOAD: Fixed URL from /raw/ to /image/:",
         finalUrl
       );
+    }
+
+    // If the URL doesn't have an extension, add one based on the detected format
+    if (!finalUrl.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
+      const extension = result.format || "jpg";
+      finalUrl = finalUrl + "." + extension;
+      console.log("🔧 AVATAR_UPLOAD: Added extension to URL:", finalUrl);
     }
 
     // Update user avatars in DB - IMPORTANT: Use save() to trigger pre-save hooks
