@@ -107,14 +107,76 @@ export async function DELETE(request: NextRequest) {
 // Helper to create the response sent back to the client
 async function createProxyResponse(response: Response) {
   try {
-    // CRITICAL FIX: Read response as arrayBuffer to handle binary data properly
-    const responseBuffer = await response.arrayBuffer();
-    const responseText = new TextDecoder("utf-8", { fatal: false }).decode(
-      responseBuffer,
-    );
+    // MULTIPLE ATTEMPTS to read the response correctly
+    let responseText: string;
 
-    // Temporary debug logging for Discord issue
-    console.log("🔍 PROXY_RESPONSE: Response length:", responseText.length);
+    // Method 1: Try reading as text directly first
+    try {
+      const clonedResponse1 = response.clone();
+      responseText = await clonedResponse1.text();
+      console.log(
+        "🔍 PROXY_RESPONSE: Method 1 (direct text) length:",
+        responseText.length,
+      );
+    } catch (directTextError) {
+      console.log("🔍 PROXY_RESPONSE: Method 1 failed, trying Method 2");
+
+      // Method 2: Try arrayBuffer approach
+      try {
+        const clonedResponse2 = response.clone();
+        const responseBuffer = await clonedResponse2.arrayBuffer();
+        responseText = new TextDecoder("utf-8", { fatal: false }).decode(
+          responseBuffer,
+        );
+        console.log(
+          "🔍 PROXY_RESPONSE: Method 2 (arrayBuffer) length:",
+          responseText.length,
+        );
+      } catch (arrayBufferError) {
+        console.log("🔍 PROXY_RESPONSE: Method 2 failed, trying Method 3");
+
+        // Method 3: Stream reading approach
+        const clonedResponse3 = response.clone();
+        const reader = clonedResponse3.body?.getReader();
+        const chunks: Uint8Array[] = [];
+        let totalLength = 0;
+
+        if (reader) {
+          let done = false;
+          while (!done) {
+            const { value, done: readerDone } = await reader.read();
+            done = readerDone;
+            if (value) {
+              chunks.push(value);
+              totalLength += value.length;
+            }
+          }
+
+          // Combine all chunks
+          const fullBuffer = new Uint8Array(totalLength);
+          let offset = 0;
+          for (const chunk of chunks) {
+            fullBuffer.set(chunk, offset);
+            offset += chunk.length;
+          }
+
+          responseText = new TextDecoder("utf-8", { fatal: false }).decode(
+            fullBuffer,
+          );
+          console.log(
+            "🔍 PROXY_RESPONSE: Method 3 (stream) length:",
+            responseText.length,
+          );
+        } else {
+          throw new Error("All methods failed to read response");
+        }
+      }
+    }
+
+    console.log(
+      "🔍 PROXY_RESPONSE: Final response length:",
+      responseText.length,
+    );
     console.log(
       "🔍 PROXY_RESPONSE: Response preview:",
       responseText.substring(0, 100),
@@ -127,11 +189,12 @@ async function createProxyResponse(response: Response) {
     // Validate JSON before proceeding
     try {
       JSON.parse(responseText);
+      console.log("🔍 PROXY_RESPONSE: JSON is valid");
     } catch (jsonError) {
       console.error("🔍 PROXY_RESPONSE: Invalid JSON detected:", jsonError);
       console.error("🔍 PROXY_RESPONSE: Full response text:", responseText);
 
-      // Try to find where the JSON is truncated
+      // Try to find where the JSON is truncated and fix it
       const lastValidChar = responseText.lastIndexOf("}");
       if (lastValidChar > 0) {
         const truncatedJson = responseText.substring(0, lastValidChar + 1);
@@ -142,53 +205,29 @@ async function createProxyResponse(response: Response) {
         try {
           JSON.parse(truncatedJson);
           console.log("🔍 PROXY_RESPONSE: Truncated JSON is valid, using it");
-          return new NextResponse(truncatedJson, {
-            status: response.status,
-            statusText: response.statusText,
-            headers: {
-              "content-type": "application/json",
-              "content-length": truncatedJson.length.toString(),
-            },
-          });
-        } catch {
-          // If truncated JSON also fails, fall through to error
+          responseText = truncatedJson;
+        } catch (truncateError) {
+          console.error(
+            "🔍 PROXY_RESPONSE: Truncated JSON is also invalid:",
+            truncateError,
+          );
+          throw jsonError;
         }
+      } else {
+        throw jsonError;
       }
-
-      throw jsonError;
     }
 
-    // Create completely new headers to avoid any inheritance issues
-    const responseHeaders = new Headers();
-
-    // Copy essential headers manually
-    responseHeaders.set(
-      "content-type",
-      response.headers.get("content-type") || "application/json",
-    );
-    responseHeaders.set("content-length", responseText.length.toString());
-
-    // Copy CORS headers if present
-    if (response.headers.get("access-control-allow-credentials")) {
-      responseHeaders.set(
-        "access-control-allow-credentials",
-        response.headers.get("access-control-allow-credentials")!,
-      );
-    }
-    if (response.headers.get("access-control-allow-origin")) {
-      responseHeaders.set(
-        "access-control-allow-origin",
-        response.headers.get("access-control-allow-origin")!,
-      );
-    }
-
-    const finalResponse = new NextResponse(responseText, {
+    // Create a completely fresh response
+    return new NextResponse(responseText, {
       status: response.status,
       statusText: response.statusText,
-      headers: responseHeaders,
+      headers: {
+        "content-type": "application/json",
+        "content-length": responseText.length.toString(),
+        "cache-control": "no-cache",
+      },
     });
-
-    return finalResponse;
   } catch (error) {
     console.error("🔍 PROXY_RESPONSE: Error in createProxyResponse:", error);
     throw error;
