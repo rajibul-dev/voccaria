@@ -1,19 +1,17 @@
 import clsx from "clsx";
-import { redirect } from "next/navigation";
-import { headers } from "next/headers"; // Import headers
+import { headers } from "next/headers";
 
+import AppBottomBar from "../_components/AppBottomBar";
+import AppFooter from "../_components/AppFooter";
 import AppHeader from "../_components/AppHeader";
 import AppSidebar from "../_components/AppSidebar";
-import AppFooter from "../_components/AppFooter";
-import AppBottomBar from "../_components/AppBottomBar";
-import GoogleLoginToastTrigger from "../_components/GoogleLoginToastTrigger";
-import DiscordConnectToastTrigger from "../_components/DiscordConnectToastTrigger";
 import ClientAuthGuard from "../_components/ClientAuthGuard";
+import DiscordConnectToastTrigger from "../_components/DiscordConnectToastTrigger";
+import GoogleLoginToastTrigger from "../_components/GoogleLoginToastTrigger";
 
-import { QueryClient, dehydrate } from "@tanstack/react-query";
 import { fetchCurrentUser } from "@/app/_hooks/useAuth";
+import { QueryClient, dehydrate } from "@tanstack/react-query";
 import { Providers } from "../providers";
-import { User } from "@/_types/user";
 
 export default async function AppLayout({
   children,

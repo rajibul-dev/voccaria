@@ -19,9 +19,6 @@ export default function ReverseAuthGuard({
 
     // If user is authenticated, redirect to app immediately
     if (user) {
-      console.log(
-        "ReverseAuthGuard - User authenticated, redirecting to /app/dashboard",
-      );
       router.replace("/app/dashboard");
     }
   }, [user, isLoading, router]);

@@ -43,5 +43,4 @@ export default function ClientAuthGuard({
 
   // Don't render anything while redirecting - show minimal loading
   return <LoadingScreen message="Redirecting..." />;
-  return null;
 }
