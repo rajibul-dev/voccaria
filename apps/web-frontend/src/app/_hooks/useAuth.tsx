@@ -3,13 +3,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { User, AllUsersResponse } from "@/_types/user"; // Your User interface
+import { User, AllUsersResponse } from "@/_types/user";
 
 // --- Query Key Constants ---
 const USER_QUERY_KEY = "user";
-const ALL_USERS_QUERY_KEY = "allUsers"; // New key for all users
-const SPECIFIC_USER_QUERY_KEY = "specificUser"; // New key for specific user
-const PROVIDERS_QUERY_KEY = "avatarProviders"; // Already defined
+const ALL_USERS_QUERY_KEY = "allUsers";
+const SPECIFIC_USER_QUERY_KEY = "specificUser";
+const PROVIDERS_QUERY_KEY = "avatarProviders";
 
 const apiCall = async (endpoint: string, options: RequestInit = {}) => {
   const response = await fetch(`/api${endpoint}`, {
@@ -25,7 +25,7 @@ const apiCall = async (endpoint: string, options: RequestInit = {}) => {
   const data = text ? JSON.parse(text) : {};
 
   if (!response.ok) {
-    // Your backend always sends { success: false, message: "specific error" }
+    // backend always sends { success: false, message: "specific error" }
     throw new Error(data.message || "Something went wrong");
   }
 

@@ -5,16 +5,13 @@ import { Toaster } from "react-hot-toast";
 import { PopoverManagerProvider } from "./_components/Popover";
 import IsOldPageProvider from "./_context/IsOldPage";
 import { SidebarProvider } from "./_context/SidebarContext";
-
-// import { User } from "@/_types/user"; // No longer needed directly here
 import { ThemeProvider } from "@mui/material";
-// Import HydrationBoundary from TanStack Query
 import {
   QueryClient,
   QueryClientProvider,
   HydrationBoundary,
 } from "@tanstack/react-query";
-import type { DehydratedState } from "@tanstack/react-query"; // Import DehydratedState type
+import type { DehydratedState } from "@tanstack/react-query";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import { useLayoutEffect, useState } from "react";
