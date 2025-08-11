@@ -98,11 +98,28 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/schedule", scheduleRoutes);
 
+// Root route - indicates server is live
+app.get("/", (request: Request, response: Response) => {
+  response.status(200).json({
+    message: "🚀 Voccaria API Server is live and running!",
+    status: "online",
+    timestamp: new Date().toISOString(),
+    version: "v1",
+    endpoints: {
+      auth: "/api/v1/auth",
+      users: "/api/v1/users",
+      schedule: "/api/v1/schedule",
+    },
+  });
+});
+
+// Keep-alive endpoint - cron job strategy when using hosting providers free tier that turns off after a period of inactivity
 app.get("/keep-alive", (request: Request, response: Response) => {
   console.log("Keep-alive ping received!");
   response.status(200).send("I'm awake!");
 });
 
+// Logging endpoint - for debugging and monitoring purposes
 app.post("/log", (request: Request, response: Response) => {
   const { message, data } = request.body;
   console.log(message);
