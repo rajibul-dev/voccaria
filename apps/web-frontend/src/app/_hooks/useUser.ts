@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import api from "@//_libs/axios";
+import api from "@/_libs/axios";
 
 const fetchUser = async () => {
   const { data } = await api.get("/users/me");
