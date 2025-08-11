@@ -1,4 +1,3 @@
-// SimpleAccountMenu.tsx - A fallback menu without complex dependencies
 "use client";
 
 import { Avatar } from "@mui/material";
@@ -17,7 +16,6 @@ export default function SimpleAccountMenu() {
     logout();
   }
 
-  // Handle loading/error states for user data display
   if (isLoading) {
     return (
       <div className="flex items-center gap-2 rounded-sm p-1">

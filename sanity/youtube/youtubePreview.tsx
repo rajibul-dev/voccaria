@@ -1,5 +1,3 @@
-// ./src/schemas/schemaTypes/youTubeType/YouTubePreview.tsx
-
 import type {PreviewProps} from 'sanity'
 import {Flex, Text} from '@sanity/ui'
 import YouTubePlayer from 'react-player/youtube'

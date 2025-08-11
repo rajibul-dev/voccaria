@@ -1,4 +1,3 @@
-// ErrorBoundary.tsx - Catches React errors and provides fallback UI
 "use client";
 
 import React, { Component, ReactNode } from "react";

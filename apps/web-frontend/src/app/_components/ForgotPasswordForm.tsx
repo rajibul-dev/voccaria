@@ -1,4 +1,3 @@
-// ForgotPasswordForm.tsx
 "use client";
 
 import { isGmail } from "@/_helpers/isGmail";
@@ -10,7 +9,6 @@ export default function ForgotPasswordForm() {
   const [email, setEmail] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
 
-  // Initialize the mutation hook
   const { forgotPassword, isSending } = useForgotPassword();
 
   async function handleSubmit(event: React.FormEvent) {
@@ -19,7 +17,6 @@ export default function ForgotPasswordForm() {
     // Reset success state before new attempt
     setIsSuccess(false);
 
-    // Call the mutate function from the hook
     forgotPassword(
       { email },
       {
