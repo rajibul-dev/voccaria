@@ -1,11 +1,10 @@
-// BULLETPROOF PROXY - No more JSON truncation nonsense!
 import {
   expressBackendBaseRESTOrigin,
   expressBackendOrigin,
 } from "@/_constants/backendOrigins";
 import { NextRequest } from "next/server";
 
-// Simple, reliable proxy function
+// proxy function
 async function proxyRequest(request: NextRequest) {
   if (!expressBackendOrigin) {
     throw new Error("EXPRESS_BACKEND_ORIGIN environment variable is not set.");
@@ -52,10 +51,8 @@ async function proxyRequest(request: NextRequest) {
   try {
     const response = await fetch(targetUrl, options);
 
-    // Use the most reliable method - direct text reading
     const responseText = await response.text();
 
-    // Return clean response with minimal headers
     return new Response(responseText, {
       status: response.status,
       statusText: response.statusText,
