@@ -59,6 +59,7 @@ export default function LoginFormEmailPassword() {
         {isLoggingIn ? "Logging in..." : "Login"}
       </button>
 
+      {/* TODO: Make this a reusable component: SubtleLink */}
       <Link
         className="text-center text-sm text-gray-500 underline-offset-4 hover:underline dark:text-gray-300"
         href={"/auth/forgot-password"}
@@ -70,6 +71,7 @@ export default function LoginFormEmailPassword() {
         <span className="text-gray-800 dark:text-gray-100">
           Don't have an account?
         </span>{" "}
+        {/* TODO: Make this a reusable component: InlineLink */}
         <Link
           className="text-my-pink-600 dark:text-my-pink-400 font-medium underline-offset-4 hover:underline"
           href={"/auth/register"}
