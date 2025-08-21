@@ -9,7 +9,7 @@ const lessonOptionsObj = {
     ],
     button: {
       text: "Get Free Lessons at One Voice",
-      link: "https://discord.com/invite/4Z5JKYPhTe",
+      link: "https://discord.gg/dx4sruQVBF",
     },
   },
   paid: {

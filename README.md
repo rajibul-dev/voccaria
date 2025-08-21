@@ -12,7 +12,7 @@ All lessons and most of the interactions currently happen on our **Discord serve
 
 - 🌐 **Main Site**: [https://voccaria.com](https://voccaria.com)
 - 🧪 **Dev Preview**: [https://voccaria.com](https://voccaria.com)
-- 💬 **Join the One Voice discord server**: [Discord Server Invite](https://discord.com/invite/4Z5JKYPhTe)
+- 💬 **Join the One Voice discord server**: [Discord Server Invite](https://discord.gg/dx4sruQVBF)
 
 ---
 

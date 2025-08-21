@@ -36,7 +36,7 @@ export default function Mission() {
               entirely free of charge on the{" "}
               <a
                 className="inline-a"
-                href="https://discord.com/invite/4Z5JKYPhTe"
+                href="https://discord.gg/dx4sruQVBF"
                 target="_blank"
                 rel="noopener noreferrer"
               >

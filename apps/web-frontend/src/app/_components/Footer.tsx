@@ -26,7 +26,7 @@ export const footerLinks = [
   {
     section: "Socials",
     links: [
-      { name: "Discord server", href: "https://discord.com/invite/4Z5JKYPhTe" },
+      { name: "Discord server", href: "https://discord.gg/dx4sruQVBF" },
       { name: "Twitch", href: "https://www.twitch.tv/miavoiceteacher" },
       {
         name: "YouTube",
