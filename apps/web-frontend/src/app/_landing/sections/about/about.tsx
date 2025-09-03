@@ -1,3 +1,7 @@
+const IS_LINK_BOLD = true;
+
+const conditionalBold = IS_LINK_BOLD ? "!font-bold" : "";
+
 // Mia's about text
 const aboutMiaText = [
   <>
@@ -9,13 +13,84 @@ const aboutMiaText = [
   </>,
   <>
     My formal studies include the{" "}
-    <strong>New York Vocal Coaching Teacher-Training Course</strong>, ongoing
-    study with <strong>Aliki Katriou</strong> (anatomy & distortion) and
-    learning about Feldenkrais through the{" "}
-    <strong>The Singing Self Program Teacher Track with Robert Sussuma</strong>.
-    Earlier in my career I trained with <strong>Silva Makamian</strong>{" "}
-    (musical-theatre & pop). I also draw on ideas and exercises inspired by
-    voice scientist <strong>Brian Gill</strong>.
+    <strong>New York Vocal Coaching Teacher Training Course</strong>, ongoing
+    mentorship with{" "}
+    <strong>
+      <a
+        href="https://www.alikikatriou.com/"
+        target="_blank"
+        className={`inline-a ${conditionalBold}`}
+      >
+        Aliki Katriou
+      </a>
+    </strong>{" "}
+    (focusing on distortion, pedagogy, and voice science), and learning about
+    Feldenkrais through the{" "}
+    <strong>
+      The Singing Self Program Teacher Track with{" "}
+      <a
+        href="https://thesingingself.com/about-robert/"
+        target="_blank"
+        className={`inline-a ${conditionalBold}`}
+      >
+        Robert Sussuma
+      </a>
+    </strong>
+    .
+  </>,
+  <>
+    Earlier in my career, I trained with{" "}
+    <strong>
+      <a
+        href="https://www.youtube.com/@SilvaMakamian"
+        target="_blank"
+        className={`inline-a ${conditionalBold}`}
+      >
+        Silva Makamian
+      </a>
+    </strong>{" "}
+    (musical theatre, pop, and working with children) and{" "}
+    <strong>
+      <a
+        href="https://www.flightofstars.org/en/"
+        target="_blank"
+        className={`inline-a ${conditionalBold}`}
+      >
+        Maria Hubenova
+      </a>
+    </strong>{" "}
+    at{" "}
+    <a href="https://www.muzarto.com/" target="_blank" className={`inline-a`}>
+      MuzArto Academy
+    </a>{" "}
+    (pop and contemporary voice). I've also worked with{" "}
+    <strong>
+      <a
+        href="https://www.natecpaul.com/"
+        target="_blank"
+        className={`inline-a ${conditionalBold}`}
+      >
+        Nate Paul
+      </a>
+    </strong>{" "}
+    (pop, musical theatre, opera) whose approach blends science-informed
+    pedagogy with practical application.
+  </>,
+  <>
+    Additionally, I attended the{" "}
+    <strong>Science Behind the Voice workshop</strong> with renowned voice
+    scientist{" "}
+    <strong>
+      Johan Sundberg and pedagogue{" "}
+      <a
+        href="https://gillmindfulvoicetraining.com/"
+        target="_blank"
+        className={`inline-a ${conditionalBold}`}
+      >
+        Brian Gill
+      </a>
+    </strong>
+    , and continue to draw on their ideas and exercises in my teaching practice.
   </>,
   <>
     My background in psychology and vocal pedagogy helps me connect technical
@@ -45,7 +120,7 @@ const aboutMiaText = [
   </>,
 ];
 
-const FLEXIFIED_PARA_COUNT = 2;
+const FLEXIFIED_PARA_COUNT = 4;
 
 const moreAboutMeContent = {
   heading: "My teaching style: casual chat, hardcore science",
