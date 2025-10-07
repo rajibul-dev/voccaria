@@ -8,7 +8,7 @@ import {
   getSingleMiaSlot,
   updateMultipleMiaSlots,
   updateSingleMiaSlot,
-} from "../../controllers/schedule/miaSlotControllers.js";
+} from "../controllers/miaSlotControllers.js";
 const router = Router();
 
 router

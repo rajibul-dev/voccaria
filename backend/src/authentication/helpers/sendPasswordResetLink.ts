@@ -1,5 +1,5 @@
 import PasswordResetLink from "../emails/PasswordResetLink.js";
-import { resend } from "../libs/resend.js";
+import { resend } from "../../core/libs/resend.js";
 
 interface SendPasswordResetLinkInterface {
   email: string;

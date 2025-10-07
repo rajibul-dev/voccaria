@@ -4,7 +4,7 @@ import {
   getBookingWithId,
   getBookings,
   updateBooking,
-} from "../../controllers/schedule/bookingControllers.js";
+} from "../controllers/bookingControllers.js";
 const router = Router();
 
 router.route("/").get(getBookings).post(createBooking);

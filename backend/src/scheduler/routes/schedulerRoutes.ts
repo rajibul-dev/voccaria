@@ -1,13 +1,16 @@
 import { Router } from "express";
-import { authorizeUser } from "../middlewares/authorizeUserMiddleware.js";
+import { authorizeUser } from "../../authentication/middlewares/authorizeUserMiddleware.js";
 
-import studentAvailabilityRoutes from "./schedule/studentAvailabilityRoutes.js";
-import adminStudentAvailabilityRoutes from "./schedule/adminStudentAvailabilityRoutes.js";
-import miaSlotRoutes from "./schedule/miaSlotRoutes.js";
-import bookingRoutes from "./schedule/bookingRoutes.js";
-
-import { requireRole } from "../middlewares/requireRole.js";
-import { ALL_STAFF_ROLES, ROLE, STUDENTS_ROLES } from "../constants/roles.js";
+import studentAvailabilityRoutes from "./studentAvailabilityRoutes.js";
+import adminStudentAvailabilityRoutes from "./adminStudentAvailabilityRoutes.js";
+import miaSlotRoutes from "./miaSlotRoutes.js";
+import bookingRoutes from "./bookingRoutes.js";
+import { requireRole } from "../../authentication/middlewares/requireRole.js";
+import {
+  ALL_STAFF_ROLES,
+  ROLE,
+  STUDENTS_ROLES,
+} from "../../constants/roles.js";
 
 const router = Router();
 const { MIA, RAJI } = ROLE;

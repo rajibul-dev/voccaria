@@ -8,7 +8,7 @@ import {
   getMysingleAvailability,
   updateMyMultipleAvailability,
   updateMysingleAvailability,
-} from "../../controllers/schedule/studentAvailabilityControllers.js";
+} from "../controllers/studentAvailabilityControllers.js";
 
 const router = Router();
 

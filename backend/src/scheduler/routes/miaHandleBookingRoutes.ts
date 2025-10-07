@@ -4,7 +4,7 @@ import {
   miaGetAllBookings,
   miaGetBookingWithId,
   miaUpdateBooking,
-} from "../../controllers/schedule/miaHandleBookingControllers.js";
+} from "../controllers/miaHandleBookingControllers.js";
 
 const router = Router();
 

@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 import validator from "validator";
 import bcrypt from "bcryptjs";
-import { ALL_ROLES, Roles } from "../constants/roles.js";
+import { ALL_ROLES, Roles } from "../../constants/roles.js";
 
 export interface IUser extends Document {
   name: string;

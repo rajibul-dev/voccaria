@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import User, { IUser } from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
 import { v2 as cloudinary } from "cloudinary";
-import { deleteAvatarFromCloudinary } from "../helpers/cloudinaryHelpers.js";
+import { deleteAvatarFromCloudinary } from "../../core/helpers/cloudinaryHelpers.js";
 import { sanitizeUser } from "../helpers/sanitizeUser.js";
 
 export async function getUser(

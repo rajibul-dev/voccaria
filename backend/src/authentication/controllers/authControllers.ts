@@ -6,7 +6,7 @@ import { hashPassword } from "../helpers/hashPassword.js";
 import { sendAccountVerificationEmail } from "../helpers/sendAccountVerificationEmail.js";
 import { sendPasswordResetLink } from "../helpers/sendPasswordResetLink.js";
 import createHash from "../helpers/createHash.js";
-import { sanitizeUser } from "../helpers/sanitizeUser.js";
+// import { sanitizeUser } from "../helpers/sanitizeUser.js";
 
 export async function register(
   request: Request,

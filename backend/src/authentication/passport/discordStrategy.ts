@@ -1,6 +1,6 @@
 import passport from "passport";
 import { Strategy as DiscordStrategy } from "passport-discord";
-import User, { IUser } from "../../models/User.js";
+import User, { IUser } from "../models/User.js";
 
 const isProduction = process.env.NODE_ENV === "production";
 

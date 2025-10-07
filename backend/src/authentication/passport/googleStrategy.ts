@@ -1,7 +1,7 @@
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import passport from "passport";
-import User, { IUser } from "../../models/User.js";
-import { googleAvatarQualityImprove } from "../../helpers/avatarQualityImprove.js";
+import User, { IUser } from "../models/User.js";
+import { googleAvatarQualityImprove } from "../helpers/avatarQualityImprove.js";
 
 const GOOGLE_CLIENT_ID = process.env.PASSPORT_GOOGLE_CLIENT_ID || "";
 const GOOGLE_CLIENT_SECRET = process.env.PASSPORT_GOOGLE_CLIENT_SECRET || "";

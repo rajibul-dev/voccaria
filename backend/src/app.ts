@@ -2,11 +2,11 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import express, { Request, Response } from "express";
-import connectDB from "./database/connect.js";
+import connectDB from "./core/database/connect.js";
 
-import authRoutes from "./routes/authRoutes.js";
-import scheduleRoutes from "./routes/scheduleRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
+import authRoutes from "./authentication/routes/authRoutes.js";
+import scheduleRoutes from "./scheduler/routes/schedulerRoutes.js";
+import userRoutes from "./authentication/routes/userRoutes.js";
 
 import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
@@ -16,11 +16,11 @@ import morgan from "morgan";
 
 import fileUpload from "express-fileupload";
 import passport from "passport";
-import "./libs/cloudinary.js";
-import "./libs/passport/discordStrategy.js";
-import "./libs/passport/googleStrategy.js";
-import "./libs/passport/localStrategy.js";
-import errorHandlerMiddleware from "./middlewares/errorHandlerMiddleware.js";
+import "./core/libs/cloudinary.js";
+import "./authentication/passport/discordStrategy.js";
+import "./authentication/passport/googleStrategy.js";
+import "./authentication/passport/localStrategy.js";
+import errorHandlerMiddleware from "./core/middlewares/errorHandlerMiddleware.js";
 
 export const app = express();
 const PORT = process.env.PORT || 5000;

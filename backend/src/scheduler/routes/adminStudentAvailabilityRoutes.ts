@@ -6,7 +6,7 @@ import {
   getBlockedHoursForStudentAvailability,
   getStudentAvailabilityById,
   overwriteStudentAvailabilityById,
-} from "../../controllers/schedule/adminStudentAvailabilityControllers.js";
+} from "../controllers/adminStudentAvailabilityControllers.js";
 const router = Router();
 
 router.route("/").get(getAllStudentsAvailability);

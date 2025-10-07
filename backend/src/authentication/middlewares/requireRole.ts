@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import { Roles } from "../constants/roles.js";
+import { Roles } from "../../constants/roles.js";
 
 export function requireRole(...requiredRoles: Roles[]) {
   return function (request: any, response: any, next: any) {
