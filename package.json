@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently -n FRONTEND,BACKEND -c blue,green \"npm:dev-frontend\" \"npm:dev-backend\"",
-    "dev-frontend": "npm --prefix apps/web-frontend run dev",
+    "dev-frontend": "npm --prefix client/web-frontend run dev",
     "dev-backend": "npm --prefix backend run dev"
   },
   "repository": {
