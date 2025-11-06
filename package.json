@@ -10,7 +10,7 @@
     "dev-frontend": "npm --prefix client/web-frontend run dev",
     "dev-frontend-fast": "npm --prefix client/web-frontend run dev:fast",
     "dev-frontend-turbo": "npm --prefix client/web-frontend run dev:turbo",
-    "dev-backend": "npm --prefix backend run dev"
+    "dev-backend": "npm --prefix server/node-backend run dev"
   },
   "repository": {
     "type": "git",
