@@ -1,8 +1,13 @@
 /todo.txt
+/planning.txt
 .vscode
-/UX-questions.txt
 /begin-with-todo.txt
+/UX-questions.txt
 /node_modules
-/hidden-explanations
-/.codeReference
 /.codebuddy
+/.codeReference
+/hidden-explanations
+/archive
+
+# avoid newer folder structure on the dev branch create conflict
+/server
