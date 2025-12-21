@@ -8,3 +8,4 @@
 /.codeReference
 /hidden-explanations
 /archive
+*.env
