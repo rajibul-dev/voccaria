@@ -1,7 +1,7 @@
 // @ts-ignore
 import nodemailer from "nodemailer";
 
-const email = process.env.EMAIL;
+const email = process.env.EMAIL_FROM;
 const pass = process.env.EMAIL_PASS;
 
 export const transporter = nodemailer.createTransport({

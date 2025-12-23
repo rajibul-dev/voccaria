@@ -21,9 +21,7 @@ const User = mongoose.model("User", userSchema);
 async function fixAvatarUrls() {
   try {
     // Connect to MongoDB
-    await mongoose.connect(
-      process.env.MONGO_URL || "mongodb://localhost:27017"
-    );
+    await mongoose.connect(process.env.DATABASE_URL);
     console.log("Connected to MongoDB");
 
     // Find users with /raw/upload/ URLs

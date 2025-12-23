@@ -16,9 +16,7 @@ const User = mongoose.model("User", userSchema);
 
 async function fixSpecificUser() {
   try {
-    await mongoose.connect(
-      process.env.MONGO_URL || "mongodb://localhost:27017"
-    );
+    await mongoose.connect(process.env.DATABASE_URL);
     console.log("Connected to MongoDB");
 
     // Find user with the specific broken URL

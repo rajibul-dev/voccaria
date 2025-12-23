@@ -42,8 +42,7 @@ export const fetchCurrentUser = async (
     if (cookieHeader) {
       headers["Cookie"] = cookieHeader;
       const backendOrigin =
-        process.env.EXPRESS_BACKEND_ORIGIN ||
-        process.env.NEXT_PUBLIC_EXPRESS_BACKEND_ORIGIN;
+        process.env.BACKEND_URL || process.env.NEXT_PUBLIC_BACKEND_URL;
       url = `${backendOrigin}/api/v1/users/me`;
     } else {
       url = "/api/users/me";

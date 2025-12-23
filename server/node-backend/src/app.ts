@@ -84,7 +84,7 @@ app.use(
       }),
     },
     store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URL || "mongodb://localhost:27017",
+      mongoUrl: process.env.DATABASE_URL,
       ttl: 14 * 24 * 60 * 60, // 14 days
     }),
   })
@@ -131,7 +131,7 @@ app.use(errorHandlerMiddleware);
 
 const start = async () => {
   try {
-    await connectDB(process.env.MONGO_URL || "mongodb://localhost:27017");
+    await connectDB(process.env.DATABASE_URL);
     app.listen(PORT as number, "0.0.0.0", () => {
       console.log(`✅ Server is running on http://localhost:${PORT}`);
     });
