@@ -1,13 +1,17 @@
+.vscode
+/node_modules
+
 /todo.txt
 /planning.txt
-.vscode
 /begin-with-todo.txt
 /UX-questions.txt
-/node_modules
 /.codebuddy
 /.codeReference
 /hidden-explanations
 /archive
 
-# avoid newer folder structure on the dev branch create conflict
-/server
+.env.local
+.env.production
+.env.staging
+.env.db-root-creds
+.env.db-voccaria
