@@ -36,8 +36,8 @@ const nextConfig = {
   env: {
     NEXT_CACHE_DISABLED: "true",
   },
-};
 
-module.exports = nextConfig;
+  output: "standalone",
+};
 
 module.exports = nextConfig;
