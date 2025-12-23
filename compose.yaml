@@ -1,6 +1,38 @@
 name: voccaria-core
 
 services:
+  frontend:
+    build:
+      context: client/web-frontend
+      dockerfile: Dockerfile.dev
+    networks:
+      - voccaria-network
+    ports:
+      - "3000:3000"
+    container_name: core-frontend
+    env_file:
+      - .env.local
+    environment:
+      - PORT=3000
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: server/node-backend
+      dockerfile: Dockerfile.dev
+    networks:
+      - voccaria-network
+    ports:
+      - "5000:5000"
+    container_name: core-backend
+    env_file:
+      - .env.local
+    environment:
+      - PORT=5000
+    depends_on:
+      - db
+
   db:
     image: mongodb/mongodb-community-server:7.0-ubuntu2204
     ports:
