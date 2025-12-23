@@ -1,0 +1,27 @@
+name: voccaria-core
+
+services:
+  db:
+    image: mongodb/mongodb-community-server:7.0-ubuntu2204
+    ports:
+      - "27017:27017"
+    container_name: core-db-mongodb
+    env_file:
+      - .env.db-root-creds
+      - .env.db-voccaria
+    volumes:
+      - type: bind
+        source: ./db-config/mongo-init.js
+        target: /docker-entrypoint-initdb.d/mongo-init.js
+        read_only: true
+      - type: volume
+        source: core-db-mongodb-data
+        target: /data/db
+    networks:
+      - voccaria-network
+
+volumes:
+  core-db-mongodb-data:
+
+networks:
+  voccaria-network:
