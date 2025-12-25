@@ -1,11 +1,10 @@
-import { FrontendURL } from "@/_constants/frontendOrigins";
 import { User } from "@/_types/user";
 import { cookies } from "next/headers";
 
 export async function getUserFromSession(): Promise<User | null> {
   const cookieStore = await cookies();
 
-  const res = await fetch(`${FrontendURL}/api/v1/users/me`, {
+  const res = await fetch(`http://localhost/api/v1/users/me`, {
     method: "GET",
     cache: "no-store",
     credentials: "include",
