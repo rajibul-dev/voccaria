@@ -9,7 +9,7 @@ const DISCORD_CLIENT_SECRET = process.env.PASSPORT_DISCORD_CLIENT_SECRET;
 
 const DISCORD_CALLBACK_URL = isProduction
   ? "https://api.voccaria.com/api/v1/users/discord-connect/redirect"
-  : "http://localhost:5000/api/v1/users/discord-connect/redirect";
+  : "http://localhost/api/v1/users/discord-connect/redirect";
 
 export default passport.use(
   new DiscordStrategy(
@@ -24,7 +24,9 @@ export default passport.use(
       const { id, username, avatar, email, global_name, verified } = profile;
       const baseAvatarUrl = `https://cdn.discordapp.com/avatars/${id}/${avatar}`;
       const isAnimated = avatar?.startsWith("a_");
-      const avatarUrl = `${baseAvatarUrl}.${isAnimated ? "gif" : "png"}?size=512`; // Reduced from 4096
+      const avatarUrl = `${baseAvatarUrl}.${
+        isAnimated ? "gif" : "png"
+      }?size=512`; // Reduced from 4096
 
       if (!verified) {
         return done(new Error("Your discord account should be verified"), null);

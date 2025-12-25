@@ -12,7 +12,7 @@ const SPECIFIC_USER_QUERY_KEY = "specificUser";
 const PROVIDERS_QUERY_KEY = "avatarProviders";
 
 const apiCall = async (endpoint: string, options: RequestInit = {}) => {
-  const response = await fetch(`/api${endpoint}`, {
+  const response = await fetch(`http://localhost/api/v1${endpoint}`, {
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
@@ -36,36 +36,30 @@ export const fetchCurrentUser = async (
   cookieHeader?: string,
 ): Promise<User | null> => {
   try {
-    const headers: Record<string, string> = {};
-    let url: string;
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+    };
 
     if (cookieHeader) {
       headers["Cookie"] = cookieHeader;
-      const backendOrigin =
-        process.env.BACKEND_URL || process.env.NEXT_PUBLIC_BACKEND_URL;
-      url = `${backendOrigin}/api/v1/users/me`;
-    } else {
-      url = "/api/users/me";
     }
 
-    const response = await fetch(url, {
+    const response = await fetch("http://localhost/api/v1/users/me", {
       method: "GET",
-      headers: { "Content-Type": "application/json", ...headers },
+      headers,
       credentials: "include",
+      cache: "no-store",
     });
 
     if (!response.ok) {
       if (response.status === 401 || response.status === 403) return null;
-      throw new Error(`HTTP ${response.status}`);
-    }
-
-    const data = JSON.parse(await response.text());
-    return data.success && data.data ? data.data : null;
-  } catch (error: any) {
-    if (error.message?.includes("401") || error.message?.includes("403")) {
       return null;
     }
-    throw new Error(error.message || "Failed to fetch user");
+
+    const data = await response.json();
+    return data?.success ? data.data : null;
+  } catch {
+    return null;
   }
 };
 
@@ -404,7 +398,7 @@ export const useUploadAvatar = () => {
       const formData = new FormData();
       formData.append("avatar", file);
 
-      const response = await fetch("/api/users/me/avatar", {
+      const response = await fetch("http://localhost/api/v1/users/me/avatar", {
         method: "POST",
         body: formData,
         credentials: "include",

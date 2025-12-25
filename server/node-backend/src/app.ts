@@ -25,31 +25,39 @@ import errorHandlerMiddleware from "./core/middlewares/errorHandlerMiddleware.js
 export const app = express();
 const PORT = process.env.PORT || 5000;
 
-const allowedOrigins = [
-  "http://localhost:3000",
-  "http://192.168.1.183:3000", // my local ip
-  "https://voccaria.com",
-  "https://dev.voccaria.com",
-  undefined, // Allow requests with no origin (like mobile apps or curl requests)
-];
+// const allowedOrigins = [
+//   "http://localhost:3000",
+//   "http://192.168.1.183:3000", // my local ip
+//   "https://voccaria.com",
+//   "https://dev.voccaria.com",
+//   undefined, // Allow requests with no origin (like mobile apps or curl requests)
+// ];
 
-const corsOptions: cors.CorsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
-      console.error(msg);
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  },
-  credentials: true,
-  optionsSuccessStatus: 200,
-};
+// const corsOptions: cors.CorsOptions = {
+//   origin: function (origin, callback) {
+//     // Allow requests with no origin (like mobile apps or curl requests)
+//     if (!origin) return callback(null, true);
+//     if (allowedOrigins.indexOf(origin) === -1) {
+//       const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
+//       console.error(msg);
+//       return callback(new Error(msg), false);
+//     }
+//     return callback(null, true);
+//   },
+//   credentials: true,
+//   optionsSuccessStatus: 200,
+// };
+// app.use(cors(corsOptions));
+
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
+
 
 app.set("trust proxy", 1);
-app.use(cors(corsOptions));
 app.use(express.json());
 app.use(
   fileUpload({
@@ -76,12 +84,9 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24, // 1 day
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      maxAge: 1000 * 60 * 60 * 24,
+      sameSite: "lax",
       secure: process.env.NODE_ENV === "production",
-      ...(process.env.NODE_ENV === "production" && {
-        domain: "voccaria.com",
-      }),
     },
     store: MongoStore.create({
       mongoUrl: process.env.DATABASE_URL,
