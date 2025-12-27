@@ -1,0 +1,53 @@
+services:
+  nginx:
+    ports:
+      - "80:80"
+
+  frontend:
+    dockerfile: Dockerfile.dev
+    env_file:
+      - .env.local
+    develop:
+      watch:
+        - action: sync
+          path: ./client/web-frontend/
+          target: /app/
+          ignore:
+            - node_modules/
+            - .git/
+            - dist/
+            - build/
+    environment:
+      - NODE_OPTIONS=--max-old-space-size=4096
+
+  backend:
+    dockerfile: Dockerfile.dev
+    env_file:
+      - .env.local
+    depends_on:
+      - db
+    develop:
+      watch:
+        - action: sync
+          path: ./server/node-backend/
+          target: /app/
+          ignore:
+            - node_modules/
+            - .git/
+            - dist/
+            - build/
+            - tmp/
+
+  db:
+    image: mongodb/mongodb-community-server:7.0-ubuntu2204
+    env_file:
+      - .env.db-root-creds
+      - .env.db-voccaria
+    volumes:
+      - ./db-config/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - core-db-mongodb-data:/data/db
+    networks:
+      - voccaria-network
+
+volumes:
+  core-db-mongodb-data:
