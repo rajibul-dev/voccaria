@@ -3,8 +3,11 @@ name: voccaria-core
 services:
   nginx:
     image: nginx:alpine
+    environment:
+      FRONTEND_UPSTREAM: frontend:3000
+      BACKEND_UPSTREAM: backend:5000
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template:ro
     depends_on:
       - frontend
       - backend
