@@ -56,7 +56,6 @@ app.use(
   })
 );
 
-
 app.set("trust proxy", 1);
 app.use(express.json());
 app.use(
@@ -135,8 +134,10 @@ app.post("/log", (request: Request, response: Response) => {
 app.use(errorHandlerMiddleware);
 
 const start = async () => {
+  const databaseUrl = process.env.DATABASE_URL;
+
   try {
-    await connectDB(process.env.DATABASE_URL);
+    await connectDB(databaseUrl);
     app.listen(PORT as number, "0.0.0.0", () => {
       console.log(`✅ Server is running on http://localhost:${PORT}`);
     });
