@@ -2,14 +2,11 @@ import passport from "passport";
 import { Strategy as DiscordStrategy } from "passport-discord";
 import User, { IUser } from "../models/User.js";
 
-const isProduction = process.env.NODE_ENV === "production";
-
 const DISCORD_CLIENT_ID = process.env.PASSPORT_DISCORD_CLIENT_ID;
 const DISCORD_CLIENT_SECRET = process.env.PASSPORT_DISCORD_CLIENT_SECRET;
 
-const DISCORD_CALLBACK_URL = isProduction
-  ? "https://api.voccaria.com/api/v1/users/discord-connect/redirect"
-  : "http://localhost/api/v1/users/discord-connect/redirect";
+const BACKEND_URL = process.env.BACKEND_URL!;
+const DISCORD_CALLBACK_URL = `${BACKEND_URL}/api/v1/users/discord-connect/redirect`;
 
 export default passport.use(
   new DiscordStrategy(

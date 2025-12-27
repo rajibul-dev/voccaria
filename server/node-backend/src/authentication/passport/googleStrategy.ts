@@ -5,11 +5,9 @@ import { googleAvatarQualityImprove } from "../helpers/avatarQualityImprove.js";
 
 const GOOGLE_CLIENT_ID = process.env.PASSPORT_GOOGLE_CLIENT_ID || "";
 const GOOGLE_CLIENT_SECRET = process.env.PASSPORT_GOOGLE_CLIENT_SECRET || "";
-const isProduction = process.env.NODE_ENV === "production";
 
-const GOOGLE_CALLBACK_URL = isProduction
-  ? "https://voccaria.com/api/v1/auth/google/redirect"
-  : "http://localhost/api/v1/auth/google/redirect";
+const BACKEND_URL = process.env.BACKEND_URL!;
+const GOOGLE_CALLBACK_URL = `${BACKEND_URL}/api/v1/auth/google/redirect`;
 
 export default passport.use(
   new GoogleStrategy(
