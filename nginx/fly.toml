@@ -6,6 +6,10 @@
 app = 'voccaria-staging-reverse-proxy'
 primary_region = 'bom'
 
+[env]
+  FRONTEND_UPSTREAM = "voccaria-staging-frontend.internal:5000"
+  BACKEND_UPSTREAM  = "voccaria-staging-backend.internal:5000"
+
 [build]
 
 [http_service]
