@@ -4,7 +4,9 @@ services:
       - "80:80"
 
   frontend:
-    dockerfile: Dockerfile.dev
+    build:
+      context: client/web-frontend
+      dockerfile: Dockerfile.dev
     env_file:
       - .env.local
     develop:
@@ -21,7 +23,9 @@ services:
       - NODE_OPTIONS=--max-old-space-size=4096
 
   backend:
-    dockerfile: Dockerfile.dev
+    build:
+      context: server/node-backend
+      dockerfile: Dockerfile.dev
     env_file:
       - .env.local
     depends_on:

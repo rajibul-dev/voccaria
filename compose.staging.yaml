@@ -4,11 +4,15 @@ services:
       - "80:80"
 
   frontend:
-    dockerfile: Dockerfile
+    build:
+      context: client/web-frontend
+      dockerfile: Dockerfile
     env_file:
       - .env.staging
 
   backend:
-    dockerfile: Dockerfile
+    build:
+      context: server/node-backend
+      dockerfile: Dockerfile
     env_file:
       - .env.staging
