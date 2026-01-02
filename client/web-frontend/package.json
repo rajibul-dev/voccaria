@@ -4,8 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev:turbo": "next dev --turbo",
-    "dev:fast": "cross-env NEXT_PRIVATE_SKIP_SIZE_LIMIT=1 next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -45,7 +43,7 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-dropzone": "^14.3.8",
-    "react-hot-toast": "^2.4.1",
+    "react-hot-toast": "^2.6.0",
     "react-icons": "^5.4.0",
     "tailwindcss": "^4.0.0"
   },
@@ -56,10 +54,6 @@
     "prettier": "^3.5.0",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "typescript": "^5.5.4"
-  },
-  "overrides": {
-    "@types/react": "19.1.8",
-    "@types/react-dom": "19.1.6"
   },
   "engines": {
     "node": ">=22.0.0"
