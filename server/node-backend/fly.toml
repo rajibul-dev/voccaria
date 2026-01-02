@@ -1,6 +1,10 @@
 app = "voccaria-staging-backend"
 primary_region = "bom"
 
+[env]
+PORT = "5000"
+NODE_ENV = "production"
+
 [http_service]
 auto_start_machines = true
 auto_stop_machines = false
