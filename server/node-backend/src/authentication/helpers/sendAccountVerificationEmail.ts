@@ -13,12 +13,14 @@ export async function sendAccountVerificationEmail({
   verificationLink,
 }: SendVerificationEmailInterface) {
   try {
-    await resend.emails.send({
+    const result = await resend.emails.send({
       from: "Voccaria <hello@voccaria.com>",
-      to: email,
+      to: [email],
       subject: "Verify your email address",
       react: EmailVerificationTemplate({ name, verificationLink }),
     });
+
+    console.log("📧 Resend result:", result);
   } catch (error) {
     console.error("Error sending verification email:", error);
     throw new Error("Failed to send verification email. Please try again.");

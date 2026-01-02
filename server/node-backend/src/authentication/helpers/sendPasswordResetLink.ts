@@ -13,12 +13,14 @@ export async function sendPasswordResetLink({
   passwordLink,
 }: SendPasswordResetLinkInterface) {
   try {
-    await resend.emails.send({
+    const result = await resend.emails.send({
       from: "Voccaria <no-reply@voccaria.com>",
-      to: email,
+      to: [email],
       subject: "Link to reset your password",
       react: PasswordResetLink({ name, passwordLink }),
     });
+
+    console.log("📧 Resend result:", result);
   } catch (error) {
     console.error("Error sending password reset link:", error);
     throw new Error("Failed to send password reset link. Please try again.");
