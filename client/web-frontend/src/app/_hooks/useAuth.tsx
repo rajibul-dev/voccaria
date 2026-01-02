@@ -64,7 +64,7 @@ export const fetchCurrentUser = async (
 };
 
 export const useUser = () => {
-  const { data, isLoading, error } = useQuery<User | null, Error>({
+  const { data, isLoading, error, status } = useQuery<User | null, Error>({
     queryKey: [USER_QUERY_KEY],
     queryFn: () => fetchCurrentUser(),
     staleTime: 5 * 60 * 1000,
@@ -74,6 +74,7 @@ export const useUser = () => {
   return {
     user: data,
     isLoading,
+    status,
     isAuthenticated: Boolean(data) && !isLoading,
     error,
   };

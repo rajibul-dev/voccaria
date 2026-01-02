@@ -10,37 +10,32 @@ export default function ClientAuthGuard({
 }: {
   children: React.ReactNode;
 }) {
-  const { user, isLoading, error } = useUser();
+  const { user, status } = useUser();
   const router = useRouter();
   const searchParams = useSearchParams();
+
   const isOAuthRedirect = searchParams.get("googleLogin") === "success";
 
   useEffect(() => {
-    // Don't redirect if we're still loading or if this is an OAuth redirect
-    if (isLoading || isOAuthRedirect) return;
+    if (isOAuthRedirect) return;
 
-    // If we're not loading and there's no user, redirect to auth immediately
-    if (!user && !error) {
-      console.log("ClientAuthGuard - No user found, redirecting to /auth");
+    if (status === "error") {
+      console.log("ClientAuthGuard - unauthenticated, redirecting");
       router.replace("/auth");
     }
-  }, [user, isLoading, error, isOAuthRedirect, router]);
+  }, [status, isOAuthRedirect, router]);
 
-  // Show loading state while checking auth
-  if (isLoading && !isOAuthRedirect) {
+  if (status === "pending" && !isOAuthRedirect) {
     return <LoadingScreen message="Checking authentication..." />;
   }
 
-  // For OAuth redirects, always render children immediately (let toast handle feedback)
   if (isOAuthRedirect) {
     return <>{children}</>;
   }
 
-  // For normal cases, only render if user is authenticated
-  if (user) {
+  if (status === "success" && user) {
     return <>{children}</>;
   }
 
-  // Don't render anything while redirecting - show minimal loading
   return <LoadingScreen message="Redirecting..." />;
 }
