@@ -138,7 +138,7 @@ const start = async () => {
 
   try {
     await connectDB(databaseUrl);
-    app.listen(PORT as number, "0.0.0.0", () => {
+    app.listen(PORT as number, "::", () => {
       console.log(`✅ Server is running on http://localhost:${PORT}`);
     });
   } catch (error) {
