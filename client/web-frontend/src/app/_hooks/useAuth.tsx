@@ -12,7 +12,7 @@ const SPECIFIC_USER_QUERY_KEY = "specificUser";
 const PROVIDERS_QUERY_KEY = "avatarProviders";
 
 const apiCall = async (endpoint: string, options: RequestInit = {}) => {
-  const response = await fetch(`http://localhost/api/v1${endpoint}`, {
+  const response = await fetch(`/api/v1${endpoint}`, {
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
@@ -44,7 +44,7 @@ export const fetchCurrentUser = async (
       headers["Cookie"] = cookieHeader;
     }
 
-    const response = await fetch("http://localhost/api/v1/users/me", {
+    const response = await fetch("/api/v1/users/me", {
       method: "GET",
       headers,
       credentials: "include",
@@ -398,7 +398,7 @@ export const useUploadAvatar = () => {
       const formData = new FormData();
       formData.append("avatar", file);
 
-      const response = await fetch("http://localhost/api/v1/users/me/avatar", {
+      const response = await fetch("/api/v1/users/me/avatar", {
         method: "POST",
         body: formData,
         credentials: "include",
