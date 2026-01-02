@@ -5,7 +5,6 @@ import { Suspense } from "react";
 import BlogSearchBar from "../_components/BlogSearchBar";
 import LatestPosts from "../_components/LatestPosts";
 import Spinner from "../_components/Spinner";
-import blogIllustration from "/public/images/blog-illustration.jpg";
 import CategorizedPostsProvider from "../_components/CategorizedPostsProvider";
 import CategorizedPostsList from "../_components/CategorizedPostsList";
 import BlogHeroButton from "../_components/BlogHeroButton";
@@ -64,7 +63,9 @@ export default async function Page() {
 
             <div>
               <Image
-                src={blogIllustration}
+                width={280}
+                height={80}
+                src="/images/blog-illustration.jpg"
                 priority
                 alt="Voccaria blog illustration"
                 className="h-80 w-70 rounded-full object-cover hue-rotate-[340deg] max-md:hidden"

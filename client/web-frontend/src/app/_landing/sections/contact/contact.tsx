@@ -3,7 +3,6 @@ import styles from "./contact.module.css";
 import foreignStyles from "../scheduling/scheduling.module.css";
 
 // images
-import ContactMeImg from "/public/images/contact-me-illustration.png";
 import Image from "next/image";
 
 // components
@@ -18,10 +17,11 @@ export default function Contact() {
       >
         <div className={styles.imgBox}>
           <Image
+            height={500}
+            width={500}
             className={styles.image}
-            src={ContactMeImg}
+            src="/images/contact-me-illustration.png"
             alt="Contact form, contact me illustration"
-            placeholder="blur"
             blurDataURL="@/public/images/contact-me-illustration.png"
           />
         </div>

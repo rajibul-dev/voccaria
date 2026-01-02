@@ -19,7 +19,7 @@ import BlogSidebarData from "./BlogSidebarData";
 import DarkModeToggler from "./DarkModeToggler";
 import Logo from "./Logo";
 import NavbarLoginButton from "./NavbarLoginButton";
-import OldPageSectionTracking from "./OldPageSectionTracking";
+// import OldPageSectionTracking from "./OldPageSectionTracking";
 import Popover from "./Popover";
 import RestMenu from "./RestMenu";
 import { useUser } from "@/app/_hooks/useAuth";
@@ -87,7 +87,7 @@ export default function Navbar() {
         {isRoot ? (
           <div className="flex items-center gap-6">
             <div className="min-[670px]:hidden">
-              <OldPageSectionTracking />
+              {/* <OldPageSectionTracking /> */}
             </div>
             <OldLogo />
           </div>
@@ -112,7 +112,7 @@ export default function Navbar() {
 
             {isRoot && (
               <li className="max-[670px]:hidden">
-                <OldPageSectionTracking />
+                {/* <OldPageSectionTracking /> */}
               </li>
             )}
 

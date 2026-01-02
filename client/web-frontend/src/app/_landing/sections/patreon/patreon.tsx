@@ -3,9 +3,6 @@ import Image from "next/image";
 // styles
 import styles from "./patreon.module.css";
 
-// image
-import PatreonAvatar from "/public/images/mia-patron.png";
-
 // components
 import OldButton from "@/app/_old-components/button";
 import HeadingPair from "@/app/_old-components/headingPair";
@@ -25,8 +22,10 @@ export default function Patreon() {
     <section id="patreon" className={styles.section}>
       <div className={styles.container}>
         <Image
+          width={280}
+          height={150}
           className={styles.avatar}
-          src={PatreonAvatar}
+          src="/images/mia-patron.png"
           alt="Mia voice teacher cartoon avatar"
           priority
           sizes="(min-width: 1100px) 280px, (min-width: 500px) 252px, (min-width: 460px) 224px, 65vw"

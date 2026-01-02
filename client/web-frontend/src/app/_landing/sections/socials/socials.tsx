@@ -9,7 +9,6 @@ import {
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 // import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import streamElementsIcon from "/public/images/streamelements-logo.png";
 
 const discordIcon = (
   <FontAwesomeIcon icon={faDiscord} className={SocialsStyles.icon} />
@@ -75,9 +74,10 @@ const socialItems = [
     expandedText: "My tipping page",
     icon: (
       <Image
-        src={streamElementsIcon}
+        width={46}
+        height={16}
+        src="/images/streamelements-logo.png"
         alt="StreamElements logo"
-        placeholder="blur"
         className={SocialsStyles.streamElementsLogo}
         // sizes="(min-width: 1980px) 57px, 46px"
         priority

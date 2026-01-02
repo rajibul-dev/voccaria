@@ -20,6 +20,7 @@ const InlineImageWithText: React.FC<inlineImageWithTextProps> = ({
         alt={imgAlt}
         className={styles.img}
         width={500}
+        height={300}
         quality={80}
         priority
       />

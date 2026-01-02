@@ -146,8 +146,6 @@ import AboutStyles from "./about.module.css";
 import ImageWithBadge from "./components/imageWithBadge";
 
 // images..
-import MiaImage from "/public/images/Mia.jpeg";
-import MiaBadge from "/public/images/vtt-badge.png";
 import AboutTextFlexified from "./components/AboutTextFlexified";
 import MoreAboutMe from "./components/MoreAboutMe";
 import RestAboutText from "./components/RestAboutText";
@@ -160,7 +158,10 @@ export default function About() {
         <div
           className={`max-[900px]:align-center grid grid-cols-[1fr_1.3fr] items-start justify-between gap-[4rem] max-[900px]:grid-cols-1 max-[900px]:justify-center max-[900px]:gap-[4.8rem]`}
         >
-          <ImageWithBadge srcImage={MiaImage} srcBadge={MiaBadge} />
+          <ImageWithBadge
+            srcImage="/images/Mia.jpeg"
+            srcBadge="/images/vtt-badge.png"
+          />
           <AboutTextFlexified
             text={aboutMiaText.slice(0, FLEXIFIED_PARA_COUNT)}
           />

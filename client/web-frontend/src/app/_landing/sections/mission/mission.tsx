@@ -7,10 +7,6 @@ import styles from "./mission.module.css";
 import HeadingPair from "@/app/_old-components/headingPair";
 import { Essay } from "@/app/_old-components/essay";
 
-// images
-import lessonImage from "/public/images/live-lesson.png";
-import resourceImage from "/public/images/resources-illustration.png";
-
 export default function Mission() {
   return (
     <section id="mission" className={`section-block ${styles.section}`}>
@@ -54,10 +50,11 @@ export default function Mission() {
           </Essay>
 
           <Image
+            width={55}
+            height={55}
             className={`${styles.image} ${styles.lessonImg}`}
-            src={lessonImage}
+            src="/images/live-lesson.png"
             alt="Mia voice teacher one-on-one free lesson"
-            placeholder="blur"
             blurDataURL="@/public/images/live-lesson.png"
             priority
           />
@@ -83,10 +80,11 @@ export default function Mission() {
           </Essay>
 
           <Image
+            width={55}
+            height={55}
             className={`${styles.image} ${styles.resourceImg}`}
-            src={resourceImage}
+            src="/images/resources-illustration.png"
             alt="Internet resources illustration"
-            placeholder="blur"
             blurDataURL="@/public/images/resources-illustration.png"
             priority
           />

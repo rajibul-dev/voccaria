@@ -28,7 +28,6 @@ import Features from "./components/features";
 
 // image
 import Image from "next/image";
-import YourOneVoiceImage from "/public/images/youronevoice.png";
 
 export default function PaidObjective() {
   return (
@@ -43,10 +42,11 @@ export default function PaidObjective() {
           <Features features={features} />
         </div>
         <Image
+          width={1300}
+          height={800}
           className={styles.image}
-          src={YourOneVoiceImage}
+          src="/images/youronevoice.png"
           alt="Your One Voice discord server channel structure"
-          placeholder="blur"
           blurDataURL="@/public/images/youronevoice.png"
           sizes="(min-width: 2380px) calc(-5vw + 373px), (min-width: 1100px) calc(-1.59vw + 292px), (min-width: 940px) 248px, (min-width: 800px) calc(28.33vw - 13px), (min-width: 500px) 270px, (min-width: 460px) 240px, 65.71vw"
         />

@@ -1,12 +1,13 @@
 import Image from "next/image";
-import miaLogo from "/public/images/mia-heart-logo.png";
 
 import styles from "./old-logo.module.css";
 
 export default function OldLogo() {
   return (
     <Image
-      src={miaLogo}
+      height={80}
+      width={80}
+      src="/images/mia-heart-logo.png"
       className={`${styles.logo}`}
       alt="Mia heart logo | Voccaria"
       onClick={() => {
