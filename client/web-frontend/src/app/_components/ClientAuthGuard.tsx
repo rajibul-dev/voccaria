@@ -20,7 +20,7 @@ export default function ClientAuthGuard({
     if (isLoading || isOAuthRedirect) return;
 
     // If we're not loading and there's no user, redirect to auth immediately
-    if (!user && !error) {
+    if (!isLoading && user === null) {
       console.log("ClientAuthGuard - No user found, redirecting to /auth");
       router.replace("/auth");
     }
