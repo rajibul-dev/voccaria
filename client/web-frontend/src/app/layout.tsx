@@ -19,7 +19,7 @@ import SearchContextProviderWrapper from "./_components/SearchContextProviderWra
 
 import { QueryClient, dehydrate } from "@tanstack/react-query";
 import { fetchCurrentUser } from "@/app/_hooks/useAuth"; // Import the fetchCurrentUser function
-import ToasterProvider from "./_components/ToasterProvider";
+import ToasterProvider from "@/app/_components/ToasterProvider";
 
 config.autoAddCss = false; /* eslint-disable import/first */
 

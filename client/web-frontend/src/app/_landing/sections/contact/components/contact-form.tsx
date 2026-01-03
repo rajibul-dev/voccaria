@@ -30,7 +30,7 @@ export default function ContactForm() {
     }));
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setState((prev) => ({
       ...prev,
@@ -55,7 +55,7 @@ export default function ContactForm() {
     }
 
     try {
-      sendEmail(trimmedValues);
+      await sendEmail(trimmedValues);
       setState(initialState);
       toast.success("Successfully sent message!");
     } catch (error: any) {

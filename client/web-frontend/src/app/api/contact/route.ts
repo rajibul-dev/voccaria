@@ -44,18 +44,19 @@ export async function POST(req: Request) {
   const data = (await req.json()) as any;
 
   if (!data.name || !data.email || !data.message) {
-    Response.json({ message: "Bad request" }, { status: 400 });
+    return Response.json({ message: "Bad request" }, { status: 400 });
   }
 
   console.log(data);
 
   try {
-    await transporter.sendMail({
+    const info = await transporter.sendMail({
       ...mailOptions,
       ...generateEmailContent(data),
       ...(data.subject && { subject: data.subject }),
     });
 
+    console.log("MAIL SENT:", info.messageId);
     return Response.json({ success: true }, { status: 200 });
   } catch (err: any) {
     console.log(err);

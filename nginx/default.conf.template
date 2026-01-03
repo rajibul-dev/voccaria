@@ -3,7 +3,40 @@ server {
 
     client_max_body_size 20M;
 
-    # FRONTEND
+    # =========================
+    # BACKEND — explicit routes
+    # =========================
+
+    # Express API (versioned)
+    location ^~ /api/v1/ {
+        proxy_pass http://${BACKEND_UPSTREAM};
+        proxy_http_version 1.1;
+
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    # Keep-alive endpoint
+    location = /keep-alive {
+        proxy_pass http://${BACKEND_UPSTREAM};
+    }
+
+    # Logging endpoint
+    location = /log {
+        proxy_pass http://${BACKEND_UPSTREAM};
+    }
+
+    # (OPTIONAL) backend root health check
+    # Only keep this if you *actually* use it externally
+    location = /backend-health {
+        proxy_pass http://${BACKEND_UPSTREAM};
+    }
+
+    # =========================
+    # FRONTEND — default owner
+    # =========================
+
     location / {
         proxy_pass http://${FRONTEND_UPSTREAM}/;
         proxy_http_version 1.1;
@@ -14,15 +47,5 @@ server {
 
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
-    }
-
-    # BACKEND API ONLY
-    location /api/ {
-        proxy_pass http://${BACKEND_UPSTREAM};
-        proxy_http_version 1.1;
-
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 }
