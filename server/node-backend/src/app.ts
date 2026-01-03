@@ -58,14 +58,23 @@ app.use(
 
 app.set("trust proxy", 1);
 app.use(express.json());
+
 app.use(
   fileUpload({
     useTempFiles: true,
     tempFileDir: "./tmp/",
     preserveExtension: true,
     safeFileNames: true,
+
     limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
-    uploadTimeout: 60000, // 60 seconds
+    abortOnLimit: true,
+
+    responseOnLimit: JSON.stringify({
+      success: false,
+      message: "Avatar image must be 10 MB or smaller",
+    }),
+
+    uploadTimeout: 60000,
     parseNested: true,
     debug: false,
     createParentPath: true,
