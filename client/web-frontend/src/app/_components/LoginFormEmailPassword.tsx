@@ -13,9 +13,9 @@ export default function LoginFormEmailPassword() {
 
   const { login, isLoggingIn, error } = useLogin();
 
-  useEffect(() => {
-    router.prefetch("/app");
-  }, [router]);
+  // useEffect(() => {
+  //   router.prefetch("/app");
+  // }, [router]);
 
   async function handleLogin() {
     login({ email, password });

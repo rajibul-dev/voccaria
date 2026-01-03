@@ -101,13 +101,26 @@ export const useLogin = () => {
       });
       return data.data.user;
     },
+
     onSuccess: (user) => {
-      queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY] });
+      // 1️ Seed the user cache immediately
+      queryClient.setQueryData([USER_QUERY_KEY], user);
+
+      // 2️ Navigate AFTER cache is stable
+      router.replace("/app");
+
+      // 3️ Background revalidation (safe)
+      queryClient.invalidateQueries({
+        queryKey: [USER_QUERY_KEY],
+        refetchType: "inactive",
+      });
+
       queryClient.invalidateQueries({ queryKey: [PROVIDERS_QUERY_KEY] });
       queryClient.invalidateQueries({ queryKey: [ALL_USERS_QUERY_KEY] });
+
       toast.success(`Welcome back, ${user.name}!`);
-      router.replace("/app");
     },
+
     onError: (error) => toast.error(error.message),
   });
 
