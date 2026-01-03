@@ -19,6 +19,7 @@ import SearchContextProviderWrapper from "./_components/SearchContextProviderWra
 
 import { QueryClient, dehydrate } from "@tanstack/react-query";
 import { fetchCurrentUser } from "@/app/_hooks/useAuth"; // Import the fetchCurrentUser function
+import ToasterProvider from "./_components/ToasterProvider";
 
 config.autoAddCss = false; /* eslint-disable import/first */
 
@@ -158,6 +159,7 @@ export default async function RootLayout({
             <div>{children}</div>
           </Providers>
         </SearchContextProviderWrapper>
+        <ToasterProvider isRoot={isRoot} />
         <SpeedInsights />
         <Analytics />
       </body>
