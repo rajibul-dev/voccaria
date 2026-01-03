@@ -159,7 +159,7 @@ export default async function RootLayout({
             <div>{children}</div>
           </Providers>
         </SearchContextProviderWrapper>
-        <ToasterProvider isRoot={isRoot} />
+        <ToasterProvider />
         <SpeedInsights />
         <Analytics />
       </body>

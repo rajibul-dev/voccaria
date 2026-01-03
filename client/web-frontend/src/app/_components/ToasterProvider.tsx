@@ -1,7 +1,12 @@
+"use client";
+
 import clsx from "clsx";
 import { Toaster } from "react-hot-toast";
+import { useIsRootClient } from "../_hooks/useIsRootClient";
 
-export default function ToasterProvider({ isRoot }: { isRoot?: boolean }) {
+export default function ToasterProvider() {
+  const isRoot = useIsRootClient();
+
   return (
     <Toaster
       position="bottom-center"

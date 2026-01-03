@@ -11,7 +11,6 @@ import {
   HydrationBoundary,
 } from "@tanstack/react-query";
 import type { DehydratedState } from "@tanstack/react-query";
-import { usePathname } from "next/navigation";
 import { useLayoutEffect, useState } from "react";
 import { darkTheme, lightTheme } from "./_theme/muiTheme";
 
@@ -34,8 +33,6 @@ export function Providers({
   children: React.ReactNode;
   dehydratedState: DehydratedState; // Type for dehydrated state
 }) {
-  const pathname = usePathname();
-  const isRoot = pathname === "/";
   const [muiMode, setMuiMode] = useState<"light" | "dark">("light");
 
   useLayoutEffect(() => {
