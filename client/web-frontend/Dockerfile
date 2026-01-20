@@ -62,5 +62,4 @@ USER nextjs
 
 EXPOSE 5000
 
-# Fly.io prefers IPv6 + explicit port
-CMD ["sh", "-c", "HOSTNAME=:: PORT=5000 node server.js"]
+CMD ["sh", "-c", "HOSTNAME=0.0.0.0 PORT=5000 node server.js"]
