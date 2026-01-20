@@ -1,15 +1,21 @@
 server {
     listen 80;
 
+    # =========================
+    # GLOBAL SAFETY
+    # =========================
     client_max_body_size 20M;
 
+    # Docker / Fly internal DNS (IPv6-aware)
     resolver 127.0.0.11 ipv6=on valid=10s;
     resolver_timeout 5s;
 
-    proxy_connect_timeout 5s;
+    # Conservative timeouts (Flycast wake-safe)
+    proxy_connect_timeout 30s;
     proxy_send_timeout 60s;
     proxy_read_timeout 60s;
 
+    # Retry only on safe failures
     proxy_next_upstream error timeout http_502 http_503 http_504;
     proxy_next_upstream_tries 3;
     proxy_next_upstream_timeout 10s;
@@ -18,7 +24,7 @@ server {
     # BACKEND — explicit routes
     # =========================
 
-    # Express API (versioned)
+    # Express API
     location ^~ /api/v1/ {
         proxy_pass http://${BACKEND_UPSTREAM};
         proxy_http_version 1.1;
@@ -27,33 +33,33 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
-        proxy_connect_timeout 30s;
-        proxy_read_timeout 30s;
+        # CRITICAL FOR SUSPEND / RESUME
+        proxy_set_header Connection "";
+        proxy_socket_keepalive off;
     }
 
     # Keep-alive endpoint
     location = /keep-alive {
         proxy_pass http://${BACKEND_UPSTREAM};
 
-        proxy_connect_timeout 30s;
-        proxy_read_timeout 30s;
+        proxy_set_header Connection "";
+        proxy_socket_keepalive off;
     }
 
     # Logging endpoint
     location = /log {
         proxy_pass http://${BACKEND_UPSTREAM};
 
-        proxy_connect_timeout 30s;
-        proxy_read_timeout 30s;
+        proxy_set_header Connection "";
+        proxy_socket_keepalive off;
     }
 
-    # (OPTIONAL) backend root health check
-    # Only keep this if you *actually* use it externally
+    # Optional backend health (safe)
     location = /backend-health {
         proxy_pass http://${BACKEND_UPSTREAM};
 
-        proxy_connect_timeout 30s;
-        proxy_read_timeout 30s;
+        proxy_set_header Connection "";
+        proxy_socket_keepalive off;
     }
 
     # =========================
@@ -68,10 +74,8 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-
-        proxy_connect_timeout 30s;
-        proxy_read_timeout 30s;
+        # DO NOT use WebSocket headers for Next.js HTML
+        proxy_set_header Connection "";
+        proxy_socket_keepalive off;
     }
 }
