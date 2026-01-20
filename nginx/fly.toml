@@ -10,7 +10,7 @@ primary_region = 'bom'
 
 [env]
   BACKEND_UPSTREAM = 'voccaria-staging-backend.flycast:5000'
-  FRONTEND_UPSTREAM = 'voccaria-staging-frontend.flycast:5000'
+  FRONTEND_UPSTREAM = 'voccaria-staging-frontend.internal:5000'
 
 [http_service]
   internal_port = 80
