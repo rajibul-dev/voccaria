@@ -9,14 +9,14 @@ primary_region = 'bom'
 [build]
 
 [env]
-  BACKEND_UPSTREAM = 'voccaria-staging-backend.internal:5000'
-  FRONTEND_UPSTREAM = 'voccaria-staging-frontend.internal:5000'
+  BACKEND_UPSTREAM = 'voccaria-staging-backend.flycast:5000'
+  FRONTEND_UPSTREAM = 'voccaria-staging-frontend.flycast:5000'
 
 [http_service]
   internal_port = 80
   force_https = true
-  auto_stop_machines = true
-  auto_start_machines = true
+  auto_stop_machines = "off"
+  auto_start_machines = false
   min_machines_running = 1
   processes = ['app']
 

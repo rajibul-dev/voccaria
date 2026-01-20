@@ -6,14 +6,14 @@ PORT = "5000"
 NODE_ENV = "production"
 
 [http_service]
+auto_stop_machines = 'stop'
 auto_start_machines = true
-auto_stop_machines = true
-force_https = true
+min_machines_running = 0
+force_https = false
 internal_port = 5000
-min_machines_running = 1
 processes = [ "app" ]
 
 [[vm]]
 cpu_kind = "shared"
 cpus = 1
-memory_mb = 512
+memory_mb = 256
