@@ -1,19 +1,26 @@
-app = "voccaria-staging-reverse-proxy"
-primary_region = "bom"
+# fly.toml app configuration file generated for voccaria-staging-reverse-proxy-billowing-smoke-8089 on 2026-01-20T17:36:01+05:30
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'voccaria-staging-reverse-proxy-billowing-smoke-8089'
+primary_region = 'bom'
+
+[build]
 
 [env]
-  FRONTEND_UPSTREAM = "voccaria-staging-frontend.internal:5000"
-  BACKEND_UPSTREAM  = "voccaria-staging-backend.internal:5000"
+  BACKEND_UPSTREAM = 'voccaria-staging-backend.internal:5000'
+  FRONTEND_UPSTREAM = 'voccaria-staging-frontend.internal:5000'
 
 [http_service]
-auto_start_machines = true
-auto_stop_machines = true
-force_https = true
-internal_port = 80
-min_machines_running = 0
-processes = [ "app" ]
+  internal_port = 80
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
 
 [[vm]]
-cpu_kind = "shared"
-cpus = 1
-memory_mb = 128
+  cpu_kind = 'shared'
+  cpus = 1
+  memory_mb = 256
