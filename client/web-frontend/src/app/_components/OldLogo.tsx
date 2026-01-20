@@ -5,8 +5,8 @@ import styles from "./old-logo.module.css";
 export default function OldLogo() {
   return (
     <Image
-      height={80}
-      width={80}
+      height={220}
+      width={140}
       src="/images/mia-heart-logo.png"
       className={`${styles.logo}`}
       alt="Mia heart logo | Voccaria"

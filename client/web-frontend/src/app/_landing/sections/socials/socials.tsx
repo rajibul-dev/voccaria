@@ -74,8 +74,8 @@ const socialItems = [
     expandedText: "My tipping page",
     icon: (
       <Image
-        width={46}
-        height={16}
+        width={220}
+        height={100}
         src="/images/streamelements-logo.png"
         alt="StreamElements logo"
         className={SocialsStyles.streamElementsLogo}

@@ -6,8 +6,8 @@ export default function OldTwoLogosAndSlash() {
   return (
     <div className="relative flex items-center justify-end">
       <Image
-        width={24}
-        height={24}
+        width={220}
+        height={80}
         src="/images/mia-heart-logo.png"
         alt="Mia heart logo | Voccaria"
         className="mr-[2.4rem] w-[8rem] max-[1100px]:w-[6.4rem] max-lg:w-[8rem]"
@@ -22,8 +22,8 @@ export default function OldTwoLogosAndSlash() {
       ></div>
 
       <Image
-        width={24}
-        height={24}
+        width={220}
+        height={80}
         src="/images/logo-voccaria.png"
         alt="Voccaria logo"
         className={clsx(

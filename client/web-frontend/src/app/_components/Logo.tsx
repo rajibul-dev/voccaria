@@ -16,8 +16,8 @@ export default function Logo({
       <Link href={"/"}>
         <Image
           src="/images/logo-voccaria.png"
-          height={120}
-          width={140}
+          height={220}
+          width={200}
           className={clsx(
             "w-38 -translate-y-0.5 max-sm:w-30 max-sm:translate-y-0 dark:brightness-105",
             className,

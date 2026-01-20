@@ -64,7 +64,7 @@ export default async function Page() {
             <div>
               <Image
                 width={280}
-                height={80}
+                height={150}
                 src="/images/blog-illustration.jpg"
                 priority
                 alt="Voccaria blog illustration"

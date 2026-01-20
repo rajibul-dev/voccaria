@@ -40,8 +40,8 @@ export default function Scheduling() {
         </div>
         <div className={styles.imageBox}>
           <Image
-            width={120}
-            height={80}
+            width={220}
+            height={100}
             className={styles.image}
             src="/images/schedule.jpg"
             alt="Booking a date illustration art vector graphic"

@@ -50,8 +50,8 @@ export default function Mission() {
           </Essay>
 
           <Image
-            width={55}
-            height={55}
+            width={200}
+            height={200}
             className={`${styles.image} ${styles.lessonImg}`}
             src="/images/live-lesson.png"
             alt="Mia voice teacher one-on-one free lesson"
@@ -80,8 +80,8 @@ export default function Mission() {
           </Essay>
 
           <Image
-            width={55}
-            height={55}
+            width={200}
+            height={200}
             className={`${styles.image} ${styles.resourceImg}`}
             src="/images/resources-illustration.png"
             alt="Internet resources illustration"
