@@ -14,7 +14,8 @@ const nextConfig = {
   },
 
   images: {
-    unoptimized: process.env.NODE_ENV === "development",
+    // Disable image optimization since we've compressed before putting it in here
+    unoptimized: true,
   },
 
   env: {
