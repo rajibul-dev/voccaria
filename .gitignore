@@ -15,3 +15,5 @@
 .env.staging
 .env.db-root-creds
 .env.db-voccaria
+
+/private-batch-scripts
