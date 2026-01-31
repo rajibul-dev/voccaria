@@ -1,5 +1,7 @@
 .vscode
 /node_modules
+**/node_modules
+/private-batch-scripts
 
 /todo.txt
 /planning.txt
