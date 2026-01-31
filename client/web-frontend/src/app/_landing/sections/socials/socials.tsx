@@ -44,7 +44,7 @@ const socialItems = [
     link: "https://www.twitch.tv/miavoiceteacher",
     expandedText: (
       <>
-        I stream every Thursday!
+        I stream every Saturday!
         <br />
         Vocal Coach Reacts!
       </>
