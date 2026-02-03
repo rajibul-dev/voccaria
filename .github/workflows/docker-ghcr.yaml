@@ -39,6 +39,8 @@ jobs:
           context: server/node-backend
           file: server/node-backend/Dockerfile
           push: true
+          labels: |
+            org.opencontainers.image.source=https://github.com/rajibul-dev/voccaria
           tags: |
             ghcr.io/rajibul-dev/voccaria-backend:latest
             ghcr.io/rajibul-dev/voccaria-backend:${{ env.GIT_SHA }}
@@ -50,6 +52,8 @@ jobs:
           context: client/web-frontend
           file: client/web-frontend/Dockerfile
           push: true
+          labels: |
+            org.opencontainers.image.source=https://github.com/rajibul-dev/voccaria
           tags: |
             ghcr.io/rajibul-dev/voccaria-frontend:latest
             ghcr.io/rajibul-dev/voccaria-frontend:${{ env.GIT_SHA }}
