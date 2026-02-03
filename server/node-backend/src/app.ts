@@ -35,8 +35,6 @@ const apiLimiter = rateLimit({
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
 
-app.use("/api/", apiLimiter);
-
 // const allowedOrigins = [
 //   "http://localhost:3000",
 //   "http://192.168.1.183:3000", // my local ip
@@ -61,14 +59,14 @@ app.use("/api/", apiLimiter);
 // };
 // app.use(cors(corsOptions));
 
+app.set("trust proxy", 1);
+app.use("/api/", apiLimiter);
 app.use(
   cors({
     origin: true,
     credentials: true,
   }),
 );
-
-app.set("trust proxy", 1);
 app.use(express.json());
 
 app.use(
