@@ -49,11 +49,9 @@ ENV NODE_ENV=production
 ENV PORT=5000
 ENV HOSTNAME=0.0.0.0
 
-# Non-root user (Next.js best practice)
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Copy standalone output
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
@@ -62,5 +60,4 @@ USER nextjs
 
 EXPOSE 5000
 
-# Fly.io prefers IPv6 + explicit port
-CMD ["sh", "-c", "HOSTNAME=:: PORT=5000 node server.js"]
+CMD ["node", "server.js"]
