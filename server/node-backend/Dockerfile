@@ -37,6 +37,9 @@ RUN npm ci --omit=dev
 # Copy compiled output
 COPY --from=builder /app/dist ./dist
 
+# Create tmp directory for uploads
+RUN mkdir -p /app/tmp && chown -R nodejs:nodejs /app/tmp
+
 USER nodejs
 
 EXPOSE 5000
