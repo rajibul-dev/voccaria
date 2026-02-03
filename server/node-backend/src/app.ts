@@ -53,7 +53,7 @@ app.use(
   cors({
     origin: true,
     credentials: true,
-  })
+  }),
 );
 
 app.set("trust proxy", 1);
@@ -78,7 +78,7 @@ app.use(
     parseNested: true,
     debug: false,
     createParentPath: true,
-  })
+  }),
 );
 
 app.use(morgan("dev"));
@@ -100,7 +100,7 @@ app.use(
       mongoUrl: process.env.DATABASE_URL,
       ttl: 14 * 24 * 60 * 60, // 14 days
     }),
-  })
+  }),
 );
 
 app.use(passport.initialize());
@@ -147,7 +147,7 @@ const start = async () => {
 
   try {
     await connectDB(databaseUrl);
-    app.listen(PORT as number, "::", () => {
+    app.listen(PORT as number, "0.0.0.0", () => {
       console.log(`✅ Server is running on http://localhost:${PORT}`);
     });
   } catch (error) {
