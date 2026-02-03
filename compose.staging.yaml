@@ -1,18 +1,16 @@
 services:
-  nginx:
-    ports:
-      - "80:80"
-
   frontend:
-    build:
-      context: client/web-frontend
-      dockerfile: Dockerfile
+    image: rajidev/voccaria-frontend:latest
+    restart: unless-stopped
     env_file:
       - .env.staging
+    ports:
+      - "127.0.0.1:3001:5000"
 
   backend:
-    build:
-      context: server/node-backend
-      dockerfile: Dockerfile
+    image: rajidev/voccaria-backend:latest
+    restart: unless-stopped
     env_file:
       - .env.staging
+    ports:
+      - "127.0.0.1:5001:5000"
