@@ -1,6 +1,6 @@
 services:
   frontend:
-    image: rajidev/voccaria-frontend:latest
+    image: ghcr.io/rajibul-dev/voccaria-frontend:latest
     restart: unless-stopped
     env_file:
       - .env.staging
@@ -8,7 +8,7 @@ services:
       - "127.0.0.1:3001:5000"
 
   backend:
-    image: rajidev/voccaria-backend:latest
+    image: ghcr.io/rajibul-dev/voccaria-backend:latest
     restart: unless-stopped
     env_file:
       - .env.staging
