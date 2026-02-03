@@ -4,7 +4,7 @@ services:
   nginx:
     image: nginx:alpine
     environment:
-      FRONTEND_UPSTREAM: frontend:5000
+      FRONTEND_UPSTREAM: frontend:3000
       BACKEND_UPSTREAM: backend:5000
     volumes:
       - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template:ro
