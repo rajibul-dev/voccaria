@@ -13,9 +13,10 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import session from "express-session";
 import morgan from "morgan";
-
 import fileUpload from "express-fileupload";
 import passport from "passport";
+import rateLimit from "express-rate-limit";
+
 import "./core/libs/cloudinary.js";
 import "./authentication/passport/discordStrategy.js";
 import "./authentication/passport/googleStrategy.js";
@@ -24,6 +25,17 @@ import errorHandlerMiddleware from "./core/middlewares/errorHandlerMiddleware.js
 
 export const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Configure the rate limiter
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 500,
+  message: "Too many requests from this IP, please try again after 15 minutes",
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+app.use("/api/", apiLimiter);
 
 // const allowedOrigins = [
 //   "http://localhost:3000",
