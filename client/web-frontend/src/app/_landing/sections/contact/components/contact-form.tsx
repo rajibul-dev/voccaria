@@ -55,9 +55,18 @@ export default function ContactForm() {
     }
 
     try {
-      await sendEmail(trimmedValues);
+      const response = await fetch("/api/v1/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(trimmedValues),
+      });
+
+      const data = await response.json();
+
       setState(initialState);
-      toast.success("Successfully sent message!");
+      toast.success(data.message || "Successfully sent message!");
     } catch (error: any) {
       setState((prev) => ({
         ...prev,

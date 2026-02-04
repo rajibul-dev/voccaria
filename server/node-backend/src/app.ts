@@ -7,6 +7,7 @@ import connectDB from "./core/database/connect.js";
 import authRoutes from "./authentication/routes/authRoutes.js";
 import scheduleRoutes from "./scheduler/routes/schedulerRoutes.js";
 import userRoutes from "./authentication/routes/userRoutes.js";
+import contactRoutes from "./core/routes/contactRoutes.js";
 
 import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
@@ -120,6 +121,7 @@ app.use(passport.session());
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/schedule", scheduleRoutes);
+app.use("/api/v1/contact", contactRoutes);
 
 // Root route - indicates server is live
 app.get("/", (request: Request, response: Response) => {
