@@ -11,6 +11,9 @@ const nextConfig = {
 
   experimental: {
     optimizePackageImports: ["@mui/material", "@mui/icons-material"],
+    serverActions: {
+      allowedOrigins: ["dev.voccaria.com", "voccaria.com"],
+    },
   },
 
   images: {
