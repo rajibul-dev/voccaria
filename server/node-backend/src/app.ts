@@ -36,29 +36,28 @@ const apiLimiter = rateLimit({
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
 
-// const allowedOrigins = [
-//   "http://localhost:3000",
-//   "http://192.168.1.183:3000", // my local ip
-//   "https://voccaria.com",
-//   "https://dev.voccaria.com",
-//   undefined, // Allow requests with no origin (like mobile apps or curl requests)
-// ];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://voccaria.com",
+  "https://dev.voccaria.com",
+  undefined, // Allow requests with no origin (like mobile apps or curl requests)
+];
 
-// const corsOptions: cors.CorsOptions = {
-//   origin: function (origin, callback) {
-//     // Allow requests with no origin (like mobile apps or curl requests)
-//     if (!origin) return callback(null, true);
-//     if (allowedOrigins.indexOf(origin) === -1) {
-//       const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
-//       console.error(msg);
-//       return callback(new Error(msg), false);
-//     }
-//     return callback(null, true);
-//   },
-//   credentials: true,
-//   optionsSuccessStatus: 200,
-// };
-// app.use(cors(corsOptions));
+const corsOptions: cors.CorsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
+      console.error(msg);
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true,
+  optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 
 app.set("trust proxy", 1);
 app.use("/api/", apiLimiter);
@@ -159,7 +158,7 @@ const start = async () => {
 
   try {
     await connectDB(databaseUrl);
-    app.listen(PORT as number, "0.0.0.0", () => {
+    app.listen(PORT as number, () => {
       console.log(`✅ Server is running on http://localhost:${PORT}`);
     });
   } catch (error) {

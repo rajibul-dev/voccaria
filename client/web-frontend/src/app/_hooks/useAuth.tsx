@@ -12,14 +12,17 @@ const SPECIFIC_USER_QUERY_KEY = "specificUser";
 const PROVIDERS_QUERY_KEY = "avatarProviders";
 
 const apiCall = async (endpoint: string, options: RequestInit = {}) => {
-  const response = await fetch(`/api/v1${endpoint}`, {
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      ...options.headers,
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_ORIGIN}/api/v1${endpoint}`,
+    {
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        ...options.headers,
+      },
+      ...options,
     },
-    ...options,
-  });
+  );
 
   const text = await response.text();
   const data = text ? JSON.parse(text) : {};
@@ -44,12 +47,15 @@ export const fetchCurrentUser = async (
       headers["Cookie"] = cookieHeader;
     }
 
-    const response = await fetch("/api/v1/users/me", {
-      method: "GET",
-      headers,
-      credentials: "include",
-      cache: "no-store",
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_ORIGIN}/api/v1/users/me`,
+      {
+        method: "GET",
+        headers,
+        credentials: "include",
+        cache: "no-store",
+      },
+    );
 
     if (!response.ok) {
       if (response.status === 401 || response.status === 403) return null;
@@ -412,11 +418,14 @@ export const useUploadAvatar = () => {
       const formData = new FormData();
       formData.append("avatar", file);
 
-      const response = await fetch("/api/v1/users/me/avatar", {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_ORIGIN}/api/v1/users/me/avatar`,
+        {
+          method: "POST",
+          body: formData,
+          credentials: "include",
+        },
+      );
 
       if (!response.ok) {
         const text = await response.text();
