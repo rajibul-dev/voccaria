@@ -14,7 +14,7 @@ export async function sendPasswordResetLink({
 }: SendPasswordResetLinkInterface) {
   try {
     const result = await resend.emails.send({
-      from: "Voccaria <no-reply@voccaria.com>",
+      from: "Voccaria <no-reply@mail.voccaria.com>",
       to: [email],
       subject: "Link to reset your password",
       react: PasswordResetLink({ name, passwordLink }),

@@ -1,6 +1,6 @@
 import { resend } from "../libs/resend.js";
 
-const email = "Voccaria <messages@voccaria.com>";
+const email = "Voccaria <messages@mail.voccaria.com>";
 
 const mailOptions = {
   from: email,
