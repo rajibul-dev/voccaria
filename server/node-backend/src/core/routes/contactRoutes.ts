@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 import { StatusCodes } from "http-status-codes";
-import { sendContactEmail as sendContactEmail } from "../helpers/sendContactEmail.js";
+import { sendContactEmail } from "../helpers/sendContactEmail.js";
 
 const router = Router();
 
