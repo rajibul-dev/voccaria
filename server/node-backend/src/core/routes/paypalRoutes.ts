@@ -82,20 +82,23 @@ router.route("/").post(async function (request: Request, response: Response) {
 
   try {
     const emailResponse = await resend.emails.send({
-      from: "Voccaria <noreply@voccaria.com>",
-      to: [dataForEmail.payerEmail],
+      ...mailOptions,
       subject: `New lesson booking: ${dataForEmail.lessonName} for ${dataForEmail.amount}`,
       ...emailHtml,
     });
 
-    console.log("Payment notification email sent:", emailResponse.data.id);
+    console.log("Payment notification email sent successfully:", emailResponse);
 
     response
       .status(200)
-      .json({ success: true, message: "Payment details processed successfully" });
+      .json({
+        success: true,
+        message: "Payment details processed successfully",
+      });
   } catch (error) {
     console.error("Error sending email:", error);
-    response.status(500)
+    response
+      .status(500)
       .json({ success: false, message: "Failed to process payment details" });
   }
 });
