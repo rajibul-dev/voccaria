@@ -17,3 +17,5 @@
 .env.staging
 .env.db-root-creds
 .env.db-voccaria
+
+/personal-playground

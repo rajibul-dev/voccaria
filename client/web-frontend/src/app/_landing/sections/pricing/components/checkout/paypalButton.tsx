@@ -1,5 +1,6 @@
 "use client";
 
+import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
 import { useEffect, useRef } from "react";
 
 interface PaypalButtonProps {
@@ -15,7 +16,7 @@ const PaypalButton: React.FC<PaypalButtonProps> = ({
   name,
   onPaymentDetails,
 }) => {
-  const paypal = useRef<any>();
+  const paypal = useRef<any>("");
 
   useEffect(
     function () {
@@ -47,9 +48,31 @@ const PaypalButton: React.FC<PaypalButtonProps> = ({
             });
           },
           onApprove: function (data: any, actions: any) {
-            return actions.order.capture().then(function (details: any) {
-              console.log(details);
+            return actions.order.capture().then(async function (details: any) {
+              console.log("Details", details);
+              console.log("Data", data);
               onPaymentDetails(details);
+
+              try {
+                const response = await fetch(
+                  `${expressBackendBaseRESTOrigin}/paypal`,
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ details, data }),
+                  },
+                );
+
+                const result = await response.json();
+                console.log("Backend response:", result);
+              } catch (error: any) {
+                console.error(
+                  "Error sending payment details to backend:",
+                  error,
+                );
+              }
             });
           },
           onError(error: any) {
@@ -59,7 +82,7 @@ const PaypalButton: React.FC<PaypalButtonProps> = ({
         })
         .render(paypal.current);
     },
-    [amount, currencyCode, name, onPaymentDetails]
+    [amount, currencyCode, name, onPaymentDetails],
   );
 
   return <div style={{ marginBottom: "-10px" }} ref={paypal}></div>;
