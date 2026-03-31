@@ -46,7 +46,7 @@ router.route("/").post(async function (request: Request, response: Response) {
   const emailReportFieldNames = {
     lessonName: "Lesson name",
     amount: "Amount",
-    payer: "Payer name",
+    payer: "Bought by",
     payerEmail: "Payer email",
     paymentDate: "Payment date",
     paymentID: "Payment ID",
@@ -74,11 +74,11 @@ router.route("/").post(async function (request: Request, response: Response) {
     paymentStatus: details.status,
   };
 
-  const emailHtml = generateFieldBasedEmailHtml(
-    emailReportFieldNames,
-    dataForEmail,
-    `New paid lesson booking`,
-  );
+  const emailHtml = generateFieldBasedEmailHtml({
+    data: dataForEmail,
+    fields: emailReportFieldNames,
+    heading: `New paid lesson booking`,
+  });
 
   try {
     const emailResponse = await resend.emails.send({
@@ -89,12 +89,10 @@ router.route("/").post(async function (request: Request, response: Response) {
 
     console.log("Payment notification email sent successfully:", emailResponse);
 
-    response
-      .status(200)
-      .json({
-        success: true,
-        message: "Payment details processed successfully",
-      });
+    response.status(200).json({
+      success: true,
+      message: "Payment details processed successfully",
+    });
   } catch (error) {
     console.error("Error sending email:", error);
     response

@@ -2,11 +2,11 @@ function withHTMLLineBreaks(str: string) {
   return str.replace(/(\r\n|\r|\n)/g, "<br>");
 }
 
-export default function generateFieldBasedEmailHtml(
-  data: any,
-  fields: any,
-  heading: string = "New message from Voccaria",
-) {
+export default function generateFieldBasedEmailHtml({
+  data,
+  fields,
+  heading = "New message from Voccaria",
+}) {
   const stringData = Object.entries(data).reduce(
     (str, [key, val]) =>
       // @ts-ignore

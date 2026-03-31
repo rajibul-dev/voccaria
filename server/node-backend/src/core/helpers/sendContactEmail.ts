@@ -24,7 +24,7 @@ export async function sendContactEmail(data: {
   try {
     const info = await resend.emails.send({
       ...mailOptions,
-      ...generateFieldBasedEmailHtml(data, CONTACT_MESSAGE_FIELDS),
+      ...generateFieldBasedEmailHtml({ data, fields: CONTACT_MESSAGE_FIELDS }),
       ...(data.subject && { subject: data.subject }),
     });
 
