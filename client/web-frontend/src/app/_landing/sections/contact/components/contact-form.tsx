@@ -7,6 +7,7 @@ import Input from "@/app/_old-components/input";
 import styles from "./contact-form.module.css";
 import OldButton from "@/app/_old-components/button";
 import toast from "react-hot-toast";
+import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
 
 const initValues = { name: "", email: "", subject: "", message: "" };
 
@@ -54,7 +55,7 @@ export default function ContactForm() {
     }
 
     try {
-      const response = await fetch("/api/v1/contact", {
+      const response = await fetch(`${expressBackendBaseRESTOrigin}/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
