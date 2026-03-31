@@ -8,6 +8,7 @@ import authRoutes from "./authentication/routes/authRoutes.js";
 import scheduleRoutes from "./scheduler/routes/schedulerRoutes.js";
 import userRoutes from "./authentication/routes/userRoutes.js";
 import contactRoutes from "./core/routes/contactRoutes.js";
+import paypalRoutes from "./core/routes/paypalRoutes.js";
 
 import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
@@ -121,6 +122,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/schedule", scheduleRoutes);
 app.use("/api/v1/contact", contactRoutes);
+app.use("/api/v1/paypal", paypalRoutes);
 
 // Root route - indicates server is live
 app.get("/", (request: Request, response: Response) => {
@@ -133,6 +135,8 @@ app.get("/", (request: Request, response: Response) => {
       auth: "/api/v1/auth",
       users: "/api/v1/users",
       schedule: "/api/v1/schedule",
+      contact: "/api/v1/contact",
+      paypal: "/api/v1/paypal",
     },
   });
 });
