@@ -9,7 +9,6 @@ import {
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 // import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import streamElementsIcon from "/public/images/streamelements-logo.png";
 
 const discordIcon = (
   <FontAwesomeIcon icon={faDiscord} className={SocialsStyles.icon} />
@@ -44,7 +43,7 @@ const socialItems = [
     link: "https://www.twitch.tv/miavoiceteacher",
     expandedText: (
       <>
-        I stream every Saturday!
+        I stream every Thursday!
         <br />
         Vocal Coach Reacts!
       </>
@@ -75,9 +74,10 @@ const socialItems = [
     expandedText: "My tipping page",
     icon: (
       <Image
-        src={streamElementsIcon}
+        width={220}
+        height={100}
+        src="/images/streamelements-logo.png"
         alt="StreamElements logo"
-        placeholder="blur"
         className={SocialsStyles.streamElementsLogo}
         // sizes="(min-width: 1980px) 57px, 46px"
         priority

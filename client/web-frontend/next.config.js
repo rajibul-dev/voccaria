@@ -15,6 +15,11 @@ const nextConfig = {
       allowedOrigins: ["dev.voccaria.com", "voccaria.com"],
     },
   },
+
+  images: {
+    // Disable image optimization since we've compressed before putting it in here
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;

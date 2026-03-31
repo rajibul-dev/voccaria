@@ -6,7 +6,6 @@ import styles from "./scheduling.module.css";
 import HeadingPair from "@/app/_old-components/headingPair";
 
 // image
-import scheduleImage from "/public/images/schedule.jpg";
 import Image from "next/image";
 
 // scheduling button text and links
@@ -41,10 +40,11 @@ export default function Scheduling() {
         </div>
         <div className={styles.imageBox}>
           <Image
+            width={220}
+            height={100}
             className={styles.image}
-            src={scheduleImage}
+            src="/images/schedule.jpg"
             alt="Booking a date illustration art vector graphic"
-            placeholder="blur"
             blurDataURL="@/public/images/schedule.jpg"
           />
         </div>
