@@ -1,13 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack(config) {
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ["@svgr/webpack"],
-    });
-    return config;
+  turbopack: {
+    rules: {
+      "*.svg": {
+        loaders: ["@svgr/webpack"],
+        as: "*.js",
+      },
+    },
   },
-  productionBrowserSourceMaps: true, // Add this line.
+
+  experimental: {
+    optimizePackageImports: ["@mui/material", "@mui/icons-material"],
+    serverActions: {
+      allowedOrigins: ["dev.voccaria.com", "voccaria.com"],
+    },
+  },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
