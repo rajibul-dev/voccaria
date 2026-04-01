@@ -8,6 +8,9 @@ const nextConfig = {
     return config;
   },
   productionBrowserSourceMaps: true, // Add this line.
+  images: {
+    unoptimized: true,
+  },
 };
 
 module.exports = nextConfig;
