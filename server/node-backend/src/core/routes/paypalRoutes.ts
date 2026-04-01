@@ -29,10 +29,7 @@ const email = "Voccaria <payments@mail.voccaria.com>";
 
 const mailOptions = {
   from: email,
-  to: [
-    // "voccaria@gmail.com",
-    process.env.RAJI_EMAIL,
-  ],
+  to: ["voccaria@gmail.com", process.env.RAJI_EMAIL],
 };
 
 router.route("/").post(async function (request: Request, response: Response) {
