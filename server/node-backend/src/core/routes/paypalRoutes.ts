@@ -29,9 +29,10 @@ const email = "Voccaria <payments@mail.voccaria.com>";
 
 const mailOptions = {
   from: email,
-  to: ["voccaria@gmail.com", process.env.RAJI_EMAIL].filter(
-    (addr): addr is string => addr !== undefined,
-  ),
+  to: [
+    // "voccaria@gmail.com",
+    process.env.RAJI_EMAIL,
+  ].filter((addr): addr is string => addr !== undefined),
 };
 
 router.route("/").post(async function (request: Request, response: Response) {
