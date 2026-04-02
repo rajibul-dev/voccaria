@@ -158,12 +158,12 @@ app.post("/log", (request: Request, response: Response) => {
 app.use(errorHandlerMiddleware);
 
 const start = async () => {
-  const databaseUrl = process.env.DATABASE_URL;
+  const databaseUrl = process.env.DATABASE_URL as string;
 
   try {
     await connectDB(databaseUrl);
     app.listen(PORT as number, () => {
-      console.log(`✅ Server is running on http://localhost:${PORT}`);
+      console.log(`✅ Server is running on port ${PORT}`);
     });
   } catch (error) {
     console.log("❌ Error connecting to the database:", error);
