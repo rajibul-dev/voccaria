@@ -54,6 +54,8 @@ export default function ContactForm() {
       });
     }
 
+    console.log(trimmedValues);
+
     try {
       const response = await fetch(`${expressBackendBaseRESTOrigin}/contact`, {
         method: "POST",

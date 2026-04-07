@@ -5,7 +5,9 @@ const email = "Voccaria <messages@mail.voccaria.com>";
 
 const mailOptions = {
   from: email,
-  to: ["voccaria@gmail.com", process.env.RAJI_EMAIL],
+  to: ["voccaria@gmail.com", process.env.RAJI_EMAIL].filter(
+    (addr): addr is string => addr !== undefined,
+  ),
 };
 
 const CONTACT_MESSAGE_FIELDS = {
@@ -26,7 +28,7 @@ export async function sendContactEmail(data: {
       ...mailOptions,
       ...generateFieldBasedEmailHtml({ data, fields: CONTACT_MESSAGE_FIELDS }),
       ...(data.subject && { subject: data.subject }),
-    });
+    } as Parameters<typeof resend.emails.send>[0]);
 
     console.log("📧 Resend result:", info);
     return info;

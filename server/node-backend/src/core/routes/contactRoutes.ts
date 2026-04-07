@@ -20,7 +20,7 @@ router.post(
     try {
       const info = await sendContactEmail(data);
 
-      console.log("MAIL SENT:", info.data.id);
+      console.log("MAIL SENT:", info);
       return response
         .status(StatusCodes.OK)
         .json({ success: true, message: "Message sent successfully" });

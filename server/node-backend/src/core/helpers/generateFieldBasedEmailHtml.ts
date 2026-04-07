@@ -6,7 +6,11 @@ export default function generateFieldBasedEmailHtml({
   data,
   fields,
   heading = "New message from Voccaria",
-}) {
+}: {
+  data: Record<string, string>;
+  fields: Record<string, string>;
+  heading?: string;
+}): { text: string; html: string } {
   const stringData = Object.entries(data).reduce(
     (str, [key, val]) =>
       // @ts-ignore
