@@ -6,8 +6,9 @@ import { useState } from "react";
 import Input from "@/app/_old-components/input";
 import styles from "./contact-form.module.css";
 import Button from "@/app/_old-components/button";
-import { sendEmail } from "@/lib/sendEmailAPICall";
+// import { sendEmail } from "@/lib/sendEmailAPICall";
 import toast from "react-hot-toast";
+import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
 
 const initValues = { name: "", email: "", subject: "", message: "" };
 
@@ -30,7 +31,7 @@ export default function ContactForm() {
     }));
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setState((prev) => ({
       ...prev,
@@ -54,10 +55,21 @@ export default function ContactForm() {
       });
     }
 
+    console.log(trimmedValues);
+
     try {
-      sendEmail(trimmedValues);
+      const response = await fetch(`${expressBackendBaseRESTOrigin}/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(trimmedValues),
+      });
+
+      const data = await response.json();
+
       setState(initialState);
-      toast.success("Successfully sent message!");
+      toast.success(data.message || "Successfully sent message!");
     } catch (error: any) {
       setState((prev) => ({
         ...prev,
@@ -75,7 +87,7 @@ export default function ContactForm() {
       // method="POST"
     >
       {error && (
-        <span className="text-red-600 font-semibold inline-block !mb-5">
+        <span className="!mb-5 inline-block font-semibold text-red-600">
           {error}
         </span>
       )}
