@@ -1,5 +1,5 @@
 import { resend } from "../libs/resend.js";
-import EmailVerificationTemplate from "../emails/EmailVerification.js";
+import EmailVerificationTemplate from "../emails/emailVerification.js";
 
 interface SendVerificationEmailInterface {
   email: string;
