@@ -141,7 +141,10 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className={`${montserrat.className} antialiased dark:bg-gray-900`}>
+      <body
+        suppressHydrationWarning
+        className={`${montserrat.className} antialiased dark:bg-gray-900`}
+      >
         <SearchContextProviderWrapper>
           <Providers>
             <Navbar />
