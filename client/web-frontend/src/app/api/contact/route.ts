@@ -32,10 +32,9 @@ export async function POST(request: Request) {
       );
     }
 
-    const to = [
-      // "voccaria@gmail.com",
-      process.env.RAJI_EMAIL,
-    ].filter((address): address is string => Boolean(address));
+    const to = ["voccaria@gmail.com", process.env.RAJI_EMAIL].filter(
+      (address): address is string => Boolean(address),
+    );
 
     const mailOptions = {
       from: "Voccaria <messages@mail.voccaria.com>",
