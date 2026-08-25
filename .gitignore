@@ -18,3 +18,5 @@
 
 /private-batch-scripts
 /personal-playground
+**/git-report.txt
+**/dump-work.sh

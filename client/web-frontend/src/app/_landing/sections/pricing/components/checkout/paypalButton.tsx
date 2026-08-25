@@ -1,6 +1,5 @@
 "use client";
 
-import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
 import { useEffect, useRef } from "react";
 
 interface PaypalButtonProps {
@@ -67,16 +66,13 @@ const PaypalButton: React.FC<PaypalButtonProps> = ({
               onPaymentDetails(details);
 
               try {
-                const response = await fetch(
-                  `${expressBackendBaseRESTOrigin}/paypal`,
-                  {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ details, data }),
+                const response = await fetch("/api/paypal", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
                   },
-                );
+                  body: JSON.stringify({ details, data }),
+                });
 
                 const result = await response.json();
                 console.log("Backend response:", result);
