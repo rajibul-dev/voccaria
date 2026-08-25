@@ -1,8 +1,6 @@
-import { mailOptions, transporter } from "@/config/nodemailer";
-
-function withHTMLLineBreaks(str: string) {
-  return str.replace(/(\r\n|\r|\n)/g, "<br>");
-}
+import { NextResponse } from "next/server";
+import { resend } from "@/server/email/resend";
+import generateFieldBasedEmailHtml from "@/server/email/generateFieldBasedEmailHtml";
 
 const CONTACT_MESSAGE_FIELDS = {
   name: "Name",
@@ -11,54 +9,65 @@ const CONTACT_MESSAGE_FIELDS = {
   message: "Message",
 };
 
-const generateEmailContent = (data: any) => {
-  const stringData = Object.entries(data).reduce(
-    (str, [key, val]) =>
-      // @ts-ignore
-      (str += `${CONTACT_MESSAGE_FIELDS[key]}: \n${val} \n \n`),
-    "",
-  );
-  const htmlData = Object.entries(data).reduce((str, [key, val]) => {
-    switch (key) {
-      case "message":
-        return (str += `<h3 class="form-heading" align="left">${
-          CONTACT_MESSAGE_FIELDS[key]
-        }</h3><p class="form-answer" align="left">${
-          // @ts-ignore
-          withHTMLLineBreaks(val)
-        }</p>`);
-
-      default:
-        // @ts-ignore
-        return (str += `<h3 class="form-heading" align="left">${CONTACT_MESSAGE_FIELDS[key]}</h3><p class="form-answer" align="left">${val}</p>`);
-    }
-  }, "");
-
-  return {
-    text: stringData,
-    html: `<!DOCTYPE html><html> <head> <title></title> <meta charset="utf-8"/> <meta name="viewport" content="width=device-width, initial-scale=1"/> <meta http-equiv="X-UA-Compatible" content="IE=edge"/> <style type="text/css"> body, table, td, a{-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;}table{border-collapse: collapse !important;}body{height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important;}@media screen and (max-width: 525px){.wrapper{width: 100% !important; max-width: 100% !important;}.responsive-table{width: 100% !important;}.padding{padding: 10px 5% 15px 5% !important;}.section-padding{padding: 0 15px 50px 15px !important;}}.form-container{margin-bottom: 24px; padding: 20px; border: 1px dashed #ccc;}.form-heading{color: #2a2a2a; font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif; font-weight: 400; text-align: left; line-height: 20px; font-size: 18px; margin: 0 0 8px; padding: 0;}.form-answer{color: #2a2a2a; font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif; font-weight: 300; text-align: left; line-height: 20px; font-size: 16px; margin: 0 0 24px; padding: 0;}div[style*="margin: 16px 0;"]{margin: 0 !important;}</style> </head> <body style="margin: 0 !important; padding: 0 !important; background: #fff"> <div style=" display: none; font-size: 1px; color: #fefefe; line-height: 1px;  max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; " ></div><table border="0" cellpadding="0" cellspacing="0" width="100%"> <tr> <td bgcolor="#ffffff" align="center" style="padding: 10px 15px 30px 15px" class="section-padding" > <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px" class="responsive-table" > <tr> <td> <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td> <table width="100%" border="0" cellspacing="0" cellpadding="0" > <tr> <td style=" padding: 0 0 0 0; font-size: 16px; line-height: 25px; color: #232323; " class="padding message-content" > <h2 style="line-height: 1.5;">New message from Voccaria</h2> <div class="form-container">${htmlData}</div></td></tr></table> </td></tr></table> </td></tr></table> </td></tr></table> </body></html>`,
-  };
-};
-
-export async function POST(req: Request) {
-  const data = (await req.json()) as any;
-
-  if (!data.name || !data.email || !data.message) {
-    Response.json({ message: "Bad request" }, { status: 400 });
-  }
-
-  console.log(data);
-
+export async function POST(request: Request) {
   try {
-    await transporter.sendMail({
-      ...mailOptions,
-      ...generateEmailContent(data),
-      ...(data.subject && { subject: data.subject }),
-    });
+    const data = await request.json();
 
-    return Response.json({ success: true }, { status: 200 });
-  } catch (err: any) {
-    console.log(err);
-    return Response.json({ message: err.message });
+    if (!data?.name || !data?.email || !data?.message) {
+      return NextResponse.json(
+        { success: false, message: "Bad request" },
+        { status: 400 },
+      );
+    }
+
+    const name = String(data.name).trim();
+    const email = String(data.email).trim();
+    const message = String(data.message).trim();
+    const subject = typeof data.subject === "string" ? data.subject.trim() : "";
+
+    if (!name || !email || !message) {
+      return NextResponse.json(
+        { success: false, message: "Bad request" },
+        { status: 400 },
+      );
+    }
+
+    const to = ["voccaria@gmail.com", process.env.RAJI_EMAIL].filter(
+      (address): address is string => Boolean(address),
+    );
+
+    const mailOptions = {
+      from: "Voccaria <messages@mail.voccaria.com>",
+      to,
+      ...generateFieldBasedEmailHtml({
+        data: {
+          name,
+          email,
+          ...(subject && { subject }),
+          message,
+        },
+        fields: CONTACT_MESSAGE_FIELDS,
+      }),
+      ...(subject && { subject }),
+    };
+
+    const result = await resend.emails.send(mailOptions);
+
+    console.log("📧 Contact email sent:", result);
+
+    return NextResponse.json({
+      success: true,
+      message: "Message sent successfully",
+    });
+  } catch (error) {
+    console.error("Error sending contact email:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Failed to send message",
+      },
+      { status: 500 },
+    );
   }
 }

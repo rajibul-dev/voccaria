@@ -1,6 +1,5 @@
 "use client";
 
-import { expressBackendBaseRESTOrigin } from "@/_constants/backendOrigins";
 import { useEffect, useRef } from "react";
 
 interface PaypalButtonProps {
@@ -10,13 +9,24 @@ interface PaypalButtonProps {
   onPaymentDetails?: any;
 }
 
+interface PaypalPaymentDetails {
+  id: string;
+  intent: string;
+  status: string;
+  purchase_units: any[];
+  payer: any;
+  create_time: string;
+  update_time: string;
+  links: any[];
+}
+
 const PaypalButton: React.FC<PaypalButtonProps> = ({
   amount,
   currencyCode,
   name,
   onPaymentDetails,
 }) => {
-  const paypal = useRef<any>("");
+  const paypal = useRef<any>(null);
 
   useEffect(
     function () {
@@ -48,22 +58,21 @@ const PaypalButton: React.FC<PaypalButtonProps> = ({
             });
           },
           onApprove: function (data: any, actions: any) {
-            return actions.order.capture().then(async function (details: any) {
-              console.log("Details", details);
-              console.log("Data", data);
+            return actions.order.capture().then(async function (
+              details: PaypalPaymentDetails,
+            ) {
+              console.log("Details:", details);
+              console.log("Data:", data);
               onPaymentDetails(details);
 
               try {
-                const response = await fetch(
-                  `${expressBackendBaseRESTOrigin}/paypal`,
-                  {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ details, data }),
+                const response = await fetch("/api/paypal", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
                   },
-                );
+                  body: JSON.stringify({ details, data }),
+                });
 
                 const result = await response.json();
                 console.log("Backend response:", result);

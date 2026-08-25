@@ -19,3 +19,6 @@
 .env.db-voccaria
 
 /personal-playground
+
+**/git-report.txt
+**/dump-work.sh
