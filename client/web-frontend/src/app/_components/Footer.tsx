@@ -132,12 +132,12 @@ export default function Footer() {
               { "max-[1500px]:text-start": isPostPage },
             )}
           >
-            This website is designed and built by{" "}
+            Website design & development by{" "}
             <a
               className="text-my-pink-600 hover:text-my-pink-500 dark:text-my-pink-300 dark:hover:text-my-pink-400 font-medium transition-colors"
               target="_blank"
-              rel="noopener noreferrer"
-              href="https://rajibuldev.notion.site/Portfolio-Rajibul-Islam-2327bdc1208c80009642f71a54f616ee?pvs=74"
+              rel="noopener"
+              href="https://rajidev.com/"
             >
               Rajibul Islam
             </a>
