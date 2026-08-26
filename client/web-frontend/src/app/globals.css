@@ -80,6 +80,7 @@
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
+@custom-variant hover (&:hover);
 
 .header-margin {
   margin-top: 11rem;
