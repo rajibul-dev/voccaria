@@ -94,7 +94,7 @@ export default function OldFooter() {
               wantDarkFooter && "dark:text-gray-300",
             )}
           >
-            This website is designed and built by{" "}
+            Website design & development by{" "}
             <a
               className={clsx(
                 "text-my-pink-600 hover:text-my-pink-500 font-medium transition-colors",
@@ -102,8 +102,8 @@ export default function OldFooter() {
                   "dark:text-my-pink-300 dark:hover:text-my-pink-400",
               )}
               target="_blank"
-              rel="noopener noreferrer"
-              href="https://rajibuldev.notion.site/Portfolio-Rajibul-Islam-2327bdc1208c80009642f71a54f616ee?pvs=74"
+              rel="noopener"
+              href="https://rajidev.com/"
             >
               Rajibul Islam
             </a>
