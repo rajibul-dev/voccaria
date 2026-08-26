@@ -83,6 +83,7 @@
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
+@custom-variant hover (&:hover);
 
 @layer components {
   .manual-auth-btn {
