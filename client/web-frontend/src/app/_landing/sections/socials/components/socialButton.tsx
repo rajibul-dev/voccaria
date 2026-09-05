@@ -1,6 +1,10 @@
+"use client";
+
 // styles
 import socialButtonStyles from "./social-button.module.css";
+// @ts-ignore
 import "./odds.css";
+import { analytics, ExternalDestination } from "@/_libs/analytics";
 
 interface SocialButtonProps {
   icon: any;
@@ -8,6 +12,7 @@ interface SocialButtonProps {
   backgroundColor: string;
   className: string;
   link: string;
+  destination: ExternalDestination;
 }
 
 const socialButton: React.FC<SocialButtonProps> = ({
@@ -16,6 +21,7 @@ const socialButton: React.FC<SocialButtonProps> = ({
   backgroundColor,
   className,
   link,
+  destination,
 }) => {
   const styles = {
     backgroundColor,
@@ -31,6 +37,7 @@ const socialButton: React.FC<SocialButtonProps> = ({
       rel="noopener noreferrer"
       style={{ ...styles }}
       className={`${className} ${socialButtonStyles.button}`}
+      onClick={() => analytics.externalLinkClicked(destination, "socials")}
     >
       <span className={`icon-box ${socialButtonStyles.iconBox}`}>{icon}</span>
       <span className={`text ${socialButtonStyles.text}`}>{text}</span>

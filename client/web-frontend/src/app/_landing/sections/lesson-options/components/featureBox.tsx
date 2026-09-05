@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import SubtleInfo from "@/app/_old-components/subtle-info";
 import { ReactNode } from "react";
+import type { ExternalDestination } from "@/_libs/analytics";
+import TrackedExternalLink from "@/app/_components/TrackedExternalLink";
 
 const circleIcon = <FontAwesomeIcon icon={faCircle} className={styles.icon} />;
 
@@ -13,7 +15,7 @@ const circleIcon = <FontAwesomeIcon icon={faCircle} className={styles.icon} />;
 interface FeatureBoxProps {
   heading: string;
   listItems: string[];
-  button: { text: string; link: string };
+  button: { text: string; link: string; destination: ExternalDestination };
   brandColor?: boolean;
   lightInfo?: string | React.ReactNode;
   children?: ReactNode;
@@ -44,14 +46,15 @@ const FeatureBox: React.FC<FeatureBoxProps> = ({
           })}
         </ul>
         {children}
-        <a
+        <TrackedExternalLink
           className={`goto-paragraph ${styles.btn}`}
           href={button.link}
-          target="_blank"
-          rel="noopener noreferrer"
+          destination={button.destination}
+          sourceSection="lesson-options"
         >
           {button.text}
-        </a>
+        </TrackedExternalLink>
+
         {lightInfo && (
           <SubtleInfo mode="dark" className={styles.lightInfo}>
             {lightInfo}

@@ -6,11 +6,13 @@ import Modal from "@/app/_old-components/modal";
 import Button from "@/app/_old-components/button";
 
 import styles from "./client-checkout-modal-window.module.css";
+import { analytics, ProductId } from "@/_libs/analytics";
 
 const ItemDetails = dynamic(() => import("./item-details"));
 
 // Define the interface for props
 interface ClientCheckoutPopupProps {
+  productId: ProductId;
   amount: number;
   name: string;
   price: string;
@@ -19,6 +21,7 @@ interface ClientCheckoutPopupProps {
 }
 
 export default function ClientCheckoutModalWindow({
+  productId,
   currency = "",
   amount,
   name,
@@ -34,12 +37,21 @@ export default function ClientCheckoutModalWindow({
   return (
     <Modal>
       <Modal.Open opens="payment-checkout">
-        <Button isBlock={true} type="primary" size="big" className={styles.btn}>
+        <Button
+          onClick={() =>
+            analytics.checkoutStarted(productId, amount, currency.toUpperCase())
+          }
+          isBlock={true}
+          type="primary"
+          size="big"
+          className={styles.btn}
+        >
           Buy now
         </Button>
       </Modal.Open>
       <Modal.Window name="payment-checkout" heading={modalHeading}>
         <ItemDetails
+          productId={productId}
           currency={currency}
           amount={amount}
           name={name}

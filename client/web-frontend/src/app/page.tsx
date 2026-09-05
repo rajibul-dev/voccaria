@@ -11,10 +11,13 @@ import Testimonials from "./_landing/sections/testimonials/testimonials";
 import Mission from "./_landing/sections/mission/mission";
 import SeoPurposeH1 from "./_landing/sections/seo-purpose-h1/seo-purpose-h1";
 import OldFooter from "./_old-components/old-footer";
+import SectionViewAnalytics from "./_components/SectionViewAnalytics";
 
 export default function Page() {
   return (
     <>
+      <SectionViewAnalytics />
+
       <main className="bg-white min-[450px]:pb-[12rem]">
         <SeoPurposeH1 />
         <About />
@@ -28,6 +31,7 @@ export default function Page() {
         <Testimonials />
         <Patreon />
       </main>
+
       <OldFooter />
       {/* <BackToTop /> */}
     </>

@@ -4,6 +4,7 @@ import styles from "./pricing-cards.module.css";
 // components
 import PricingCardItem from "./pricing-card-item";
 import React from "react";
+import type { ProductId } from "@/_libs/analytics";
 
 // typescript type definition
 interface PricingDetails {
@@ -12,6 +13,7 @@ interface PricingDetails {
   amount: number;
   heading: string;
   description: string | React.ReactNode | null;
+  productId: ProductId;
   recommended?: boolean;
   className?: string;
   moreDescription?: string;
@@ -38,6 +40,7 @@ const PricingCards: React.FC<PricingCardsProps> = ({ pricingDetails }) => {
           isRecommended={item?.recommended ?? false}
           currency={item.currency}
           amount={item.amount}
+          productId={item.productId}
           className={item?.className}
           moreDescription={item?.moreDescription}
           recommendedRow={item?.recommendedRow}

@@ -6,8 +6,9 @@ import { useState } from "react";
 import Input from "@/app/_old-components/input";
 import styles from "./contact-form.module.css";
 import Button from "@/app/_old-components/button";
-// import { sendEmail } from "@/lib/sendEmailAPICall";
+// import { sendEmail } from "@/_libs/sendEmailAPICall";
 import toast from "react-hot-toast";
+import { analytics } from "@/_libs/analytics";
 
 const initValues = { name: "", email: "", subject: "", message: "" };
 
@@ -66,6 +67,8 @@ export default function ContactForm() {
       });
 
       const data = await response.json();
+
+      analytics.contactSubmitted();
 
       setState(initialState);
       toast.success(data.message || "Successfully sent message!");

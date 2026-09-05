@@ -35,12 +35,14 @@ import SocialsStyles from "./socials.module.css";
 // components
 import SocialButton from "./components/socialButton";
 import Image from "next/image";
+import { ExternalDestination } from "@/_libs/analytics";
 
 // social items object
 const socialItems = [
   {
     name: "twitch",
     link: "https://www.twitch.tv/miavoiceteacher",
+    destination: "twitch" as ExternalDestination,
     expandedText: (
       <>
         I stream every Thursday!
@@ -55,6 +57,7 @@ const socialItems = [
   {
     name: "youtube",
     link: "https://www.youtube.com/channel/UCP81Xp_j1hK2w1DbVvuItmQ",
+    destination: "youtube" as ExternalDestination,
     expandedText: "My YouTube Channel",
     icon: youtubeIcon,
     bgColor: "#FF0000",
@@ -63,6 +66,7 @@ const socialItems = [
   {
     name: "patreon",
     link: "https://www.patreon.com/MiaVoiceTeacher",
+    destination: "patreon" as ExternalDestination,
     expandedText: "My Patreon",
     icon: patreonIcon,
     bgColor: "#f96854",
@@ -71,6 +75,7 @@ const socialItems = [
   {
     name: "streamelements",
     link: "https://streamelements.com/miavoiceteacher/tip",
+    destination: "streamelements" as ExternalDestination,
     expandedText: "My tipping page",
     icon: (
       <Image
@@ -89,6 +94,7 @@ const socialItems = [
   {
     name: "discord",
     link: "http://discordapp.com/users/140513822069882881",
+    destination: "discord" as ExternalDestination,
     expandedText: "Contact me on Discord",
     icon: discordIcon,
     bgColor: "#5865f2",
@@ -111,6 +117,7 @@ export default function socials() {
             backgroundColor={item.bgColor}
             link={item.link}
             className={item.name}
+            destination={item.destination}
           />
         ))}
       </div>

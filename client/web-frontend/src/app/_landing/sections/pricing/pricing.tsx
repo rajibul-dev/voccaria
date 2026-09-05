@@ -9,12 +9,38 @@ import PricingCards from "./components/pricing-cards";
 import { useCountdown, makeCountdownString } from "@/app/_hooks/useCountdown";
 import { useEffect, useState } from "react";
 import { addSeconds } from "date-fns";
+import type { ProductId } from "@/_libs/analytics";
 
 // create the pricing credentials object (temp)
 
-const pricingDetails = [
+// products ids
+// | "recording_review"
+// | "lesson_30"
+// | "lesson_60"
+// | "lesson_30_pack_4"
+// | "lesson_60_pack_4";
+
+interface PricingDetails {
+  currency: string;
+  currencySymbol: string;
+  amount: number;
+  heading: string;
+  description: string | React.ReactNode | null;
+  productId: ProductId;
+  recommended?: boolean;
+  className?: string;
+  moreDescription?: string;
+  recommendedRow?: boolean;
+  importantInfo?: {
+    label?: string;
+    description: string | React.ReactNode;
+  };
+}
+
+const pricingDetails: PricingDetails[] = [
   // Euro dollar instences
   {
+    productId: "recording_review",
     currency: "eur",
     currencySymbol: "€",
     amount: 50,
@@ -27,6 +53,7 @@ const pricingDetails = [
       "Send your recordings and a detailed description of the sound and style you're aiming for to begin your customized vocal journey!",
   },
   {
+    productId: "lesson_30",
     currency: "eur",
     currencySymbol: "€",
     amount: 45,
@@ -34,6 +61,7 @@ const pricingDetails = [
     description: "A short session to get you going in the right direction!",
   },
   {
+    productId: "lesson_60",
     currency: "eur",
     currencySymbol: "€",
     amount: 80,
@@ -42,6 +70,7 @@ const pricingDetails = [
       "Enough time for us to give plenty of attention to technique, supervised practice and/or song work!",
   },
   {
+    productId: "lesson_30_pack_4",
     currency: "eur",
     currencySymbol: "€",
     amount: 140,
@@ -50,6 +79,7 @@ const pricingDetails = [
     recommendedRow: true,
   },
   {
+    productId: "lesson_60_pack_4",
     currency: "eur",
     currencySymbol: "€",
     amount: 280,
@@ -60,9 +90,10 @@ const pricingDetails = [
   },
 ];
 
-const newPricingDetails = [
+const newPricingDetails: PricingDetails[] = [
   // Euro dollar instences
   {
+    productId: "recording_review",
     currency: "eur",
     currencySymbol: "€",
     amount: 50,
@@ -92,6 +123,7 @@ const newPricingDetails = [
     },
   },
   {
+    productId: "lesson_30",
     currency: "eur",
     currencySymbol: "€",
     amount: 50,
@@ -99,6 +131,7 @@ const newPricingDetails = [
     description: "A short session to get you going in the right direction!",
   },
   {
+    productId: "lesson_60",
     currency: "eur",
     currencySymbol: "€",
     amount: 90,
@@ -107,6 +140,7 @@ const newPricingDetails = [
       "Enough time for us to give plenty of attention to technique, supervised practice and/or song work!",
   },
   {
+    productId: "lesson_30_pack_4",
     currency: "eur",
     currencySymbol: "€",
     amount: 160,
@@ -115,6 +149,7 @@ const newPricingDetails = [
     recommendedRow: true,
   },
   {
+    productId: "lesson_60_pack_4",
     currency: "eur",
     currencySymbol: "€",
     amount: 320,

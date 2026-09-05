@@ -4,6 +4,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import TwoLogosAndSlash from "./TwoLogosAndSlash";
 import { usePathname } from "next/navigation";
+import { analytics, ExternalDestination } from "@/_libs/analytics";
 
 export const footerLinks = [
   {
@@ -15,31 +16,49 @@ export const footerLinks = [
       {
         name: "Apply for paid lessons",
         href: "https://docs.google.com/forms/d/1dW-N6xyf7ATc6zCIL0rR1I63EN4A4U6JghhPA6xi2pM/viewform?edit_requested=true",
+        destination:
+          "private_paid_lesson_application_form" as ExternalDestination,
       },
       { name: "Buy paid lessons", href: "/#pricing" },
       {
         name: "Schedule a lesson",
         href: "https://calendly.com/miavocalcoach/gen-availability?month=2025-05",
+        destination: "calendly" as ExternalDestination,
       },
     ],
   },
   {
     section: "Socials",
     links: [
-      { name: "Discord server", href: "https://discord.gg/dx4sruQVBF" },
-      { name: "Twitch", href: "https://www.twitch.tv/miavoiceteacher" },
+      {
+        name: "Discord server",
+        href: "https://discord.gg/dx4sruQVBF",
+        destination: "discord_server" as ExternalDestination,
+      },
+      {
+        name: "Twitch",
+        href: "https://www.twitch.tv/miavoiceteacher",
+        destination: "twitch" as ExternalDestination,
+      },
       {
         name: "YouTube",
         href: "https://www.youtube.com/channel/UCP81Xp_j1hK2w1DbVvuItmQ",
+        destination: "youtube" as ExternalDestination,
       },
-      { name: "Patreon", href: "https://www.patreon.com/MiaVoiceTeacher" },
+      {
+        name: "Patreon",
+        href: "https://www.patreon.com/MiaVoiceTeacher",
+        destination: "patreon" as ExternalDestination,
+      },
       {
         name: "Mia’s discord",
         href: "http://discordapp.com/users/140513822069882881",
+        destination: "mia_discord_profile" as ExternalDestination,
       },
       {
         name: "Mia’s tipping page",
         href: "https://streamelements.com/miavoiceteacher/tip",
+        destination: "streamelements" as ExternalDestination,
       },
     ],
   },
@@ -106,6 +125,14 @@ export default function Footer() {
                       className="text-sm leading-[.5px] text-gray-700 transition-colors hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => {
+                        if (link.destination) {
+                          analytics.externalLinkClicked(
+                            link.destination,
+                            "footer",
+                          );
+                        }
+                      }}
                     >
                       {link.name}
                     </Link>
@@ -138,6 +165,9 @@ export default function Footer() {
               target="_blank"
               rel="noopener"
               href="https://rajidev.com/"
+              onClick={() =>
+                analytics.externalLinkClicked("raji_personal_website", "footer")
+              }
             >
               Rajibul Islam
             </a>

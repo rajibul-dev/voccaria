@@ -6,6 +6,7 @@ import styles from "./mission.module.css";
 // components
 import HeadingPair from "@/app/_old-components/headingPair";
 import { Essay } from "@/app/_old-components/essay";
+import TrackedExternalLink from "@/app/_components/TrackedExternalLink";
 
 export default function Mission() {
   return (
@@ -30,14 +31,14 @@ export default function Mission() {
               <strong>providing FREE lessons</strong> without any gimmicks or
               attempts to sell a program. I have shared my unique approaches
               entirely free of charge on the{" "}
-              <a
+              <TrackedExternalLink
                 className="inline-a"
                 href="https://discord.gg/dx4sruQVBF"
-                target="_blank"
-                rel="noopener noreferrer"
+                destination="discord_server"
+                sourceSection="mission"
               >
                 Discord server I created
-              </a>
+              </TrackedExternalLink>
               , which currently has over 10,000 members.
             </Essay.Para>
             <Essay.Para>

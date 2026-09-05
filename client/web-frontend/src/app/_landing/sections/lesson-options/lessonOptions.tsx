@@ -10,6 +10,7 @@ const lessonOptionsObj = {
     button: {
       text: "Get Free Lessons at One Voice",
       link: "https://discord.gg/dx4sruQVBF",
+      destination: "discord_server" as ExternalDestination,
     },
   },
   paid: {
@@ -23,6 +24,8 @@ const lessonOptionsObj = {
     button: {
       text: "Apply for Private Paid Lessons",
       link: "https://docs.google.com/forms/d/1dW-N6xyf7ATc6zCIL0rR1I63EN4A4U6JghhPA6xi2pM/viewform?edit_requested=true",
+      destination:
+        "private_paid_lesson_application_form" as ExternalDestination,
     },
     lightInfo: (
       <>
@@ -41,6 +44,7 @@ import styles from "./lessonOptions.module.css";
 import HeadingPair from "@/app/_old-components/headingPair";
 import FeatureBox from "./components/featureBox";
 import ScrollToPricingBtn from "./components/scrollToPricingBtn";
+import { ExternalDestination } from "@/_libs/analytics";
 
 export default function LessonOptions() {
   return (
