@@ -16,6 +16,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import OldButton from "@/app/_old-components/button";
 import dynamic from "next/dynamic";
+import { ProductId } from "@/_libs/analytics";
 
 const checkIcon = (
   <FontAwesomeIcon icon={faCircleCheck} className={styles.checkIcon} />
@@ -33,6 +34,7 @@ interface ItemDetailsProps {
   onCloseModal?: any;
   setShowCloseIcon?: any;
   moreDescription?: string;
+  productId: ProductId;
 }
 
 const ItemDetails: React.FC<ItemDetailsProps> = ({
@@ -44,6 +46,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
   onCloseModal,
   setShowCloseIcon,
   moreDescription = null,
+  productId,
 }) => {
   const [paymentDetails, setPaymentDetails] = useState<any>(null);
   const isPaymentSuccessful = paymentDetails?.status === "COMPLETED";
@@ -178,6 +181,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
 
       {!isPaymentSuccessful ? (
         <PaypalButton
+          productId={productId}
           name={name}
           currencyCode={currency.toUpperCase()}
           amount={amount}

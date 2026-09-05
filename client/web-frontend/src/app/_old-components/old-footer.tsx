@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import { footerLinks } from "../_components/Footer";
 import OldTwoLogosAndSlash from "../_components/old-two-logo-and-slash";
+import { analytics } from "@/_libs/analytics";
 
 export const wantDarkFooter = false; // for old landing page
 
@@ -71,6 +72,14 @@ export default function OldFooter() {
                       )}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => {
+                        if (link.destination) {
+                          analytics.externalLinkClicked(
+                            link.destination,
+                            "footer",
+                          );
+                        }
+                      }}
                     >
                       {link.name}
                     </Link>
@@ -104,6 +113,9 @@ export default function OldFooter() {
               target="_blank"
               rel="noopener"
               href="https://rajidev.com/"
+              onClick={() =>
+                analytics.externalLinkClicked("raji_personal_website", "footer")
+              }
             >
               Rajibul Islam
             </a>

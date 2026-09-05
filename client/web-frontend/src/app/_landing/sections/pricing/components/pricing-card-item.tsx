@@ -1,13 +1,14 @@
 import React from "react";
 
-// styles
 import Modal from "@/app/_old-components/modal";
-import styles from "./pricing-card-item.module.css";
 import dynamic from "next/dynamic";
 
+// styles
+import styles from "./pricing-card-item.module.css";
+
 // components
-import OldButton from "@/app/_old-components/button";
 import Button from "@/app/_components/Button";
+import { ProductId } from "@/_libs/analytics";
 
 const ClientCheckoutModalWindow = dynamic(
   () => import("./checkout/client-checkout-modal-window"),
@@ -27,6 +28,7 @@ interface PricingCardItemProps {
     label?: string;
     description: string | React.ReactNode;
   };
+  productId: ProductId;
 }
 
 const PricingCardItem: React.FC<PricingCardItemProps> = ({
@@ -40,6 +42,7 @@ const PricingCardItem: React.FC<PricingCardItemProps> = ({
   moreDescription,
   recommendedRow,
   importantInfo,
+  productId,
 }) => {
   const nameSlittedArray = name.split(" ");
   const sliceFirstPart = nameSlittedArray.slice(0, -2).join(" ");
@@ -100,6 +103,7 @@ const PricingCardItem: React.FC<PricingCardItemProps> = ({
         )}
 
         <ClientCheckoutModalWindow
+          productId={productId}
           amount={amount}
           currency={currency}
           moreDescription={moreDescription}

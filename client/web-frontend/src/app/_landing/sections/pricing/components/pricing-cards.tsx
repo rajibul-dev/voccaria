@@ -4,9 +4,11 @@ import styles from "./pricing-cards.module.css";
 // components
 import PricingCardItem from "./pricing-card-item";
 import React from "react";
+import { ProductId } from "@/_libs/analytics";
 
 // typescript type definition
 interface PricingDetails {
+  productId: ProductId;
   currency: string;
   currencySymbol: string;
   amount: number;
@@ -31,6 +33,7 @@ const PricingCards: React.FC<PricingCardsProps> = ({ pricingDetails }) => {
     <ul className={styles.grid}>
       {pricingDetails.map((item) => (
         <PricingCardItem
+          productId={item.productId}
           name={item.heading}
           price={`${item.currencySymbol}${item.amount}`}
           key={item.heading}

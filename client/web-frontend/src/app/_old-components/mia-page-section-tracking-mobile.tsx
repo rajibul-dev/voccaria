@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import MenuIcon from "@/_assets/icons/menu.svg";
 import { createPortal } from "react-dom";
 import useOutsideClick from "@/app/_hooks/useOutsideClick";
+import { analytics, type SectionId } from "@/_libs/analytics";
 
 // components
 const Overlay = dynamic(() => import("@/app/_old-components/overlay"));
@@ -56,6 +57,8 @@ const MiaPageSectionTrackingMobile: React.FC<
   }, [navOpen]);
 
   function handleClick(selector: string) {
+    analytics.sectionNavigationClicked(selector as SectionId);
+
     const element = document?.getElementById(selector);
     const headerOffset =
       document?.querySelector("header")?.getBoundingClientRect().height || 0;

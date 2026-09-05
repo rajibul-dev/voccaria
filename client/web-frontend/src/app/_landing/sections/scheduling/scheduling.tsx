@@ -1,4 +1,5 @@
 // styles
+import { ExternalDestination } from "@/_libs/analytics";
 import ScheduleButtons from "./components/schedule-buttons";
 import styles from "./scheduling.module.css";
 
@@ -16,6 +17,7 @@ const schedulingData = [
       "This is my general availability for the free & paid lessons. Please contact me on Discord before you schedule.",
     link: "https://calendly.com/miavocalcoach/gen-availability",
     buttonLabel: "To Calendly",
+    destination: "calendly" as ExternalDestination,
   },
   {
     name: "Schedule from Discord",
@@ -23,6 +25,7 @@ const schedulingData = [
       "Clicking this will open my Discord profile mia0006. We can decide a time for our lessons from there.",
     link: "https://discord.com/users/140513822069882881",
     buttonLabel: "To my Discord",
+    destination: "mia_discord_profile" as ExternalDestination,
   },
 ];
 

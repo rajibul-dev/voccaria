@@ -1,6 +1,7 @@
 // styles
-import OldButton from "@/app/_old-components/button";
 import styles from "./schedule-buttons.module.css";
+import { ExternalDestination } from "@/_libs/analytics";
+import TrackedExternalLink from "@/app/_components/TrackedExternalLink";
 
 interface ScheduleButtonsProps {
   schedulingData: {
@@ -8,6 +9,7 @@ interface ScheduleButtonsProps {
     description: string;
     link: string;
     buttonLabel: string;
+    destination: ExternalDestination;
   }[];
 }
 
@@ -18,18 +20,18 @@ const ScheduleButtons: React.FC<ScheduleButtonsProps> = ({
     <div className={styles.wrapper}>
       {schedulingData.map((item) => {
         return (
-          <a
+          <TrackedExternalLink
             className={styles.item}
             key={item.name}
             href={item.link}
-            target="_blank"
-            rel="noopener noreferrer"
+            destination={item.destination}
+            sourceSection="scheduling"
           >
             <h3 className={`heading-h3 ${styles.heading}`}>{item.name}</h3>
             <p className={`goto-paragraph ${styles.description}`}>
               {item.description}
             </p>
-          </a>
+          </TrackedExternalLink>
         );
       })}
     </div>

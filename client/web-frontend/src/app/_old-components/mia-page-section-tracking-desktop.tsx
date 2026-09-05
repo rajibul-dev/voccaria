@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { analytics, type SectionId } from "@/_libs/analytics";
 
 // styles
 import styles from "./mia-page-section-tracking-desktop.module.css";
@@ -22,7 +23,7 @@ const MiaPageSectionTrackingDesktop: React.FC<
     // Find elements
     links.forEach((link) => {
       sectionRefs.current[link.selector] = document?.getElementById(
-        link.selector
+        link.selector,
       ) as HTMLDivElement; // Assume sections are divs
     });
 
@@ -57,6 +58,8 @@ const MiaPageSectionTrackingDesktop: React.FC<
   }, [links, clicked]);
 
   function handleClick(link: string) {
+    analytics.sectionNavigationClicked(link as SectionId);
+
     clearTimeout(scrollTimeout);
     setActive(link);
     setClicked(true);

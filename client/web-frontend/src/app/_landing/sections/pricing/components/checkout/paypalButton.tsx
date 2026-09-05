@@ -1,5 +1,6 @@
 "use client";
 
+import { analytics, ProductId } from "@/_libs/analytics";
 import { useEffect, useRef } from "react";
 
 interface PaypalButtonProps {
@@ -7,6 +8,7 @@ interface PaypalButtonProps {
   currencyCode: string;
   name: string;
   onPaymentDetails?: any;
+  productId: ProductId;
 }
 
 interface PaypalPaymentDetails {
@@ -25,6 +27,7 @@ const PaypalButton: React.FC<PaypalButtonProps> = ({
   currencyCode,
   name,
   onPaymentDetails,
+  productId,
 }) => {
   const paypal = useRef<any>(null);
 
@@ -65,6 +68,12 @@ const PaypalButton: React.FC<PaypalButtonProps> = ({
               console.log("Data:", data);
               onPaymentDetails(details);
 
+              analytics.paypalApproved(
+                productId,
+                amount,
+                currencyCode.toUpperCase(),
+              );
+
               try {
                 const response = await fetch("/api/paypal", {
                   method: "POST",
@@ -82,11 +91,20 @@ const PaypalButton: React.FC<PaypalButtonProps> = ({
                   error,
                 );
               }
+
+              if (details.status === "COMPLETED") {
+                analytics.paymentCompleted(
+                  productId,
+                  amount,
+                  currencyCode.toUpperCase(),
+                );
+              }
             });
           },
           onError(error: any) {
             onPaymentDetails({ status: "FAILED", error });
             console.error(error);
+            analytics.paymentFailed(productId);
           },
         })
         .render(paypal.current);
