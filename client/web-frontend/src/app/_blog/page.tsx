@@ -15,7 +15,7 @@ import {
   getPaginatedBlogPosts,
   getPostsInCategoryByIndex,
   getTotalBlogPostsCount,
-} from "@/lib/sanityFetchers";
+} from "@/_libs/sanityFetchers";
 import Footer from "../_components/Footer";
 
 export const revalidate = 0; // for now

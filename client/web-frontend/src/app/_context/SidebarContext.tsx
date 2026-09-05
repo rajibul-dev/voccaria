@@ -11,7 +11,7 @@ import {
 import {
   getAllCategories,
   getPostsInCategoryByIndex,
-} from "@/lib/sanityFetchers";
+} from "@/_libs/sanityFetchers";
 import { BlogPost, Category } from "@/models/blogInterfaces";
 
 interface SidebarData {

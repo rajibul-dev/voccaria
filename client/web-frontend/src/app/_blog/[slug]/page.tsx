@@ -2,7 +2,7 @@ import BackButton from "@/app/_components/BackButton";
 import BlogPost from "@/app/_components/BlogPost";
 import KeepTrackOfLastRead from "@/app/_components/KeepTrackOfLastRead";
 import Spinner from "@/app/_components/Spinner";
-import { getAllBlogPosts, getPost } from "@/lib/sanityFetchers";
+import { getAllBlogPosts, getPost } from "@/_libs/sanityFetchers";
 import { Metadata } from "next";
 import { Suspense } from "react";
 

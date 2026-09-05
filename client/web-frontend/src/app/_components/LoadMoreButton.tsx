@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { getPaginatedBlogPosts } from "@/lib/sanityFetchers";
+import { getPaginatedBlogPosts } from "@/_libs/sanityFetchers";
 import { BlogPost } from "@/models/blogInterfaces";
 import Link from "next/link";
-import { formatDateTime } from "@/lib/dateFns";
+import { formatDateTime } from "@/_libs/dateFns";
 
 // Define the prop type
 interface LoadMoreButtonProps {

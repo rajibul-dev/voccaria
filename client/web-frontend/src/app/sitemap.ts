@@ -1,4 +1,4 @@
-import { getAllBlogPosts } from "@/lib/sanityFetchers";
+import { getAllBlogPosts } from "@/_libs/sanityFetchers";
 import { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useCategorizedPosts } from "./CategorizedPostsClient";
 import Link from "next/link";
-import { formatDateTime } from "@/lib/dateFns";
+import { formatDateTime } from "@/_libs/dateFns";
 
 const INITIAL_LIMIT = 5;
 const LOAD_MORE_LIMIT = 10;

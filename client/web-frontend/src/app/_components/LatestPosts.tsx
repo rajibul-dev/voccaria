@@ -1,8 +1,8 @@
-import { formatDateTime } from "@/lib/dateFns";
+import { formatDateTime } from "@/_libs/dateFns";
 import {
   getPaginatedBlogPosts,
   getTotalBlogPostsCount,
-} from "@/lib/sanityFetchers";
+} from "@/_libs/sanityFetchers";
 import Link from "next/link";
 import LoadMoreButton from "./LoadMoreButton";
 

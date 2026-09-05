@@ -4,7 +4,7 @@ import {
   getAllBlogPostsForSearch,
   getAllCategories,
   getFirstPostSlugOfCategory,
-} from "@/lib/sanityFetchers";
+} from "@/_libs/sanityFetchers";
 import SearchModal from "./SearchModal";
 
 type StructuredContent = {
