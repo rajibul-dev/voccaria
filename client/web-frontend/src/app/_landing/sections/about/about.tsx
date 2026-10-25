@@ -78,8 +78,8 @@ const aboutMiaText = [
   </>,
   <>
     Additionally, I attended the{" "}
-    <strong>Science Behind the Voice workshop</strong> with renowned voice
-    scientist{" "}
+    <strong>The Science of the Singing Voice: Science to Practice 2025</strong>{" "}
+    with renowned voice scientist{" "}
     <strong>
       Johan Sundberg and pedagogue{" "}
       <a
